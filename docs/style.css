@@ -1,0 +1,88 @@
+/* NorviTech Suite — one stylesheet, no build step, no webfont. */
+:root{
+  --brand:#FD8024;      /* the mark, focus rings, links in dark mode; never a background behind text */
+  --brand-ink:#B85200;  /* links and CTA on light backgrounds (4.9:1 on white) */
+  --masthead:#241f31;   /* header + footer in both modes; dark-mode page background */
+  --ink:#2D2D2D;
+  --paper:#FFFFFF;
+  --muted:#59636e;
+  --bg:var(--paper);
+  --fg:var(--ink);
+  --card:#f6f5f7;
+  --line:#e3e1e6;
+  --pill:#eceaf0;
+  --link:var(--brand-ink);
+  --cta-bg:var(--brand-ink);
+  --cta-fg:#FFFFFF;
+  --focus:var(--brand-ink); /* 4.95:1 on white; #FD8024 is 2.5:1 and fails the 3:1 non-text minimum */
+  --font:-apple-system,"Segoe UI",Ubuntu,Cantarell,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#241f31;
+    --fg:#FFFFFF;
+    --muted:#9198a1;
+    --card:#2d2740;
+    --line:#3d3749;
+    --pill:#3d3749;
+    --link:var(--brand);
+    --focus:var(--brand);
+  }
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.masthead a:focus-visible{outline-color:var(--brand)} /* 6.3:1 on #241f31 in both modes */
+img{max-width:100%;height:auto}
+h1,h2,h3{line-height:1.2;overflow-wrap:anywhere}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+
+/* masthead: header and footer, #241f31 in both schemes */
+.masthead{background:var(--masthead);color:#FFFFFF}
+.masthead a{color:#FFFFFF}
+.masthead a:hover{color:var(--brand)}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding-top:14px;padding-bottom:14px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
+.brand img{height:28px;width:auto}
+header nav{display:flex;flex-wrap:wrap;gap:4px 20px;font-weight:600}
+
+.hero{padding:56px 0 24px}
+.hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 14px;max-width:24ch}
+.hero p{font-size:19px;color:var(--muted);max-width:60ch;margin:0 0 22px}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.cta a{display:inline-block;padding:10px 18px;border-radius:8px;font-weight:600}
+.cta .primary{background:var(--cta-bg);color:var(--cta-fg)}
+.cta .primary:hover{text-decoration:none;filter:brightness(1.1)}
+.cta .secondary{border:1px solid var(--line);color:var(--fg)}
+
+h2{font-size:24px;margin:44px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.card h3{margin:0;font-size:20px}
+.card h3 a{color:var(--fg)}
+.card p{margin:0}
+.card .sub{color:var(--muted)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.pill{background:var(--pill);border-radius:999px;padding:2px 10px;font-size:13px;color:var(--fg)} /* --muted on the dark pill is 3.9:1; 13px text needs 4.5:1 */
+.links{display:flex;flex-wrap:wrap;gap:4px 16px;font-weight:600}
+
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px 16px}
+.how div{border-left:3px solid var(--brand);padding-left:14px}
+.how h3{margin:0 0 4px;font-size:16px}
+.how p{margin:0;color:var(--muted)}
+
+footer{margin-top:56px;font-size:14px}
+footer .wrap{padding-top:24px;padding-bottom:40px}
+footer nav{display:flex;flex-wrap:wrap;gap:4px 16px;font-weight:600;margin-bottom:12px}
+footer nav span{color:#a79fb5;font-weight:400}
+footer p{margin:8px 0;color:#d9d4e3}
+footer a{text-decoration:underline;text-decoration-color:#6b6480}
+
+.notfound{padding:72px 0 40px}
+.notfound h1{font-size:clamp(28px,5vw,44px);margin:0 0 14px}
+
+@media (max-width:600px){.hero{padding:36px 0 20px}h2{margin-top:36px}}
