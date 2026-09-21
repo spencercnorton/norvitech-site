@@ -19,7 +19,7 @@ analytics — so a change is a diff you can read in full.
 
 ## What it does
 
-**One page, five cards.** `docs/index.html` lists every app in the suite with
+**One page, four cards.** `docs/index.html` lists every app in the suite with
 its one-line pitch, licence, platform and links. Light and dark follow the
 visitor's system setting; the layout works from phone width up.
 
@@ -67,5 +67,6 @@ python3 scripts/check.py      # what CI runs: tag balance, links, no scripts, no
   <a href="https://github.com/spencercnorton/helios">Helios</a> ·
   <a href="https://github.com/spencercnorton/bitagent">BitAgent</a> ·
   <a href="https://github.com/spencercnorton/xnote">XNote</a> ·
+  <a href="https://github.com/spencercnorton/xnote-placement">XNote Placement</a> ·
   <a href="https://norvitech.com">norvitech.com</a>
 </p>
