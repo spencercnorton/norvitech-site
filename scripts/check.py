@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """The site's only test: every page parses with balanced tags, every relative link
-resolves inside docs/, and nothing executable or tracking got in.
+resolves inside docs/, and nothing executable or tracking got in — no script tag,
+no inline handler, no embedded document, no resource loaded from another host.
 """
 from __future__ import annotations
 
@@ -11,6 +12,10 @@ from pathlib import Path
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
+FORBIDDEN_TAGS = {"script", "iframe", "object", "embed", "applet", "frame"}
+# Elements whose src/href fetch a resource when the page loads; only same-site paths may appear.
+LOADING_TAGS = {"img", "source", "video", "audio", "track", "picture", "input"}
+LOADING_RELS = {"stylesheet", "icon", "preload", "prefetch", "modulepreload", "manifest", "apple-touch-icon"}
 
 
 class Check(HTMLParser):
@@ -21,13 +26,24 @@ class Check(HTMLParser):
         self.errors: list[str] = []
 
     def handle_starttag(self, tag, attrs):
-        if tag == "script":
-            self.errors.append("<script> is not allowed")
+        if tag in FORBIDDEN_TAGS:
+            self.errors.append(f"<{tag}> is not allowed")
         if tag not in VOID:
             self.stack.append(tag)
+        rel = set((dict(attrs).get("rel") or "").lower().split())
+        loads = tag in LOADING_TAGS or (tag == "link" and rel & LOADING_RELS)
         for k, v in attrs:
-            if k in ("href", "src") and v:
-                self.refs.append(v)
+            if k.startswith("on"):
+                self.errors.append(f"<{tag} {k}=…> inline handler")
+            if k in ("href", "src", "srcset", "poster", "data") and v:
+                # srcset is a comma-separated list of "<url> <descriptor>" candidates
+                urls = [c.strip().split()[0] for c in v.split(",") if c.strip()] if k == "srcset" else [v.strip()]
+                for url in urls:
+                    if url.lower().startswith("javascript:"):
+                        self.errors.append(f"<{tag} {k}> javascript: URL")
+                    if loads and re.match(r"(?i)^(https?:)?//", url):
+                        self.errors.append(f"<{tag} {k}={url}> loads from another host")
+                    self.refs.append(url)
 
     def handle_endtag(self, tag):
         if tag in VOID:
@@ -51,7 +67,7 @@ def main() -> int:
                 if ref.startswith("mailto:"):
                     errors.append(f"mailto link {ref}")
                 continue
-            target = DOCS / ref.lstrip("/").split("#")[0]
+            target = DOCS / ref.lstrip("/").split("#")[0].split(" ")[0]
             if not target.exists():
                 errors.append(f"dead link {ref}")
         for e in errors:
