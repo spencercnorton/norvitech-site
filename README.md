@@ -66,7 +66,6 @@ python3 scripts/check.py      # what CI runs: tag balance, links, no scripts, no
 <p align="center">
   <a href="https://github.com/spencercnorton/helios">Helios</a> ·
   <a href="https://github.com/spencercnorton/bitagent">BitAgent</a> ·
-  <a href="https://github.com/spencercnorton/bitagent-ui">BitAgent UI</a> ·
   <a href="https://github.com/spencercnorton/xnote">XNote</a> ·
   <a href="https://norvitech.com">norvitech.com</a>
 </p>
