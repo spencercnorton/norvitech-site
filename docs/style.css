@@ -151,18 +151,19 @@ html:not(.js) .clock{display:none} /* a clock that cannot tick shows nothing */
 .dots a[aria-current]{background:var(--brand);border-color:var(--brand)}
 .dots a:hover{background:var(--muted)}
 
-/* ---- Install: one command for every app in the APT repository ---- */
-.install{border-radius:18px;padding:24px 28px;margin:0}
-.install h2{margin:0 0 6px}
-.install p{margin:0 0 14px;color:var(--muted);max-width:70ch}
-.cmd{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
-.cmd pre{flex:1 1 420px;margin:0;padding:14px 16px;border-radius:12px;overflow-x:auto;
-  background:var(--pill);border:1px solid var(--glass-edge);font-size:14.5px;line-height:1.7}
+/* ---- Install: a strip, not a section. Title and tech line on the left, the
+   command and its button on the right; stacked below 900px. ---- */
+.install{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:10px 28px;
+  align-items:center;border-radius:16px;padding:18px 24px;margin:0}
+.install h2{margin:0;font-size:22px}
+.install .lede p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.cmd{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cmd pre{flex:1 1 380px;margin:0;padding:12px 16px;border-radius:12px;overflow-x:auto;
+  background:var(--pill);border:1px solid var(--glass-edge);font-size:14.5px;line-height:1.65}
 .cmd pre code{background:none;padding:0}
-.cmd button{flex:0 0 auto;padding:12px 20px;border-radius:10px;border:0;cursor:pointer;
+.cmd button{flex:0 0 auto;padding:11px 20px;border-radius:10px;border:0;cursor:pointer;
   background:var(--cta-bg);color:var(--cta-fg);font:600 15px var(--font)}
 .cmd button:hover{filter:brightness(1.1)}
-.note{font-size:14px;color:var(--muted);margin:14px 0 0}
 
 h2{font-size:24px;margin:44px 0 16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px}
@@ -209,6 +210,7 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
 .notfound h1{font-size:clamp(28px,5vw,44px);margin:0 0 14px}
 
 @media (max-width:900px){
+  .install{grid-template-columns:1fr;gap:14px}
   .slide{grid-template-columns:1fr;gap:16px;height:auto}
   .slide img{max-height:46vh;width:100%}
   .slide h3{font-size:22px}

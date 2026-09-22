@@ -135,14 +135,15 @@
 <div class="wrap">
 
 <section class="install glass" id="install">
-  <h2>Install the lot on Ubuntu</h2>
-  <p>One repository carries every desktop app in the suite. Add it once and they update with everything else.</p>
+  <div class="lede">
+    <h2>Add the APT</h2>
+    <p>Ubuntu 26.04 · amd64 · signed · Helios, XNote, XNote Placement and SnipSnap</p>
+  </div>
   <div class="cmd">
     <pre id="apt-command"><code>curl -fsSL https://apt.globalentry.systems/setup.sh | sudo sh
 sudo apt install helios xnote snipsnap</code></pre>
     <button type="button" data-copy="apt-command" hidden>Copy</button>
   </div>
-  <p class="note">Ubuntu 26.04 (<code>resolute</code>) on amd64 today; <code>setup.sh</code> installs the signing key and the repository, and refuses other releases. XNote Placement comes along with XNote as a recommendation. BitAgent is a server, not a desktop app — it ships as <a href="/bitagent/">Docker Compose</a>. Every app also <a href="https://github.com/spencercnorton">builds from source</a>.</p>
 </section>
 
 </div>
@@ -159,8 +160,7 @@ sudo apt install helios xnote snipsnap</code></pre>
       <a href="/snipsnap/">SnipSnap</a>
       <a href="/about/">About</a>
     </nav>
-    <p>NorviTech © Spencer Norton. NorviTech is the name Spencer Norton publishes software under. Each product carries its own licence: MIT unless its README says otherwise.</p>
-    <p>Plain HTML, CSS and one 5 KB script on GitHub Pages — no cookies, no storage, no analytics, nothing third-party. The script's only outside request is the clock asking our own <a href="https://time.globalentry.systems/">public NTP service</a> for the time. <a href="https://github.com/spencercnorton/norvitech-site">This site's source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
   </div>
 </footer>
 
