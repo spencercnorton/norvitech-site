@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>XNote Placement · NorviTech</title>
+<meta name="description" content="Puts every XNote sticky note back where you left it. A GNOME Shell extension that restores each note's position, monitor and workspace on Wayland, where the app cannot do it itself.">
+<link rel="canonical" href="https://norvitech.com/xnote-placement/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="XNote Placement · NorviTech">
+<meta property="og:description" content="Puts every XNote sticky note back where you left it. A GNOME Shell extension that restores each note's position, monitor and workspace on Wayland, where the app cannot do it itself.">
+<meta property="og:url" content="https://norvitech.com/xnote-placement/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li class="all"><a href="/#suite">The whole suite<small>One card per app</small></a></li>
+        </ul>
+      </details>
+      <a href="/#how">How it works</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/#suite">Suite</a> / XNote Placement</p>
+  <h1>XNote Placement</h1>
+  <p class="tag">Puts every XNote sticky note back where you left it.</p>
+  <p>A GNOME Shell extension that restores each note's position, monitor and workspace on Wayland, where the app cannot do it itself.</p>
+  <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GNOME Shell 50 · JavaScript</span><span class="pill">Wayland</span></div>
+  <p class="cta"><a class="primary" href="https://github.com/spencercnorton/xnote-placement#install">Install</a><a class="secondary" href="https://github.com/spencercnorton/xnote-placement">Source on GitHub</a><a class="secondary" href="/xnote/">XNote</a></p>
+</section>
+
+<div class="prose">
+<p><a href="/xnote/">XNote</a> keeps each sticky note as its own window, and since version 3.0 it is a native Wayland application. Under Wayland a client cannot place its own window — no position, no monitor, no workspace — so XNote remembers a note's size but not where it was. This extension is the compositor side of that job, for GNOME Shell 50 on Wayland. There are no settings.</p>
+</div>
+
+<h2>What it does</h2>
+<div class="how">
+  <div class="glass"><h3>Remembers where every note is</h3><p>As you move or resize a note, the extension records its position, its monitor and its workspace. The record is keyed by the note, not by the window, so it survives XNote restarts.</p></div>
+  <div class="glass"><h3>Puts it back</h3><p>When a note opens — after a login, after XNote restarts, after a hidden note is shown again — it goes back to the recorded spot.</p></div>
+  <div class="glass"><h3>Matches by title, guesses nothing</h3><p>XNote's pads are plain windows with no identity the compositor can see, so the extension reproduces each note's title from the first line of its file and matches on that. A note that cannot be matched is left exactly where the compositor put it.</p></div>
+  <div class="glass"><h3>Knows which monitor is which</h3><p>Monitors are keyed by serial number first, because identical models cannot be told apart otherwise and an index reshuffles when a display wakes late or a KVM switches inputs. A note whose monitor is missing stays on screen, clamped into the work area.</p></div>
+  <div class="glass"><h3>Waits for the compositor to finish</h3><p>A new XNote window is 0×0 for its first ~90 ms and mutter places it twice before it settles. Until it has, the extension re-asserts the stored place and records nothing — convergence without a magic delay.</p></div>
+  <div class="glass"><h3>Nothing leaves the machine</h3><p>The extension has no network functionality. Its state is a small file under your GNOME Shell extension data.</p></div>
+</div>
+
+<h2>Install</h2>
+<div class="how">
+  <div class="glass"><h3>Ubuntu 26.04 — APT</h3><p>The same repository that serves XNote; <code>sudo apt install xnote</code> already pulls this package in as a recommendation. Log out and back in, then enable it with <code>gnome-extensions enable</code> — the exact UUID is in the <a href="https://github.com/spencercnorton/xnote-placement#install">README</a>.</p></div>
+  <div class="glass"><h3>Other platforms — from source</h3><p>Any GNOME Shell 50 session on Wayland with XNote 3.0.2 or later: copy <code>extension.js</code> and <code>metadata.json</code> into your extensions directory, log out and back in, enable. It is not on extensions.gnome.org yet, and it does nothing on X11.</p></div>
+</div>
+
+<h2>Documentation</h2>
+<div class="prose">
+<ul>
+  <li><a href="https://github.com/spencercnorton/xnote-placement#documentation">How it works</a> — the storage format, the timing measurements, and why this is an extension rather than a feature of XNote</li>
+  <li><a href="https://github.com/spencercnorton/xnote-placement/blob/main/CHANGELOG.md">Changelog</a> — one entry per tagged release</li>
+  <li><a href="https://github.com/spencercnorton/xnote-placement/issues/new/choose">Issues</a> · <a href="https://github.com/spencercnorton/xnote-placement/discussions">Discussions</a> · <a href="https://github.com/spencercnorton/xnote-placement/security/advisories/new">Report a vulnerability</a></li>
+</ul>
+</div>
+
+<nav class="siblings" aria-label="Other apps">
+  <a class="glass" href="/helios/">Helios</a>
+  <a class="glass" href="/bitagent/">BitAgent</a>
+  <a class="glass" href="/xnote/">XNote</a>
+  <a class="glass" href="/xnote-placement/" aria-current="page">XNote Placement</a>
+  <a class="glass" href="/snipsnap/">SnipSnap</a>
+</nav>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/about/">About</a>
+    </nav>
+    <p>NorviTech © Spencer Norton. NorviTech is the name Spencer Norton publishes software under. Each product carries its own licence: MIT unless its README says otherwise.</p>
+    <p>Plain HTML and CSS on GitHub Pages — no scripts, cookies or analytics. <a href="https://github.com/spencercnorton/norvitech-site">This site's source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

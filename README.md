@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>The front door of the NorviTech Suite.</strong><br>
-  One HTML page and one stylesheet, served by GitHub Pages from <code>docs/</code>.
+  Seven HTML pages and one stylesheet, served by GitHub Pages from <code>docs/</code>.
 </p>
 
 <p align="center">
@@ -19,9 +19,14 @@ analytics — so a change is a diff you can read in full.
 
 ## What it does
 
-**One page, four cards.** `docs/index.html` lists every app in the suite with
-its one-line pitch, licence, platform and links. Light and dark follow the
-visitor's system setting; the layout works from phone width up.
+**One card per app, one page per app.** `docs/index.html` lists every app in
+the suite with its one-line pitch, licence, platform and links; `docs/<app>/`
+is that app's own page — what it does, how to install it, where its data
+lives, its documentation — written from its README. `docs/about/` is Spencer.
+The Apps menu in the header is a native `<details>` element, so it needs no
+script. Light and dark follow the visitor's system setting; the glass panels
+fall back to solid ones where `backdrop-filter` is unavailable or the visitor
+asked for reduced transparency; the layout works from phone width up.
 
 **Shared brand assets.** `docs/assets/` holds the NorviTech mark, the README
 banner (`banner.svg`) and the Open Graph card. Every product README hot-links
@@ -50,7 +55,7 @@ python3 -m http.server -d docs 8000    # then open http://localhost:8000
 ## Development
 
 ```bash
-python3 scripts/check.py      # what CI runs: tag balance, links, no scripts, no e-mail
+python3 scripts/check.py      # what CI runs: tag balance, links, no scripts, no e-mail, one shared header/footer
 ```
 
 ## Licence

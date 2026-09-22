@@ -17,9 +17,19 @@
   <div class="wrap">
     <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
     <nav aria-label="Site">
-      <a href="/#suite">Suite</a>
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li class="all"><a href="/#suite">The whole suite<small>One card per app</small></a></li>
+        </ul>
+      </details>
       <a href="/#how">How it works</a>
-      <a href="/#support">Support</a>
+      <a href="/about/">About</a>
       <a href="https://github.com/spencercnorton">GitHub</a>
     </nav>
   </div>
@@ -28,13 +38,22 @@
 <main class="wrap">
   <section class="notfound">
     <h1>There is nothing here.</h1>
-    <p>The page you asked for is not part of this site. The suite lives on <a href="/#suite">the front page</a>; each product's documentation lives in its repository on <a href="https://github.com/spencercnorton">GitHub</a>.</p>
+    <p>That address is not part of the NorviTech Suite site. Try <a href="/">the front page</a>, pick an app from the menu, or <a href="https://github.com/spencercnorton">go to GitHub</a>.</p>
   </section>
 </main>
 
 <footer class="masthead">
   <div class="wrap">
-    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton">GitHub</a></p>
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/about/">About</a>
+    </nav>
+    <p>NorviTech © Spencer Norton. NorviTech is the name Spencer Norton publishes software under. Each product carries its own licence: MIT unless its README says otherwise.</p>
+    <p>Plain HTML and CSS on GitHub Pages — no scripts, cookies or analytics. <a href="https://github.com/spencercnorton/norvitech-site">This site's source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
   </div>
 </footer>
 

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """The site's only test: every page parses with balanced tags, every relative link
-resolves inside docs/, and nothing executable or tracking got in — no script tag,
-no inline handler, no embedded document, no resource loaded from another host.
+resolves inside docs/, nothing executable or tracking got in — no script tag,
+no inline handler, no embedded document, no resource loaded from another host —
+and every page carries the same header and footer, since there is no build step
+to keep the menu in sync.
 """
 from __future__ import annotations
 
@@ -54,12 +56,23 @@ class Check(HTMLParser):
             self.stack.pop()
 
 
+CHROME = re.compile(r"<(header|footer) class=\"masthead\">.*?</\1>", re.S)
+
+
 def main() -> int:
     bad = 0
-    for page in sorted(DOCS.glob("*.html")):
+    chrome: dict[str, str] = {}
+    for page in sorted(DOCS.rglob("*.html")):
         p = Check()
-        p.feed(page.read_text(encoding="utf-8"))
+        text = page.read_text(encoding="utf-8")
+        p.feed(text)
         errors = list(p.errors)
+        for m in CHROME.finditer(text):
+            first = chrome.setdefault(m.group(1), m.group(0))
+            if m.group(0) != first:
+                errors.append(f"<{m.group(1)}> differs from the first page's")
+        if set(chrome) - {m.group(1) for m in CHROME.finditer(text)}:
+            errors.append("missing the shared header or footer")
         if p.stack:
             errors.append(f"unclosed at EOF: {p.stack}")
         for ref in p.refs:
@@ -71,7 +84,7 @@ def main() -> int:
             if not target.exists():
                 errors.append(f"dead link {ref}")
         for e in errors:
-            print(f"{page.name}: {e}")
+            print(f"{page.relative_to(DOCS)}: {e}")
         bad += len(errors)
     for f in DOCS.rglob("*"):
         if f.is_file() and f.suffix in {".html", ".css", ".svg", ".txt"}:

@@ -1,4 +1,7 @@
-/* NorviTech Suite — one stylesheet, no build step, no webfont. */
+/* NorviTech Suite — one stylesheet, no build step, no webfont.
+   Glass: translucent panels over a soft brand-tinted backdrop. The palette is unchanged;
+   only the surfaces are. Every panel has an opaque fallback so nothing depends on
+   backdrop-filter for legibility. */
 :root{
   --brand:#FD8024;      /* the mark, focus rings, links in dark mode; never a background behind text */
   --brand-ink:#B85200;  /* links and CTA on light backgrounds (4.9:1 on white) */
@@ -16,6 +19,16 @@
   --cta-fg:#FFFFFF;
   --focus:var(--brand-ink); /* 4.95:1 on white; #FD8024 is 2.5:1 and fails the 3:1 non-text minimum */
   --font:-apple-system,"Segoe UI",Ubuntu,Cantarell,Roboto,"Helvetica Neue",Arial,sans-serif;
+  /* glass */
+  --glow-a:rgba(253,128,36,.30);   /* brand glow, top right */
+  --glow-b:rgba(120,90,200,.18);   /* violet glow, bottom left */
+  --glow-c:rgba(253,128,36,.12);   /* a second, fainter brand glow mid-page so cards have something to blur */
+  --glass:rgba(255,255,255,.58);   /* over the light backdrop this reads ~#fbfafb, so --ink/--muted keep their ratios */
+  --glass-strong:rgba(255,255,255,.82);
+  --glass-line:rgba(255,255,255,.75);
+  --glass-edge:rgba(36,31,49,.10);
+  --glass-shadow:0 8px 30px rgba(36,31,49,.10),0 1px 2px rgba(36,31,49,.06);
+  --chrome:rgba(36,31,49,.78);     /* header and footer tint, both modes */
 }
 @media (prefers-color-scheme:dark){
   :root{
@@ -27,41 +40,85 @@
     --pill:#3d3749;
     --link:var(--brand);
     --focus:var(--brand);
+    --glow-a:rgba(253,128,36,.26);
+    --glow-b:rgba(120,90,200,.28);
+    --glow-c:rgba(253,128,36,.10);
+    --glass:rgba(45,39,64,.55);    /* ~#29233b over the dark backdrop; --muted is 5:1 on it */
+    --glass-strong:rgba(45,39,64,.85);
+    --glass-line:rgba(255,255,255,.10);
+    --glass-edge:rgba(255,255,255,.08);
+    --glass-shadow:0 8px 30px rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.3);
+    --chrome:rgba(36,31,49,.62);
   }
+}
+/* No blur available, or the user asked for less transparency: solid panels, same layout. */
+@supports not (backdrop-filter:blur(1px)){
+  :root{--glass:var(--card);--glass-strong:var(--card);--chrome:var(--masthead)}
+}
+@media (prefers-reduced-transparency:reduce){
+  :root{--glass:var(--card);--glass-strong:var(--card);--chrome:var(--masthead)}
 }
 
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font);
+  background-image:radial-gradient(70vw 60vh at 100% -10%,var(--glow-a),transparent 70%),
+                   radial-gradient(60vw 60vh at -10% 100%,var(--glow-b),transparent 70%),
+                   radial-gradient(40vw 40vh at 30% 50%,var(--glow-c),transparent 70%);
+  background-attachment:fixed}
 a{color:var(--link);text-decoration:none}
 a:hover{text-decoration:underline}
-a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-.masthead a:focus-visible{outline-color:var(--brand)} /* 6.3:1 on #241f31 in both modes */
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.masthead a:focus-visible,.masthead summary:focus-visible{outline-color:var(--brand)} /* 6.3:1 on #241f31 in both modes */
 img{max-width:100%;height:auto}
 h1,h2,h3{line-height:1.2;overflow-wrap:anywhere}
 .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
 
-/* masthead: header and footer, #241f31 in both schemes */
-.masthead{background:var(--masthead);color:#FFFFFF}
+/* the glass panel: cards, how-it-works items, the menu */
+.glass{background:var(--glass);border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow),inset 0 1px 0 var(--glass-line);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4)}
+
+/* masthead: header and footer, a #241f31 tint over the backdrop in both schemes */
+.masthead{background:var(--chrome);color:#FFFFFF;-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4)}
 .masthead a{color:#FFFFFF}
 .masthead a:hover{color:var(--brand)}
-header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding-top:14px;padding-bottom:14px}
+header.masthead{position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,255,255,.08)}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding-top:12px;padding-bottom:12px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
 .brand img{height:28px;width:auto}
-header nav{display:flex;flex-wrap:wrap;gap:4px 20px;font-weight:600}
+header nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;font-weight:600}
+
+/* the Apps menu: a native <details>, no script. It closes on a second click or Esc-less tab-away; that is the trade for zero JavaScript. */
+.menu{position:relative}
+.menu summary{list-style:none;cursor:pointer;color:#FFFFFF;padding:4px 0}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary::after{content:" ▾";font-size:12px}
+.menu[open] summary::after{content:" ▴"}
+.menu summary:hover{color:var(--brand)}
+.menu ul{position:absolute;left:0;top:calc(100% + 10px);z-index:20;min-width:280px;margin:0;padding:8px;list-style:none;border-radius:14px;
+  background:var(--glass-strong);border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow)} /* no blur here: a nested backdrop-filter only sees its parent's box */
+.menu li a{display:block;padding:8px 10px;border-radius:9px;color:var(--fg);font-weight:600;line-height:1.3}
+.menu li a:hover{background:var(--pill);color:var(--fg);text-decoration:none}
+.menu li a[aria-current]{background:var(--pill)}
+.menu li small{display:block;font-weight:400;font-size:13px;color:var(--muted)}
+.menu li.all{border-top:1px solid var(--line);margin-top:6px;padding-top:6px}
 
 .hero{padding:56px 0 24px}
 .hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 14px;max-width:24ch}
 .hero p{font-size:19px;color:var(--muted);max-width:60ch;margin:0 0 22px}
+.hero .crumb{font-size:14px;margin:0 0 10px}
+.hero .tag{color:var(--fg);font-weight:600;margin-bottom:8px}
+.hero .pills{margin:0 0 22px}
 .cta{display:flex;flex-wrap:wrap;gap:10px}
-.cta a{display:inline-block;padding:10px 18px;border-radius:8px;font-weight:600}
-.cta .primary{background:var(--cta-bg);color:var(--cta-fg)}
+.cta a{display:inline-block;padding:10px 18px;border-radius:9px;font-weight:600}
+.cta .primary{background:var(--cta-bg);color:var(--cta-fg);box-shadow:0 4px 14px rgba(184,82,0,.25)}
 .cta .primary:hover{text-decoration:none;filter:brightness(1.1)}
-.cta .secondary{border:1px solid var(--line);color:var(--fg)}
+.cta .secondary{border:1px solid var(--glass-edge);color:var(--fg);background:var(--glass)}
 
 h2{font-size:24px;margin:44px 0 16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.card{border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:transform .15s ease,box-shadow .15s ease}
+.card:hover{transform:translateY(-2px)}
 .card h3{margin:0;font-size:20px}
 .card h3 a{color:var(--fg)}
 .card p{margin:0}
@@ -70,10 +127,27 @@ h2{font-size:24px;margin:44px 0 16px}
 .pill{background:var(--pill);border-radius:999px;padding:2px 10px;font-size:13px;color:var(--fg)} /* --muted on the dark pill is 3.9:1; 13px text needs 4.5:1 */
 .links{display:flex;flex-wrap:wrap;gap:4px 16px;font-weight:600}
 
-.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px 16px}
-.how div{border-left:3px solid var(--brand);padding-left:14px}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:16px}
+.how div{border-radius:14px;padding:16px 16px 16px 18px;border-left:3px solid var(--brand)}
 .how h3{margin:0 0 4px;font-size:16px}
 .how p{margin:0;color:var(--muted)}
+.how p+p{margin-top:8px}
+.how code,.prose code{font-size:.92em;background:var(--pill);border-radius:5px;padding:1px 5px}
+
+/* longer text on app and about pages */
+.prose{max-width:70ch}
+.prose p,.prose li{color:var(--fg)}
+.prose p{margin:0 0 12px}
+.prose ul{padding-left:20px;margin:0 0 12px}
+.prose table{border-collapse:collapse;width:100%;font-size:15px;margin:0 0 12px}
+.prose th,.prose td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+.prose th{color:var(--muted);font-weight:600}
+.panel{border-radius:16px;padding:20px 22px;margin:0 0 16px}
+.panel h3{margin:0 0 8px;font-size:18px}
+.panel p:last-child,.panel ul:last-child{margin-bottom:0}
+.siblings{display:flex;flex-wrap:wrap;gap:8px;margin-top:44px}
+.siblings a{display:inline-block;padding:6px 14px;border-radius:999px;font-weight:600;color:var(--fg)}
+.siblings a[aria-current]{border-color:var(--brand)}
 
 footer{margin-top:56px;font-size:14px}
 footer .wrap{padding-top:24px;padding-bottom:40px}
@@ -85,4 +159,8 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
 .notfound{padding:72px 0 40px}
 .notfound h1{font-size:clamp(28px,5vw,44px);margin:0 0 14px}
 
-@media (max-width:600px){.hero{padding:36px 0 20px}h2{margin-top:36px}}
+@media (max-width:600px){
+  .hero{padding:36px 0 20px}h2{margin-top:36px}
+  header nav{width:100%}.menu{width:100%}.menu ul{position:static;min-width:0;margin-top:8px}
+}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}

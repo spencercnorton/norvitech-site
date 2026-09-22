@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>BitAgent · NorviTech</title>
+<meta name="description" content="A self-hosted BitTorrent DHT crawler and indexer built for the *arr stack. Evidence-driven classification, curation and opt-in LLM stages, with the operator console and public library in the same image.">
+<link rel="canonical" href="https://norvitech.com/bitagent/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="BitAgent · NorviTech">
+<meta property="og:description" content="A self-hosted BitTorrent DHT crawler and indexer built for the *arr stack. Evidence-driven classification, curation and opt-in LLM stages, with the operator console and public library in the same image.">
+<meta property="og:url" content="https://norvitech.com/bitagent/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li class="all"><a href="/#suite">The whole suite<small>One card per app</small></a></li>
+        </ul>
+      </details>
+      <a href="/#how">How it works</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/#suite">Suite</a> / BitAgent</p>
+  <h1>BitAgent</h1>
+  <p class="tag">A self-hosted BitTorrent DHT crawler and indexer built for the *arr stack.</p>
+  <p>Evidence-driven classification, curation and opt-in LLM stages, with the operator console and public library in the same image. Descended from bitmagnet.</p>
+  <div class="pills"><span class="pill lic">MIT</span><span class="pill">Docker Compose</span><span class="pill">Go · Python · Postgres</span><span class="pill">Torznab · GraphQL</span></div>
+  <p class="cta"><a class="primary" href="https://github.com/spencercnorton/bitagent#see-it-run">See it run</a><a class="secondary" href="https://github.com/spencercnorton/bitagent">Source on GitHub</a><a class="secondary" href="https://github.com/spencercnorton/bitagent/blob/main/docs/index.md">Docs</a></p>
+</section>
+
+<div class="prose">
+<p>BitAgent crawls the DHT into a Postgres corpus, classifies every torrent it finds, and serves the result to Sonarr, Radarr, Lidarr, Readarr and Prowlarr over Torznab. What makes it different is the loop: it watches what your *arrs actually grab and keep, and feeds that back into what it indexes. It started in April 2026 as a fork of <a href="https://github.com/bitmagnet-io/bitmagnet">bitmagnet</a>; the DHT crawler, metainfo fetcher, CEL classifier and the Postgres/GraphQL foundation are upstream's work and are credited as such.</p>
+</div>
+
+<h2>What BitAgent adds</h2>
+<div class="how">
+  <div class="glass"><h3>Ground truth from your *arr stack</h3><p>Sonarr, Radarr, Lidarr and Readarr webhooks, a history poller and a qBittorrent poller land every signal in an append-only evidence table that resolves, by explicit precedence, into one canonical label per torrent.</p></div>
+  <div class="glass"><h3>Curation, not just collection</h3><p>A deterministic content filter — language, lossy-audio-only music, NSFW, blocked extensions and content types, foreign audio — runs in pure Go with no network or database call per decision, and is anime-aware so watchable anime is never dropped on a script heuristic.</p></div>
+  <div class="glass"><h3>Titles that actually match</h3><p>An LLM-free anime backbone recognises fansub brackets, absolute episode numbers and romaji season markers, backed by an alias table built from AniDB titles joined to TMDB mappings, so every romaji, kanji, English and fan alias resolves to one id.</p></div>
+  <div class="glass"><h3>Accurate swarm numbers</h3><p>A BEP-15 UDP scrape worker refreshes seeders and leechers from public trackers at about seventy infohashes per datagram, replacing the crawler's one-node, never-refreshed estimate.</p></div>
+  <div class="glass"><h3>Observability that answers questions</h3><p>A <code>bitagent_*</code> metric family for every subsystem — crawler, classifier, evidence, content filter, liveness, retention, each LLM stage — and counterfactual <code>would_*</code> metrics so you read the numbers before you flip a switch.</p></div>
+  <div class="glass"><h3>LLM stages, off by default</h3><p>Four points in the pipeline can ask a model over any OpenAI-compatible endpoint, hosted or on your own LAN. Every stage runs in shadow mode first, daily and monthly budgets persist in Postgres, zero means stop, and anything from a private tracker never leaves the house.</p></div>
+</div>
+
+<h2>The dashboard</h2>
+<div class="how">
+  <div class="glass"><h3>Operator console</h3><p>Indexer win rate, match rate, grab liveness, evidence per source, a quarantine you can spot-check, one scorecard per LLM stage with spend against budget, a read-only view of the running configuration, a search tester and a GraphQL explorer.</p></div>
+  <div class="glass"><h3>Public library</h3><p>The same small FastAPI app, started and supervised by the Go core, serves a second hostname for browsing what the index holds. It reads the core over GraphQL and Prometheus on localhost and never writes.</p></div>
+</div>
+
+<h2>Install</h2>
+<div class="how">
+  <div class="glass"><h3>Docker Compose</h3><p>Two containers, no accounts, no API keys: copy the example env, set one Postgres password, <code>docker compose up -d --build</code>. Metrics climb within a minute and the console is on port 8080. The exact commands are in the <a href="https://github.com/spencercnorton/bitagent#see-it-run">README</a>.</p></div>
+  <div class="glass"><h3>Then wire the *arrs</h3><p>Add the Torznab endpoint as an indexer in Prowlarr or each *arr, and point each *arr's webhook at BitAgent so the evidence loop closes. <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/integrations/sonarr.md">Per-app guides</a> cover the clicks.</p></div>
+</div>
+
+<h2>Documentation</h2>
+<div class="prose">
+<ul>
+  <li>Concepts: <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/concepts/architecture.md">Architecture</a> · <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/concepts/dht-crawler.md">DHT crawler</a> · <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/concepts/classification.md">Classification</a></li>
+  <li>Reference: <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/reference/torznab-api.md">Torznab API</a> · <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/reference/graphql-api.md">GraphQL API</a> · <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/ui-guide.md">Dashboard guide</a> · <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/reference/metrics.md">Metrics</a></li>
+  <li>Operations: <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/operations/security.md">Security</a> · <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/operations/monitoring.md">Monitoring</a> · <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/integrations/private-tracker-mode.md">Private tracker mode</a></li>
+  <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/project/improvements.md">Improvements over upstream</a> · <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/legal/disclaimer.md">Legal disclaimer</a></li>
+  <li><a href="https://github.com/spencercnorton/bitagent/issues/new/choose">Issues</a> · <a href="https://github.com/spencercnorton/bitagent/discussions">Discussions</a> · <a href="https://github.com/spencercnorton/bitagent/security/advisories/new">Report a vulnerability</a></li>
+</ul>
+</div>
+
+<nav class="siblings" aria-label="Other apps">
+  <a class="glass" href="/helios/">Helios</a>
+  <a class="glass" href="/bitagent/" aria-current="page">BitAgent</a>
+  <a class="glass" href="/xnote/">XNote</a>
+  <a class="glass" href="/xnote-placement/">XNote Placement</a>
+  <a class="glass" href="/snipsnap/">SnipSnap</a>
+</nav>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/about/">About</a>
+    </nav>
+    <p>NorviTech © Spencer Norton. NorviTech is the name Spencer Norton publishes software under. Each product carries its own licence: MIT unless its README says otherwise.</p>
+    <p>Plain HTML and CSS on GitHub Pages — no scripts, cookies or analytics. <a href="https://github.com/spencercnorton/norvitech-site">This site's source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

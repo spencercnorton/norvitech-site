@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>XNote · NorviTech</title>
+<meta name="description" content="Sticky notes that stay on your desktop, and stay yours. A native GTK4/libadwaita notes app for GNOME on Wayland, descended from Xpad, with encrypted backup to Dropbox or any rclone remote.">
+<link rel="canonical" href="https://norvitech.com/xnote/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="XNote · NorviTech">
+<meta property="og:description" content="Sticky notes that stay on your desktop, and stay yours. A native GTK4/libadwaita notes app for GNOME on Wayland, descended from Xpad, with encrypted backup to Dropbox or any rclone remote.">
+<meta property="og:url" content="https://norvitech.com/xnote/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li class="all"><a href="/#suite">The whole suite<small>One card per app</small></a></li>
+        </ul>
+      </details>
+      <a href="/#how">How it works</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/#suite">Suite</a> / XNote</p>
+  <h1>XNote</h1>
+  <p class="tag">Sticky notes that stay on your desktop, and stay yours.</p>
+  <p>A native GTK4/libadwaita notes app for GNOME on Wayland, descended from Xpad, with encrypted backup to Dropbox or any rclone remote.</p>
+  <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GTK4 · C</span><span class="pill">Wayland</span></div>
+  <p class="cta"><a class="primary" href="https://github.com/spencercnorton/xnote#install">Install</a><a class="secondary" href="https://github.com/spencercnorton/xnote">Source on GitHub</a><a class="secondary" href="https://github.com/spencercnorton/xnote/blob/main/docs/user-guide.md">User guide</a></p>
+</section>
+
+<div class="prose">
+<p>A note is a small window with your words in it, in the colour you gave it, where you left it. XNote keeps each one as an independent window, saves every change as you type, and never sends a byte anywhere unless you ask it to. It is a GPL-3.0-or-later descendant of <a href="https://launchpad.net/xpad">Xpad</a>, rebuilt on GTK 4 and libadwaita for GNOME on Wayland.</p>
+</div>
+
+<h2>What it does</h2>
+<div class="how">
+  <div class="glass"><h3>Notes, not a notes app</h3><p>There is no list to open first: each note is its own window on the desktop, sized and coloured on its own, with the first line as its title. Hover a note and a small toolbar appears; move away and it is gone.</p></div>
+  <div class="glass"><h3>Everything is a keystroke</h3><p><code>Ctrl+N</code> for a new note, <code>Ctrl+B</code>/<code>I</code>/<code>U</code> for formatting, <code>Ctrl+F</code> to search inside a note; hold <code>Ctrl</code> and drag to move a note, <code>Ctrl</code> and right-drag to resize it.</p></div>
+  <div class="glass"><h3>Colours and fonts, per note or for all</h3><p>The dot on a hovered note's toolbar opens a row of swatches. The full palette, your own colours and the font live in Preferences, once for every note or overridden on one; new notes can take a random colour so a cluster reads at a glance.</p></div>
+  <div class="glass"><h3>Saved as you type</h3><p>Notes are plain files under <code>~/.config/xnote</code>, written atomically on a four-second tick, so a crash never costs more than the last few seconds and never corrupts a note.</p></div>
+  <div class="glass"><h3>Encrypted backup, anywhere rclone goes</h3><p>The optional <code>xnote-cloud-backup</code> helper takes an encrypted, authenticated snapshot of every note (XChaCha20-Poly1305 under a key only your passphrase or a one-time recovery code can unwrap) and appends it as a recovery kit to Dropbox, any rclone remote or a mounted path, hourly. The provider sees ciphertext and metadata, never a note.</p></div>
+  <div class="glass"><h3>Back where you left it</h3><p>Wayland forbids an application from placing its own windows, so the companion <a href="/xnote-placement/">XNote Placement</a> extension does it from the compositor side. The APT package brings it along as a recommendation.</p></div>
+</div>
+
+<h2>Install</h2>
+<div class="how">
+  <div class="glass"><h3>Ubuntu 26.04 — APT</h3><p>Add the NorviTech APT repository once and <code>sudo apt install xnote</code>. The package replaces <code>xpad</code> and migrates its notes on first launch, and recommends the placement extension; enable that once after your next login. Commands in the <a href="https://github.com/spencercnorton/xnote#install">README</a>.</p></div>
+  <div class="glass"><h3>Other platforms — from source</h3><p>GTK 4.10+, libadwaita 1.5+, GtkSourceView 5 and the autotools; <code>./autogen.sh</code>, <code>./configure</code>, <code>make</code>. A Go toolchain adds the backup helper; without one the desktop app still builds and the helper is omitted, never downloaded.</p></div>
+</div>
+
+<h2>Where your data lives</h2>
+<div class="prose">
+<p>Live notes are plain text under <code>~/.config/xnote/</code>; the backup helper's wrapped keys and snapshots sit under <code>~/.local/share/xnote-backup/</code>. Nothing leaves the machine unless you configure a backup remote, and then only encrypted recovery kits do — the provider can observe device name, timestamps, sizes and cadence, never a note. Keep the recovery code somewhere separate from the computer. The <a href="https://github.com/spencercnorton/xnote#where-your-data-lives">README table</a> lists every path.</p>
+</div>
+
+<h2>Documentation</h2>
+<div class="prose">
+<ul>
+  <li><a href="https://github.com/spencercnorton/xnote/blob/main/docs/user-guide.md">User guide</a> — from first launch to <code>xnote-cloud-backup restore</code> on a new machine</li>
+  <li><a href="https://github.com/spencercnorton/xnote/blob/main/docs/development.md">Development</a> — the source tree, the tests and the release model</li>
+  <li><a href="https://github.com/spencercnorton/xnote/blob/main/CHANGELOG.md">Changelog</a> — one entry per tagged release</li>
+  <li><a href="https://github.com/spencercnorton/xnote/issues/new/choose">Issues</a> · <a href="https://github.com/spencercnorton/xnote/discussions">Discussions</a> · <a href="https://github.com/spencercnorton/xnote/security/advisories/new">Report a vulnerability</a></li>
+</ul>
+</div>
+
+<nav class="siblings" aria-label="Other apps">
+  <a class="glass" href="/helios/">Helios</a>
+  <a class="glass" href="/bitagent/">BitAgent</a>
+  <a class="glass" href="/xnote/" aria-current="page">XNote</a>
+  <a class="glass" href="/xnote-placement/">XNote Placement</a>
+  <a class="glass" href="/snipsnap/">SnipSnap</a>
+</nav>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/about/">About</a>
+    </nav>
+    <p>NorviTech © Spencer Norton. NorviTech is the name Spencer Norton publishes software under. Each product carries its own licence: MIT unless its README says otherwise.</p>
+    <p>Plain HTML and CSS on GitHub Pages — no scripts, cookies or analytics. <a href="https://github.com/spencercnorton/norvitech-site">This site's source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

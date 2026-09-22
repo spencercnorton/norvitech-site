@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>SnipSnap · NorviTech</title>
+<meta name="description" content="Screenshot any region of any monitor on GNOME Wayland, with no permission dialog. A Qt 6 capture-and-annotate tool whose GNOME Shell extension draws the selection inside the compositor.">
+<link rel="canonical" href="https://norvitech.com/snipsnap/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="SnipSnap · NorviTech">
+<meta property="og:description" content="Screenshot any region of any monitor on GNOME Wayland, with no permission dialog. A Qt 6 capture-and-annotate tool whose GNOME Shell extension draws the selection inside the compositor.">
+<meta property="og:url" content="https://norvitech.com/snipsnap/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li class="all"><a href="/#suite">The whole suite<small>One card per app</small></a></li>
+        </ul>
+      </details>
+      <a href="/#how">How it works</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/#suite">Suite</a> / SnipSnap</p>
+  <h1>SnipSnap</h1>
+  <p class="tag">Screenshot any region of any monitor on GNOME Wayland, with no permission dialog.</p>
+  <p>A Qt 6 capture-and-annotate tool whose GNOME Shell extension draws the selection inside the compositor.</p>
+  <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">Qt 6 · C++</span><span class="pill">GNOME Shell 50 · 51</span></div>
+  <p class="cta"><a class="primary" href="https://github.com/spencercnorton/snipsnap#install">Install</a><a class="secondary" href="https://github.com/spencercnorton/snipsnap">Source on GitHub</a></p>
+</section>
+
+<div class="prose">
+<p>Press a key, drag a region, annotate it, then copy or save. SnipSnap is built for GNOME on Wayland, where an application cannot read the screen and every screenshot tool either flashes a portal permission dialog before each capture or quietly stops working across a multi-monitor desktop. It is a downstream fork of <a href="https://github.com/flameshot-org/flameshot">Flameshot</a> with the capture path moved into the compositor; the editor, CLI, tray icon and configuration file are Flameshot's.</p>
+</div>
+
+<h2>What it does</h2>
+<div class="how">
+  <div class="glass"><h3>The selection lives in the compositor</h3><p>A GNOME Shell extension draws the dimmed screen and the selection rectangle, so one drag can start on one monitor and end on another, mixed scales and rotations included. The compositor already has the pixels: no portal dialog, no per-monitor boundary.</p></div>
+  <div class="glass"><h3>A full editor, in the same process</h3><p>Arrows, rectangles, circles, pencil, marker, numbered pointers, text, secure pixelation, invert, undo and redo, zoom and pan — then copy or save. The editor follows your desktop theme and the overlay follows the GNOME accent colour.</p></div>
+  <div class="glass"><h3>Nothing leaves the machine</h3><p>There is no image-host uploader and no update checker; both are compiled out, and no code path in the shipped build opens a network connection. Captures go to your clipboard or the directory you choose.</p></div>
+  <div class="glass"><h3>Still works where the bridge does not</h3><p><code>snipsnap gui</code>, the tray icon and the D-Bus interface take the desktop-portal path on every desktop. On X11, or a Wayland session that is not GNOME, that is what you use: a permission prompt and one monitor at a time, everything else the same.</p></div>
+  <div class="glass"><h3>Optional hand-off to satty</h3><p>If you prefer <a href="https://github.com/gabm/Satty">satty</a>'s annotation window, <code>snipsnap-annotator enable</code> sends every committed capture there instead of the built-in editor.</p></div>
+</div>
+
+<h2>Install</h2>
+<div class="how">
+  <div class="glass"><h3>Ubuntu 26.04 — APT</h3><p>Add the NorviTech APT repository once and <code>sudo apt install snipsnap</code>; the package carries the GNOME Shell extension and its schema. Then <code>snipsnap-shell-bridge activate</code> as your normal user — it hands over <kbd>Print</kbd> only after the bridge is proven active. Commands in the <a href="https://github.com/spencercnorton/snipsnap#install">README</a>.</p></div>
+  <div class="glass"><h3>Other distributions — from source</h3><p>Qt 6.2+ and CMake 3.22 build SnipSnap; the GNOME Shell bridge needs Shell 50 or 51. Build with <code>-DENABLE_GNOME_SHELL_BRIDGE=ON</code> or you get a build without the compositor capture path — the reason this program exists. No Flatpak, Snap or AppImage.</p></div>
+  <div class="glass"><h3>Coming from Flameshot</h3><p>Installing <code>snipsnap</code> replaces the Flameshot package; the <code>flameshot</code> command stays as a compatibility symlink, and your settings are copied into <code>~/.config/snipsnap/</code> without deleting the originals.</p></div>
+</div>
+
+<h2>Where your data lives</h2>
+<div class="prose">
+<p>Settings in <code>~/.config/snipsnap/snipsnap.ini</code>, the last selection rectangle under <code>~/.cache/snipsnap/</code>, the bridge socket in your runtime directory while the daemon runs, and your screenshots in the directory you save to — nothing else. SnipSnap makes no network connections at all. The <a href="https://github.com/spencercnorton/snipsnap#where-your-data-lives">README table</a> lists every path.</p>
+</div>
+
+<h2>Documentation</h2>
+<div class="prose">
+<ul>
+  <li><a href="https://github.com/spencercnorton/snipsnap/blob/main/docs/gnome-shell-bridge.md">The GNOME Shell bridge</a> — the socket protocol and how the extension and daemon meet</li>
+  <li><a href="https://github.com/spencercnorton/snipsnap/blob/main/CHANGELOG.md">Changelog</a> — one entry per tagged release</li>
+  <li><a href="https://github.com/spencercnorton/snipsnap/issues/new/choose">Issues</a> · <a href="https://github.com/spencercnorton/snipsnap/discussions">Discussions</a> · <a href="https://github.com/spencercnorton/snipsnap/security/advisories/new">Report a vulnerability</a></li>
+</ul>
+</div>
+
+<nav class="siblings" aria-label="Other apps">
+  <a class="glass" href="/helios/">Helios</a>
+  <a class="glass" href="/bitagent/">BitAgent</a>
+  <a class="glass" href="/xnote/">XNote</a>
+  <a class="glass" href="/xnote-placement/">XNote Placement</a>
+  <a class="glass" href="/snipsnap/" aria-current="page">SnipSnap</a>
+</nav>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/about/">About</a>
+    </nav>
+    <p>NorviTech © Spencer Norton. NorviTech is the name Spencer Norton publishes software under. Each product carries its own licence: MIT unless its README says otherwise.</p>
+    <p>Plain HTML and CSS on GitHub Pages — no scripts, cookies or analytics. <a href="https://github.com/spencercnorton/norvitech-site">This site's source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
