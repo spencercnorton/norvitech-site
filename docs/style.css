@@ -230,3 +230,157 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
   header nav{width:100%}.menu{width:100%}.menu ul{position:static;min-width:0;margin-top:8px}
 }
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}.track{scroll-behavior:auto}}
+
+/* ---- About: the career timeline -------------------------------------------
+   One column so the chronology is unambiguous. Every moving part is a CSS
+   transition the script only triggers, and all of it is switched off under
+   prefers-reduced-motion. Without the script this is a plain <ol> of native
+   <details>, which is why nothing here is display:none by default. */
+.tl{margin:0 0 26px}
+/* No script, no filtering — so the control is not there to be pressed. The
+   list below is complete and every <details> still opens on its own. */
+.tl-filters{display:none}
+.js .tl-filters{position:relative;display:inline-flex;gap:2px;padding:4px;margin:0 0 6px;
+  border-radius:999px;background:var(--glass);border:1px solid var(--glass-edge);
+  box-shadow:var(--glass-shadow);backdrop-filter:blur(14px) saturate(140%)}
+.tl-f{position:relative;z-index:1;appearance:none;border:0;background:none;cursor:pointer;
+  font:600 15px/1 var(--font);color:var(--muted);padding:9px 16px;border-radius:999px;
+  display:inline-flex;align-items:center;gap:7px;transition:color .25s ease}
+.tl-f[aria-pressed="true"]{color:var(--cta-fg)}
+.tl-n{font-size:12px;font-weight:700;padding:1px 7px;border-radius:999px;
+  background:var(--pill);color:var(--fg);transition:background .25s ease,color .25s ease}
+.tl-f[aria-pressed="true"] .tl-n{background:rgba(255,255,255,.25);color:var(--cta-fg)}
+/* The moving pill. Parked under the active button by the script; it is the one
+   element that animates position, so the label text never reflows. */
+.tl-slider{position:absolute;top:4px;left:0;height:calc(100% - 8px);border-radius:999px;
+  background:linear-gradient(135deg,var(--brand-ink),#8a3ea0);box-shadow:0 4px 14px rgba(36,31,49,.28);
+  transition:transform .42s cubic-bezier(.22,1,.36,1),width .42s cubic-bezier(.22,1,.36,1);
+  transform:translateX(0);width:0;opacity:0}
+.js .tl-slider{opacity:1}
+.tl-hint{color:var(--muted);font-size:14px;margin:0 0 18px}
+.tl-hint-js{display:none}
+.js .tl-hint-js{display:inline}
+
+.tl-list{list-style:none;margin:0;padding:0;max-width:1100px;position:relative}
+/* The spine. Drawn behind the dots and faded at both ends so it reads as a
+   thread rather than a border. */
+.tl-list::before{content:"";position:absolute;left:78px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(to bottom,transparent,var(--line) 6%,var(--line) 94%,transparent)}
+.tl-item{position:relative;padding:0 0 14px 110px;min-height:44px}
+.tl-year{position:absolute;left:0;top:16px;width:58px;text-align:right;font-size:13px;
+  font-weight:700;color:var(--muted);letter-spacing:.02em}
+.tl-dot{position:absolute;left:71px;top:20px;width:16px;height:16px;border-radius:50%;
+  background:var(--bg);border:3px solid var(--accent);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent);
+  transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s ease}
+.tl-item:hover .tl-dot{transform:scale(1.25);box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 26%,transparent)}
+
+.tl-card{border-radius:16px;background:var(--glass);border:1px solid var(--glass-edge);
+  box-shadow:var(--glass-shadow);backdrop-filter:blur(14px) saturate(140%);overflow:hidden;
+  border-left:4px solid var(--accent);transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s ease}
+.tl-card:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(36,31,49,.16),0 1px 2px rgba(36,31,49,.08)}
+.tl-card>summary{display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer;
+  list-style:none;user-select:none}
+.tl-card>summary::-webkit-details-marker{display:none}
+.tl-card>summary::after{content:"";flex:none;width:9px;height:9px;margin-left:4px;
+  border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);
+  transform:rotate(45deg) translate(-2px,-2px);transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.tl-card[open]>summary::after{transform:rotate(225deg) translate(-2px,-2px)}
+/* The org mark: initials on the org's own accent. Not a trademark, by design. */
+.tl-mark{flex:none;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;
+  font-weight:800;font-size:15px;letter-spacing:.01em;color:#fff;
+  background:linear-gradient(140deg,var(--accent),color-mix(in srgb,var(--accent) 55%,#241f31));
+  box-shadow:0 4px 12px color-mix(in srgb,var(--accent) 35%,transparent)}
+.tl-head{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.tl-head strong{font-size:16px;line-height:1.25}
+.tl-org{font-size:14px;font-weight:600;color:var(--accent)}
+.tl-when{font-size:13px;color:var(--muted)}
+.tl-kind{flex:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+.tl-body{padding:0 16px 16px 74px}
+.tl-lead{margin:0 0 10px;color:var(--fg)}
+.tl-body ul{margin:0 0 12px;padding-left:20px}
+.tl-body li{margin:0 0 6px}
+.tl-body .pills{margin-top:0}
+.sheet-att{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:12px 14px;
+  border-radius:12px;background:var(--pill);border:1px solid var(--line)}
+.sheet-att p{margin:0;font-size:14px}
+.sheet-att-i{font-size:16px;line-height:1.5}
+
+/* Entry animation. The script adds .tl-ready, so a no-JS page is never left
+   invisible by a transition that will not run. */
+.js .tl-ready .tl-item{opacity:0;transform:translateY(14px);
+  transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}
+.js .tl-ready .tl-item.in{opacity:1;transform:none}
+.tl-item.out{display:none}
+
+/* ---- The attachment / detail sheet ---------------------------------------- */
+.sheet{border:0;padding:0;max-width:min(720px,92vw);width:100%;border-radius:20px;
+  background:var(--glass-strong);color:var(--fg);box-shadow:0 30px 80px rgba(36,31,49,.35);
+  backdrop-filter:blur(22px) saturate(150%);overflow:visible}
+.sheet::backdrop{background:rgba(36,31,49,.55);backdrop-filter:blur(3px)}
+.sheet[open]{animation:sheet-in .34s cubic-bezier(.22,1,.36,1)}
+.sheet[open]::backdrop{animation:fade-in .34s ease}
+@keyframes sheet-in{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+.sheet-in{padding:26px 28px 28px;max-height:min(80vh,760px);overflow:auto}
+.sheet-x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--glass-edge);background:var(--glass);color:var(--fg);cursor:pointer;
+  font-size:14px;line-height:1;display:grid;place-items:center;transition:transform .2s ease}
+.sheet-x:hover{transform:rotate(90deg)}
+.sheet-head{display:flex;gap:14px;align-items:center;margin:0 0 16px;padding-right:34px}
+.sheet-head h3{margin:0 0 2px;font-size:20px}
+.sheet-in ul{padding-left:20px;margin:0 0 12px}
+.sheet-in li{margin:0 0 7px}
+
+@media (max-width:900px){
+  .tl-list::before{left:15px}
+  .tl-item{padding-left:40px}
+  .tl-year{position:static;width:auto;text-align:left;display:block;margin:0 0 5px}
+  .tl-dot{left:8px;top:30px}
+  /* The row is mark | text | chevron and nothing else: at 390px the kind chip
+     was stealing enough width to wrap the job title one word per line, and the
+     filter above already says which kind you are looking at. */
+  .tl-card>summary{gap:11px;padding:13px 13px 13px 12px}
+  .tl-mark{width:38px;height:38px;border-radius:11px;font-size:13px}
+  .tl-kind{display:none}
+  .tl-head strong{font-size:15px}
+  .tl-body{padding:0 14px 14px 14px}
+  /* Must carry .js: unscoped, this re-enabled the control below 900px on a
+     page with no script — dead buttons — and lost to `.js .tl-filters`
+     on specificity when the script WAS there, so display:flex never applied. */
+  .js .tl-filters{display:flex;width:100%}
+  .tl-f{flex:1;justify-content:center;padding:9px 6px;font-size:14px;gap:5px}
+  .sheet-in{padding:22px 18px 24px}
+  .sheet-head{gap:11px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tl-slider,.tl-card,.tl-dot,.sheet-x,.tl-card>summary::after{transition:none}
+  .js .tl-ready .tl-item{opacity:1;transform:none;transition:none}
+  .sheet[open],.sheet[open]::backdrop{animation:none}
+}
+
+/* A granted-document attachment: the kind line, the identifier and the link. */
+.sheet-att-doc{align-items:flex-start}
+.sheet-att-doc p{margin:0 0 7px}
+.sheet-att-doc p:last-child{margin:0}
+.sheet-att-k{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.sheet-att-id{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;
+  background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:1px 7px}
+
+/* A real mark sits on its own light tile: these are wordmarks in their own
+   colours, so the accent gradient behind them would fight the artwork. The
+   monogram tiles stay as they are — a mixed row reads fine because the tile,
+   not its contents, is what gives the column its rhythm. */
+.tl-mark.has-logo{background:#fff;border:1px solid var(--glass-edge);
+  box-shadow:0 2px 8px rgba(36,31,49,.12);padding:6px}
+.tl-mark.has-logo img{width:100%;height:100%;object-fit:contain;display:block}
+
+/* The brand strip. A wordmark is 3:1 to 8:1 — it cannot read at row-icon size,
+   so the real mark goes here, where the detail view gives it real width. */
+.tl-brand{margin:0 0 14px}
+.tl-brand img{height:30px;width:auto;max-width:210px;display:block}
+@media (prefers-color-scheme:dark){
+  /* These marks are dark artwork on an assumed white page. */
+  .tl-brand img{background:#fff;border-radius:8px;padding:7px 10px;box-sizing:content-box}
+}
