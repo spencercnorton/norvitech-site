@@ -19,12 +19,14 @@
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
 <meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
 </head>
 <body>
 
 <header class="masthead">
   <div class="wrap">
     <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
     <nav aria-label="Site">
       <details class="menu">
         <summary>Apps</summary>
@@ -34,13 +36,17 @@
           <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
           <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
           <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
-          <li class="all"><a href="/#suite">The whole suite<small>One card per app</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
         </ul>
       </details>
       <a href="/#how">How it works</a>
       <a href="/about/">About</a>
       <a href="https://github.com/spencercnorton">GitHub</a>
     </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note>UTC</span>
+    </a>
   </div>
 </header>
 
@@ -110,7 +116,7 @@
       <a href="/about/">About</a>
     </nav>
     <p>NorviTech © Spencer Norton. NorviTech is the name Spencer Norton publishes software under. Each product carries its own licence: MIT unless its README says otherwise.</p>
-    <p>Plain HTML and CSS on GitHub Pages — no scripts, cookies or analytics. <a href="https://github.com/spencercnorton/norvitech-site">This site's source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+    <p>Plain HTML, CSS and one 5 KB script on GitHub Pages — no cookies, no storage, no analytics, nothing third-party. The script's only outside request is the clock asking our own <a href="https://time.globalentry.systems/">public NTP service</a> for the time. <a href="https://github.com/spencercnorton/norvitech-site">This site's source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
   </div>
 </footer>
 

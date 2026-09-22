@@ -72,7 +72,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var
 .masthead a:focus-visible,.masthead summary:focus-visible{outline-color:var(--brand)} /* 6.3:1 on #241f31 in both modes */
 img{max-width:100%;height:auto}
 h1,h2,h3{line-height:1.2;overflow-wrap:anywhere}
-.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+.wrap.wide{max-width:1680px}
 
 /* the glass panel: cards, how-it-works items, the menu */
 .glass{background:var(--glass);border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow),inset 0 1px 0 var(--glass-line);
@@ -83,10 +84,18 @@ h1,h2,h3{line-height:1.2;overflow-wrap:anywhere}
 .masthead a{color:#FFFFFF}
 .masthead a:hover{color:var(--brand)}
 header.masthead{position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,255,255,.08)}
-header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding-top:12px;padding-bottom:12px}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding-top:12px;padding-bottom:12px}
+.rule{width:1px;align-self:stretch;min-height:26px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.28),transparent)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
 .brand img{height:28px;width:auto}
-header nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;font-weight:600}
+header nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;font-weight:600;margin-right:auto}
+
+/* the clock: our time, read from the public NTP edge (site.js) */
+.clock{display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;color:#FFFFFF}
+.clock:hover{text-decoration:none;color:var(--brand)}
+.clock [data-face]{font-variant-numeric:tabular-nums;font-size:19px;font-weight:600;letter-spacing:.5px}
+.clock [data-note]{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#bdb6cc}
+html:not(.js) .clock{display:none} /* a clock that cannot tick shows nothing */
 
 /* the Apps menu: a native <details>, no script. It closes on a second click or Esc-less tab-away; that is the trade for zero JavaScript. */
 .menu{position:relative}
@@ -103,9 +112,9 @@ header nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;font-weig
 .menu li small{display:block;font-weight:400;font-size:13px;color:var(--muted)}
 .menu li.all{border-top:1px solid var(--line);margin-top:6px;padding-top:6px}
 
-.hero{padding:56px 0 24px}
-.hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 14px;max-width:24ch}
-.hero p{font-size:19px;color:var(--muted);max-width:60ch;margin:0 0 22px}
+.hero{padding:40px 0 22px}
+.hero h1{font-size:clamp(27px,3.4vw,40px);margin:0 0 12px;max-width:34ch}
+.hero p{font-size:18px;color:var(--muted);max-width:70ch;margin:0 0 18px}
 .hero .crumb{font-size:14px;margin:0 0 10px}
 .hero .tag{color:var(--fg);font-weight:600;margin-bottom:8px}
 .hero .pills{margin:0 0 22px}
@@ -114,6 +123,40 @@ header nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;font-weig
 .cta .primary{background:var(--cta-bg);color:var(--cta-fg);box-shadow:0 4px 14px rgba(184,82,0,.25)}
 .cta .primary:hover{text-decoration:none;filter:brightness(1.1)}
 .cta .secondary{border:1px solid var(--glass-edge);color:var(--fg);background:var(--glass)}
+
+/* ---- Spotlight: a scroll-snap carousel; site.js only auto-advances it ---- */
+.spot{margin:8px 0 0}
+.track{display:flex;gap:20px;margin:0;padding:6px;list-style:none;overflow-x:auto;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
+.track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;border-radius:22px;padding:20px;
+  display:grid;grid-template-columns:minmax(0,1.75fr) minmax(240px,.85fr);gap:28px;align-items:center}
+.slide{height:clamp(380px,62vh,620px)}
+.slide img{display:block;width:100%;max-height:min(576px,calc(62vh - 44px));object-fit:contain;object-position:center;
+  border-radius:12px;border:1px solid var(--glass-edge);box-shadow:0 18px 50px rgba(36,31,49,.22)}
+.slide h3{margin:0 0 8px;font-size:26px}
+.slide h3 a{color:var(--fg)}
+.slide p{margin:0 0 10px}
+.slide .sub{color:var(--muted)}
+.slide .pills{margin-top:14px}
+.dots{display:flex;justify-content:center;gap:10px;margin:18px 0 0;padding:0;list-style:none}
+.dots a{display:block;width:42px;height:7px;border-radius:999px;background:var(--pill);
+  border:1px solid var(--glass-edge)}
+.dots a[aria-current]{background:var(--brand);border-color:var(--brand)}
+.dots a:hover{background:var(--muted)}
+
+/* ---- Install: one command for every app in the APT repository ---- */
+.install{border-radius:18px;padding:22px 24px;margin:0}
+.install h2{margin:0 0 6px}
+.install p{margin:0 0 14px;color:var(--muted);max-width:70ch}
+.cmd{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.cmd pre{flex:1 1 420px;margin:0;padding:14px 16px;border-radius:12px;overflow-x:auto;
+  background:var(--pill);border:1px solid var(--glass-edge);font-size:14.5px;line-height:1.7}
+.cmd pre code{background:none;padding:0}
+.cmd button{flex:0 0 auto;padding:12px 20px;border-radius:10px;border:0;cursor:pointer;
+  background:var(--cta-bg);color:var(--cta-fg);font:600 15px var(--font)}
+.cmd button:hover{filter:brightness(1.1)}
+.note{font-size:14px;color:var(--muted);margin:14px 0 0}
 
 h2{font-size:24px;margin:44px 0 16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px}
@@ -159,8 +202,19 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
 .notfound{padding:72px 0 40px}
 .notfound h1{font-size:clamp(28px,5vw,44px);margin:0 0 14px}
 
+@media (max-width:900px){
+  .slide{grid-template-columns:1fr;gap:16px;height:auto}
+  .slide img{max-height:46vh}
+  .slide h3{font-size:22px}
+}
 @media (max-width:600px){
   .hero{padding:36px 0 20px}h2{margin-top:36px}
+  /* stacked, a sticky header would be a third of a phone screen */
+  header.masthead{position:static}
+  .rule{display:none}
+  .clock{order:1;margin-left:auto;align-items:flex-end}
+  .clock [data-face]{font-size:16px}
+  header nav{order:2;width:100%;margin-right:0}
   header nav{width:100%}.menu{width:100%}.menu ul{position:static;min-width:0;margin-top:8px}
 }
-@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}.track{scroll-behavior:auto}}

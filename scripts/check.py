@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """The site's only test: every page parses with balanced tags, every relative link
-resolves inside docs/, nothing executable or tracking got in — no script tag,
-no inline handler, no embedded document, no resource loaded from another host —
-and every page carries the same header and footer, since there is no build step
-to keep the menu in sync.
+resolves inside docs/, nothing tracking or third-party got in, and every page
+carries the same header and footer, since there is no build step to keep the
+menu in sync.
+
+Exactly one script may run here: `docs/site.js`, same-origin, external, on
+every page. An inline `<script>`, an `on*` handler, a second script, a script
+from another host, an embedded document, or any resource loaded from another
+host is still refused — so the whole of what executes on norvitech.com is one
+reviewable file.
 """
 from __future__ import annotations
 
@@ -14,9 +19,11 @@ from pathlib import Path
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
-FORBIDDEN_TAGS = {"script", "iframe", "object", "embed", "applet", "frame"}
+FORBIDDEN_TAGS = {"iframe", "object", "embed", "applet", "frame"}
+# The one script allowed to run on this site, on every page, and nothing else.
+SITE_SCRIPT = "/site.js"
 # Elements whose src/href fetch a resource when the page loads; only same-site paths may appear.
-LOADING_TAGS = {"img", "source", "video", "audio", "track", "picture", "input"}
+LOADING_TAGS = {"img", "source", "video", "audio", "track", "picture", "input", "script"}
 LOADING_RELS = {"stylesheet", "icon", "preload", "prefetch", "modulepreload", "manifest", "apple-touch-icon"}
 
 
@@ -26,10 +33,24 @@ class Check(HTMLParser):
         self.stack: list[str] = []
         self.refs: list[str] = []
         self.errors: list[str] = []
+        self.scripts = 0
 
     def handle_starttag(self, tag, attrs):
         if tag in FORBIDDEN_TAGS:
             self.errors.append(f"<{tag}> is not allowed")
+        # A browser keeps the FIRST of a repeated attribute and drops the rest,
+        # while dict(attrs) keeps the last — so `src="//evil" src="/site.js"`
+        # would load one thing and be judged as another. Refuse the ambiguity
+        # rather than trying to agree with the parser about which one wins.
+        names = [k for k, _ in attrs]
+        if len(names) != len(set(names)):
+            self.errors.append(f"<{tag}> repeats an attribute; a browser keeps the first, this check must not disagree")
+        if tag == "script":
+            self.scripts += 1
+            srcs = [v for k, v in attrs if k == "src"]
+            # An inline script has no src at all; this catches that too.
+            if srcs != [SITE_SCRIPT]:
+                self.errors.append(f"only <script src=\"{SITE_SCRIPT}\"> may run here")
         if tag not in VOID:
             self.stack.append(tag)
         rel = set((dict(attrs).get("rel") or "").lower().split())
@@ -73,6 +94,8 @@ def main() -> int:
                 errors.append(f"<{m.group(1)}> differs from the first page's")
         if set(chrome) - {m.group(1) for m in CHROME.finditer(text)}:
             errors.append("missing the shared header or footer")
+        if p.scripts != 1:
+            errors.append(f"expected exactly one <script src=\"{SITE_SCRIPT}\">, found {p.scripts}")
         if p.stack:
             errors.append(f"unclosed at EOF: {p.stack}")
         for ref in p.refs:
@@ -87,7 +110,7 @@ def main() -> int:
             print(f"{page.relative_to(DOCS)}: {e}")
         bad += len(errors)
     for f in DOCS.rglob("*"):
-        if f.is_file() and f.suffix in {".html", ".css", ".svg", ".txt"}:
+        if f.is_file() and f.suffix in {".html", ".css", ".svg", ".txt", ".js"}:
             if re.search(r"[\w.+-]+@[\w-]+\.[\w.-]+", f.read_text(encoding="utf-8")):
                 print(f"{f.relative_to(DOCS)}: e-mail address")
                 bad += 1

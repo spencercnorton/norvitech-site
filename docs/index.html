@@ -19,12 +19,14 @@
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
 <meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
 </head>
 <body>
 
 <header class="masthead">
   <div class="wrap">
     <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
     <nav aria-label="Site">
       <details class="menu">
         <summary>Apps</summary>
@@ -34,74 +36,120 @@
           <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
           <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
           <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
-          <li class="all"><a href="/#suite">The whole suite<small>One card per app</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
         </ul>
       </details>
       <a href="/#how">How it works</a>
       <a href="/about/">About</a>
       <a href="https://github.com/spencercnorton">GitHub</a>
     </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note>UTC</span>
+    </a>
   </div>
 </header>
 
-<main class="wrap">
+<main>
 
+<div class="wrap">
 <section class="hero">
   <h1>Open-source apps for the Linux desktop and the self-hosted stack.</h1>
   <p>Small tools, one developer. No telemetry, no accounts, no hosted service; each README says exactly what leaves the machine, and each release is a tag you can read end to end.</p>
-  <p class="cta"><a class="primary" href="#suite">See the suite</a><a class="secondary" href="/about/">About Spencer</a></p>
 </section>
-
-<h2 id="suite">The suite</h2>
-<div class="grid">
-
-  <article class="card glass" id="helios">
-    <h3><a href="/helios/">Helios</a></h3>
-    <p><strong>The desktop that sees everything your coding agents do.</strong></p>
-    <p class="sub">A native GTK4/libadwaita workbench for Claude Code, OpenAI Codex and OpenRouter models on Ubuntu.</p>
-    <div class="pills"><span class="pill lic">MIT</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GTK4 · Python</span></div>
-    <div class="links"><a href="/helios/">Overview</a><a href="https://github.com/spencercnorton/helios">GitHub</a><a href="https://github.com/spencercnorton/helios#install">Install</a><a href="https://github.com/spencercnorton/helios/blob/main/docs/user-guide.md">User guide</a></div>
-  </article>
-
-  <article class="card glass" id="bitagent">
-    <h3><a href="/bitagent/">BitAgent</a></h3>
-    <p><strong>A self-hosted BitTorrent DHT crawler and indexer built for the *arr stack.</strong></p>
-    <p class="sub">Evidence-driven classification, curation and opt-in LLM stages, with the operator console and public library in the same image. Descended from bitmagnet.</p>
-    <div class="pills"><span class="pill lic">MIT</span><span class="pill">Docker Compose</span><span class="pill">Go · Python · Postgres</span></div>
-    <div class="links"><a href="/bitagent/">Overview</a><a href="https://github.com/spencercnorton/bitagent">GitHub</a><a href="https://github.com/spencercnorton/bitagent#see-it-run">Install</a><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/index.md">Docs</a></div>
-  </article>
-
-  <article class="card glass" id="xnote">
-    <h3><a href="/xnote/">XNote</a></h3>
-    <p><strong>Sticky notes that stay on your desktop, and stay yours.</strong></p>
-    <p class="sub">A native GTK4/libadwaita notes app for GNOME on Wayland, descended from Xpad, with encrypted backup to Dropbox or any rclone remote.</p>
-    <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GTK4 · C</span></div>
-    <div class="links"><a href="/xnote/">Overview</a><a href="https://github.com/spencercnorton/xnote">GitHub</a><a href="https://github.com/spencercnorton/xnote#install">Install</a></div>
-  </article>
-
-  <article class="card glass" id="xnote-placement">
-    <h3><a href="/xnote-placement/">XNote Placement</a></h3>
-    <p><strong>Puts every XNote sticky note back where you left it.</strong></p>
-    <p class="sub">A GNOME Shell extension that restores each note's position, monitor and workspace on Wayland, where the app cannot do it itself.</p>
-    <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GNOME Shell · JavaScript</span></div>
-    <div class="links"><a href="/xnote-placement/">Overview</a><a href="https://github.com/spencercnorton/xnote-placement">GitHub</a><a href="https://github.com/spencercnorton/xnote-placement#install">Install</a></div>
-  </article>
-
-  <article class="card glass" id="snipsnap">
-    <h3><a href="/snipsnap/">SnipSnap</a></h3>
-    <p><strong>Screenshot any region of any monitor on GNOME Wayland, with no permission dialog.</strong></p>
-    <p class="sub">A Qt 6 capture-and-annotate tool whose GNOME Shell extension draws the selection inside the compositor.</p>
-    <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">Qt 6 · C++</span></div>
-    <div class="links"><a href="/snipsnap/">Overview</a><a href="https://github.com/spencercnorton/snipsnap">GitHub</a><a href="https://github.com/spencercnorton/snipsnap#install">Install</a></div>
-  </article>
-
 </div>
+
+<div class="wrap wide">
+<section class="spot" aria-label="The suite">
+  <ul class="track" data-track>
+
+    <li class="slide glass" id="slide-helios">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="/assets/spotlight/helios-dark.png">
+        <img src="/assets/spotlight/helios-light.png" width="1200" height="772" alt="A live Helios session: the request is sent, the agent thinks, reads a file, writes a test, runs the suite and streams its answer while each step appears in the transcript.">
+      </picture>
+      <div>
+        <h3><a href="/helios/">Helios</a></h3>
+        <p><strong>The desktop that sees everything your coding agents do.</strong></p>
+        <p class="sub">A native GTK4/libadwaita workbench for Claude Code, OpenAI Codex and OpenRouter models. Every session in one window, with permissions, budgets and the plan you agreed to where you can see them.</p>
+        <div class="pills"><span class="pill lic">MIT</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GTK4 · Python</span></div>
+        <div class="links"><a href="/helios/">Overview</a><a href="https://github.com/spencercnorton/helios">GitHub</a></div>
+      </div>
+    </li>
+
+    <li class="slide glass" id="slide-bitagent">
+      <img src="/assets/spotlight/bitagent.png" width="1000" height="600" loading="lazy" alt="The BitAgent quickstart running: two containers start, the DHT crawler's persisted count climbs and the operator console comes up.">
+      <div>
+        <h3><a href="/bitagent/">BitAgent</a></h3>
+        <p><strong>A self-hosted BitTorrent DHT crawler and indexer built for the *arr stack.</strong></p>
+        <p class="sub">It crawls the DHT into Postgres, classifies what it finds, serves it over Torznab — and watches what your *arrs actually keep, feeding that back into what it indexes.</p>
+        <div class="pills"><span class="pill lic">MIT</span><span class="pill">Docker Compose</span><span class="pill">Go · Python · Postgres</span></div>
+        <div class="links"><a href="/bitagent/">Overview</a><a href="https://github.com/spencercnorton/bitagent">GitHub</a></div>
+      </div>
+    </li>
+
+    <li class="slide glass" id="slide-xnote">
+      <img src="/assets/spotlight/xnote.png" width="1100" height="688" loading="lazy" alt="An XNote session: notes are created, typed into, recoloured from the hover toolbar's swatches and moved around the desktop.">
+      <div>
+        <h3><a href="/xnote/">XNote</a></h3>
+        <p><strong>Sticky notes that stay on your desktop, and stay yours.</strong></p>
+        <p class="sub">A GTK4 descendant of Xpad for GNOME on Wayland: each note its own window, saved as you type, with optional encrypted backup to Dropbox or any rclone remote.</p>
+        <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GTK4 · C</span></div>
+        <div class="links"><a href="/xnote/">Overview</a><a href="https://github.com/spencercnorton/xnote">GitHub</a></div>
+      </div>
+    </li>
+
+    <li class="slide glass" id="slide-xnote-placement">
+      <img src="/assets/spotlight/xnote-placement.png" width="1280" height="800" loading="lazy" alt="A desktop of XNote sticky notes arranged across the screen, each one back in the position it was left in.">
+      <div>
+        <h3><a href="/xnote-placement/">XNote Placement</a></h3>
+        <p><strong>Puts every XNote sticky note back where you left it.</strong></p>
+        <p class="sub">Wayland forbids an app from placing its own windows, so this GNOME Shell extension does it from the compositor side — position, monitor and workspace, on every login. Nothing to configure.</p>
+        <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GNOME Shell · JavaScript</span></div>
+        <div class="links"><a href="/xnote-placement/">Overview</a><a href="https://github.com/spencercnorton/xnote-placement">GitHub</a></div>
+      </div>
+    </li>
+
+    <li class="slide glass" id="slide-snipsnap">
+      <img src="/assets/spotlight/snipsnap.png" width="1400" height="394" loading="lazy" alt="A SnipSnap capture: the screen dims, a region is dragged across two monitors, and the editor opens with exactly that region.">
+      <div>
+        <h3><a href="/snipsnap/">SnipSnap</a></h3>
+        <p><strong>Screenshot any region of any monitor on GNOME Wayland, with no permission dialog.</strong></p>
+        <p class="sub">The selection is drawn inside the compositor by a Shell extension, so one drag can cross monitors and there is no portal prompt. A full annotate-and-copy editor comes with it.</p>
+        <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">Qt 6 · C++</span></div>
+        <div class="links"><a href="/snipsnap/">Overview</a><a href="https://github.com/spencercnorton/snipsnap">GitHub</a></div>
+      </div>
+    </li>
+
+  </ul>
+  <ul class="dots">
+    <li><a data-dot href="#slide-helios" aria-label="Helios"></a></li>
+    <li><a data-dot href="#slide-bitagent" aria-label="BitAgent"></a></li>
+    <li><a data-dot href="#slide-xnote" aria-label="XNote"></a></li>
+    <li><a data-dot href="#slide-xnote-placement" aria-label="XNote Placement"></a></li>
+    <li><a data-dot href="#slide-snipsnap" aria-label="SnipSnap"></a></li>
+  </ul>
+</section>
+</div>
+
+<div class="wrap">
+
+<section class="install glass" id="install">
+  <h2>Install the lot on Ubuntu</h2>
+  <p>One repository carries every desktop app in the suite. Add it once and they update with everything else.</p>
+  <div class="cmd">
+    <pre id="apt-command"><code>curl -fsSL https://apt.globalentry.systems/setup.sh | sudo sh
+sudo apt install helios xnote snipsnap</code></pre>
+    <button type="button" data-copy="apt-command" hidden>Copy</button>
+  </div>
+  <p class="note">Ubuntu 26.04 (<code>resolute</code>) on amd64 today; <code>setup.sh</code> installs the signing key and the repository, and refuses other releases. XNote Placement comes along with XNote as a recommendation. BitAgent is a server, not a desktop app — it ships as <a href="/bitagent/">Docker Compose</a>. Every app also <a href="https://github.com/spencercnorton">builds from source</a>.</p>
+</section>
 
 <h2 id="how">How it works</h2>
 <div class="how">
   <div class="glass"><h3>Release mirrors</h3><p>Development happens in a private tree. Every tagged release is exported to GitHub through an automated gate that checks the tree for anything that should not be public. Pull requests are reviewed on GitHub, applied to the development tree and ship in the next tag, with your name in the release notes.</p></div>
   <div class="glass"><h3>Same shape everywhere</h3><p>Every repository has the same README layout, the same badge row, an issue chooser, a security policy and a support page. Learn one, know them all.</p></div>
-  <div class="glass"><h3>Your data stays yours</h3><p>Each README says where your data lives. No telemetry, no accounts, no hosted service. Screenshots come from isolated demonstration profiles; nothing personal is in them.</p></div>
+  <div class="glass"><h3>Your data stays yours</h3><p>Each README says where your data lives. No telemetry, no accounts, no hosted service. Every picture on this page comes from an isolated demonstration profile; nothing personal is in them.</p></div>
   <div class="glass"><h3>Forks stay honest</h3><p>BitAgent, XNote and SnipSnap keep their upstream licences, notices and authors, and each README says exactly what is upstream's and what is new.</p></div>
 </div>
 
@@ -110,6 +158,8 @@
   <div class="glass"><h3>Bugs and ideas</h3><p>Each repository's issue chooser and Discussions. There is no e-mail address; that is deliberate.</p></div>
   <div class="glass"><h3>Security</h3><p>GitHub private vulnerability reporting on the repository concerned, acknowledged within a week. Never a public issue.</p></div>
   <div class="glass"><h3>Keep it going</h3><p>If one of these saves you time, you can <a href="https://buy.stripe.com/8x26oH2U44f65TRe574wM04">support the development</a>.</p></div>
+</div>
+
 </div>
 
 </main>
@@ -125,7 +175,7 @@
       <a href="/about/">About</a>
     </nav>
     <p>NorviTech © Spencer Norton. NorviTech is the name Spencer Norton publishes software under. Each product carries its own licence: MIT unless its README says otherwise.</p>
-    <p>Plain HTML and CSS on GitHub Pages — no scripts, cookies or analytics. <a href="https://github.com/spencercnorton/norvitech-site">This site's source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+    <p>Plain HTML, CSS and one 5 KB script on GitHub Pages — no cookies, no storage, no analytics, nothing third-party. The script's only outside request is the clock asking our own <a href="https://time.globalentry.systems/">public NTP service</a> for the time. <a href="https://github.com/spencercnorton/norvitech-site">This site's source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
   </div>
 </footer>
 
