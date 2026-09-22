@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Why Wayland will not let an app place its own window · NorviTech</title>
+<meta name="description" content="A Wayland client cannot set its own position, monitor or workspace — so notes, palettes and tool windows all reopen in the wrong place. What the protocol actually says, why the usual workarounds fail, and what has to live in the compositor instead.">
+<link rel="canonical" href="https://norvitech.com/xnote-placement/wayland-window-placement/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Why Wayland will not let an app place its own window · NorviTech">
+<meta property="og:description" content="A Wayland client cannot set its own position, monitor or workspace — so notes, palettes and tool windows all reopen in the wrong place. What the protocol actually says, why the usual workarounds fail, and what has to live in the compositor instead.">
+<meta property="og:url" content="https://norvitech.com/xnote-placement/wayland-window-placement/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why Wayland will not let an app place its own window",
+  "url": "https://norvitech.com/xnote-placement/wayland-window-placement/",
+  "description": "A Wayland client cannot set its own position, monitor or workspace — so notes, palettes and tool windows all reopen in the wrong place. What the protocol actually says, why the usual workarounds fail, and what has to live in the compositor instead.",
+  "datePublished": "2026-09-22",
+  "inLanguage": "en",
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "XNote Placement",
+    "url": "https://norvitech.com/xnote-placement/"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Spencer Norton",
+    "url": "https://norvitech.com/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NorviTech",
+    "url": "https://norvitech.com/",
+    "logo": "https://norvitech.com/assets/logo.svg"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/">Suite</a> / <a href="/xnote-placement/">XNote Placement</a> / Window placement on Wayland</p>
+  <h1>Why Wayland will not let an app place its own window</h1>
+  <p class="tag">Not an oversight, not a missing feature, and not something the application can fix.</p>
+  <p>If an application used to reopen its windows where you left them and stopped when you moved to Wayland, this is why — and why the fix cannot live in the application.</p>
+  <p class="cta"><a class="primary" href="/xnote-placement/">About XNote Placement</a><a class="secondary" href="https://github.com/spencercnorton/xnote-placement">Source on GitHub</a></p>
+</section>
+<h2>The protocol has no way to say it</h2>
+<div class="prose">
+<p>Under X11 a client could call <code>XMoveWindow</code> and put itself anywhere, on any screen. Wayland has no equivalent, and this is deliberate rather than unfinished: a surface is given a size by the compositor and has no say in where it is placed, which monitor it lands on, or which workspace it appears in. A client cannot even <em>ask</em> where it currently is.</p>
+<p>The reason is the same one behind the screenshot rules: on X11, self-placement was indistinguishable from a window shoving itself in front of whatever you were doing. Removing the capability removes a whole class of misbehaviour, and it hands window management back to the thing that actually knows about your monitors, your workspaces and your focus — the compositor.</p>
+<p>The cost falls on well-behaved applications with many small windows. A sticky-notes program, a floating palette, a tool window: each one knows exactly where it should go and has no way to get there.</p>
+</div>
+
+<h2>Why the usual workarounds do not work</h2>
+<div class="how">
+  <div class="glass"><h3>"Just remember the geometry"</h3><p>An application can save size and restore it — size is negotiated with the compositor. Position is not part of that negotiation at all, so half the state round-trips and half is silently dropped.</p></div>
+  <div class="glass"><h3>"Use a protocol extension"</h3><p>There are protocols for placing surfaces relative to <em>another surface you own</em> — menus, tooltips, popups. There is none for absolute placement of a top-level window, because that is the capability being withheld.</p></div>
+  <div class="glass"><h3>"Fall back to X11"</h3><p>Running under XWayland restores the old behaviour and gives up everything the native port was for: fractional scaling, correct input on mixed-DPI setups, and the rest. A regression dressed as a fix.</p></div>
+  <div class="glass"><h3>"Let the compositor remember"</h3><p>Mutter has no general window-position memory, and no setting to add one. This is the gap.</p></div>
+</div>
+
+<h2>What has to live in the compositor</h2>
+<div class="prose">
+<p>If placement is the compositor's job, then window <em>placement memory</em> is a compositor feature too — and on GNOME, a Shell extension is how you add one. <a href="/xnote-placement/">XNote Placement</a> is that for XNote's sticky notes: it records each note's position, monitor and workspace as you move it, and puts the note back when it opens again after a login or a restart.</p>
+<p>Describing it that way makes it sound trivial. It is not, and the interesting parts are all consequences of working from the compositor side, where you have windows rather than application objects.</p>
+</div>
+
+<h2>Three problems you only meet from this side</h2>
+<div class="how">
+  <div class="glass"><h3>A window has no identity</h3><p>XNote's pads are plain windows; the compositor sees no note id. The extension reproduces each note's title from the first line of its file and matches on that, so the record survives restarts — and a note it cannot match confidently is left exactly where the compositor put it, rather than guessed at.</p></div>
+  <div class="glass"><h3>Monitor indices are not stable</h3><p>An index reshuffles when a display wakes late or a KVM switches inputs, and two identical panels cannot be told apart by model. Monitors are keyed by serial number first. A note whose monitor is gone stays on screen, clamped into the work area, instead of being restored off-canvas.</p></div>
+  <div class="glass"><h3>A new window is not where it will be</h3><p>A fresh XNote window is 0×0 for roughly its first 90 ms, and mutter places it twice before it settles. Reading the position too early records nonsense; a fixed delay is a guess that breaks on a slower machine. The extension re-asserts the stored place and records nothing until the window has converged.</p></div>
+</div>
+
+<h2>What this means if you hit the same wall</h2>
+<div class="prose">
+<p>The general shape transfers to any application with this problem on GNOME: the application keeps what it legitimately owns — the note, the document, the size — and a small extension owns the placement, keyed by something stable that the compositor can actually observe. The two halves ship separately because they run in different processes with different privileges, which is also why the extension is worth reading before you install it: it is a few hundred lines, it has no network functionality, and its state is one small file.</p>
+<p>The limits are worth stating plainly. It is GNOME Shell 50 on Wayland; it does nothing on X11, where the application never had the problem; and a title-matching heuristic is a heuristic, which is why the failure mode is "left alone", not "moved somewhere wrong".</p>
+<ul>
+  <li><a href="/xnote-placement/">XNote Placement</a> — what it does, install, where your data lives</li>
+  <li><a href="https://github.com/spencercnorton/xnote-placement/blob/main/docs/how-it-works.md">How it works</a> — the storage format, the timing measurements, and why this is an extension rather than a feature of XNote</li>
+  <li><a href="/xnote/">XNote</a> — the sticky notes themselves, native Wayland since 3.0</li>
+</ul>
+</div>
+
+<nav class="siblings" aria-label="Other apps">
+  <a class="glass" href="/helios/">Helios</a>
+  <a class="glass" href="/bitagent/">BitAgent</a>
+  <a class="glass" href="/xnote/">XNote</a>
+  <a class="glass" href="/xnote-placement/" aria-current="page">XNote Placement</a>
+  <a class="glass" href="/snipsnap/">SnipSnap</a>
+</nav>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/about/">About</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

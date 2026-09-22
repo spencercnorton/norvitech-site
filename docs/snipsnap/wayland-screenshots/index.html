@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Screenshots on GNOME Wayland without a permission prompt · NorviTech</title>
+<meta name="description" content="Why every screenshot tool on Wayland either asks permission each time or loses the second monitor, what the xdg-desktop-portal path actually costs, and how drawing the selection inside GNOME Shell removes both problems.">
+<link rel="canonical" href="https://norvitech.com/snipsnap/wayland-screenshots/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Screenshots on GNOME Wayland without a permission prompt · NorviTech">
+<meta property="og:description" content="Why every screenshot tool on Wayland either asks permission each time or loses the second monitor, what the xdg-desktop-portal path actually costs, and how drawing the selection inside GNOME Shell removes both problems.">
+<meta property="og:url" content="https://norvitech.com/snipsnap/wayland-screenshots/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Screenshots on GNOME Wayland without a permission prompt",
+  "url": "https://norvitech.com/snipsnap/wayland-screenshots/",
+  "description": "Why every screenshot tool on Wayland either asks permission each time or loses the second monitor, what the xdg-desktop-portal path actually costs, and how drawing the selection inside GNOME Shell removes both problems.",
+  "datePublished": "2026-09-22",
+  "inLanguage": "en",
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "SnipSnap",
+    "url": "https://norvitech.com/snipsnap/"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Spencer Norton",
+    "url": "https://norvitech.com/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NorviTech",
+    "url": "https://norvitech.com/",
+    "logo": "https://norvitech.com/assets/logo.svg"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/">Suite</a> / <a href="/snipsnap/">SnipSnap</a> / Screenshots on Wayland</p>
+  <h1>Screenshots on GNOME Wayland without a permission prompt</h1>
+  <p class="tag">Wayland took the screen away from applications on purpose. That is the right decision, and it is why your screenshot tool got worse.</p>
+  <p>If you moved to Wayland and found that the tool you had used for years now asks permission before every capture, or can no longer drag a region across two monitors, nothing is broken. This page explains what actually changed, what the sanctioned fix costs, and the one place the problem can be solved instead of worked around.</p>
+  <p class="cta"><a class="primary" href="/snipsnap/">About SnipSnap</a><a class="secondary" href="https://github.com/spencercnorton/snipsnap#install">Install</a></p>
+</section>
+<h2>What changed under Wayland</h2>
+<div class="prose">
+<p>Under X11 any client could read the whole screen, including every other window. Screenshot tools relied on that, and so could a keylogger — the same privilege, with no way for the display server to tell them apart. Wayland closes it: a client sees its own surfaces and nothing else. There is no API for "give me the framebuffer", by design.</p>
+<p>So a screenshot tool needs something outside itself to hand it pixels. On a modern desktop that something is <code>xdg-desktop-portal</code>: the application asks the portal, the portal asks the compositor, and the user is shown a dialog confirming the capture. It works, it is the right default for sandboxed applications, and it is a genuine security boundary — the point is that the user, not the program, decides.</p>
+</div>
+
+<h2>What the portal path costs</h2>
+<div class="how">
+  <div class="glass"><h3>A dialog before every capture</h3><p>The prompt is the feature, not a bug — but a tool you reach for twenty times a day turns into forty interactions. Some compositors can remember the grant; GNOME's screenshot portal deliberately confirms each time.</p></div>
+  <div class="glass"><h3>One monitor at a time</h3><p>The portal hands back a screen, and interactive selection happens inside the portal's own UI. A region that starts on one display and ends on another is not something the calling application gets to express.</p></div>
+  <div class="glass"><h3>Your own overlay is a window</h3><p>A tool that draws its own dimmed selection layer is drawing a normal Wayland surface. It cannot cover what it does not own, cannot position itself across outputs, and under mixed scaling its rectangle and the real pixels disagree.</p></div>
+</div>
+
+<h2>The other place to solve it</h2>
+<div class="prose">
+<p>The compositor already has every pixel, knows where each monitor is, and knows each one's scale and rotation. On GNOME it is also extensible. So rather than asking the compositor for a screenshot through a broker, the selection itself can be drawn <em>inside</em> the compositor by a GNOME Shell extension: the dim layer and the rubber-band rectangle are Shell UI, and what comes back is exactly the region you dragged.</p>
+<p>That is what <a href="/snipsnap/">SnipSnap</a> does. One drag can begin on one monitor and end on another, with mixed scales and rotations, because at no point is a client trying to paint across outputs it does not own. There is no portal dialog, because there is no cross-application capture to authorise — the code drawing the selection is part of your desktop shell, installed by you.</p>
+<p>The honest framing: this is not a way around Wayland's security model. It is a different trust decision. A Shell extension runs with the compositor's privileges, which is precisely why you should read one before installing it, and why the capture path is a package you install deliberately rather than something any application can reach.</p>
+</div>
+
+<h2>What that buys, concretely</h2>
+<div class="prose">
+<table>
+  <tr><th></th><th>Portal path</th><th>Compositor path</th></tr>
+  <tr><td>Permission dialog</td><td>Every capture</td><td>None — the selection is Shell UI</td></tr>
+  <tr><td>Region across two monitors</td><td>Not expressible</td><td>One drag, mixed scales and rotations</td></tr>
+  <tr><td>Where the overlay is drawn</td><td>The portal's UI, or your own surface</td><td>Inside the compositor, over everything</td></tr>
+  <tr><td>Works on X11</td><td>Yes</td><td>No — but the portal path is still there for it</td></tr>
+  <tr><td>Works on non-GNOME Wayland</td><td>Yes</td><td>No — the extension is GNOME Shell 50/51</td></tr>
+</table>
+</div>
+
+<h2>Where this does not apply</h2>
+<div class="how">
+  <div class="glass"><h3>You are on X11</h3><p>Nothing described here is a problem for you. Any tool still works the old way, SnipSnap included — <code>snipsnap gui</code>, the tray icon and the D-Bus interface take the ordinary path on every desktop.</p></div>
+  <div class="glass"><h3>You are on Wayland but not GNOME</h3><p>KDE, Sway and the rest each have their own answer; a GNOME Shell extension is not portable to them. The portal path is what you use, with a prompt and one monitor at a time.</p></div>
+  <div class="glass"><h3>You want a sandboxed package</h3><p>A Flatpak or a Snap cannot install a Shell extension, which is the whole mechanism. That is why SnipSnap ships as a distribution package and not as either.</p></div>
+</div>
+
+<h2>If you want to try it</h2>
+<div class="prose">
+<p>SnipSnap is a downstream fork of Flameshot with the capture path moved into the compositor; the editor, CLI, tray icon and configuration file are Flameshot's, so the tool you already know is the tool you get. Installing it replaces the Flameshot package and copies your settings across without deleting the originals, and the <code>flameshot</code> command stays as a compatibility symlink.</p>
+<p>Two details worth knowing before you build from source: the GNOME Shell bridge needs Shell 50 or 51, and you must configure with <code>-DENABLE_GNOME_SHELL_BRIDGE=ON</code> or you get a build without the compositor capture path — which is the reason the program exists. After installing, <code>snipsnap-shell-bridge activate</code> takes over the <kbd>Print</kbd> key, and only once the bridge is proven active.</p>
+<ul>
+  <li><a href="/snipsnap/">SnipSnap</a> — what it does, install, where your data lives</li>
+  <li><a href="https://github.com/spencercnorton/snipsnap/blob/main/docs/gnome-shell-bridge.md">The GNOME Shell bridge</a> — the socket protocol, and how the extension and the daemon meet</li>
+  <li><a href="https://github.com/spencercnorton/snipsnap">Source on GitHub</a> — read the extension before you install it</li>
+</ul>
+</div>
+
+<nav class="siblings" aria-label="Other apps">
+  <a class="glass" href="/helios/">Helios</a>
+  <a class="glass" href="/bitagent/">BitAgent</a>
+  <a class="glass" href="/xnote/">XNote</a>
+  <a class="glass" href="/xnote-placement/">XNote Placement</a>
+  <a class="glass" href="/snipsnap/" aria-current="page">SnipSnap</a>
+</nav>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/about/">About</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
