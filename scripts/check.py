@@ -9,9 +9,16 @@ every page. An inline `<script>`, an `on*` handler, a second script, a script
 from another host, an embedded document, or any resource loaded from another
 host is still refused — so the whole of what executes on norvitech.com is one
 reviewable file.
+
+One thing that looks like a script is not one: a `<script type="application/
+ld+json">` block is structured data a browser never executes, and a page may
+carry at most one, inline, and it must parse as one schema.org object. That is
+outside the script budget on purpose — it runs nothing — and inside every
+other gate: it is scanned for e-mail addresses and estate detail like any text.
 """
 from __future__ import annotations
 
+import json
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -28,6 +35,9 @@ VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "met
 FORBIDDEN_TAGS = {"iframe", "object", "embed", "applet", "frame"}
 # The one script allowed to run on this site, on every page, and nothing else.
 SITE_SCRIPT = "/site.js"
+# Structured data. Not code: a browser parses it as JSON and never executes it.
+LD_JSON = "application/ld+json"
+SCHEMA_ORG = "https://schema.org"
 # Elements whose src/href fetch a resource when the page loads; only same-site paths may appear.
 LOADING_TAGS = {"img", "source", "video", "audio", "track", "picture", "input", "script"}
 LOADING_RELS = {"stylesheet", "icon", "preload", "prefetch", "modulepreload", "manifest", "apple-touch-icon"}
@@ -40,6 +50,8 @@ class Check(HTMLParser):
         self.refs: list[str] = []
         self.errors: list[str] = []
         self.scripts = 0
+        self.structured = 0
+        self._ld: list[str] | None = None  # open ld+json body being collected
         self.canonical: str | None = None
 
     def handle_starttag(self, tag, attrs):
@@ -53,11 +65,17 @@ class Check(HTMLParser):
         if len(names) != len(set(names)):
             self.errors.append(f"<{tag}> repeats an attribute; a browser keeps the first, this check must not disagree")
         if tag == "script":
-            self.scripts += 1
             srcs = [v for k, v in attrs if k == "src"]
-            # An inline script has no src at all; this catches that too.
-            if srcs != [SITE_SCRIPT]:
-                self.errors.append(f"only <script src=\"{SITE_SCRIPT}\"> may run here")
+            if dict(attrs).get("type") == LD_JSON:
+                self.structured += 1
+                self._ld = []
+                if srcs:
+                    self.errors.append("structured data must be inline, not loaded")
+            else:
+                self.scripts += 1
+                # An inline script has no src at all; this catches that too.
+                if srcs != [SITE_SCRIPT]:
+                    self.errors.append(f"only <script src=\"{SITE_SCRIPT}\"> may run here")
         if tag not in VOID:
             self.stack.append(tag)
         rel = set((dict(attrs).get("rel") or "").lower().split())
@@ -79,9 +97,23 @@ class Check(HTMLParser):
                         self.errors.append(f"<{tag} {k}={url}> loads from another host")
                     self.refs.append(url)
 
+    def handle_data(self, data):
+        if self._ld is not None:
+            self._ld.append(data)
+
     def handle_endtag(self, tag):
         if tag in VOID:
             return
+        if tag == "script" and self._ld is not None:
+            body, self._ld = "".join(self._ld), None
+            try:
+                doc = json.loads(body)
+            except ValueError as e:
+                self.errors.append(f"structured data does not parse as JSON: {e}")
+            else:
+                if not (isinstance(doc, dict) and doc.get("@context") == SCHEMA_ORG
+                        and ("@type" in doc or "@graph" in doc)):
+                    self.errors.append("structured data must be one schema.org object")
         if not self.stack or self.stack[-1] != tag:
             self.errors.append(f"unbalanced </{tag}> (open: {self.stack[-3:]})")
         else:
@@ -127,6 +159,8 @@ def main() -> int:
             errors.append("missing the shared header or footer")
         if p.scripts != 1:
             errors.append(f"expected exactly one <script src=\"{SITE_SCRIPT}\">, found {p.scripts}")
+        if p.structured > 1:
+            errors.append(f"at most one structured-data block per page, found {p.structured}")
         # Presence, not truthiness: href="" is still a canonical link element on a
         # noindex page, and on any other page it is a canonical that names nothing.
         if page.name == UNLISTED:
