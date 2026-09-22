@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Every page's <link rel="canonical">, and nothing else: 404.html is noindex and
+  stays out. Hand-written, because there is no build step and never will be for
+  seven URLs; scripts/check.py fails if this file and the pages disagree.
+
+  No <lastmod>, <changefreq> or <priority>. Google ignores the last two outright
+  and uses lastmod only where it is consistently accurate — a hand-maintained
+  date rots on the first edit that forgets it, and a rotten one is worse than
+  none. Add lastmod when something generates it from the commit that touched the
+  page.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://norvitech.com/</loc></url>
+  <url><loc>https://norvitech.com/helios/</loc></url>
+  <url><loc>https://norvitech.com/bitagent/</loc></url>
+  <url><loc>https://norvitech.com/xnote/</loc></url>
+  <url><loc>https://norvitech.com/xnote-placement/</loc></url>
+  <url><loc>https://norvitech.com/snipsnap/</loc></url>
+  <url><loc>https://norvitech.com/about/</loc></url>
+</urlset>
