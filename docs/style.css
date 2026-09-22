@@ -293,7 +293,7 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
   box-shadow:0 4px 12px color-mix(in srgb,var(--accent) 35%,transparent)}
 .tl-head{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
 .tl-head strong{font-size:16px;line-height:1.25}
-.tl-org{font-size:14px;font-weight:600;color:var(--accent)}
+.tl-org{font-size:14px;font-weight:600;color:var(--fg)} /* text wears text tokens; the tile, dot and border carry identity */
 .tl-when{font-size:13px;color:var(--muted)}
 .tl-kind{flex:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
   color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
@@ -415,4 +415,293 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
 @media (prefers-color-scheme:dark){
   /* These marks are dark artwork on an assumed white page. */
   .tl-brand img{background:#fff;border-radius:8px;padding:7px 10px;box-sizing:content-box}
+}
+
+
+/* ---- About: the career system ----------------------------------------------
+   One dataset, four linked views: the timeline list (the chart's table view),
+   the Gantt, the map and the skill/organisation keys. Organisation accents are
+   derived from each organisation's own mark and validated as a palette with the
+   dataviz six-checks script, per mode, on the bars that actually touch. */
+:root{--map-dot:rgba(36,31,49,.26);--gsurf:#fbfafb}
+@media (prefers-color-scheme:dark){:root{--map-dot:rgba(255,255,255,.16);--gsurf:#29233b}}
+[data-org="employer"]{--accent:#0090d8;--lbl:#241f31}
+[data-org="oracle"]{--accent:#c74634;--lbl:#ffffff}
+[data-org="sjtu"]{--accent:#a80c30;--lbl:#ffffff}
+[data-org="zhaw"]{--accent:#1266ac;--lbl:#ffffff}
+[data-org="norvitech"]{--accent:#fd8024;--lbl:#241f31}
+[data-org="leeds"]{--accent:#3a8556;--lbl:transparent}
+[data-org="leeds"] .g-lbl{visibility:hidden}
+[data-org="parkview"]{--accent:#267a3e;--lbl:#ffffff}
+[data-org="usf"]{--accent:#1e588d;--lbl:#ffffff}
+[data-org="care"]{--accent:#8d8a96;--lbl:#241f31}
+@media (prefers-color-scheme:dark){
+[data-org="employer"]{--accent:#0090d8;--lbl:#241f31}
+[data-org="oracle"]{--accent:#c74634;--lbl:#ffffff}
+[data-org="sjtu"]{--accent:#cc3a4c;--lbl:#ffffff}
+[data-org="zhaw"]{--accent:#2573bb;--lbl:#ffffff}
+[data-org="norvitech"]{--accent:#dd6a05;--lbl:#241f31}
+[data-org="leeds"]{--accent:#58a271;--lbl:#241f31}
+[data-org="parkview"]{--accent:#2c7f43;--lbl:#ffffff}
+[data-org="usf"]{--accent:#3b74ab;--lbl:#ffffff}
+[data-org="care"]{--accent:#8f8b9b;--lbl:#241f31}
+}
+
+/* By the numbers: stat tiles. Values in the sans at display size with
+   proportional figures; the accent rides a rule above, never the text. */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:14px;margin:0 0 30px}
+/* The count-up is drawn over the number, never into it: the text node always holds the true
+   value, for search engines that render mid-animation, screen readers, copy and print. */
+.kpi-v[data-show]{position:relative;color:transparent}
+.kpi-v[data-show]::after{content:attr(data-show);position:absolute;left:0;top:0;color:var(--fg)}
+.kpi{position:relative;display:flex;flex-direction:column;gap:5px;padding:20px 18px 16px;border-radius:16px;color:var(--fg);overflow:hidden;
+  transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s ease}
+.kpi::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:var(--accent)}
+.kpi:hover{transform:translateY(-3px);text-decoration:none;box-shadow:0 16px 36px rgba(36,31,49,.16)}
+.kpi-v{font-size:clamp(30px,3vw,40px);font-weight:700;line-height:1;letter-spacing:-.02em}
+.kpi-l{font-size:14px;font-weight:600;line-height:1.3}
+.kpi-s{font-size:12.5px;color:var(--muted)}
+
+/* Controls: one row above everything they scope. */
+.c-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin:0 0 10px}
+.c-controls .tl-filters{margin:0}
+.c-keys{display:none;flex-wrap:wrap;align-items:center;gap:6px}
+.js .c-keys{display:flex}
+.c-keys-lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.key{appearance:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--glass);color:var(--fg);
+  font:600 13px/1 var(--font);padding:7px 11px;border-radius:999px;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.key:disabled{cursor:default}
+.key:not(:disabled):hover{border-color:var(--fg)}
+.key[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.key-n{font-size:11px;font-weight:700;color:var(--muted)}
+.key[aria-pressed="true"] .key-n{color:inherit;opacity:.72}
+.key-sw{width:12px;height:12px;border-radius:3px;background:var(--accent);flex:none}
+.c-note{min-height:1.4em;margin:0 0 12px;font-size:14px;color:var(--muted)}
+.c-note:empty{visibility:hidden}
+.c-note b{color:var(--fg)}
+.c-note button{appearance:none;border:0;background:none;color:var(--link);font:inherit;font-weight:600;cursor:pointer;padding:0;margin-left:6px}
+
+/* The Gantt. Thin bars (22px), 4px rounded data ends, a 2px surface gap cut
+   between touching bars, hairline solid gridlines, one axis. */
+.gantt{margin:0 0 26px;padding:18px 20px 16px;border-radius:18px}
+.gantt figcaption{font-size:14px;color:var(--muted);margin:0 0 6px;max-width:92ch}
+.gantt figcaption strong{color:var(--fg)}
+.g-scroll{overflow-x:auto;overscroll-behavior-x:contain}
+.g-plot{position:relative;display:grid;grid-template-columns:168px minmax(0,1fr);grid-template-rows:repeat(3,38px) 26px;
+  min-width:720px;padding:24px 20px 0 0}
+.g-lane-lbl{grid-column:1;align-self:center;font-size:13px;font-weight:600;color:var(--muted);padding-right:12px}
+.g-track{grid-column:2;position:relative;z-index:1}
+.g-grid{grid-column:2;grid-row:1/4;position:relative}
+.g-grid i{position:absolute;left:var(--x);top:0;bottom:0;width:1px;background:var(--line)}
+.g-axis{grid-column:2;grid-row:4;position:relative;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.g-axis span{position:absolute;left:var(--x);top:7px;transform:translateX(-50%)}
+@media (max-width:1100px){.g-axis .odd{visibility:hidden}}
+.g-now{grid-column:2;grid-row:1/4;position:relative;pointer-events:none;z-index:2}
+.g-now::before{content:"";position:absolute;left:var(--x);top:-4px;bottom:0;width:2px;margin-left:-1px;background:var(--link);border-radius:1px}
+.g-now span{position:absolute;left:var(--x);top:-22px;transform:translateX(-50%);font-size:11px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--fg)}
+.g-bar{position:absolute;left:calc(var(--x) + 1px);width:calc(var(--w) - 2px);top:8px;height:22px;border-radius:4px;background:var(--accent);
+  container-type:inline-size;display:flex;align-items:center;padding:0 8px;text-decoration:none;
+  transition:opacity .3s ease,filter .3s ease,box-shadow .2s ease,clip-path .9s cubic-bezier(.16,1,.3,1)}
+.g-bar::before,.g-pt::before{content:"";position:absolute;inset:-7px 0}   /* hit area taller than the mark */
+.g-bar.live{border-radius:4px 2px 2px 4px;background:linear-gradient(90deg,var(--accent) 62%,color-mix(in srgb,var(--accent) 45%,transparent))}
+.g-bar.live::before{right:-10px}
+.g-bar.live::after{content:"";position:absolute;right:-5px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 2px var(--gsurf);animation:g-live 2.2s ease-in-out infinite}
+@keyframes g-live{0%,100%{box-shadow:0 0 0 2px var(--gsurf),0 0 0 2px color-mix(in srgb,var(--accent) 40%,transparent)}
+  50%{box-shadow:0 0 0 2px var(--gsurf),0 0 0 8px color-mix(in srgb,var(--accent) 0%,transparent)}}
+.g-lbl{display:none;font-size:11.5px;font-weight:700;white-space:nowrap;color:var(--lbl)}
+@container (min-width:20px){.g-lbl.lw-20{display:block}}
+@container (min-width:30px){.g-lbl.lw-30{display:block}}
+@container (min-width:40px){.g-lbl.lw-40{display:block}}
+@container (min-width:50px){.g-lbl.lw-50{display:block}}
+@container (min-width:60px){.g-lbl.lw-60{display:block}}
+@container (min-width:70px){.g-lbl.lw-70{display:block}}
+@container (min-width:80px){.g-lbl.lw-80{display:block}}
+@container (min-width:90px){.g-lbl.lw-90{display:block}}
+@container (min-width:100px){.g-lbl.lw-100{display:block}}
+@container (min-width:110px){.g-lbl.lw-110{display:block}}
+@container (min-width:120px){.g-lbl.lw-120{display:block}}
+@container (min-width:130px){.g-lbl.lw-130{display:block}}
+@container (min-width:140px){.g-lbl.lw-140{display:block}}
+@container (min-width:150px){.g-lbl.lw-150{display:block}}
+@container (min-width:160px){.g-lbl.lw-160{display:block}}
+@container (min-width:170px){.g-lbl.lw-170{display:block}}
+@container (min-width:180px){.g-lbl.lw-180{display:block}}
+@container (min-width:190px){.g-lbl.lw-190{display:block}}
+@container (min-width:200px){.g-lbl.lw-200{display:block}}
+@container (min-width:210px){.g-lbl.lw-210{display:block}}
+@container (min-width:220px){.g-lbl.lw-220{display:block}}
+@container (min-width:230px){.g-lbl.lw-230{display:block}}
+@container (min-width:240px){.g-lbl.lw-240{display:block}}
+.g-pt{position:absolute;left:var(--x);top:19px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 2px var(--gsurf);z-index:2;transition:opacity .3s ease,transform .3s cubic-bezier(.34,1.56,.64,1)}
+.g-pt::before{inset:-6px}
+.g-bar:hover,.g-bar:focus-visible,.g-bar.hot,.g-pt:hover,.g-pt:focus-visible,.g-pt.hot{filter:brightness(1.08);outline:none;
+  box-shadow:0 0 0 2px var(--gsurf),0 0 0 4px var(--fg)}
+.g-bar.off,.g-pt.off{opacity:.1;pointer-events:none}
+.g-bar.dim,.g-pt.dim{opacity:.22;filter:saturate(.35)}
+.js .gantt:not(.in) .g-bar{clip-path:inset(0 100% 0 0 round 4px)}
+.js .gantt.in .g-bar{clip-path:inset(0 0 0 0 round 4px)}
+.js .gantt:not(.in) .g-pt{transform:scale(0)}
+.g-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.g-legend .key{font-size:12.5px;padding:6px 10px}
+
+/* One tooltip for the whole chart, fixed so no scroll container can clip it. */
+.g-tip{position:fixed;z-index:60;pointer-events:none;min-width:190px;max-width:290px;padding:10px 12px;border-radius:12px;
+  background:var(--glass-strong);border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow);backdrop-filter:blur(18px) saturate(150%);
+  font-size:13px;line-height:1.4;color:var(--fg);opacity:0;transform:translateY(4px);transition:opacity .14s ease,transform .14s ease}
+.g-tip.on{opacity:1;transform:none}
+.g-tip .t-when{font-weight:700;font-variant-numeric:tabular-nums}
+.g-tip .t-role{display:block;font-weight:600}
+.g-tip .t-org{display:flex;align-items:center;gap:7px;color:var(--muted)}
+.g-tip .t-org::before{content:"";width:14px;height:2px;border-radius:1px;background:var(--accent);flex:none}
+
+/* The rail: the map (and, on wide screens, what you are reading) beside the list. */
+.c-rail{margin:0 0 22px;max-width:780px}
+.rail-now{display:none}
+.map{position:relative;aspect-ratio:720/268;container:map/inline-size}
+.map-land{position:absolute;inset:0;width:100%;height:100%}
+.map-land path{fill:none;stroke:var(--map-dot);stroke-width:3.4;stroke-linecap:round}
+.m-city{position:absolute;left:var(--x);top:var(--y);width:0;height:0;color:var(--fg);text-decoration:none;z-index:1}
+.m-city::before{content:"";position:absolute;top:-12px;width:32px;height:24px}
+/* Hit areas lean toward their own label, so close neighbours (Leeds and Zurich sit ~11px
+   apart in the rail) never stack one marker's target on top of the other's dot. */
+.m-l::before{left:-26px}
+.m-r::before{left:-6px}
+.m-dot{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:var(--muted);box-shadow:0 0 0 2px var(--gsurf);
+  transition:background .3s ease,transform .3s cubic-bezier(.34,1.56,.64,1)}
+.m-name,.m-yrs{position:absolute;white-space:nowrap;line-height:1.2}
+.m-name{top:-10px;font-size:12.5px;font-weight:700}
+.m-yrs{top:5px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.m-l .m-name,.m-l .m-yrs{right:10px}
+.m-r .m-name,.m-r .m-yrs{left:10px}
+.m-city:hover{text-decoration:none}
+.m-city.seen .m-dot{background:color-mix(in srgb,var(--link) 55%,var(--muted))}
+.m-city.now .m-dot,.m-city.hot .m-dot,.m-city:hover .m-dot,.m-city:focus-visible .m-dot{background:var(--link);transform:scale(1.35)}
+.m-city.now .m-dot{animation:m-pulse 1.8s ease-out infinite}
+@keyframes m-pulse{0%{box-shadow:0 0 0 2px var(--gsurf),0 0 0 2px color-mix(in srgb,var(--link) 55%,transparent)}
+  100%{box-shadow:0 0 0 2px var(--gsurf),0 0 0 14px color-mix(in srgb,var(--link) 0%,transparent)}}
+.m-city.dim{opacity:.28}
+.m-city[aria-pressed="true"] .m-name{text-decoration:underline;text-underline-offset:3px}
+/* A narrow map (the desktop rail, or a phone) drops the years and stacks the two cities
+   whose names collide - Fort Wayne below its dot, Leeds above - and draws bigger dots. */
+@container map (max-width:600px){
+  .m-yrs{display:none}
+  .map-land path{stroke-width:4.8}
+  .m-city[data-rpos] .m-name{left:50%;right:auto;transform:translateX(-50%)}
+  .m-city[data-rpos="b"] .m-name{top:9px}
+  .m-city[data-rpos="t"] .m-name{top:-25px}
+  .m-city[data-rpos]::before{left:-12px;width:24px}
+}
+@media (min-width:1280px){
+  .c-body{display:grid;grid-template-columns:minmax(0,1fr) clamp(300px,26vw,400px);gap:36px;align-items:start}
+  .c-list{grid-column:1;grid-row:1;min-width:0}
+  .c-rail{grid-column:2;grid-row:1;position:sticky;top:78px;margin:0;max-width:none;padding:16px 16px 14px;border-radius:18px;
+    background:var(--glass);border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow);backdrop-filter:blur(14px) saturate(140%)}
+
+  .js .rail-now{display:block;margin-top:8px;padding:12px 0 2px 12px;border-top:1px solid var(--line);border-left:3px solid var(--accent)}
+}
+.rn-k{margin:0;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rn-yr{margin:2px 0 4px;font-size:30px;font-weight:700;line-height:1.05;letter-spacing:-.02em}
+.rn-role{margin:0;font-weight:700;line-height:1.3}
+.rn-org{margin:3px 0 0;font-size:14px;color:var(--muted)}
+.rail-now.swap{animation:rn-in .4s cubic-bezier(.16,1,.3,1)}
+@keyframes rn-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Linked states on the list (on inner elements: the entrance rules own .tl-item's opacity). */
+.tl-item .tl-card,.tl-item .tl-dot,.tl-item .tl-year{transition-property:opacity,filter,transform,box-shadow;transition-duration:.3s}
+.tl-item.dim .tl-card,.tl-item.dim .tl-year{opacity:.36;filter:saturate(.25)}
+.tl-item.dim .tl-dot{opacity:.3}
+.tl-item.hot .tl-card{box-shadow:0 0 0 2px var(--accent),0 14px 34px rgba(36,31,49,.16)}
+.tl-item.hot .tl-dot{transform:scale(1.3)}
+
+/* Pointer spotlight: a soft accent glow that follows the cursor across a card. */
+@media (hover:hover) and (pointer:fine){
+  .tl-card{isolation:isolate}
+  .tl-card::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s ease;
+    background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 16%,transparent),transparent 65%)}
+  .tl-card:hover::before{opacity:1}
+}
+
+/* Sheet navigation. */
+.sheet-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px 16px;border-top:1px solid var(--line)}
+.sheet-step{appearance:none;display:inline-flex;align-items:center;gap:8px;max-width:44%;border:1px solid var(--line);background:var(--glass);color:var(--fg);
+  font:600 13px/1.2 var(--font);padding:8px 12px;border-radius:10px;cursor:pointer}
+.sheet-step:hover{border-color:var(--fg)}
+.sheet-step [data-lbl]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sheet-step.none{visibility:hidden}
+.sheet-pos{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.sheet-in.step-l{animation:sh-l .32s cubic-bezier(.16,1,.3,1)}
+.sheet-in.step-r{animation:sh-r .32s cubic-bezier(.16,1,.3,1)}
+@keyframes sh-l{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+@keyframes sh-r{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.cta button.secondary{appearance:none;display:inline-block;padding:10px 18px;border-radius:9px;font:600 16px/1.55 var(--font);cursor:pointer}
+.cta button[hidden]{display:none}
+
+@media (max-width:900px){
+  .g-plot{grid-template-columns:118px minmax(0,1fr)}
+  .g-lane-lbl{font-size:12px}
+  .gantt{padding:14px 12px 12px}
+}
+@media (prefers-reduced-motion:reduce){
+  .kpi,.g-bar,.g-pt,.g-tip,.m-dot,.tl-item .tl-card,.tl-item .tl-dot,.tl-item .tl-year{transition:none}
+  .js .gantt:not(.in) .g-bar{clip-path:none}
+  .js .gantt:not(.in) .g-pt{transform:none}
+  .g-bar.live::after,.m-city.now .m-dot,.rail-now.swap,.sheet-in.step-l,.sheet-in.step-r{animation:none}
+  .kpi:hover{transform:none}
+}
+
+/* Print: the page is its own CV. Everything interactive goes; every entry prints open. */
+@media print{
+  @page{margin:14mm 12mm}
+  body{background:#fff !important;color:#000;font-size:11pt}
+  .masthead,.cta,.hero .pills,.c-controls,.c-note,.gantt,.c-rail,.sheet,.g-tip,.tl-hint,.tl-filters,.tl-list::before,.tl-list::after,
+  .tl-dot,.tl-kind,.tl-card>summary::after,.tl-brand{display:none !important}
+  .glass,.panel,.tl-card,.kpi{background:#fff !important;box-shadow:none !important;backdrop-filter:none !important;border:1px solid #ccc !important}
+  .tl-card{border-left:4px solid var(--accent) !important}
+  .tl-item{padding:0 0 8px 0 !important;break-inside:avoid;opacity:1 !important;transform:none !important}
+  .tl-item.out{display:block !important}   /* a filter on screen is not a filter on paper */
+  .tl-year{position:static !important;display:inline;opacity:1 !important;transform:none !important}
+  .tl-item .tl-card,.tl-item .tl-mark{opacity:1 !important;filter:none !important;transform:none !important}
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .kpi::before{display:none}
+  a{color:#000 !important}
+  h2{break-after:avoid;margin:14pt 0 6pt;font-size:14pt}
+  /* A CV, not the site: the site's own philosophy and links stay on screen. */
+  #how,#how+.how,#elsewhere,#elsewhere+.prose{display:none !important}
+  body{font-size:9.5pt;line-height:1.4}
+  .hero h1{font-size:22pt;margin:0 0 4pt}
+  .hero p{font-size:10pt;margin:0 0 5pt}
+  .panel{padding:8pt 10pt;margin:0 0 6pt}
+  .kpi{padding:7pt 9pt}
+  .kpi-v{font-size:17pt}
+  .tl-list{max-width:none}
+  .tl-card>summary{padding:6pt 9pt;gap:9pt}
+  .tl-mark{width:28px;height:28px;border-radius:7px}
+  .tl-body{padding:0 9pt 6pt 9pt}
+  .tl-lead{margin:0 0 4pt}
+  .tl-body ul{margin:0 0 4pt}
+  .tl-body li{margin:0 0 2pt}
+  .tl-body .pills,.sheet-att{display:none}
+}
+
+/* Phones: the whole shape at a glance, not a sideways scroller. Lane names sit above their
+   tracks; each track draws its own year lines, so no gridline crosses a label. */
+@media (max-width:700px){
+  .g-scroll{overflow:visible}
+  .g-plot{min-width:0;grid-template-columns:minmax(0,1fr);grid-template-rows:17px 36px 17px 36px 17px 36px 24px;padding:22px 2px 0 0}
+  .g-plot>span:nth-of-type(1){grid-row:1 !important}.g-plot>div:nth-of-type(1){grid-row:2 !important}
+  .g-plot>span:nth-of-type(2){grid-row:3 !important}.g-plot>div:nth-of-type(2){grid-row:4 !important}
+  .g-plot>span:nth-of-type(3){grid-row:5 !important}.g-plot>div:nth-of-type(3){grid-row:6 !important}
+  .g-lane-lbl{grid-column:1 !important;align-self:end;padding:0;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+  .g-track{grid-column:1 !important;background:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px calc(100% / 18))}
+  .g-grid{display:none}
+  .g-axis{grid-column:1;grid-row:7}
+  .g-axis span:not(.q){visibility:hidden}
+  .g-now{grid-column:1;grid-row:1/7}
+  .js .c-keys{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:2px 20px;
+    mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 30px),transparent)}
+  .js .c-keys::-webkit-scrollbar{display:none}
+  .key{flex:none}
 }
