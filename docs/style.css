@@ -172,7 +172,7 @@ h2{font-size:24px;margin:44px 0 16px}
 .card h3{margin:0;font-size:20px}
 .card h3 a{color:var(--fg)}
 .card p{margin:0}
-.card .sub{color:var(--muted)}
+.card .sub,.panel .sub{color:var(--muted);margin:-2px 0 12px;font-size:15px}
 .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
 .pill{background:var(--pill);border-radius:999px;padding:2px 10px;font-size:13px;color:var(--fg)} /* --muted on the dark pill is 3.9:1; 13px text needs 4.5:1 */
 .links{display:flex;flex-wrap:wrap;gap:4px 16px;font-weight:600}
@@ -186,6 +186,9 @@ h2{font-size:24px;margin:44px 0 16px}
 
 /* longer text on app and about pages */
 .prose{max-width:70ch}
+/* The About timeline: still one column so the chronology is unambiguous,
+   but wider than body prose - its lines are short bullets, not paragraphs. */
+.cv{max-width:1100px}
 .prose p,.prose li{color:var(--fg)}
 .prose p{margin:0 0 12px}
 .prose ul{padding-left:20px;margin:0 0 12px}
