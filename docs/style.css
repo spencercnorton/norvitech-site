@@ -309,9 +309,25 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
 
 /* Entry animation. The script adds .tl-ready, so a no-JS page is never left
    invisible by a transition that will not run. */
-.js .tl-ready .tl-item{opacity:0;transform:translateY(14px);
-  transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}
+.js .tl-ready .tl-item{opacity:0;transform:translateY(34px) scale(.965);
+  transition:opacity .6s ease,transform .7s cubic-bezier(.16,1,.3,1)}
 .js .tl-ready .tl-item.in{opacity:1;transform:none}
+.js .tl-ready .tl-item .tl-dot{transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1) .18s,box-shadow .6s ease .18s}
+.js .tl-ready .tl-item.in .tl-dot{transform:scale(1)}
+.js .tl-ready .tl-item.in .tl-dot{animation:dot-pulse 1.1s ease-out .3s 1}
+@keyframes dot-pulse{0%{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)}
+  45%{box-shadow:0 0 0 14px color-mix(in srgb,var(--accent) 0%,transparent),0 0 0 4px color-mix(in srgb,var(--accent) 30%,transparent)}
+  100%{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)}}
+.js .tl-ready .tl-item .tl-year{opacity:0;transform:translateX(-14px);transition:opacity .5s ease .1s,transform .6s cubic-bezier(.16,1,.3,1) .1s}
+.js .tl-ready .tl-item.in .tl-year{opacity:1;transform:none}
+.js .tl-ready .tl-item .tl-mark{transform:scale(.7) rotate(-8deg);transition:transform .7s cubic-bezier(.34,1.4,.64,1) .12s}
+.js .tl-ready .tl-item.in .tl-mark{transform:none}
+.js .tl-ready .tl-item.in .tl-card:hover .tl-mark{transform:scale(1.06)}
+/* The spine draws itself as you scroll: a filled brand thread over the grey line,
+   its height set by the script from the viewport's midpoint. */
+.js .tl-list::after{content:"";position:absolute;left:78px;top:6px;width:2px;height:var(--tl-fill,0px);
+  background:linear-gradient(to bottom,var(--brand),#8a3ea0);border-radius:2px;
+  box-shadow:0 0 12px color-mix(in srgb,var(--brand) 45%,transparent);transition:height .25s ease-out}
 .tl-item.out{display:none}
 
 /* ---- The attachment / detail sheet ---------------------------------------- */
@@ -335,6 +351,7 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
 
 @media (max-width:900px){
   .tl-list::before{left:15px}
+  .js .tl-list::after{left:15px}
   .tl-item{padding-left:40px}
   .tl-year{position:static;width:auto;text-align:left;display:block;margin:0 0 5px}
   .tl-dot{left:8px;top:30px}
@@ -356,7 +373,9 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
 }
 @media (prefers-reduced-motion:reduce){
   .tl-slider,.tl-card,.tl-dot,.sheet-x,.tl-card>summary::after{transition:none}
-  .js .tl-ready .tl-item{opacity:1;transform:none;transition:none}
+  .js .tl-ready .tl-item,.js .tl-ready .tl-item .tl-dot,.js .tl-ready .tl-item .tl-year,.js .tl-ready .tl-item .tl-mark{opacity:1;transform:none;transition:none;animation:none}
+  .js .tl-list::after{transition:none}
+  .tl-mark{transition:none}
   .sheet[open],.sheet[open]::backdrop{animation:none}
 }
 
@@ -372,9 +391,22 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
    colours, so the accent gradient behind them would fight the artwork. The
    monogram tiles stay as they are — a mixed row reads fine because the tile,
    not its contents, is what gives the column its rhythm. */
-.tl-mark.has-logo{background:#fff;border:1px solid var(--glass-edge);
-  box-shadow:0 2px 8px rgba(36,31,49,.12);padding:6px}
-.tl-mark.has-logo img{width:100%;height:100%;object-fit:contain;display:block}
+/* A real mark IS the icon. Three treatments, all edge-to-edge, never a white plate:
+   .fill  - a brand-square (Oracle, Parkview): the image is the tile.
+   .dark  - a multicolour transparent mark (Leeds, SJTU, Natera): on the site's plum.
+   .mono  - a single-colour vector mark (NorviTech, ZHAW): white on its own accent. */
+.tl-mark.has-logo{padding:0;overflow:hidden;border:0;background:var(--accent)}
+.tl-mark.has-logo img{width:100%;height:100%;display:block;object-fit:contain}
+.tl-mark.fill img{object-fit:cover}
+.tl-mark.dark{background:#241f31;padding:4px}
+.tl-mark.mono{padding:8px;background:linear-gradient(140deg,var(--accent),color-mix(in srgb,var(--accent) 70%,#241f31))}
+.tl-mark.mono img{filter:brightness(0) invert(1)}
+.tl-card:hover .tl-mark{transform:scale(1.06)}
+.tl-mark{transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.sheet-head .tl-mark{width:56px;height:56px;border-radius:16px}
+.sheet-head .tl-mark.dark{padding:5px}
+.sheet-head .tl-mark.mono{padding:10px}
+@media (max-width:900px){.tl-mark.dark{padding:3px}.tl-mark.mono{padding:7px}}
 
 /* The brand strip. A wordmark is 3:1 to 8:1 — it cannot read at row-icon size,
    so the real mark goes here, where the detail view gives it real width. */

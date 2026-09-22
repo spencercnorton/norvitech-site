@@ -189,16 +189,38 @@
           var el = entry.target;
           // Stagger by position in the viewport batch, not by index, so a
           // deep link partway down the page does not wait on rows above it.
-          setTimeout(function () { el.classList.add("in"); }, Math.min(entry.target.dataset.i % 6, 5) * 55);
+          setTimeout(function () { el.classList.add("in"); }, Math.min(entry.target.dataset.i % 6, 5) * 70);
           seen.unobserve(el);
         });
       }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
       items.forEach(function (el) { seen.observe(el); });
       // Insurance: a CV that never becomes visible is far worse than one that
-      // skips its entrance. If anything stops the observer, show everything.
+      // skips its entrance. But "2.5 s elapsed" is not "the observer is dead":
+      // revealing everything on a timer meant nobody who scrolled slower than
+      // that ever saw the lower entries arrive. Reveal all only if the observer
+      // has produced nothing at all by then.
       setTimeout(function () {
-        items.forEach(function (el) { el.classList.add("in"); });
+        if (!list.querySelector(".tl-item.in")) {
+          items.forEach(function (el) { el.classList.add("in"); });
+        }
       }, 2500);
+
+      // The spine fills to the viewport's midpoint as you scroll, so the thread
+      // reads as "drawn so far". One rAF per scroll frame; a CSS transition
+      // smooths the steps. Cleared by the reduced-motion branch above.
+      var ticking = false;
+      function fill() {
+        ticking = false;
+        var r = list.getBoundingClientRect();
+        var mid = window.innerHeight * 0.5;
+        var px = Math.max(0, Math.min(r.height - 12, mid - r.top - 6));
+        list.style.setProperty("--tl-fill", px + "px");
+      }
+      window.addEventListener("scroll", function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(fill); }
+      }, { passive: true });
+      window.addEventListener("resize", fill);
+      fill();
     }
 
     /* ---- The detail sheet ---------------------------------------------
