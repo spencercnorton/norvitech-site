@@ -72,8 +72,12 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var
 .masthead a:focus-visible,.masthead summary:focus-visible{outline-color:var(--brand)} /* 6.3:1 on #241f31 in both modes */
 img{max-width:100%;height:auto}
 h1,h2,h3{line-height:1.2;overflow-wrap:anywhere}
-.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
-.wrap.wide{max-width:1680px}
+.wrap{max-width:min(1600px,94vw);margin:0 auto;padding:0 20px}
+.wrap.wide{max-width:min(2100px,97vw)}
+/* Header and footer are chrome, not content: the mark sits hard left and the
+   clock hard right, whatever the window is. Centring these inside the content
+   column left both of them marooned in the middle of a wide desktop. */
+.masthead .wrap{max-width:none;padding-left:32px;padding-right:32px}
 
 /* the glass panel: cards, how-it-works items, the menu */
 .glass{background:var(--glass);border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow),inset 0 1px 0 var(--glass-line);
@@ -131,8 +135,10 @@ html:not(.js) .clock{display:none} /* a clock that cannot tick shows nothing */
 .track::-webkit-scrollbar{display:none}
 .slide{flex:0 0 100%;scroll-snap-align:center;border-radius:22px;padding:20px;
   display:grid;grid-template-columns:minmax(0,1.75fr) minmax(240px,.85fr);gap:28px;align-items:center}
-.slide{height:clamp(380px,62vh,620px)}
-.slide img{display:block;width:100%;max-height:min(576px,calc(62vh - 44px));object-fit:contain;object-position:center;
+.slide{height:clamp(380px,62vh,820px)}
+/* width:auto, never 100%: these are fixed-resolution captures, and filling a
+   wide column would upscale a screenshot until its text went soft. */
+.slide img{display:block;margin:0 auto;width:auto;max-width:100%;max-height:min(776px,calc(62vh - 44px));
   border-radius:12px;border:1px solid var(--glass-edge);box-shadow:0 18px 50px rgba(36,31,49,.22)}
 .slide h3{margin:0 0 8px;font-size:26px}
 .slide h3 a{color:var(--fg)}
@@ -146,7 +152,7 @@ html:not(.js) .clock{display:none} /* a clock that cannot tick shows nothing */
 .dots a:hover{background:var(--muted)}
 
 /* ---- Install: one command for every app in the APT repository ---- */
-.install{border-radius:18px;padding:22px 24px;margin:0}
+.install{border-radius:18px;padding:24px 28px;margin:0}
 .install h2{margin:0 0 6px}
 .install p{margin:0 0 14px;color:var(--muted);max-width:70ch}
 .cmd{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
@@ -204,13 +210,14 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
 
 @media (max-width:900px){
   .slide{grid-template-columns:1fr;gap:16px;height:auto}
-  .slide img{max-height:46vh}
+  .slide img{max-height:46vh;width:100%}
   .slide h3{font-size:22px}
 }
 @media (max-width:600px){
   .hero{padding:36px 0 20px}h2{margin-top:36px}
   /* stacked, a sticky header would be a third of a phone screen */
   header.masthead{position:static}
+  .masthead .wrap{padding-left:20px;padding-right:20px}
   .rule{display:none}
   .clock{order:1;margin-left:auto;align-items:flex-end}
   .clock [data-face]{font-size:16px}

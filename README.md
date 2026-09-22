@@ -19,10 +19,13 @@ analytics, and exactly one script — so a change is a diff you can read in full
 
 ## What it does
 
-**A spotlight, then one command.** The front page is a carousel of each app
-actually running — the animations are the products' own reviewed recordings —
-over a one-line install block that copies the whole APT setup to the
-clipboard. `docs/<app>/` is that app's own page (what it does, how to install
+**A spotlight, then one command, and nothing else.** The front page is a
+carousel of each app actually running — the animations are the products' own
+reviewed recordings — over a one-line install block that copies the whole APT
+setup to the clipboard. That is the whole page: the prose sections that used
+to explain the release process and the support routes were cut on 2026-09-22,
+because every one of them is already said, per product, in the place someone
+actually reads it. `docs/<app>/` is that app's own page (what it does, how to install
 it, where its data lives, its documentation, written from its README) and
 `docs/about/` is Spencer. The Apps menu in the header is a native `<details>`
 element.
