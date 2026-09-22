@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>BitAgent and bitmagnet: what the fork adds, and what it owes upstream · NorviTech</title>
+<meta name="description" content="bitmagnet has been dormant since July 2025. BitAgent is a maintained fork from April 2026: what is still upstream's work, what was added on top, and an honest account of what forking a project costs everyone.">
+<link rel="canonical" href="https://norvitech.com/bitagent/vs-bitmagnet/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="BitAgent and bitmagnet: what the fork adds, and what it owes upstream · NorviTech">
+<meta property="og:description" content="bitmagnet has been dormant since July 2025. BitAgent is a maintained fork from April 2026: what is still upstream's work, what was added on top, and an honest account of what forking a project costs everyone.">
+<meta property="og:url" content="https://norvitech.com/bitagent/vs-bitmagnet/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "BitAgent and bitmagnet: what the fork adds, and what it owes upstream",
+  "url": "https://norvitech.com/bitagent/vs-bitmagnet/",
+  "description": "bitmagnet has been dormant since July 2025. BitAgent is a maintained fork from April 2026: what is still upstream's work, what was added on top, and an honest account of what forking a project costs everyone.",
+  "datePublished": "2026-09-22",
+  "inLanguage": "en",
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "BitAgent",
+    "url": "https://norvitech.com/bitagent/"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Spencer Norton",
+    "url": "https://norvitech.com/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NorviTech",
+    "url": "https://norvitech.com/",
+    "logo": "https://norvitech.com/assets/logo.svg"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/">Suite</a> / <a href="/bitagent/">BitAgent</a> / Compared with bitmagnet</p>
+  <h1>BitAgent and bitmagnet</h1>
+  <p class="tag">What the fork adds, and what it owes upstream. Both halves stated plainly.</p>
+  <p>If you run bitmagnet and have noticed it has not moved in a while, or you are choosing between the two, this page is the honest comparison — including the parts that favour staying where you are.</p>
+  <p class="cta"><a class="primary" href="/bitagent/">About BitAgent</a><a class="secondary" href="https://github.com/spencercnorton/bitagent#see-it-run">See it run</a></p>
+</section>
+<h2>The situation, factually</h2>
+<div class="prose">
+<p><a href="https://github.com/bitmagnet-io/bitmagnet">bitmagnet</a> is a self-hosted BitTorrent DHT crawler and Torznab indexer. Its last movement on <code>main</code> was in July 2025. BitAgent was cut from it in April 2026 at commit <code>2b9e8ea</code> — the head of upstream <code>main</code> from July 2025 until May 2026 — and stopped tracking upstream at that month's rebrand. The <code>upstream</code> remote stays configured, for security-fix surveillance rather than merges.</p>
+<p>A dormant project is not an abandoned one, and this page is not an argument that you should switch. It is the information you need to decide.</p>
+</div>
+
+<h2>What is still upstream's work</h2>
+<div class="prose">
+<p>This matters more than the list of additions, because it is the part a fork can quietly stop saying. The DHT protocol implementation, metainfo fetching, the CEL classifier engine and the Postgres/GraphQL foundation are bitmagnet's, and they are the reason everything else was possible. BitAgent is MIT-licensed <em>because</em> bitmagnet is, every upstream copyright notice is preserved, and the lineage is stated on the front page of the repository rather than in a footnote.</p>
+<p>If you are evaluating the fork, evaluate it as "bitmagnet plus a loop", not as a new indexer.</p>
+</div>
+
+<h2>What the fork adds</h2>
+<div class="how">
+  <div class="glass"><h3>A feedback loop from your *arrs</h3><p>The headline difference. Sonarr, Radarr, Lidarr and Readarr webhooks, a history poller and a qBittorrent poller land every signal in an append-only evidence table, which resolves by explicit precedence into one canonical label per torrent. What you actually grabbed and kept becomes an input to what gets indexed and how results are ranked.</p></div>
+  <div class="glass"><h3>Curation rather than collection</h3><p>A deterministic content filter — language, lossy-audio-only music, NSFW, blocked extensions and content types, foreign audio — in pure Go with no network or database call per decision, and anime-aware so watchable anime is not dropped on a script heuristic.</p></div>
+  <div class="glass"><h3>Titles that match without an LLM</h3><p>An anime backbone that reads fansub brackets, absolute episode numbers and romaji season markers, backed by an alias table joining AniDB titles to TMDB mappings, so romaji, kanji, English and fan aliases resolve to one id.</p></div>
+  <div class="glass"><h3>Swarm numbers that are real</h3><p>A BEP-15 UDP scrape worker refreshes seeders and leechers from public trackers at roughly seventy infohashes per datagram, replacing a one-node estimate that was never refreshed.</p></div>
+  <div class="glass"><h3>Metrics you can act on</h3><p>A <code>bitagent_*</code> family per subsystem, plus counterfactual <code>would_*</code> metrics so you can read what a rule would have done before you enable it.</p></div>
+  <div class="glass"><h3>An operator console in the same image</h3><p>Indexer win rate, match rate, grab liveness, evidence per source, a quarantine you can spot-check, and a read-only view of the running configuration — no second deployment.</p></div>
+</div>
+
+<h2>The LLM stages, and why they are off</h2>
+<div class="prose">
+<p>Four points in the pipeline can ask a model over any OpenAI-compatible endpoint, hosted or on your own LAN. Every stage runs in shadow mode first so you can compare its verdicts against what you would have done; daily and monthly budgets persist in Postgres; zero means stop; and anything from a private tracker never leaves the house.</p>
+<p>They are off by default and should stay off until the shadow numbers convince you, which is the same advice as for any classifier you did not write. The metrics exist precisely so that "it seems better" is not the basis for turning one on.</p>
+</div>
+
+<h2>Reasons to stay on bitmagnet</h2>
+<div class="how">
+  <div class="glass"><h3>It already does what you need</h3><p>If you want a DHT crawler feeding Torznab and nothing more, upstream does that, and a fork is extra surface area for no gain. Dormant is not broken.</p></div>
+  <div class="glass"><h3>You prefer the larger project</h3><p>bitmagnet has more users, more issues answered, and more people who have hit your problem before. A fork maintained by one person does not.</p></div>
+  <div class="glass"><h3>You do not run *arrs</h3><p>The evidence loop is the reason this fork exists. Without Sonarr, Radarr, Lidarr or Readarr feeding it, most of what was added has nothing to learn from.</p></div>
+</div>
+
+<h2>What a fork costs</h2>
+<div class="prose">
+<p>Worth saying, because it is the part comparison pages usually leave out. Forking splits attention and duplicates maintenance: a security fix upstream has to be noticed and carried across by hand, the two projects' schemas have diverged past the point of merging back, and anyone choosing between them now has a decision they did not previously have to make. Against that, the evidence loop needed changes across the classifier, the schema and the indexer at once, which is not a change you land as a pull request on a project that is not merging.</p>
+<p>The fork was the right call for this use case. It is not automatically the right call for yours.</p>
+</div>
+
+<h2>If you want to try it</h2>
+<div class="prose">
+<p>Two containers, no accounts and no API keys: copy the example env, set one Postgres password, and bring it up. Metrics climb within a minute and the console is on port 8080. Wiring it to the *arrs is a Torznab endpoint in Prowlarr (or each app directly) plus a webhook back at BitAgent, which is what closes the loop.</p>
+<p>Both projects index a public DHT and neither hosts content; what you do with an index is your responsibility and your jurisdiction's. The repository's legal note covers that properly.</p>
+<ul>
+  <li><a href="/bitagent/">BitAgent</a> — what it does, the dashboard, install</li>
+  <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/project/improvements.md">Improvements over upstream</a> — the itemised list, with the baseline commit to diff against</li>
+  <li><a href="https://github.com/bitmagnet-io/bitmagnet">bitmagnet</a> — upstream, and the work this is built on</li>
+</ul>
+</div>
+
+<nav class="siblings" aria-label="Other apps">
+  <a class="glass" href="/helios/">Helios</a>
+  <a class="glass" href="/bitagent/" aria-current="page">BitAgent</a>
+  <a class="glass" href="/xnote/">XNote</a>
+  <a class="glass" href="/xnote-placement/">XNote Placement</a>
+  <a class="glass" href="/snipsnap/">SnipSnap</a>
+</nav>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/about/">About</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
