@@ -107,5 +107,6 @@ python3 scripts/check.py      # what CI runs: tag balance, links, one same-origi
   <a href="https://github.com/spencercnorton/xnote">XNote</a> ·
   <a href="https://github.com/spencercnorton/xnote-placement">XNote Placement</a> ·
   <a href="https://github.com/spencercnorton/snipsnap">SnipSnap</a> ·
+  <a href="https://github.com/spencercnorton/norvi-os">NorviOS</a> ·
   <a href="https://norvitech.com">norvitech.com</a>
 </p>
