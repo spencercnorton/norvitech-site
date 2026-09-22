@@ -8,12 +8,12 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="stylesheet" href="/style.css">
 <title>BitAgent and bitmagnet: what the fork adds, and what it owes upstream · NorviTech</title>
-<meta name="description" content="bitmagnet has been dormant since July 2025. BitAgent is a maintained fork from April 2026: what is still upstream's work, what was added on top, and an honest account of what forking a project costs everyone.">
+<meta name="description" content="BitAgent is a fork of bitmagnet, cut in April 2026 after upstream's main had gone more than nine months without a commit: what is still upstream's work, what the fork adds, and the reasons to stay on upstream.">
 <link rel="canonical" href="https://norvitech.com/bitagent/vs-bitmagnet/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="NorviTech">
 <meta property="og:title" content="BitAgent and bitmagnet: what the fork adds, and what it owes upstream · NorviTech">
-<meta property="og:description" content="bitmagnet has been dormant since July 2025. BitAgent is a maintained fork from April 2026: what is still upstream's work, what was added on top, and an honest account of what forking a project costs everyone.">
+<meta property="og:description" content="BitAgent is a fork of bitmagnet, cut in April 2026 after upstream's main had gone more than nine months without a commit: what is still upstream's work, what the fork adds, and the reasons to stay on upstream.">
 <meta property="og:url" content="https://norvitech.com/bitagent/vs-bitmagnet/">
 <meta property="og:image" content="https://norvitech.com/assets/og.png">
 <meta property="og:image:width" content="1280">
@@ -28,7 +28,7 @@
   "@type": "Article",
   "headline": "BitAgent and bitmagnet: what the fork adds, and what it owes upstream",
   "url": "https://norvitech.com/bitagent/vs-bitmagnet/",
-  "description": "bitmagnet has been dormant since July 2025. BitAgent is a maintained fork from April 2026: what is still upstream's work, what was added on top, and an honest account of what forking a project costs everyone.",
+  "description": "BitAgent is a fork of bitmagnet, cut in April 2026 after upstream's main had gone more than nine months without a commit: what is still upstream's work, what the fork adds, and the reasons to stay on upstream.",
   "datePublished": "2026-09-22",
   "inLanguage": "en",
   "about": {
@@ -85,13 +85,14 @@
   <p class="crumb"><a href="/">Suite</a> / <a href="/bitagent/">BitAgent</a> / Compared with bitmagnet</p>
   <h1>BitAgent and bitmagnet</h1>
   <p class="tag">What the fork adds, and what it owes upstream. Both halves stated plainly.</p>
-  <p>If you run bitmagnet and have noticed it has not moved in a while, or you are choosing between the two, this page is the honest comparison — including the parts that favour staying where you are.</p>
+  <p>If you run bitmagnet and are wondering whether a fork is worth it, or you are choosing between the two, this page is the honest comparison — including the parts that favour staying where you are.</p>
   <p class="cta"><a class="primary" href="/bitagent/">About BitAgent</a><a class="secondary" href="https://github.com/spencercnorton/bitagent#see-it-run">See it run</a></p>
 </section>
 <h2>The situation, factually</h2>
 <div class="prose">
-<p><a href="https://github.com/bitmagnet-io/bitmagnet">bitmagnet</a> is a self-hosted BitTorrent DHT crawler and Torznab indexer. Its last movement on <code>main</code> was in July 2025. BitAgent was cut from it in April 2026 at commit <code>2b9e8ea</code> — the head of upstream <code>main</code> from July 2025 until May 2026 — and stopped tracking upstream at that month's rebrand. The <code>upstream</code> remote stays configured, for security-fix surveillance rather than merges.</p>
-<p>A dormant project is not an abandoned one, and this page is not an argument that you should switch. It is the information you need to decide.</p>
+<p><a href="https://github.com/bitmagnet-io/bitmagnet">bitmagnet</a> is a self-hosted BitTorrent DHT crawler and Torznab indexer. BitAgent was cut from it in April 2026 at commit <code>2b9e8ea</code>, which had been the head of upstream <code>main</code> since July 2025 — more than nine months without a commit — and stopped tracking upstream at its rebrand that same month. The <code>upstream</code> remote stays configured, for security-fix surveillance rather than merges.</p>
+<p>Upstream has moved since: a dependency fix for its TMDB integration landed in May 2026 and shipped as <code>v0.10.1-beta.1</code>. An earlier version of this page said upstream had not moved since July 2025, which was wrong. How active a project is right now is the fact on this page most likely to have changed by the time you read it, so <a href="https://github.com/bitmagnet-io/bitmagnet/commits/main">check upstream's commits</a> for yourself.</p>
+<p>A quiet project is not an abandoned one, and this page is not an argument that you should switch. It is the information you need to decide.</p>
 </div>
 
 <h2>What is still upstream's work</h2>
@@ -118,14 +119,14 @@
 
 <h2>Reasons to stay on bitmagnet</h2>
 <div class="how">
-  <div class="glass"><h3>It already does what you need</h3><p>If you want a DHT crawler feeding Torznab and nothing more, upstream does that, and a fork is extra surface area for no gain. Dormant is not broken.</p></div>
+  <div class="glass"><h3>It already does what you need</h3><p>If you want a DHT crawler feeding Torznab and nothing more, upstream does that, and a fork is extra surface area for no gain. Quiet is not broken, and upstream still ships fixes.</p></div>
   <div class="glass"><h3>You prefer the larger project</h3><p>bitmagnet has more users, more issues answered, and more people who have hit your problem before. A fork maintained by one person does not.</p></div>
   <div class="glass"><h3>You do not run *arrs</h3><p>The evidence loop is the reason this fork exists. Without Sonarr, Radarr, Lidarr or Readarr feeding it, most of what was added has nothing to learn from.</p></div>
 </div>
 
 <h2>What a fork costs</h2>
 <div class="prose">
-<p>Worth saying, because it is the part comparison pages usually leave out. Forking splits attention and duplicates maintenance: a security fix upstream has to be noticed and carried across by hand, the two projects' schemas have diverged past the point of merging back, and anyone choosing between them now has a decision they did not previously have to make. Against that, the evidence loop needed changes across the classifier, the schema and the indexer at once, which is not a change you land as a pull request on a project that is not merging.</p>
+<p>Worth saying, because it is the part comparison pages usually leave out. Forking splits attention and duplicates maintenance: a security fix upstream has to be noticed and carried across by hand, the two projects' schemas have diverged past the point of merging back, and anyone choosing between them now has a decision they did not previously have to make. Against that, the evidence loop needed changes across the classifier, the schema and the indexer at once, which is not a change that lands as one pull request on someone else's project.</p>
 <p>The fork was the right call for this use case. It is not automatically the right call for yours.</p>
 </div>
 

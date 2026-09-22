@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>The front door of the NorviTech Suite.</strong><br>
-  Eight HTML pages, one stylesheet and one 5 KB script, served by GitHub Pages from <code>docs/</code>.
+  Plain HTML pages, one stylesheet and one script, served by GitHub Pages from <code>docs/</code>.
 </p>
 
 <p align="center">
@@ -13,8 +13,8 @@
 </p>
 
 This repository is the source of [norvitech.com](https://norvitech.com): the
-suite spotlight, one page per app, and the shared brand assets every NorviTech
-README embeds. It is deliberately plain — no framework, no build step, no
+suite spotlight, one page per app, a handful of guides, and the shared brand
+assets every NorviTech README embeds. It is deliberately plain — no framework, no build step, no
 analytics, and exactly one script — so a change is a diff you can read in full.
 
 ## What it does
@@ -29,6 +29,24 @@ actually reads it. `docs/<app>/` is that app's own page (what it does, how to in
 it, where its data lives, its documentation, written from its README) and
 `docs/about/` is Spencer. The Apps menu in the header is a native `<details>`
 element.
+
+**Guides that answer the question before the product does.** Each explains the
+platform problem first, says what the sanctioned answer costs, and only then
+what the app does about it — with a section on when you should not use it:
+
+- [Helios vs. Claude Code in a terminal](https://norvitech.com/helios/vs-terminal/) —
+  same CLI underneath; what changes, and when the terminal is the right answer.
+- [Screenshots on GNOME Wayland without a permission prompt](https://norvitech.com/snipsnap/wayland-screenshots/) —
+  what the portal path costs, and drawing the selection inside the compositor.
+- [Why Wayland will not let an app place its own window](https://norvitech.com/xnote-placement/wayland-window-placement/) —
+  what the protocol withholds, and what has to live in GNOME Shell instead.
+- [BitAgent and bitmagnet](https://norvitech.com/bitagent/vs-bitmagnet/) —
+  what is still upstream's work, what the fork adds, and reasons to stay upstream.
+
+**Findable by crawlers and assistants alike.** Every indexable page declares a
+canonical URL, is listed in `docs/sitemap.xml` (which `check.py` keeps in sync),
+and carries one `application/ld+json` block describing what it is. Nothing on a
+page is rendered by script, so a crawler that never runs JavaScript sees all of it.
 
 **One script, and the page works without it.** `docs/site.js` auto-advances
 the spotlight, drives the copy button, and ticks a clock that reads its time
