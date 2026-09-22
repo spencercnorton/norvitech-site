@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Helios vs. Claude Code in a terminal · NorviTech</title>
+<meta name="description" content="Same claude CLI underneath, so nothing is lost. What changes when you run Claude Code, Codex or an OpenRouter model inside Helios instead of a terminal: every session visible, permissions you can read, a spend limit that is on by default, and a plan you own.">
+<link rel="canonical" href="https://norvitech.com/helios/vs-terminal/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Helios vs. Claude Code in a terminal · NorviTech">
+<meta property="og:description" content="Same claude CLI underneath, so nothing is lost. What changes when you run Claude Code, Codex or an OpenRouter model inside Helios instead of a terminal: every session visible, permissions you can read, a spend limit that is on by default, and a plan you own.">
+<meta property="og:url" content="https://norvitech.com/helios/vs-terminal/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Helios vs. Claude Code in a terminal",
+  "url": "https://norvitech.com/helios/vs-terminal/",
+  "description": "Same claude CLI underneath, so nothing is lost. What changes when you run Claude Code, Codex or an OpenRouter model inside Helios instead of a terminal: every session visible, permissions you can read, a spend limit that is on by default, and a plan you own.",
+  "datePublished": "2026-09-22",
+  "inLanguage": "en",
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Helios",
+    "url": "https://norvitech.com/helios/"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Spencer Norton",
+    "url": "https://norvitech.com/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NorviTech",
+    "url": "https://norvitech.com/",
+    "logo": "https://norvitech.com/assets/logo.svg"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/">Suite</a> / <a href="/helios/">Helios</a> / Compared with a terminal</p>
+  <h1>Helios vs. Claude Code in a terminal</h1>
+  <p class="tag">Same CLI underneath. Nothing is taken away; some things stop being invisible.</p>
+  <p>If you already run Claude Code, OpenAI Codex or an OpenRouter model from a terminal, this page is the honest answer to one question: what actually changes if you open the same agent inside Helios, and when should you not bother.</p>
+  <p class="cta"><a class="primary" href="/helios/">About Helios</a><a class="secondary" href="https://github.com/spencercnorton/helios#install">Install</a></p>
+</section>
+
+<h2>The short version</h2>
+<div class="prose">
+<p>Helios does not replace the <code>claude</code> or <code>codex</code> command. It launches the official CLI you already have signed in, speaks its streaming protocol, and leaves its sign-in, context files and transcripts exactly where the CLI keeps them. You can keep using the terminal alongside it, on the same projects, on the same day.</p>
+<p>What Helios adds is not capability but visibility and defaults. Most of what it shows you — permission modes, plan mode, a dollar cap, checkpoints — exists in the CLI as a flag or a slash command. In a terminal you reach for those when you remember to. In Helios they are on the screen, on by default, and the same across three providers.</p>
+</div>
+
+<h2>Side by side</h2>
+<div class="prose">
+<table>
+  <tr><th>What you are doing</th><th>In a terminal</th><th>In Helios</th></tr>
+  <tr><td>Running several sessions</td><td>One per terminal tab or tmux pane; you keep the map in your head.</td><td>Every project and session in one sidebar with a live status dot; a session that is waiting on you says so.</td></tr>
+  <tr><td>Seeing what the agent just did</td><td>Scrollback. Tool calls and their results interleave with the answer.</td><td>A transcript that streams markdown and code, with one card per tool call showing its result and elapsed time.</td></tr>
+  <tr><td>Approving a command or an edit</td><td>A prompt in the stream: the command, y/n.</td><td>A dialog with the full command or diff, why the agent wants it, and the rule it would remember if you say “always”.</td></tr>
+  <tr><td>Choosing how much to trust it</td><td><code>--permission-mode</code>, per launch.</td><td>Ask, Accept edits, Auto, Bypass, Plan or Never ask — per conversation, one click, and read-only whatever you pick when the folder is your home directory.</td></tr>
+  <tr><td>Capping what a run can cost</td><td><code>--max-budget-usd</code> if you pass it.</td><td>The same native cap, required rather than optional, shown next to the composer. GPT sessions get a shared token budget that covers their subagents; OpenRouter gets a fixed allowance and a bounded tool loop. A trip stops the work and keeps your draft.</td></tr>
+  <tr><td>Agreeing on a plan first</td><td>Plan mode, a slash command away.</td><td>The same plan mode, plus a Work: an objective, a definition of done and an acceptance checklist that belong to you and that the model’s own plan can never rewrite.</td></tr>
+  <tr><td>Undoing a bad turn</td><td>The CLI’s own rewind.</td><td>A snapshot of the working tree before every turn, and a rewind dialog. Two chats in one folder can both write; a clobber is recoverable rather than forbidden.</td></tr>
+  <tr><td>Picking a model</td><td>A model id you type.</td><td>A picker built from what the connected CLI actually ships, latest per family first — nothing hand-listed that the binary does not have.</td></tr>
+  <tr><td>Watching subagents</td><td>Nested output in the same stream.</td><td>An activity strip keyed on the delegation the agent actually made — an actor exists only when the CLI reports one, and never changes state on a guess.</td></tr>
+  <tr><td>Switching provider</td><td>A different CLI with different flags.</td><td>Claude, GPT and OpenRouter in one window with the same permission chip, the same budget seam and the same plan pane.</td></tr>
+</table>
+</div>
+
+<h2>When the terminal is the right answer</h2>
+<div class="how">
+  <div class="glass"><h3>You are not at a desktop</h3><p>Over SSH, on a server, in a container, on a machine without GTK 4: the CLI is the tool. Helios is a native Ubuntu application and does not pretend otherwise.</p></div>
+  <div class="glass"><h3>You are scripting it</h3><p><code>claude -p</code> in a pipeline, a Makefile, a CI job. Non-interactive runs have no use for a window.</p></div>
+  <div class="glass"><h3>You run one session and it is short</h3><p>If you rarely have more than one agent going and rarely run anything long enough to cost real money, the visibility Helios adds is answering a question you are not asking.</p></div>
+</div>
+
+<h2>When Helios earns its place</h2>
+<div class="how">
+  <div class="glass"><h3>Several agents at once</h3><p>Three projects, five sessions, one of them waiting for a permission you have not noticed. The sidebar is the map you were keeping in your head.</p></div>
+  <div class="glass"><h3>Long autonomous runs</h3><p>An hour of tool calls on per-token billing is where a cap stops being a flag you might set and becomes the thing standing between you and a surprise. Helios will not start a Claude session without one.</p></div>
+  <div class="glass"><h3>Work you have to answer for</h3><p>When someone will ask what the agent did and why you let it: the transcript with one card per tool call, the permission dialogs with the full diff, and the Work whose definition of done you wrote are the record.</p></div>
+</div>
+
+<h2>What you give up</h2>
+<div class="prose">
+<p>Honestly: a little. Helios adds a process between you and the CLI, so a brand-new CLI feature may take a release to surface in the picker or the dialogs, and there is a desktop app to install and update. The tradeoff is deliberate — every control it shows is one the CLI already has, so nothing you learned in the terminal stops being true.</p>
+<p>What you do not give up: your sign-in, your <code>CLAUDE.md</code> and memory files, your transcript history, or the terminal itself. Helios reads and writes the same <code>~/.claude/projects</code> the CLI does, keeps its own state under <code>~/.helios</code>, and sends nothing anywhere on its own.</p>
+</div>
+
+<h2>Next</h2>
+<div class="prose">
+<ul>
+  <li><a href="/helios/">Helios</a> — what it does, install, where your data lives</li>
+  <li><a href="https://github.com/spencercnorton/helios/blob/main/docs/user-guide.md">User guide</a> — first run, permissions, budgets, Works and plans</li>
+  <li><a href="https://github.com/spencercnorton/helios#install">Install on Ubuntu 26.04</a> — one APT repository, <code>sudo apt install helios</code></li>
+</ul>
+</div>
+
+<nav class="siblings" aria-label="Other apps">
+  <a class="glass" href="/helios/" aria-current="page">Helios</a>
+  <a class="glass" href="/bitagent/">BitAgent</a>
+  <a class="glass" href="/xnote/">XNote</a>
+  <a class="glass" href="/xnote-placement/">XNote Placement</a>
+  <a class="glass" href="/snipsnap/">SnipSnap</a>
+</nav>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/about/">About</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
