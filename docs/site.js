@@ -115,10 +115,10 @@
   }
 
   /* ---- The clock -------------------------------------------------------
-     Our time, not the visitor's: one uncached read of the public NTP edge's
-     own clock, corrected for half the round trip, then ticked locally and
-     re-read every ten minutes. If that host cannot be reached we say whose
-     clock is on screen rather than quietly showing the wrong one. */
+     The visitor's own wall clock, but disciplined by ours: one uncached read
+     of the public NTP edge's clock, corrected for half the round trip, then
+     ticked locally and re-read every ten minutes. Rendered in the visitor's
+     locale and zone; the tooltip says whose clock is actually driving it. */
   var clock = document.getElementById("clock");
   if (clock) {
     var face = clock.querySelector("[data-face]");
@@ -127,15 +127,23 @@
     var offset = 0;
     var ours = false;
 
-    function two(n) { return n < 10 ? "0" + n : "" + n; }
+    // The visitor's zone, named the short way ("MDT", "GMT+1"). Fixed for the
+    // life of the page: a DST change mid-visit survives until the next reload.
+    var zone = "";
+    try {
+      var parts = new Intl.DateTimeFormat(undefined, { timeZoneName: "short" }).formatToParts(new Date());
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i].type === "timeZoneName") { zone = parts[i].value; }
+      }
+    } catch (e) { /* no Intl: the face alone still reads correctly */ }
 
     function tick() {
       var now = new Date(Date.now() + offset);
-      face.textContent = two(now.getUTCHours()) + ":" + two(now.getUTCMinutes()) + ":" + two(now.getUTCSeconds());
+      face.textContent = now.toLocaleTimeString();
       face.setAttribute("datetime", now.toISOString());
-      note.textContent = ours ? "UTC · our NTP" : "UTC · your device";
+      note.textContent = zone;
       clock.title = ours
-        ? "Coordinated Universal Time from time.globalentry.systems, a GPS-disciplined NTP service"
+        ? "Your local time, set by time.globalentry.systems, a GPS-disciplined NTP service"
         : "time.globalentry.systems could not be reached; this is your own device clock";
     }
 

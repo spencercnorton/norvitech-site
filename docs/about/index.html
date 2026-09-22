@@ -8,12 +8,12 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="stylesheet" href="/style.css">
 <title>About Spencer Norton · NorviTech</title>
-<meta name="description" content="Founder of NorviTech. Builds small, honest tools for the Linux desktop and the self-hosted stack: Helios, BitAgent, XNote, XNote Placement and SnipSnap.">
+<meta name="description" content="Founder of NorviTech. Healthcare data and automation by day; small, honest tools for the Linux desktop and the self-hosted stack: Helios, BitAgent, XNote, XNote Placement and SnipSnap.">
 <link rel="canonical" href="https://norvitech.com/about/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NorviTech">
 <meta property="og:title" content="About Spencer Norton · NorviTech">
-<meta property="og:description" content="Founder of NorviTech. Builds small, honest tools for the Linux desktop and the self-hosted stack: Helios, BitAgent, XNote, XNote Placement and SnipSnap.">
+<meta property="og:description" content="Founder of NorviTech. Healthcare data and automation by day; small, honest tools for the Linux desktop and the self-hosted stack: Helios, BitAgent, XNote, XNote Placement and SnipSnap.">
 <meta property="og:url" content="https://norvitech.com/about/">
 <meta property="og:image" content="https://norvitech.com/assets/og.png">
 <meta property="og:image:width" content="1280">
@@ -45,7 +45,7 @@
     </nav>
     <a class="clock" id="clock" href="https://time.globalentry.systems/">
       <time data-face>--:--:--</time>
-      <span data-note>UTC</span>
+      <span data-note></span>
     </a>
   </div>
 </header>
@@ -55,20 +55,27 @@
 <section class="hero">
   <p class="crumb"><a href="/">NorviTech</a> / About</p>
   <h1>Spencer Norton</h1>
-  <p class="tag">Founder of NorviTech. Builds small, honest tools for the Linux desktop and the self-hosted stack.</p>
+  <p class="tag">Founder of NorviTech. I build the data and automation infrastructure healthcare revenue cycle teams run on, and small, honest tools for the Linux desktop and the self-hosted stack.</p>
   <p>One developer, working in the open: every app on this site is something I use every day, published under a licence you can read and a release process you can audit.</p>
-  <p class="cta"><a class="primary" href="https://github.com/spencercnorton">GitHub</a><a class="secondary" href="/#suite">The suite</a></p>
+  <p>I verify before I assert and measure before I decide. I build the check that would actually fail if I were wrong, and I automate my own toil rather than absorbing it. That rule built the device, it runs the day job, and it is why these apps look the way they do.</p>
+  <div class="pills"><span class="pill">Healthcare data · since 2017</span><span class="pill">Snowflake · SQL · Python</span><span class="pill">AWS · Terraform · CI</span><span class="pill">GTK4 · GNOME · Wayland</span><span class="pill">Co-inventor · US patent, 2024</span></div>
+  <p class="cta"><a class="primary" href="https://github.com/spencercnorton">GitHub</a><a class="secondary" href="/">The suite</a><a class="secondary" href="https://www.linkedin.com/in/nortonspencer">LinkedIn</a></p>
 </section>
 
 <h2>The short version</h2>
-<div class="prose">
+<div class="grid">
 <div class="panel glass">
-<h3>NorviTech began in health technology</h3>
-<p>NorviTech was founded in 2018 to take the guesswork out of nutrition and hydration intake monitoring in hospitals and care homes: a weight-based device that records what a patient actually ate and drank and hands the numbers to the care-management system, instead of a clinician estimating a tray by eye. The design was shaped by interviews with more than seventy-five clinicians around the world, built into a working prototype, and backed by a founders' grant in 2020.</p>
+<h3>It started with a medical device</h3>
+<p>NorviTech was founded in 2018 to take the guesswork out of nutrition and hydration intake monitoring in hospitals and care homes: a weight-based device that records what a patient actually ate and drank, and hands the numbers to the care-management system, instead of a clinician estimating a tray by eye. The design was shaped by consultation with more than seventy-five clinicians and administrators around the world, taken from idea to working prototype by a multidisciplinary team, and funded by a British government grant and academic partnerships. I am a co-inventor on the United States patent that came out of it, granted in 2024.</p>
+</div>
+<div class="panel glass">
+<h3>Then eight years of healthcare data</h3>
+<p>Before and since the device I have spent eight years turning clinical and financial data into decisions: clinical-trial and patient-chart analytics at a regional health system, then four years of post-acute and value-based care analytics — more than two hundred and fifty revenue cycle reports, and the enterprise data models behind them.</p>
+<p>Today I own the Snowflake semantic model behind revenue cycle reporting at a health technology company: a modular model with an enforced record grain, automated parity testing against the legacy model it replaces, and a staged retirement of that model gated on evidence rather than a date. Alongside it, a shared hosting platform that runs sixteen internal applications on AWS from one application registry, with single sign-on, immutable image deployments and automated per-site health checks; agent-based automation that triages billing errors, maps payors, categorises denials and prepares rebills; and a code reviewer, backed by a large language model, wired into merge-request workflows.</p>
 </div>
 <div class="panel glass">
 <h3>Today it is the name I publish software under</h3>
-<p>The same instincts carried over — measure rather than guess, keep the data where it belongs, make the whole thing readable end to end — and they are the house rules of the NorviTech Suite: no telemetry, no accounts, no hosted service, each README says what leaves the machine, and each release is a tag you can read in full.</p>
+<p>The same instincts carried over — measure rather than guess, keep the data where it belongs, make the whole thing readable end to end — and they are the house rules of the NorviTech Suite: no telemetry, no accounts, no hosted service. Each README says what leaves the machine, and each release is a tag you can read in full.</p>
 </div>
 </div>
 
@@ -83,15 +90,28 @@
 <h2>How I work</h2>
 <div class="how">
   <div class="glass"><h3>Measure the mechanism</h3><p>A fix is not done when the symptom goes away; it is done when the instrument that would have caught it reads non-zero. Every app ships with the metrics or the test that proves its own claim.</p></div>
+  <div class="glass"><h3>Prove the replacement before you retire the original</h3><p>The habit comes from the day job, where a new data model is not trusted because it was built carefully but because it was tested line for line against the one it replaces. Nothing here is cut over on a date; it is cut over on evidence.</p></div>
   <div class="glass"><h3>Release mirrors, not moving targets</h3><p>Development happens in a private tree; every tagged release is exported through an automated gate that refuses anything that should not be public. What you clone is exactly what was reviewed.</p></div>
   <div class="glass"><h3>Forks stay honest</h3><p>Three of the five apps descend from someone else's work. They keep the upstream licence, notices and authors, and say plainly what is upstream's and what is new.</p></div>
   <div class="glass"><h3>Your data stays yours</h3><p>I run all of this on my own machines, so the question "what leaves the box?" gets asked first, and answered in each README.</p></div>
+  <div class="glass"><h3>Automate the toil, don't absorb it</h3><p>Helios exists because I spend my working day directing coding agents and wanted the permissions, the spend and the plan somewhere I could see them. Every app here started as my own repeated annoyance.</p></div>
+</div>
+
+<h2>Background</h2>
+<div class="prose">
+<ul>
+  <li><strong>Education</strong> — MSc International Business, University of Leeds; MBA, Shanghai Jiao Tong University; study tour at ZHAW Zurich University of Applied Sciences; BA Business Administration, University of Saint Francis, where I served more than two years as student body president.</li>
+  <li><strong>Certifications</strong> — Six Sigma Green Belt (CSSGB), Certified Revenue Cycle Representative (CRCR), Microsoft Power Platform Fundamentals and Microsoft Technology Associate: Database Administration Fundamentals.</li>
+  <li><strong>Patent</strong> — co-inventor, "Device for Measuring Nutritional Intake", granted by the United States Patent and Trademark Office in 2024.</li>
+  <li><strong>Domain</strong> — revenue cycle management and medical claims: EDI 837 and 835, denials, payor contracts, prior authorisation and financial close.</li>
+</ul>
 </div>
 
 <h2>Elsewhere</h2>
 <div class="prose">
 <ul>
   <li><a href="https://github.com/spencercnorton">github.com/spencercnorton</a> — every release, issue and discussion</li>
+  <li><a href="https://www.linkedin.com/in/nortonspencer">linkedin.com/in/nortonspencer</a> — the professional record this page is a summary of</li>
   <li><a href="https://buy.stripe.com/8x26oH2U44f65TRe574wM04">Support the development</a> — if one of these saves you time</li>
 </ul>
 <p>There is no e-mail address on this site; that is deliberate. Each repository's issue chooser, Discussions and private vulnerability reporting are the routes, and they are answered as time allows.</p>
