@@ -639,11 +639,15 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
 .tl-voice::before{content:"";position:absolute;left:28px;top:-11px;width:2px;height:10px;border-radius:1px;
   background:color-mix(in srgb,var(--accent) 65%,transparent)}
 .tv-avs{grid-column:1;align-self:start;display:flex;gap:4px;padding-top:1px}
-.tv-av{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;padding:0;
-  font:700 10.5px/1 var(--font);letter-spacing:.03em;color:var(--fg);
+.tv-av{position:relative;overflow:hidden;flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;padding:0;
+  font:700 11px/1 var(--font);letter-spacing:.03em;color:var(--fg);
   background:color-mix(in srgb,var(--accent) 24%,var(--gsurf));border:2px solid var(--gsurf);
   box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent)}
-button.tv-av{appearance:none;position:relative;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease}
+/* Their own LinkedIn photo where they have one, over the initials, which stay as the
+   fallback (Matt Stieber has none). Circle-masked and re-encoded, 80 px, pinned. */
+.tv-av img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
+.rec figcaption .tv-av{width:40px;height:40px;font-size:13px}   /* 80 px source: sharp at 2x */
+button.tv-av{appearance:none;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease}
 button.tv-av:disabled{cursor:default}
 button.tv-av:not(:disabled):hover{transform:translateY(-2px) scale(1.1)}
 .js button.tv-av[aria-pressed="true"]{box-shadow:0 0 0 2px var(--accent)}
