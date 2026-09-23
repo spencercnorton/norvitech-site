@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>DA2 vs Discern Explorer (CCL) vs Discern Reporting Portal · NorviTech</title>
+<meta name="description" content="What Discern Analytics 2.0 (DA2), Discern Explorer (CCL) and the Discern Reporting Portal each are in Oracle Health (Cerner) Millennium, how they relate, and how to tell which one a report request needs.">
+<link rel="canonical" href="https://norvitech.com/consulting/da2-vs-discern-explorer/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="DA2 vs Discern Explorer (CCL) vs Discern Reporting Portal · NorviTech">
+<meta property="og:description" content="What Discern Analytics 2.0 (DA2), Discern Explorer (CCL) and the Discern Reporting Portal each are in Oracle Health (Cerner) Millennium, how they relate, and how to tell which one a report request needs.">
+<meta property="og:url" content="https://norvitech.com/consulting/da2-vs-discern-explorer/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "DA2, Discern Explorer and the Reporting Portal",
+  "url": "https://norvitech.com/consulting/da2-vs-discern-explorer/",
+  "description": "What Discern Analytics 2.0 (DA2), Discern Explorer (CCL) and the Discern Reporting Portal each are in Oracle Health (Cerner) Millennium, how they relate, and how to tell which one a report request needs.",
+  "datePublished": "2026-09-22",
+  "inLanguage": "en",
+  "about": {
+    "@type": "Thing",
+    "name": "Discern Analytics 2.0"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Spencer Norton",
+    "url": "https://norvitech.com/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NorviTech",
+    "url": "https://norvitech.com/",
+    "logo": "https://norvitech.com/assets/logo.svg"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/">NorviTech</a> / <a href="/consulting/">Consulting</a> / DA2 vs Discern Explorer</p>
+  <h1>DA2, Discern Explorer and the Reporting Portal</h1>
+  <p class="tag">Three names from one reporting family in Oracle Health (Cerner) Millennium, and which one a given request actually needs.</p>
+</section>
+
+<h2>The short version</h2>
+<div class="prose">
+<p><strong>Discern Analytics 2.0 (DA2)</strong> is where most reports get built: a query and report designer for Millennium data, used by report writers and analysts rather than programmers. <strong>Discern Explorer</strong> is Cerner Command Language (CCL), the scripting language programmers write against the Millennium database. The <strong>Discern Reporting Portal</strong> is where people <em>run</em> reports, and it is built on the DA2 framework.</p>
+<p>They are not rivals. A hospital running Millennium usually has all three, and the useful question about any request is which one it needs, because that decides who can build it and how long it waits in a queue.</p>
+</div>
+
+<h2>Side by side</h2>
+<div class="prose">
+<table>
+  <tr><th></th><th>Discern Analytics 2.0</th><th>Discern Explorer (CCL)</th><th>Discern Reporting Portal</th></tr>
+  <tr><td>What it is</td><td>A designer for queries, data cubes and formatted reports</td><td>A query and scripting language against the Millennium database</td><td>A place to find and run reports</td></tr>
+  <tr><td>Who uses it</td><td>Report writers, analysts, super users</td><td>CCL programmers</td><td>Managers, supervisors, anyone who needs the output</td></tr>
+  <tr><td>Where it runs</td><td>A desktop application and a web application</td><td>Programs compiled into the domain, run from menus, schedules or other programs</td><td>The browser</td></tr>
+  <tr><td>Security</td><td colspan="2">Governed by the domain’s own security; what a user can see depends on their position and grants</td><td>Shares DA2’s security, so a report visible in one is visible in the other</td></tr>
+</table>
+</div>
+
+<h2>How they fit together</h2>
+<div class="prose">
+<p>Since Millennium 2018.01, Explorer Menu, the old launcher for Discern Explorer programs, is no longer supported, and DA2 took its place as the front door. The Reporting Portal uses the same framework, so reports published in DA2 show up in the Portal and the other way round. The Portal can also run other report types side by side, including Discern Explorer programs and, where a site has them, BusinessObjects reports and data cubes, with the option to run a long report in the background and collect the output later.</p>
+<p>In practice that means a user rarely cares which tool built a report. The distinction matters to whoever has to build it or fix it.</p>
+</div>
+
+<h2>Which one does a request need?</h2>
+<div class="how">
+  <div class="glass"><h3>Build it in DA2 when</h3><p>The question is a list, a count or a trend over data the domain already exposes: appointments, charges, encounters, census, orders. Prompts for a date range or a location, grouping, subtotals and crosstabs are exactly what DA2 is for, and a report writer can own it after hand-over.</p></div>
+  <div class="glass"><h3>It needs CCL when</h3><p>The request writes back to the database, needs procedural logic a query cannot express, or has to run as part of another program. Those belong with a CCL programmer, and pretending otherwise produces a DA2 report nobody can maintain.</p></div>
+  <div class="glass"><h3>It only needs the Portal when</h3><p>The report already exists and the real problem is that the right people cannot find it or run it. That is a publishing and security change, not a build.</p></div>
+</div>
+
+<div class="prose">
+<p>A good share of what lands in a CCL queue is the first kind. Moving it to DA2 shortens the wait for the requester and leaves the programmers with the work that genuinely needs them. When a request truly needs CCL, the honest move is to say so at scoping rather than half-way through the build.</p>
+</div>
+
+<h2>Next</h2>
+<div class="prose">
+<ul>
+  <li><a href="/consulting/">Discern Analytics 2.0 consulting</a> — report builds, scheduled extracts, dashboards and training</li>
+  <li><a href="/consulting/automating-da2-extracts/">Automating scheduled DA2 extracts into a dashboard</a></li>
+  <li><a href="/consulting/da2-inflated-totals/">Why a DA2 report’s totals come out inflated</a></li>
+  <li><a href="/consulting/da2-dates-and-time-zones/">Choosing a DA2 report’s date window, and its time zone</a></li>
+  <li><a href="/consulting/da2-to-google-azure-warehouse/">Getting DA2 data into Google, Azure or your warehouse</a></li>
+  <li><a href="/consulting/da2-on-continuum-and-communityworks/">DA2 reporting on the Continuum and CommunityWorks domains</a></li>
+</ul>
+<p><small>Oracle, Oracle Health, Cerner, Millennium and Discern are trademarks of Oracle and/or its affiliates. NorviTech is independent and is not affiliated with, sponsored by or endorsed by Oracle.</small></p>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

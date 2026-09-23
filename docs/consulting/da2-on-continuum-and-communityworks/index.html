@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>DA2 reporting on the Continuum and CommunityWorks domains · NorviTech</title>
+<meta name="description" content="What changes when you build Discern Analytics 2.0 (DA2) reports on Oracle Health&#x27;s multi-tenant Continuum domain for behavioral health and post-acute care, or on CommunityWorks for community hospitals.">
+<link rel="canonical" href="https://norvitech.com/consulting/da2-on-continuum-and-communityworks/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="DA2 reporting on the Continuum and CommunityWorks domains · NorviTech">
+<meta property="og:description" content="What changes when you build Discern Analytics 2.0 (DA2) reports on Oracle Health&#x27;s multi-tenant Continuum domain for behavioral health and post-acute care, or on CommunityWorks for community hospitals.">
+<meta property="og:url" content="https://norvitech.com/consulting/da2-on-continuum-and-communityworks/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "DA2 reporting on the Continuum and CommunityWorks domains",
+  "url": "https://norvitech.com/consulting/da2-on-continuum-and-communityworks/",
+  "description": "What changes when you build Discern Analytics 2.0 (DA2) reports on Oracle Health&#x27;s multi-tenant Continuum domain for behavioral health and post-acute care, or on CommunityWorks for community hospitals.",
+  "datePublished": "2026-09-22",
+  "inLanguage": "en",
+  "about": {
+    "@type": "Thing",
+    "name": "Discern Analytics 2.0"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Spencer Norton",
+    "url": "https://norvitech.com/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NorviTech",
+    "url": "https://norvitech.com/",
+    "logo": "https://norvitech.com/assets/logo.svg"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/">NorviTech</a> / <a href="/consulting/">Consulting</a> / Continuum and CommunityWorks</p>
+  <h1>DA2 reporting on the Continuum and CommunityWorks domains</h1>
+  <p class="tag">On a multi-tenant Oracle Health domain you share the system with other organisations and do not administer it. That changes how reporting should be built.</p>
+</section>
+
+<h2>The two domains</h2>
+<div class="prose">
+<p><strong>Continuum</strong> is Oracle Health’s multi-tenant domain for long-term care, behavioral health and rehabilitation. <strong>CommunityWorks</strong> is the shared, Oracle-hosted domain for community and rural hospitals. In both, many organisations run on one Millennium domain that Oracle hosts and maintains, and changes to it go through a stricter validation process than on a domain a health system runs for itself.</p>
+<p>For reporting, that has three consequences.</p>
+</div>
+
+<h2>What changes</h2>
+<div class="how">
+  <div class="glass"><h3>You filter to yourself, every time</h3><p>Security decides what a user can see, but a report that leans on it alone is fragile. Build every DA2 report with explicit organisation and facility filters, so a change in someone’s position never widens what the report returns.</p></div>
+  <div class="glass"><h3>You build within the domain, not on it</h3><p>You cannot reshape a shared domain to suit one report, and custom changes take longer to reach it. DA2 is usually the most direct route to your own data, so it pays to build reports that are documented, prompted rather than hard-coded, and easy for the next person to maintain.</p></div>
+  <div class="glass"><h3>Extracts are your way out</h3><p>Analysis that DA2 cannot comfortably do, such as years of trend or joins with finance data from elsewhere, belongs in a warehouse you control, fed by scheduled extracts. See <a href="/consulting/da2-to-google-azure-warehouse/">getting DA2 data into a warehouse</a>.</p></div>
+</div>
+
+<h2>Behavioral health and post-acute specifics</h2>
+<div class="prose">
+<ul>
+  <li><strong>Long stays change the arithmetic.</strong> Census, length of stay and days-in-period behave differently when stays run for weeks or months: an encounter spans many reporting periods, so count patient-days in the period, not admissions.</li>
+  <li><strong>Levels of care change mid-stay.</strong> Programmes step patients between levels of care within one stay. Report on the level that applied on each day, not the one on the admission record.</li>
+  <li><strong>Some records carry stricter rules.</strong> Substance use disorder treatment records covered by 42 CFR Part 2 have disclosure rules beyond HIPAA. Decide early which reports and extracts may contain them, and keep them out of anything that does not need them.</li>
+  <li><strong>Therapy and scheduling drive revenue.</strong> In rehabilitation, therapy minutes, units and scheduling productivity are operational and financial measures at once, so the same extract often feeds both a daily operations dashboard and revenue cycle reporting.</li>
+</ul>
+</div>
+
+<h2>Next</h2>
+<div class="prose">
+<ul>
+  <li><a href="/consulting/">Discern Analytics 2.0 consulting</a> — report builds, scheduled extracts, dashboards and training</li>
+  <li><a href="/consulting/da2-vs-discern-explorer/">DA2, Discern Explorer and the Reporting Portal — which one a request needs</a></li>
+  <li><a href="/consulting/automating-da2-extracts/">Automating scheduled DA2 extracts into a dashboard</a></li>
+  <li><a href="/consulting/da2-inflated-totals/">Why a DA2 report’s totals come out inflated</a></li>
+  <li><a href="/consulting/da2-dates-and-time-zones/">Choosing a DA2 report’s date window, and its time zone</a></li>
+  <li><a href="/consulting/da2-to-google-azure-warehouse/">Getting DA2 data into Google, Azure or your warehouse</a></li>
+</ul>
+<p><small>Oracle, Oracle Health, Cerner, Millennium and Discern are trademarks of Oracle and/or its affiliates. NorviTech is independent and is not affiliated with, sponsored by or endorsed by Oracle.</small></p>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Getting DA2 data into Google, Azure or your data warehouse · NorviTech</title>
+<meta name="description" content="How to ETL Discern Analytics 2.0 (DA2) extracts from Oracle Health (Cerner) into Google Sheets or BigQuery, Azure SQL or Fabric, Snowflake or another data warehouse, and host reporting from there.">
+<link rel="canonical" href="https://norvitech.com/consulting/da2-to-google-azure-warehouse/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Getting DA2 data into Google, Azure or your data warehouse · NorviTech">
+<meta property="og:description" content="How to ETL Discern Analytics 2.0 (DA2) extracts from Oracle Health (Cerner) into Google Sheets or BigQuery, Azure SQL or Fabric, Snowflake or another data warehouse, and host reporting from there.">
+<meta property="og:url" content="https://norvitech.com/consulting/da2-to-google-azure-warehouse/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Getting DA2 data into Google, Azure or your warehouse",
+  "url": "https://norvitech.com/consulting/da2-to-google-azure-warehouse/",
+  "description": "How to ETL Discern Analytics 2.0 (DA2) extracts from Oracle Health (Cerner) into Google Sheets or BigQuery, Azure SQL or Fabric, Snowflake or another data warehouse, and host reporting from there.",
+  "datePublished": "2026-09-22",
+  "inLanguage": "en",
+  "about": {
+    "@type": "Thing",
+    "name": "Discern Analytics 2.0"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Spencer Norton",
+    "url": "https://norvitech.com/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NorviTech",
+    "url": "https://norvitech.com/",
+    "logo": "https://norvitech.com/assets/logo.svg"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/">NorviTech</a> / <a href="/consulting/">Consulting</a> / DA2 into a warehouse</p>
+  <h1>Getting DA2 data into Google, Azure or your warehouse</h1>
+  <p class="tag">Discern Analytics 2.0 is good at producing an extract. Reporting from somewhere you own means moving that extract into a warehouse, on a schedule, without losing or doubling a day.</p>
+</section>
+
+<h2>The short version</h2>
+<div class="prose">
+<p>A scheduled DA2 report writes a file. A small, boring pipeline picks it up, checks it, reshapes it and loads it into the place your organisation already reports from: Google Sheets or BigQuery, Azure SQL, Fabric or a lakehouse, Snowflake, or an on-premises warehouse. Power BI, Tableau or Looker Studio then read the warehouse, not the extract.</p>
+<p>The destination matters less than people expect. The same four decisions make any of them dependable.</p>
+</div>
+
+<h2>Four decisions that matter more than the destination</h2>
+<div class="prose">
+<h3>1. Load by day, and make a reload harmless</h3>
+<p>Key each load on the day the data describes and replace that day whole, rather than appending rows. Then re-running yesterday, or loading a late file, corrects the warehouse instead of doubling it. Append-only loads are how a dashboard slowly drifts from the source.</p>
+<h3>2. Check the shape before you load</h3>
+<p>DA2 reports get edited: a column renamed, a prompt changed, a filter added. Validate every file against the columns the load needs, and refuse it with a clear message when they are missing. A load that quietly reads a renamed column as empty produces zeros that look like a real bad day.</p>
+<h3>3. Keep the raw file</h3>
+<p>Land each extract untouched before transforming it, and keep it for as long as your retention policy allows. When a number is questioned in three months, the raw file is how you prove what the source said on that day, and how you rebuild history after fixing a transformation.</p>
+<h3>4. Treat the destination as a place PHI now lives</h3>
+<p>The moment patient-level rows leave Millennium, the cloud tenant holding them needs the same care as the source: a Business Associate Agreement with the provider, access through groups rather than personal shares, a service identity with the narrowest scope that works, and aggregation wherever the report does not need the patient. Many dashboards need no identifiers at all.</p>
+</div>
+
+<h2>By destination</h2>
+<div class="how">
+  <div class="glass"><h3>Google</h3><p>Google Sheets suits a daily dashboard of a few thousand rows that people already live in; a service account writes to a shared drive the organisation owns. Past that size, BigQuery holds the history and Looker Studio or Sheets read summaries from it.</p></div>
+  <div class="glass"><h3>Azure</h3><p>Land the files in storage, load them with a scheduled pipeline into Azure SQL, Fabric or a lakehouse, and report in Power BI. It fits organisations already on Microsoft 365 and Entra ID, because access follows the groups they already manage.</p></div>
+  <div class="glass"><h3>Snowflake and others</h3><p>Stage the files and copy them into tables, then build a modelled layer with a clear grain, one row per encounter, charge or appointment, so every report agrees on what it is counting.</p></div>
+</div>
+
+<div class="prose">
+<p>Whichever you choose, the reliability rules for the extract itself still apply: pick the file by its header, map the file date to the data date, and catch up on missed runs. <a href="/consulting/automating-da2-extracts/">Automating scheduled DA2 extracts</a> covers those.</p>
+</div>
+
+<h2>Next</h2>
+<div class="prose">
+<ul>
+  <li><a href="/consulting/">Discern Analytics 2.0 consulting</a> — report builds, scheduled extracts, dashboards and training</li>
+  <li><a href="/consulting/da2-vs-discern-explorer/">DA2, Discern Explorer and the Reporting Portal — which one a request needs</a></li>
+  <li><a href="/consulting/automating-da2-extracts/">Automating scheduled DA2 extracts into a dashboard</a></li>
+  <li><a href="/consulting/da2-inflated-totals/">Why a DA2 report’s totals come out inflated</a></li>
+  <li><a href="/consulting/da2-dates-and-time-zones/">Choosing a DA2 report’s date window, and its time zone</a></li>
+  <li><a href="/consulting/da2-on-continuum-and-communityworks/">DA2 reporting on the Continuum and CommunityWorks domains</a></li>
+</ul>
+<p><small>Oracle, Oracle Health, Cerner, Millennium and Discern are trademarks of Oracle and/or its affiliates. NorviTech is independent and is not affiliated with, sponsored by or endorsed by Oracle.</small></p>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

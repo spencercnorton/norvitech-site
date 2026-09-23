@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Why DA2 report totals come out inflated · NorviTech</title>
+<meta name="description" content="Why totals in a Discern Analytics 2.0 (DA2) report can come out too high: two independent child lists rendered side by side form a cross join. How to spot it and how to total correctly.">
+<link rel="canonical" href="https://norvitech.com/consulting/da2-inflated-totals/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Why DA2 report totals come out inflated · NorviTech">
+<meta property="og:description" content="Why totals in a Discern Analytics 2.0 (DA2) report can come out too high: two independent child lists rendered side by side form a cross join. How to spot it and how to total correctly.">
+<meta property="og:url" content="https://norvitech.com/consulting/da2-inflated-totals/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why a DA2 report’s totals come out inflated",
+  "url": "https://norvitech.com/consulting/da2-inflated-totals/",
+  "description": "Why totals in a Discern Analytics 2.0 (DA2) report can come out too high: two independent child lists rendered side by side form a cross join. How to spot it and how to total correctly.",
+  "datePublished": "2026-09-22",
+  "inLanguage": "en",
+  "about": {
+    "@type": "Thing",
+    "name": "Discern Analytics 2.0"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Spencer Norton",
+    "url": "https://norvitech.com/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NorviTech",
+    "url": "https://norvitech.com/",
+    "logo": "https://norvitech.com/assets/logo.svg"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/">NorviTech</a> / <a href="/consulting/">Consulting</a> / Inflated DA2 totals</p>
+  <h1>Why a DA2 report’s totals come out inflated</h1>
+  <p class="tag">When a Discern Analytics 2.0 report puts two unrelated child lists side by side, every sum below them is quietly multiplied.</p>
+</section>
+
+<h2>The short version</h2>
+<div class="prose">
+<p>Take one appointment with three charges and two time entries. If the report shows charges and time entries as two independent lists on the same rows, the extract does not carry three rows plus two. It carries every pairing, three times two, and each charge appears twice, each time entry three times. Sum the units column and you have counted every charge twice.</p>
+<p>That is a cross join, and it is one of the most common reasons a DA2 report’s totals do not match the source system.</p>
+</div>
+
+<h2>How to spot it</h2>
+<div class="prose">
+<ul>
+  <li><strong>The total is too high by a ratio that wobbles.</strong> A join bug that doubles everything is easy to see. A cross join inflates each parent by a different factor, depending on how many rows its other list has, so the overall error looks like noise.</li>
+  <li><strong>Identical rows repeat inside one parent.</strong> Sort the extract by the parent key. If the same charge line appears once for every time entry, the two lists are multiplying each other.</li>
+  <li><strong>It gets worse on busy records.</strong> Parents with long lists on both sides inflate the most, so the busiest days, clinicians or patients look the most productive.</li>
+</ul>
+</div>
+
+<h2>How to total it correctly</h2>
+<div class="how">
+  <div class="glass"><h3>Change the report</h3><p>Where you own the report, return each child list separately, or aggregate each list to one row per parent before they meet. That fixes every consumer at once.</p></div>
+  <div class="glass"><h3>De-duplicate before summing</h3><p>Where you cannot change it, reduce each list to its distinct rows per parent, using the columns that identify a charge or a time entry, and only then sum. Never sum the rendered rows directly.</p></div>
+  <div class="glass"><h3>Reconcile once</h3><p>Pick a few parents, count their children in the source system by hand, and compare. Ten minutes of this settles whether a report’s totals can be trusted.</p></div>
+</div>
+
+<div class="prose">
+<p>The same shape also hides a quieter problem: a column that means different things on different rows. Time lost to a cancellation, for example, can sit in the same minutes column as treatment time. Before summing a column, check that every row puts the same kind of thing in it.</p>
+</div>
+
+<h2>Next</h2>
+<div class="prose">
+<ul>
+  <li><a href="/consulting/">Discern Analytics 2.0 consulting</a> — report builds, scheduled extracts, dashboards and training</li>
+  <li><a href="/consulting/da2-vs-discern-explorer/">DA2, Discern Explorer and the Reporting Portal — which one a request needs</a></li>
+  <li><a href="/consulting/automating-da2-extracts/">Automating scheduled DA2 extracts into a dashboard</a></li>
+  <li><a href="/consulting/da2-dates-and-time-zones/">Choosing a DA2 report’s date window, and its time zone</a></li>
+  <li><a href="/consulting/da2-to-google-azure-warehouse/">Getting DA2 data into Google, Azure or your warehouse</a></li>
+  <li><a href="/consulting/da2-on-continuum-and-communityworks/">DA2 reporting on the Continuum and CommunityWorks domains</a></li>
+</ul>
+<p><small>Oracle, Oracle Health, Cerner, Millennium and Discern are trademarks of Oracle and/or its affiliates. NorviTech is independent and is not affiliated with, sponsored by or endorsed by Oracle.</small></p>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

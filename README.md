@@ -43,6 +43,16 @@ what the app does about it — with a section on when you should not use it:
 - [BitAgent and bitmagnet](https://norvitech.com/bitagent/vs-bitmagnet/) —
   what is still upstream's work, what the fork adds, and reasons to stay upstream.
 
+**Consulting.** [Discern Analytics 2.0 (DA2) consulting](https://norvitech.com/consulting/) —
+report builds, scheduled extracts, dashboards and training for hospitals on Oracle
+Health (Cerner) Millennium, with six guides:
+[DA2 vs Discern Explorer](https://norvitech.com/consulting/da2-vs-discern-explorer/),
+[automating scheduled DA2 extracts](https://norvitech.com/consulting/automating-da2-extracts/),
+[inflated DA2 totals](https://norvitech.com/consulting/da2-inflated-totals/),
+[DA2 date windows and time zones](https://norvitech.com/consulting/da2-dates-and-time-zones/),
+[DA2 data into Google, Azure or a warehouse](https://norvitech.com/consulting/da2-to-google-azure-warehouse/) and
+[DA2 on the Continuum and CommunityWorks domains](https://norvitech.com/consulting/da2-on-continuum-and-communityworks/).
+
 **Findable by crawlers and assistants alike.** Every indexable page declares a
 canonical URL, is listed in `docs/sitemap.xml` (which `check.py` keeps in sync),
 and carries one `application/ld+json` block describing what it is. Nothing on a

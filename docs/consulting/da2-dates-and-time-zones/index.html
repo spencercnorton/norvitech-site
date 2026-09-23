@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>DA2 report date windows and time zones · NorviTech</title>
+<meta name="description" content="How the date column a Discern Analytics 2.0 (DA2) report is windowed on changes what it can show, why status columns are snapshots, and how to check which time zone a hosted Millennium domain&#x27;s timestamps use.">
+<link rel="canonical" href="https://norvitech.com/consulting/da2-dates-and-time-zones/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="DA2 report date windows and time zones · NorviTech">
+<meta property="og:description" content="How the date column a Discern Analytics 2.0 (DA2) report is windowed on changes what it can show, why status columns are snapshots, and how to check which time zone a hosted Millennium domain&#x27;s timestamps use.">
+<meta property="og:url" content="https://norvitech.com/consulting/da2-dates-and-time-zones/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Choosing a DA2 report’s date window, and its time zone",
+  "url": "https://norvitech.com/consulting/da2-dates-and-time-zones/",
+  "description": "How the date column a Discern Analytics 2.0 (DA2) report is windowed on changes what it can show, why status columns are snapshots, and how to check which time zone a hosted Millennium domain's timestamps use.",
+  "datePublished": "2026-09-22",
+  "inLanguage": "en",
+  "about": {
+    "@type": "Thing",
+    "name": "Discern Analytics 2.0"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Spencer Norton",
+    "url": "https://norvitech.com/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NorviTech",
+    "url": "https://norvitech.com/",
+    "logo": "https://norvitech.com/assets/logo.svg"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/">NorviTech</a> / <a href="/consulting/">Consulting</a> / Dates and time zones</p>
+  <h1>Choosing a DA2 report’s date window, and its time zone</h1>
+  <p class="tag">Which date column a Discern Analytics 2.0 report is windowed on decides what it can ever show. Which clock the timestamps use decides which day they land on.</p>
+</section>
+
+<h2>The short version</h2>
+<div class="prose">
+<p>Most activity in Millennium carries several dates: when something was created, when it was changed, when it is scheduled to happen. A DA2 report windowed on the wrong one does not return wrong numbers. It returns right numbers to a different question, and nothing on the page says so.</p>
+</div>
+
+<h2>The window decides what can appear</h2>
+<div class="prose">
+<p>Take a scheduling report meant to measure what schedulers did yesterday. Windowed on the date each appointment was <em>created</em>, it shows yesterday’s new bookings and nothing else: an appointment created last week and rebooked yesterday falls outside the window, so rebooking work, often a large share of the job, can never appear. Windowed on the date of the scheduling <em>action</em>, the same report shows both.</p>
+<p>Neither is wrong. They answer different questions, and the choice belongs in the report’s title and in the dashboard built from it, not in someone’s memory.</p>
+</div>
+
+<h2>Status columns are snapshots</h2>
+<div class="prose">
+<p>A column such as appointment state holds its value at the moment the extract ran. For appointments that have not happened yet, that value is mostly “scheduled”, so a no-show or cancellation rate calculated on recent bookings looks excellent and is meaningless. Measure outcomes with a report windowed on when the appointment was due, after it has had time to happen, and never store a snapshot rate as if it were final.</p>
+</div>
+
+<h2>Check the clock the timestamps use</h2>
+<div class="prose">
+<p>A hosted Millennium domain does not always store timestamps in the facility’s own time zone. In one domain I worked with, timestamps came out of DA2 in US Central time for a hospital several hours away. Anything near midnight landed on the wrong day, and a census counted at the wrong hour was off by the patients admitted or discharged in between.</p>
+<p>The check takes minutes: find an event whose local time you know for certain, such as an admission you can confirm on the unit, and compare it with the value in the extract. Then convert once, in one place, and label outputs in the zone their readers live in.</p>
+</div>
+
+<h2>Three questions before trusting a date</h2>
+<div class="how">
+  <div class="glass"><h3>Which date is the window?</h3><p>Creation, action or scheduled time. Write it in the report title.</p></div>
+  <div class="glass"><h3>Is this value final?</h3><p>If it can still change after the extract runs, it is a snapshot. Measure it later, or say so.</p></div>
+  <div class="glass"><h3>Whose clock is this?</h3><p>Prove the time zone against one known event before building anything on the hours.</p></div>
+</div>
+
+<h2>Next</h2>
+<div class="prose">
+<ul>
+  <li><a href="/consulting/">Discern Analytics 2.0 consulting</a> — report builds, scheduled extracts, dashboards and training</li>
+  <li><a href="/consulting/da2-vs-discern-explorer/">DA2, Discern Explorer and the Reporting Portal — which one a request needs</a></li>
+  <li><a href="/consulting/automating-da2-extracts/">Automating scheduled DA2 extracts into a dashboard</a></li>
+  <li><a href="/consulting/da2-inflated-totals/">Why a DA2 report’s totals come out inflated</a></li>
+  <li><a href="/consulting/da2-to-google-azure-warehouse/">Getting DA2 data into Google, Azure or your warehouse</a></li>
+  <li><a href="/consulting/da2-on-continuum-and-communityworks/">DA2 reporting on the Continuum and CommunityWorks domains</a></li>
+</ul>
+<p><small>Oracle, Oracle Health, Cerner, Millennium and Discern are trademarks of Oracle and/or its affiliates. NorviTech is independent and is not affiliated with, sponsored by or endorsed by Oracle.</small></p>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

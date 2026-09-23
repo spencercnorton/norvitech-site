@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Automating scheduled DA2 extracts into a dashboard · NorviTech</title>
+<meta name="description" content="How to turn a scheduled Discern Analytics 2.0 (DA2) report into a dependable daily dashboard: which file to read, which day it describes, catching up after a missed run, and noticing when a feed stops.">
+<link rel="canonical" href="https://norvitech.com/consulting/automating-da2-extracts/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Automating scheduled DA2 extracts into a dashboard · NorviTech">
+<meta property="og:description" content="How to turn a scheduled Discern Analytics 2.0 (DA2) report into a dependable daily dashboard: which file to read, which day it describes, catching up after a missed run, and noticing when a feed stops.">
+<meta property="og:url" content="https://norvitech.com/consulting/automating-da2-extracts/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Automating scheduled DA2 extracts into a dashboard",
+  "url": "https://norvitech.com/consulting/automating-da2-extracts/",
+  "description": "How to turn a scheduled Discern Analytics 2.0 (DA2) report into a dependable daily dashboard: which file to read, which day it describes, catching up after a missed run, and noticing when a feed stops.",
+  "datePublished": "2026-09-22",
+  "inLanguage": "en",
+  "about": {
+    "@type": "Thing",
+    "name": "Discern Analytics 2.0"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Spencer Norton",
+    "url": "https://norvitech.com/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NorviTech",
+    "url": "https://norvitech.com/",
+    "logo": "https://norvitech.com/assets/logo.svg"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app">
+  <p class="crumb"><a href="/">NorviTech</a> / <a href="/consulting/">Consulting</a> / Automating DA2 extracts</p>
+  <h1>Automating scheduled DA2 extracts into a dashboard</h1>
+  <p class="tag">A Discern Analytics 2.0 report that runs on a schedule is only half a pipeline. The other half decides whether the dashboard can be trusted.</p>
+</section>
+
+<h2>The short version</h2>
+<div class="prose">
+<p>A DA2 report can be scheduled to run in the background and write its output to a file. Point a small script at that file, reshape it, and push it to Power BI, Tableau, Google Sheets or a warehouse, and you have a dashboard nobody has to refresh by hand.</p>
+<p>That part takes an afternoon. What takes longer is the handful of assumptions that are true on the first day and false a month later. These are the ones I have seen break real dashboards.</p>
+</div>
+
+<h2>Five assumptions that break</h2>
+<div class="prose">
+<h3>1. “The newest file is my report”</h3>
+<p>Scheduled reports tend to share one drop folder. Pick the newest file by modified time and the pipeline works only while your report happens to land last; the day another report’s schedule moves, the dashboard ingests a billing extract and falls over. Choose the file by its <em>content</em> instead: the newest drop whose header carries the columns this report must have. Refuse loudly when none does.</p>
+
+<h3>2. “The file’s date is the data’s date”</h3>
+<p>A file stamped with today’s date usually contains yesterday’s activity, because the report ran overnight over the previous day. Get this wrong and every figure is labelled one day late, which nobody notices until a holiday. Confirm the mapping once against the source, and write it into the code as a rule, not a guess.</p>
+
+<h3>3. “The job runs after the file lands”</h3>
+<p>Drop times move: a schedule change, a slow night, a server patch. A job that only ever reads the latest file couples correctness to the clock. Make ingestion catch up instead: on every run, take <em>every</em> drop newer than the last one processed, oldest first. Then the run time stops mattering, and a missed day heals itself on the next run.</p>
+
+<h3>4. “An empty file means something broke”</h3>
+<p>On a genuinely quiet day, such as a clinic closed at weekends, a scheduled report writes a file with a header and no rows. That is a correct answer, not a failure. Treat header-only drops as real zero days, or the dashboard will cry “stale” every Monday, and a warning that fires every Monday is a warning nobody reads.</p>
+
+<h3>5. “If it ran, it worked”</h3>
+<p>The failure that hurts is the silent one: the schedule stops, the dashboard keeps showing last Tuesday, and it looks fine. Stamp every page with the date of the newest data it contains, not the time the script ran, and show a clear warning when that date falls behind. Count the lag in the days the business actually works, so a closed Sunday is not an outage.</p>
+</div>
+
+<h2>What good looks like</h2>
+<div class="how">
+  <div class="glass"><h3>Checks its inputs</h3><p>Refuses a file missing a required column rather than quietly reading every row as zero.</p></div>
+  <div class="glass"><h3>Heals itself</h3><p>Processes every unread drop in order, so a late file or a skipped run costs a delay, not a hole.</p></div>
+  <div class="glass"><h3>Tells the truth about age</h3><p>Shows the day the data describes and warns, in business days, when it stops moving.</p></div>
+</div>
+
+<h2>Next</h2>
+<div class="prose">
+<ul>
+  <li><a href="/consulting/">Discern Analytics 2.0 consulting</a> — report builds, scheduled extracts, dashboards and training</li>
+  <li><a href="/consulting/da2-vs-discern-explorer/">DA2, Discern Explorer and the Reporting Portal — which one a request needs</a></li>
+  <li><a href="/consulting/da2-inflated-totals/">Why a DA2 report’s totals come out inflated</a></li>
+  <li><a href="/consulting/da2-dates-and-time-zones/">Choosing a DA2 report’s date window, and its time zone</a></li>
+  <li><a href="/consulting/da2-to-google-azure-warehouse/">Getting DA2 data into Google, Azure or your warehouse</a></li>
+  <li><a href="/consulting/da2-on-continuum-and-communityworks/">DA2 reporting on the Continuum and CommunityWorks domains</a></li>
+</ul>
+<p><small>Oracle, Oracle Health, Cerner, Millennium and Discern are trademarks of Oracle and/or its affiliates. NorviTech is independent and is not affiliated with, sponsored by or endorsed by Oracle.</small></p>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
