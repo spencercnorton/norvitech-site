@@ -299,6 +299,16 @@
       when.textContent = m.dataset.when + (dur ? " · " + dur : "");
       org.textContent = orgName[m.dataset.org] || "";
       tip.appendChild(role); tip.appendChild(when); tip.appendChild(org);
+      // Whatever quote is showing under the entry's card, the bar says too.
+      var say = byId[m.dataset.bar].querySelector(".tv-say:not([hidden])");
+      if (say) {
+        var n = byId[m.dataset.bar].querySelectorAll(".tv-say").length;
+        var q = document.createElement("span"), by = document.createElement("span");
+        q.className = "t-q"; by.className = "t-by";
+        q.textContent = "“" + say.querySelector("p").textContent + "”";
+        by.textContent = "— " + say.querySelector("strong").textContent + (n > 1 ? " and " + (n - 1) + " more" : "");
+        tip.appendChild(q); tip.appendChild(by);
+      }
       tip.hidden = false;
       var r = m.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
       var x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), window.innerWidth - w - 8);
@@ -333,6 +343,29 @@
         gantt.classList.add("in");
       }
     }
+
+    /* ---- What they said ----------------------------------------------------
+       A role with several recommendations shows one quote at a time under its
+       card; pointing at, focusing or tapping a face shows theirs, and "Read all"
+       then opens the sheet at that person. Without this block the first quote
+       stands on its own and every recommendation is in the entry's detail. */
+    [].slice.call(list.querySelectorAll(".tl-voice")).forEach(function (v) {
+      var faces = [].slice.call(v.querySelectorAll("button.tv-av"));
+      var says = [].slice.call(v.querySelectorAll(".tv-say"));
+      var more = v.querySelector(".tv-more");
+      function show(rec) {
+        if (more.dataset.rec === rec) { return; }
+        says.forEach(function (s) { s.hidden = s.dataset.rec !== rec; });
+        faces.forEach(function (f) { f.setAttribute("aria-pressed", String(f.dataset.rec === rec)); });
+        more.dataset.rec = rec;
+      }
+      faces.forEach(function (f) {
+        f.disabled = false;
+        ["pointerenter", "focus", "click"].forEach(function (ev) {
+          f.addEventListener(ev, function () { show(f.dataset.rec); });
+        });
+      });
+    });
 
     /* ---- The list: reveal, spine, and the rail that follows you ---------- */
     var rail = career.querySelector("[data-rail]");
@@ -455,7 +488,7 @@
         }
         if (history.replaceState) { history.replaceState(null, "", "#e-" + id); }
       };
-      openSheet = function (id, from) {
+      openSheet = function (id, from, rec) {
         if (!byId[id]) { return; }
         opener = from || null;
         first = id;
@@ -463,6 +496,14 @@
         if (!sheet.open) { before = /^#e-/.test(location.hash) ? "" : location.hash; }
         fillSheet(id, 0);
         if (!sheet.open) { sheet.showModal(); }
+        // Straight to the person whose quote you were reading. Layout offsets, not
+        // client rects: the sheet is still scaling in, and a rect measured mid-scale
+        // lands the scroll short by the scale factor.
+        var f = rec && body.querySelector('.rec[data-rec="' + rec + '"]');
+        if (f) {
+          body.scrollTop = f.offsetTop - body.offsetTop - 14;
+          f.classList.add("lit");
+        }
       };
       var step = function (d) {
         var b = steps.filter(function (x) { return Number(x.dataset.step) === d; })[0];
@@ -500,7 +541,7 @@
 
     /* ---- By the numbers --------------------------------------------------- */
     [].slice.call(document.querySelectorAll("[data-open]")).forEach(function (a) {
-      a.addEventListener("click", function (e) { e.preventDefault(); openSheet(a.dataset.open, a); });
+      a.addEventListener("click", function (e) { e.preventDefault(); openSheet(a.dataset.open, a, a.dataset.rec); });
     });
     var counters = [].slice.call(document.querySelectorAll("[data-count]"));
     var suffix = function (el) { return el.dataset.suffix || ""; };

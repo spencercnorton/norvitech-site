@@ -18,6 +18,7 @@ other gate: it is scanned for e-mail addresses and estate detail like any text.
 """
 from __future__ import annotations
 
+import html
 import json
 import re
 import sys
@@ -121,6 +122,17 @@ class Check(HTMLParser):
 
 
 CHROME = re.compile(r"<(header|footer) class=\"masthead\">.*?</\1>", re.S)
+# About: a pull-quote under a card and the recommendation it is taken from, in full.
+PULL = re.compile(r'<figure class="tv-say" data-rec="([a-z-]+)"[^>]*><blockquote><p>(.*?)</p>', re.S)
+FULL = re.compile(r'<figure class="rec" data-rec="([a-z-]+)">.*?<blockquote>(.*?)</blockquote>', re.S)
+
+
+def quote_errors(text: str) -> list[str]:
+    """A pull-quote is someone else's words: it must be a verbatim run of one paragraph
+    of the recommendation it is taken from, which the same page carries in full."""
+    full = {k: html.unescape(re.sub(r"<[^>]+>", "\n", v)) for k, v in FULL.findall(text)}
+    return [f"pull-quote {k} is not verbatim from its recommendation"
+            for k, q in PULL.findall(text) if html.unescape(q) not in full.get(k, "")]
 
 
 def sitemap_errors(canonicals: set[str]) -> list[str]:
@@ -150,7 +162,7 @@ def main() -> int:
         p = Check()
         text = page.read_text(encoding="utf-8")
         p.feed(text)
-        errors = list(p.errors)
+        errors = list(p.errors) + quote_errors(text)
         for m in CHROME.finditer(text):
             first = chrome.setdefault(m.group(1), m.group(0))
             if m.group(0) != first:
