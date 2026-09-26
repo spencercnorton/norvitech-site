@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Changelog · Indigo · NorviTech</title>
+<meta name="description" content="Versions follow semantic versioning; each release is a tag on main.">
+<link rel="canonical" href="https://norvitech.com/indigo/changelog/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Changelog · Indigo · NorviTech">
+<meta property="og:description" content="Versions follow semantic versioning; each release is a tag on main.">
+<meta property="og:url" content="https://norvitech.com/indigo/changelog/">
+<meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Indigo on the GameCube: a glass cube showing a GameCube controller, with LIBRARY named underneath">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app doc-hero">
+  <p class="crumb"><a href="/#suite">Suite</a> / <a href="/indigo/">Indigo</a></p>
+  <h1>Changelog</h1>
+</section>
+
+<div class="docs">
+<nav class="docnav glass" aria-label="Indigo guide">
+<p>Guide</p>
+<ul>
+<li><a href="/indigo/guide/">Overview</a></li>
+<li><a href="/indigo/guide/install/">Install</a></li>
+<li><a href="/indigo/guide/controls/">Controls</a></li>
+<li><a href="/indigo/guide/home/">Home</a></li>
+<li><a href="/indigo/guide/library/">Library</a></li>
+<li><a href="/indigo/guide/game-details/">Game details</a></li>
+<li><a href="/indigo/guide/cheats/">Cheats</a></li>
+<li><a href="/indigo/guide/settings/">Settings</a></li>
+<li><a href="/indigo/guide/personalize/">Make it yours</a></li>
+<li><a href="/indigo/guide/source/">Source</a></li>
+<li><a href="/indigo/guide/system/">System</a></li>
+<li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
+<li><a href="/indigo/guide/posters/">Posters</a></li>
+<li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+</ul>
+<p>Reference</p>
+<ul>
+<li><a href="/indigo/guide/settings-file/">Settings files</a></li>
+<li><a href="/indigo/changelog/" aria-current="page">Changelog</a></li>
+</ul>
+</nav>
+<article class="doc">
+<p>Versions follow <a href="https://semver.org/">semantic versioning</a>; each release is a
+tag on <code>main</code>.</p>
+<h2 id="v1250--memory-cards-a-cube-that-flies-in-and-a-drag-and-drop-download">v1.25.0 — Memory Cards, a cube that flies in, and a drag-and-drop download</h2>
+<p>The first formal release of Indigo: everything below, tested together, with the
+guide and every picture recorded again on this build.</p>
+<h3 id="memory-cards">Memory Cards</h3>
+<ul>
+<li>
+<strong>Memory Cards</strong>, a new row on the System face between System Information
+and Restart Indigo, shows the saves on the memory cards in Slot A and Slot
+B and in folders on the SD card, much as the GameCube's own Memory Card
+screen does. Each save shows its banner, the game's name for it and its
+size in blocks; the tab says how many blocks the card has free, and the
+line above the buttons shows the rest of the save's comment. L and R move
+between Slot A, Slot B and the SD card; A opens a folder.</li>
+<li>A on a save copies, moves or deletes it. Copy and Move go to the other
+slot, to the Save Folder, or to another folder you choose. A save copied
+off a card becomes a <code>.gci</code> named as Dolphin names a GCI folder's saves;
+Action Replay (<code>.sav</code>) and GameShark (<code>.gcs</code>) saves copy onto a card too.
+Every copy is read back and compared before it counts, and a Move removes
+the original only then. A card that already has the save, or hasn't the
+room for it, says so and nothing changes; a save its game marks as not to
+be moved can be copied but not moved; Delete asks first, with Cancel
+highlighted.</li>
+<li>Settings › Setup › Storage › <strong>Save Folder</strong> chooses where saves copied off
+a card go: a folder on the Configuration Device, <code>swiss/saves</code> until you
+choose another (key <code>Save Folder</code> in <code>global.ini</code>). A lists the folders, X
+chooses the one that's open.</li>
+<li>The System face's three rows sit a little closer together to fit under
+the cube, and Restart Indigo's confirmation returns to its row, now the
+third.</li>
+</ul>
+<h3 id="the-cube-flies-in">The cube flies in</h3>
+<ul>
+<li>When Indigo starts, the Home cube flies in from the distance. It starts
+as a small spinning cube in the middle of the screen, tumbles toward you,
+and comes to rest on Library half a second later. Home is ready after 0.8
+seconds instead of 1.15, and the cube is in view from the first frames
+instead of fading up out of a dark screen.</li>
+<li>Starting no longer dims the screen before the cube appears. The face name,
+its hint and the glass's light fade in as the cube arrives instead of
+switching on at once.</li>
+<li>With UI Motion set to Reduced, the cube fades in where it rests. With Off
+it is simply there, as before.</li>
+</ul>
+<h3 id="in-game-reset-comes-back-to-indigo">In-Game Reset comes back to Indigo</h3>
+<ul>
+<li>With In-Game Reset set to Apploader, A + Z + START during a game now
+returns to Indigo. A reset restarts whatever <code>swiss/patches/apploader.img</code>
+holds, and until now that was stock Swiss's copy. The release zip now
+carries Indigo's own. It replaces stock Swiss's, so a game started from
+stock Swiss resets to Indigo too.</li>
+</ul>
+<h3 id="a-drag-and-drop-download">A drag-and-drop download</h3>
+<ul>
+<li>The download is drag and drop. <code>Indigo-vX.Y.Z.zip</code> is laid out exactly
+as the card is: unzip it, select everything inside and drag it onto the
+root of the SD card. Before, everything sat in an <code>Indigo-vX.Y.Z/SD card/</code>
+folder inside the zip. An <code>Indigo-README.txt</code> says what each file is for,
+and the licence and notice now travel in <code>swiss/indigo/</code>.</li>
+</ul>
+<h3 id="fixes">Fixes</h3>
+<ul>
+<li>Starting a game from the Library opens its file afresh. A read error while
+browsing, which a slow SD card adapter (SD2SP2, SD Gecko) can cause, no
+longer carries into the launch. A launch that failed after setup no longer
+leaves the next try reading the game from the wrong place on the card.</li>
+<li>Indigo records when you last played a game before it prepares the game, as
+Swiss does with its recent list. It no longer writes to the card after the
+game's data has been mapped.</li>
+</ul>
+<h3 id="documentation">Documentation</h3>
+<ul>
+<li>Every picture in the README and the guide is recorded again on this
+release, and the README gains two animations: the cube flying in when
+Indigo starts, and Memory Cards copying a save to the SD card. The guide's
+Memory Cards page has pictures of each screen and a card of its own on the
+guide's index, next to System. The README and the guide link the video
+tour and the Indigo page at norvitech.com/indigo; the poster and cheat
+downloads stay at indigo.norvitech.com, with their checksums.</li>
+<li>The guide says Settings help closes with B as well as Y.</li>
+</ul>
+<h3 id="for-developers">For developers</h3>
+<ul>
+<li>
+<code>make dev</code> also builds the packer (<code>cube/packer/reboot.dol</code>), compressing
+with <code>xz</code> because the build image has no <code>7z</code>, and
+<code>buildtools/sd_package.sh</code> turns it into that <code>apploader.img</code>.</li>
+<li>The host test suite ships with the source: <code>buildtools/ui/tests/</code> (C unit
+tests, GX vertex-stream checks and source audits) and the UI isolation
+guardrail <code>buildtools/check_ui_isolation.sh</code> are now in the public
+repository, so anyone can run what CI runs with
+<code>buildtools/ui/tests/run_tests.sh all</code>.</li>
+</ul>
+<h2 id="v1240--four-icons-for-every-face-sharp-on-the-glass">v1.24.0 — four icons for every face, sharp on the glass</h2>
+<ul>
+<li>Each face of the Home cube has four icons of its own, and no face offers
+another face's. Library has Controller, Books, Covers and Play; Source has
+Hub, Disc, SD Card and Folder; Settings has Sliders, Gear, Toggles and Dial;
+System has Clock, Info, Power and Chip. Covers, Play, SD Card, Folder,
+Toggles, Dial, Info, Power and Chip are new, and None is gone.</li>
+<li>A settings file that names an icon from another face's list, or None,
+leaves that face on its first icon.</li>
+<li>The face icons are drawn after the glass's glow instead of under it, so
+their lines stay sharp and easy to read.</li>
+<li>The sun no longer glints in the corner of the glass, and no band of light
+passes over it while Home rests. The rest of the glass (the bent view
+through it, the prism edges, the glow, the rim and the halo) is unchanged.</li>
+<li>The dot that circled the temperature dial at the top right is gone; the
+time and the temperature stay.</li>
+</ul>
+<h2 id="v1232--a-quieter-sun-on-the-glass">v1.23.2 — a quieter sun on the glass</h2>
+<ul>
+<li>The sun that a corner of the Home cube catches is now a small glint with
+short rays instead of a large starburst. Its core is smaller and softer,
+the streak and rays are shorter and fainter, and the reflections across
+the screen are fainter. The README and guide pictures of Home, Source and
+System are recorded again with it.</li>
+</ul>
+<h2 id="v1231--pictures-of-every-new-screen">v1.23.1 — pictures of every new screen</h2>
+<ul>
+<li>The README's Library animation shows all three layouts, and two new
+animations follow its Settings paragraph: a tour of Settings in its new
+look, and Y opening a game's settings from the Library. Home, Game Detail
+and Menu Color are recorded again on this release.</li>
+<li>The guide's Library page has an animation of the Library Layout setting
+and of the Vertical and Grid layouts, and one of Y and a game's settings.
+Every picture of Settings, Game Detail, the cheat browser, the Library,
+the Source and System screens and the troubleshooting box is new, so each
+shows the current look.</li>
+<li>The guide's Game Detail, Settings and Controls pages describe the
+Settings line on Game Detail, Y in the Library and each layout's buttons.</li>
+</ul>
+<h2 id="v1230--library-layouts-and-a-games-settings-from-the-library">v1.23.0 — Library layouts, and a game's settings from the Library</h2>
+<ul>
+<li>Library Layout, the first setting in Setup › Library, lays the Library out
+three ways. <strong>Horizontal</strong> is the row of covers you know. <strong>Vertical</strong> is a
+column down the left of the screen, turning like a wheel, with the
+selected game's title, publisher and details beside its cover. <strong>Grid</strong>
+shows rows of five covers, three rows at a time, with a lit frame that
+slides to the selected cover and its title and publisher above the
+controls.</li>
+<li>Every layout wraps round from the last game to the first. In the grid,
+Left and Right run on from one row to the next, Up and Down move a row
+and keep to the column, and L and R move three rows at a time.</li>
+<li>Y on a game in the Library opens that game's own settings, in every
+layout. Leaving them shows the game's details, and B returns to the
+Library with the same game selected. Y never starts a game, even with
+Boot without prompts on.</li>
+<li>The sliders mark that shows a game has settings of its own now appears
+on every cover that shows its art.</li>
+</ul>
+<h2 id="v1221--glass-that-catches-the-light-without-burning-white">v1.22.1 — glass that catches the light without burning white</h2>
+<ul>
+<li>When a face of the Home cube turns through the light as the cube turns or
+tips, it now brightens to a pale lilac with its icon still showing. Before,
+the glow added on top of the reflection turned the whole face white for a
+few frames. The cube at rest looks the same as before.</li>
+</ul>
+<h2 id="v1220--settings-in-the-cheat-browsers-look">v1.22.0 — Settings in the cheat browser's look</h2>
+<ul>
+<li>Every Settings page (Quick, Game Defaults, Setup and its six sections, and
+a game's own settings) is drawn like the cheat browser: one full page, the
+tabs as a segmented control between L and R, the settings as cards, and the
+highlighted one lit with an accent bar that slides as you move.</li>
+<li>Settings that are on or off show an ON or OFF switch; settings with more
+choices show their value in a pill, with arrows while highlighted. Text
+settings read like a field, and "Not set" when empty. Menu Color shows a
+swatch of the color.</li>
+<li>A line above the buttons says what the highlighted setting does, or what
+its current value does. The buttons that work are shown as icons, with
+Save &amp; Exit and Discard &amp; Exit beside them.</li>
+<li>The list of choices, the help and every message and progress box are cards
+in the same style; a warning's accent is amber and a failure's red.</li>
+<li>A game's own settings count their Custom rows at the top right ("2
+custom"), and Game Detail gains a SETTINGS line: how many are the game's
+own and the first of them, or "Game Defaults" with X to change them.</li>
+<li>The page stays on screen for the whole of Settings instead of being
+rebuilt after every press, so it never flickers.</li>
+</ul>
+<h2 id="v1210--glass-that-bends-light">v1.21.0 — glass that bends light</h2>
+<ul>
+<li>The Home cube is glass that refracts: through the front you see the cube's
+far edges, its inner cube and the backdrop, bent and slightly magnified,
+and the rounded edges part the light into red, green and blue like a prism.</li>
+<li>Highlights, glints and the face icons glow. A fine rim lights the edges
+that face the light, a halo sits behind the cube, and the glass focuses a
+patch of light on the floor under it.</li>
+<li>A corner that catches the light flares like the sun: a bright point, six
+rays, a long streak and faint reflections strung across the screen.</li>
+<li>While Home rests, a band of light passes over the glass every seven
+seconds. It needs UI Motion set to Full.</li>
+<li>All of it follows Menu Color. The sun's white core and the prism's fringes
+keep their own colors.</li>
+</ul>
+<h2 id="v1200--see-which-games-have-their-own-settings">v1.20.0 — see which games have their own settings</h2>
+<ul>
+<li>In the Library, a small sliders mark in the corner of a cover means the
+game has settings of its own: at least one that differs from Game
+Defaults, the same count Game Detail shows as "X SETTINGS (2 CUSTOM)". A
+game reset to its defaults loses the mark. It follows Menu Color.</li>
+<li>Indigo reads the games' settings files once when the Library first opens,
+and again after you save settings.</li>
+<li>Game Defaults no longer shows Force Vertical Offset. That default never
+reached a game (each game starts at -3 with GCVideo or GCDigital and +0
+otherwise), so the row did nothing. Set it in a game's own settings; the
+key in global.ini is still read.</li>
+</ul>
+<h2 id="v1191--the-indigo-guide">v1.19.1 — the Indigo guide</h2>
+<ul>
+<li>New: <a href="/indigo/guide/">the Indigo guide</a>, thirteen pages with pictures
+from the real interface. It covers installing, the controls, Home, the
+Library, game details, cheats, Settings and a game's own settings, Menu
+Color and the cube icons, sources, System, posters and troubleshooting,
+and ends with every setting explained.</li>
+<li>The README links to it, and its Home animation and System picture are
+re-recorded with v1.19.0's cube, whose icons now share one shade.</li>
+</ul>
+<h2 id="v1190--cube-face-icons">v1.19.0 — cube face icons</h2>
+<ul>
+<li>Settings › Setup › Console has a row for each face of the Home cube:
+Library Icon, Source Icon, Settings Icon and System Icon. Each picks the
+picture on its face: Controller, Books, Hub, Disc, Sliders, Gear, Clock or
+None. Any face can show any of them, and a face keeps its name and what
+A does there.</li>
+<li>Disc and Gear are new, and Books is the bookshelf the Library face had in
+v1.4.0. Controller mirrors your controller and Clock tells the time on
+whichever face you put them.</li>
+<li>Every icon now glows in the same lilac, the Library controller's, on every
+face, and the glass behind each face has the same tint. The defaults are
+still the controller, hub, sliders and clock.</li>
+<li>The settings file keys are <code>Library Icon</code>, <code>Source Icon</code>, <code>Settings Icon</code>
+and <code>System Icon</code>.</li>
+</ul>
+<h2 id="v1180--button-icons-in-prompts">v1.18.0 — button icons in prompts</h2>
+<ul>
+<li>Message boxes show their buttons as icons too. "Press A to continue."
+becomes the A button and CONTINUE, and deleting a file shows L + A to
+continue or B to cancel.</li>
+<li>Settings' two questions end on their buttons: "Reset everything on this
+screen?" shows A RESET or B KEEP, and "Keep this video mode?" shows
+A KEEP or B CHANGE BACK under its countdown.</li>
+<li>The icons also reach these screens:
+<ul>
+<li>the on-screen keyboard;</li>
+<li>the DOL parameters screen;</li>
+<li>the cheat browser when it has nothing to show;</li>
+<li>the older Swiss screens: the classic file browser's game box, the
+file manager, the folder and DOL pickers, and the MP3 player.</li>
+</ul>
+</li>
+</ul>
+<h2 id="v1172--menu-color-in-the-readme">v1.17.2 — Menu Color in the README</h2>
+<ul>
+<li>The README shows Menu Color: the Home cube in each of the eight colors,
+and the Menu Color list previewing each one before you choose.</li>
+</ul>
+<h2 id="v1171--direct-download-links">v1.17.1 — direct download links</h2>
+<ul>
+<li>The README's Posters and Cheats sections link straight to the three
+downloads (posters for USA and Japan, posters for Europe and Australia,
+cheats for every region) instead of only to the page.</li>
+</ul>
+<h2 id="v1170--menu-color-previews-in-its-list">v1.17.0 — Menu Color previews in its list</h2>
+<ul>
+<li>The list that A opens on Settings › Setup › Console › Menu Color now shows
+each color on screen as you move through it, the way Left and Right
+already do on the row. B puts your color back; A keeps the one you are on.</li>
+</ul>
+<h2 id="v1161--posters-and-cheats-to-download">v1.16.1 — posters and cheats to download</h2>
+<ul>
+<li>Ready-made poster packs (USA and Japan, or Europe and Australia) and a cheat
+pack for every region are at <a href="https://indigo.norvitech.com">https://indigo.norvitech.com</a>. The README and
+the release zip's instructions point there; building your own posters.pak
+still works as before.</li>
+</ul>
+<h2 id="v1160--menu-color">v1.16.0 — Menu Color</h2>
+<ul>
+<li>Settings › Setup › Console › Menu Color colors the whole interface: the
+cube, its light and the stage behind it, the panels, the highlight and the
+text. Choose Indigo (the default), Azure, Emerald, Gold, Spice, Crimson,
+Rose or Jet Black. Right steps round the color wheel and A lists them all.
+The new color shows at once, and Discard &amp; Exit puts the old one back.</li>
+<li>Every color keeps Indigo's brightness, so text reads as easily and the
+glass cube keeps its depth. Cover art, banners, the controller buttons
+in the hints, warnings and enabled cheats keep their own colors.</li>
+<li>The settings file key is <code>Menu Color</code>.</li>
+</ul>
+<h2 id="v1150--button-icons">v1.15.0 — button icons</h2>
+<ul>
+<li>Control hints show the controller's buttons instead of spelling them
+out, the way games do. You see a green A, a red B, grey X and Y, a
+purple Z, the L and R triggers, START, the control stick and the D-pad,
+each followed by what it does.</li>
+<li>They cover every hint line: Home, the source picker, the Library, game
+detail, cheats, Settings and System information. On the game detail
+card they also mark the launch button, "Choose cheats" and the
+shortcuts. Hold L and press A shows as L + A.</li>
+<li>A game's own settings now show all of "X DEFAULT  B DONE". The title
+bar used to cut it off.</li>
+<li>The README's pictures are re-recorded with the icons.</li>
+</ul>
+<h2 id="v1141--home">v1.14.1 — Home</h2>
+<ul>
+<li>The white frame on the cube is gone. The white line and the dark line
+inside it no longer outline the face you are on; the glass, its reflection
+and each face's emblem are unchanged.</li>
+<li>The README's Home animation and System screenshot are re-recorded without
+it.</li>
+</ul>
+<h2 id="v1140--pick-from-a-list">v1.14.0 — pick from a list</h2>
+<ul>
+<li>A on a setting with four or more choices lists them all. That covers the
+video modes, languages, polling rates, horizontal scale, camera stick
+options, RetroTINK-4K profiles and a few more. Move with the D-pad or
+stick, press A to pick, or B to keep what you had; the current choice is
+marked. Left and Right still step one choice at a time.</li>
+<li>The list holds exactly what Right steps through, so video modes your
+cable can't show stay out of it, and the polling rates the list would
+otherwise name twice appear once.</li>
+</ul>
+<h2 id="v1131--the-video-prompt-names-the-new-mode">v1.13.1 — the video prompt names the new mode</h2>
+<ul>
+<li>"Keep this video mode?" now says what you'd keep, for example "Keep
+Swiss Video Mode: PAL 576p?". The row behind the prompt still showed the
+old value until you answered.</li>
+</ul>
+<h2 id="v1130--steady-stick-in-the-last-two-old-lists-the-disc-drive-is-game-disc">v1.13.0 — steady stick in the last two old lists; the disc drive is "Game Disc"</h2>
+<ul>
+<li>The folder picker (copying or moving a file) and the "Select DOL"
+list now scroll with the stick like every other list: one row, a pause,
+then a steady repeat. Before, a full stick raced through a row every
+24 ms or so.</li>
+<li>The disc drive is called "Game Disc" instead of "DVD" wherever Indigo
+names a source: the source picker, Home's Source screen, the file list
+and System information. Settings about the drive itself keep their names.</li>
+<li>System information says CPU calibration is adjusted in Setup / Console,
+where it moved in v1.9.0, instead of the old "Settings / System".</li>
+</ul>
+<h2 id="v1121--home">v1.12.1 — Home</h2>
+<ul>
+<li>The white frame on the cube now marks the face you are on. It stayed on
+the face Library starts on, so after a turn it sat edge-on beside the face
+you had chosen, or on the top or bottom after Up or Down. Now it fades
+across to each face as that face turns to the front.</li>
+<li>The README's Home animation is re-recorded with it, and the System
+screenshot is current: it still showed the rings around the cube removed
+in v1.4.1.</li>
+</ul>
+<h2 id="v1120--settings-read-the-positive-way-round">v1.12.0 — settings read the positive way round</h2>
+<ul>
+<li>Settings stored as "Disable …" now read the way you'd say them:
+Controller Recalibration, Alpha Dithering and Hypervisor show On or Off,
+like Controller Rumble already did. The settings file keeps its key
+names, so <code>Disable Hypervisor=Yes</code> still works and shows as Hypervisor ›
+Off.</li>
+<li>Their help says what On and Off each do.</li>
+</ul>
+<h2 id="v1110--storage-says-whether-your-settings-file-loaded">v1.11.0 — Storage says whether your settings file loaded</h2>
+<ul>
+<li>Settings › Setup › Storage now tells you, under its title, where your
+settings live and whether that file loaded: "Settings are saved in
+swiss/settings/global.ini.", "No swiss/settings/global.ini yet: using
+defaults." or "No device to save settings to."</li>
+<li>Configuration Device's help names the file and says the choice changes
+only once Save &amp; Exit has written the settings there.</li>
+</ul>
+<h2 id="v1100--help-for-every-setting-saving-keeps-your-files-intact">v1.10.0 — help for every setting; saving keeps your files intact</h2>
+<ul>
+<li>
+<p>Y now explains every setting in Settings. 34 rows had no help, including
+most of Network, Swiss Video Mode, Disable Video Patches, Force
+Widescreen, Field Rendering and Horizontal Scale.</p>
+</li>
+<li>
+<p>Game Defaults' NTSC and PAL video modes have their own help instead of
+sharing a game's.</p>
+</li>
+<li>
+<p>Saving settings no longer wipes a hand-edited <code>global.ini</code> or game file:</p>
+<ul>
+<li>comments, blank lines and keys Indigo doesn't know stay where they are;</li>
+<li>known keys get their new value in place;</li>
+<li>missing keys are added before the End marker.</li>
+</ul>
+<p>Older key names are replaced by their current ones.</p>
+</li>
+<li>
+<p>Reset to defaults in a game's settings no longer wipes the Comment and
+Status lines in its file.</p>
+</li>
+<li>
+<p>Toggling autoload (Z) saves only the Autoload line. Before, it saved every
+setting in memory, including ones turned off for this session only, such
+as Boot without prompts when B was held at launch.</p>
+</li>
+<li>
+<p>A new Configuration Device is written to the console's SRAM only after
+the settings are saved to it. If that save fails, the console keeps the
+old device instead of pointing at one without settings.</p>
+</li>
+<li>
+<p>A settings file that can only be read in part now counts as unreadable,
+so it is never half-applied or saved over.</p>
+</li>
+<li>
+<p>Fixed in v1.9.0's game settings: opening them with X no longer puts the
+game's Force Video Mode back to its default. The X press that opened the
+screen was also read as "X: use the default" on the first row.</p>
+</li>
+</ul>
+<h2 id="v190--settings-layout-and-a-games-own-settings">v1.9.0 — Settings layout and a game's own settings</h2>
+<ul>
+<li>Settings is reorganised around when you change things:
+<ul>
+<li>It opens on <strong>Quick</strong>: nine settings that fit on one screen. They are
+menu music and sounds, UI motion, rumble, In-Game Reset, the GameCube
+main menu, memory-card emulation, auto-loaded cheats, and boot without
+prompts.</li>
+<li>
+<strong>Game Defaults</strong> holds what every game starts with.</li>
+<li>
+<strong>Setup</strong> holds everything you set once, in six sections: Display,
+Console, Storage, Network, Library and Developer. A opens a section and
+B goes back.</li>
+<li>L and R move between the three.</li>
+</ul>
+</li>
+<li>A game's own settings (X on its detail screen) open on their own, titled
+with the game's name and without the global tabs, so changing them can't
+also change the defaults.</li>
+<li>The Save &amp; Exit and Discard &amp; Exit buttons replace Back and Next.</li>
+<li>The old Game tab's "Reset to defaults" is gone, because its settings are
+now spread across Quick and Setup. Game Defaults and a game's own settings
+keep their resets.</li>
+<li>docs/SETTINGS.md now lists each key under the screen that shows it.</li>
+<li>Values that differ from Game Defaults are marked <strong>Custom</strong>. Every other
+row follows Game Defaults, and so changes whenever the defaults do.</li>
+<li>
+<strong>X</strong> puts the highlighted row back to its Game Defaults value.</li>
+<li>The rows you're most likely to change come first, in the same order on
+Game Defaults: video mode, widescreen, language, polling rate and the
+controls. Compatibility, picture tuning and the RetroTINK-4K profile
+follow.</li>
+<li>"Reset to defaults" asks before it resets a whole screen.</li>
+<li>Game Detail says when a game has its own settings: the hint reads
+"X SETTINGS (2 CUSTOM)".</li>
+</ul>
+<h2 id="v180--settings-controls">v1.8.0 — Settings controls</h2>
+<ul>
+<li>Holding the D-pad now repeats, the same way the control stick does: hold
+Down to run through a list.</li>
+<li>A changes the highlighted value, the same as Right.</li>
+<li>B leaves Settings. Anything you changed is saved, as with Save &amp; Exit.
+Discard &amp; Exit is still there to undo.</li>
+<li>L and R wrap around the six tabs.</li>
+<li>After you change Swiss Video Mode, System Video, AVE Compatibility, Force
+DTV Status or RetroTINK-4K HDMI Input, Settings asks whether to keep the new
+picture. Press A within 10 seconds to keep it; otherwise it changes back by
+itself, so a mode your TV can't show never sticks.</li>
+<li>Fixed: if you opened Settings from a game and changed a game default,
+saving wrote that game's old values into its own settings file, so the game
+stopped following the defaults. It now keeps following them.</li>
+</ul>
+<h2 id="v170--home">v1.7.0 — Home</h2>
+<ul>
+<li>The cube is glass, like the GameCube's own menu. A soft reflection lies
+across each face and slides over it as the cube turns and sways, and the
+bevelled edges catch the light as thin glints.</li>
+<li>The light stays put while the cube turns, so every face looks the same when
+it comes to the front. Before, the lighting was painted on the cube and
+turned with it: Source arrived brighter than Library, and Up or Down
+carried the bright top to the front.</li>
+<li>The README's Home animation tips the cube up and down as well as turning
+it left and right, as Up and Down on the D-pad or control stick do.</li>
+</ul>
+<h2 id="v160--download">v1.6.0 — download</h2>
+<ul>
+<li>Each release now has an <code>Indigo-vX.Y.Z.zip</code> download. Its <code>SD card</code>
+folder holds <code>ipl.dol</code> and the <code>games</code> and <code>swiss/ui</code> folders, ready to
+copy to the root of the card.</li>
+<li>The README's new "Set up your library" section says how <code>/games</code> has to
+look for the Library to appear, and how to add posters.</li>
+<li>
+<code>buildtools/ui/poster_pack.py</code> is now published. <code>--covers DIR</code> builds
+<code>posters.pak</code> from a folder of cover images named by game ID, and a missing
+Docker image produces the exact <code>docker pull</code> command instead of Docker's
+error.</li>
+</ul>
+<h2 id="v152--settings-files">v1.5.2 — settings files</h2>
+<ul>
+<li>New: <a href="/indigo/guide/settings-file/">docs/SETTINGS.md</a> lists every key Swiss reads from
+<code>global.ini</code> and from a game's own settings file, with its values, its
+default and where it appears in Settings, so a card can be set up on a
+computer before it goes in the console. Example files are in
+<a href="https://github.com/spencercnorton/indigo/tree/v1.25.0/docs/examples">docs/examples/</a>.</li>
+<li>The README no longer says Settings was rebuilt: it keeps Swiss's six tabs,
+restyled.</li>
+</ul>
+<h2 id="v151--readme">v1.5.1 — README</h2>
+<ul>
+<li>Install now says where <code>swiss.dol</code> goes on the console: in place of the file
+your loader already boots, under that file's name, with PicoBoot spelled
+out. The build path <code>cube/swiss/swiss.dol</code> read as a path on the SD card.</li>
+</ul>
+<h2 id="v150--home">v1.5.0 — Home</h2>
+<ul>
+<li>The Library face shows a GameCube controller instead of the bookshelf, and
+it follows the controller in your hand: the control stick and C-stick lean
+with yours, and A, B, X, Y, Start, the D-pad and the L and R triggers light
+while you hold them. Two seconds after you let go it starts playing by
+itself; with reduced motion on it only mirrors you.</li>
+<li>The short marks on the four sides of the cube are gone, on Home, in
+Settings and on the restart prompt.</li>
+<li>The README's Home animation is re-recorded with the controller.</li>
+</ul>
+<h2 id="v142--readme">v1.4.2 — README</h2>
+<ul>
+<li>The README's licence section notes that Indigo's interface was built with
+Claude Code.</li>
+</ul>
+<h2 id="v141--home">v1.4.1 — Home</h2>
+<ul>
+<li>The orbit rings around the cube are gone, on Home and on every other
+screen that shows the cube; it now sits on its own over the backdrop.</li>
+<li>The README's Home animation is re-recorded without them.</li>
+</ul>
+<h2 id="v140--indigo">v1.4.0 — Indigo</h2>
+<ul>
+<li>Swiss UI is now called Indigo, with a new home at
+<a href="https://github.com/spencercnorton/indigo">spencercnorton/indigo</a>. Earlier
+releases stay in the archived spencercnorton/swiss-ui repository. The
+executable is still <code>swiss.dol</code> and settings stay where they were, so an
+existing card needs no changes.</li>
+<li>Home names only the face you are on, under the cube. The source name above
+the cube and the neighbouring faces' names beside it are gone; they did not
+turn with the cube.</li>
+<li>The Library face shows books on a shelf instead of three bars that read as
+a chart.</li>
+<li>The README's Home animation is re-recorded with the new labels and emblem.</li>
+<li>System Information and the restart prompt use the new name, and the About
+page's source link points at this repository.</li>
+</ul>
+<h2 id="v134--cheats">v1.3.4 — cheats</h2>
+<ul>
+<li>Fixed: leaving the cheat browser crashed Swiss when the cheat file came from
+a read-only device such as a data disc. Saving the selection now skips a
+device that cannot write instead of calling a missing write handler.</li>
+<li>The game detail picture is now an animation: the cheat browser opens,
+cheats are switched on and off, and the detail screen shows the new count.</li>
+</ul>
+<h2 id="v133--screenshots">v1.3.3 — screenshots</h2>
+<ul>
+<li>The library animation and game detail still show real GameCube games with
+their box art from a poster pack, instead of fictitious placeholder titles.</li>
+</ul>
+<h2 id="v132--screenshots">v1.3.2 — screenshots</h2>
+<ul>
+<li>The library animation and game detail still now show a poster pack in use:
+nine illustrated covers drawn for the fictitious demonstration titles,
+rendered by the real poster pipeline (focus scaling, depth, retained art),
+instead of the generated fallback cards.</li>
+</ul>
+<h2 id="v131--screenshots">v1.3.1 — screenshots</h2>
+<ul>
+<li>The Home animation is re-cut on the rotations: the loop now walks Library,
+Source, System and back to Library, instead of opening on four idle seconds
+and cutting off mid-turn.</li>
+</ul>
+<h2 id="v130--screenshots">v1.3.0 — screenshots</h2>
+<ul>
+<li>The README now shows the interface: an animated capture of the Home cube
+turning between its four faces, the game library, and the game detail
+screen.</li>
+<li>Captured from a demonstration card built for the purpose — nine fictitious
+titles with generated cover art — so nothing in frame is anyone's real
+library or third-party artwork. The animations are APNG, which GitHub
+renders in a README like any image.</li>
+</ul>
+<h2 id="v120--first-public-release">v1.2.0 — first public release</h2>
+<p>The first published release of the interface rebuild. Everything below is what
+this tag contains rather than a list of changes against an earlier public
+version; the upstream Swiss history it is built on is at
+<a href="https://github.com/emukidid/swiss-gc">emukidid/swiss-gc</a>.</p>
+<ul>
+<li>
+<strong>Home</strong>: an animated four-face cube, one face per destination, with
+device state carried through the rotation.</li>
+<li>
+<strong>Library</strong>: a retained poster grid over the device's games, with a saved
+selection that survives a return to Home.</li>
+<li>
+<strong>Game details</strong>: a per-title surface with artwork, region and format
+information, and the boot options for that title.</li>
+<li>
+<strong>Cheats</strong>: a presentation pass over the cheat browser, with clearer
+per-cheat state and safer runtime handling.</li>
+<li>
+<strong>Settings and System</strong>: rebuilt surfaces with consistent controller
+navigation shared across every screen.</li>
+<li>Interface work only: device handlers, the patch engine and the loader are
+upstream Swiss.</li>
+</ul>
+<nav class="pager" aria-label="Previous and next page">
+<a class="prev" href="/indigo/guide/settings-file/"><small>Previous</small>Settings files</a>
+</nav>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/CHANGELOG.md">CHANGELOG.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/CHANGELOG.md">Suggest an edit</a>.</p>
+</article>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

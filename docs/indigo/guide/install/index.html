@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Install · Indigo · NorviTech</title>
+<meta name="description" content="Indigo is a single program, ipl.dol, that runs in place of Swiss. It reads the same settings, cheats and saves as Swiss, so nothing on your card has to move.">
+<link rel="canonical" href="https://norvitech.com/indigo/guide/install/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Install · Indigo · NorviTech">
+<meta property="og:description" content="Indigo is a single program, ipl.dol, that runs in place of Swiss. It reads the same settings, cheats and saves as Swiss, so nothing on your card has to move.">
+<meta property="og:url" content="https://norvitech.com/indigo/guide/install/">
+<meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Indigo on the GameCube: a glass cube showing a GameCube controller, with LIBRARY named underneath">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app doc-hero">
+  <p class="crumb"><a href="/#suite">Suite</a> / <a href="/indigo/">Indigo</a> / <a href="/indigo/guide/">Guide</a></p>
+  <h1>Install</h1>
+</section>
+
+<div class="docs">
+<nav class="docnav glass" aria-label="Indigo guide">
+<p>Guide</p>
+<ul>
+<li><a href="/indigo/guide/">Overview</a></li>
+<li><a href="/indigo/guide/install/" aria-current="page">Install</a></li>
+<li><a href="/indigo/guide/controls/">Controls</a></li>
+<li><a href="/indigo/guide/home/">Home</a></li>
+<li><a href="/indigo/guide/library/">Library</a></li>
+<li><a href="/indigo/guide/game-details/">Game details</a></li>
+<li><a href="/indigo/guide/cheats/">Cheats</a></li>
+<li><a href="/indigo/guide/settings/">Settings</a></li>
+<li><a href="/indigo/guide/personalize/">Make it yours</a></li>
+<li><a href="/indigo/guide/source/">Source</a></li>
+<li><a href="/indigo/guide/system/">System</a></li>
+<li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
+<li><a href="/indigo/guide/posters/">Posters</a></li>
+<li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+</ul>
+<p>Reference</p>
+<ul>
+<li><a href="/indigo/guide/settings-file/">Settings files</a></li>
+<li><a href="/indigo/changelog/">Changelog</a></li>
+</ul>
+</nav>
+<article class="doc">
+<p>Indigo is a single program, <code>ipl.dol</code>, that runs in place of Swiss. It reads
+the same settings, cheats and saves as Swiss, so nothing on your card has to
+move.</p>
+<p><strong>You need</strong> a GameCube that already starts Swiss from an SD card or a drive
+replacement (PicoBoot, GC Loader, SD2SP2, SD Gecko and the like), and a
+computer to copy files to the card.</p>
+<h2 id="1-download">1. Download</h2>
+<p>Each <a href="https://github.com/spencercnorton/indigo/releases/latest">release</a> has
+an <code>Indigo-vX.Y.Z.zip</code>. It is laid out exactly as it goes on the card, so
+installing is drag and drop:</p>
+<pre lang="text"><code>Indigo-README.txt              what goes where, in plain words
+ipl.dol                        Indigo
+games/                         your games (see Library)
+swiss/patches/apploader.img    Indigo again, for In-Game Reset
+swiss/ui/                      posters.pak, if you add one (see Posters)
+swiss/indigo/                  the licence and notice
+</code></pre>
+<h2 id="2-put-it-on-the-card">2. Put it on the card</h2>
+<p>Pick the line that matches how your console starts Swiss.</p>
+<p><strong>PicoBoot, and other modchips that boot <code>ipl.dol</code> from the card.</strong>
+If the root of the card already has an <code>ipl.dol</code>, that is your current Swiss:
+rename it to <code>z.dol</code>. Then unzip the download, select everything inside and
+drag it onto the root of the card. PicoBoot starts <code>z.dol</code> when you hold Z at power-on, so stock Swiss
+stays one button away.</p>
+<p><strong>PicoBoot with no <code>ipl.dol</code> on the card.</strong> Swiss is flashed onto the Pico
+itself. Flash PicoBoot's standard firmware first (see its
+<a href="https://support.webhdx.dev/gc/picoboot/installation-guide">installation guide</a>),
+then follow the step above.</p>
+<p><strong>A loader that boots a <code>.dol</code> from the card by name.</strong> Replace that file
+with <code>ipl.dol</code>, keeping the old file's name.</p>
+<p><strong>GC Loader, or a loader that boots a disc image.</strong> Drag everything in the
+download onto the root of the card, start Swiss the way you do now, and open
+<code>ipl.dol</code> from Swiss's file list. Indigo doesn't build a <code>boot.iso</code>.</p>
+<h2 id="3-first-boot">3. First boot</h2>
+<p>Indigo opens on Home, a glass cube with one destination on each face. If it
+finds your games, the cube faces <strong>Library</strong>; press A to see them. If it
+finds no device to read from yet, it faces <strong>Source</strong>, where you choose one.</p>
+<p align="center">
+  <a href="/indigo/guide/images/home-library-face.png"><img alt="Home on the Library face: the glass cube shows a GameCube controller, LIBRARY is written underneath, and the hint line reads Turn and A Open." src="/indigo/guide/images/home-library-face.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p>Next:</p>
+<ul>
+<li>
+<a href="/indigo/guide/library/#set-up-the-games-folder">Set up your library</a>: the Library
+needs a <code>/games</code> folder with nothing but games in it.</li>
+<li>
+<a href="/indigo/guide/posters/">Add posters</a> for box art, and <a href="/indigo/guide/cheats/">cheats</a> if you
+want them.</li>
+<li>Learn the <a href="/indigo/guide/controls/">controls</a>.</li>
+</ul>
+<h2 id="update-indigo">Update Indigo</h2>
+<p>Download the new release and replace <code>ipl.dol</code> (or the file you replaced in
+step 2) and <code>swiss/patches/apploader.img</code> with the new ones. Your settings,
+poster pack and cheats stay where they are.</p>
+<h2 id="go-back-to-stock-swiss">Go back to stock Swiss</h2>
+<ul>
+<li>
+<strong>PicoBoot:</strong> hold Z while you switch the console on to start <code>z.dol</code>.</li>
+<li>
+<strong>Other loaders:</strong> put your old file back, or start stock Swiss from your
+loader as before.</li>
+<li>In-Game Reset set to Apploader returns to Indigo until you put back stock
+Swiss's own <code>swiss/patches/apploader.img</code>.</li>
+</ul>
+<p>Both use the same settings file. Indigo keeps your comments in it when it
+saves; stock Swiss rewrites the whole file when it saves.</p>
+<h2 id="leaving-a-game">Leaving a game</h2>
+<p>With <strong>In-Game Reset</strong> turned on (Settings › Quick), hold <strong>A + Z + START</strong>
+during a game to leave it, or <strong>R + Z + START</strong> to restart it. Set it to
+<strong>Apploader</strong> to come back to Indigo: the zip's <code>swiss/patches/apploader.img</code>
+is Indigo. <strong>Reboot</strong> resets the console, which starts whatever your loader
+boots (with GC Loader, its <code>boot.iso</code>).</p>
+<h2 id="build-it-yourself">Build it yourself</h2>
+<p>The build runs in the container image the project's CI uses, so nothing is
+installed on your computer:</p>
+<div class="highlight highlight-source-shell"><pre>git clone https://github.com/spencercnorton/indigo.git
+<span class="pl-c1">cd</span> indigo
+docker run --rm -u <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s"><span class="pl-pds">$(</span>id -u<span class="pl-pds">)</span></span>:<span class="pl-s"><span class="pl-pds">$(</span>id -g<span class="pl-pds">)</span></span><span class="pl-pds">"</span></span> -v <span class="pl-s"><span class="pl-pds">"</span><span class="pl-smi">$PWD</span>:/work<span class="pl-pds">"</span></span> -w /work \
+  ghcr.io/extremscorner/libogc2 make dev</pre></div>
+<p>This writes <code>cube/swiss/swiss.dol</code>. That is the same program as <code>ipl.dol</code>
+in the release zip; copy it to the card under the name your loader expects.
+<code>buildtools/sd_package.sh vX.Y.Z</code> packs it into the zip, with the
+<code>apploader.img</code> In-Game Reset returns to.</p>
+<hr>
+<p align="center"><a href="/indigo/guide/">← Guide</a> · <a href="/indigo/guide/controls/">Controls →</a></p>
+<nav class="pager" aria-label="Previous and next page">
+<a class="prev" href="/indigo/guide/"><small>Previous</small>Indigo guide</a>
+<a class="next" href="/indigo/guide/controls/"><small>Next</small>Controls</a>
+</nav>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/install.md">docs/guide/install.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/install.md">Suggest an edit</a>.</p>
+</article>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

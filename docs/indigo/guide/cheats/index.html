@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Cheats · Indigo · NorviTech</title>
+<meta name="description" content="Indigo runs Gecko codes: cheats that change a game while it runs, from infinite health to widescreen fixes. You switch them on per game, and Indigo…">
+<link rel="canonical" href="https://norvitech.com/indigo/guide/cheats/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Cheats · Indigo · NorviTech">
+<meta property="og:description" content="Indigo runs Gecko codes: cheats that change a game while it runs, from infinite health to widescreen fixes. You switch them on per game, and Indigo…">
+<meta property="og:url" content="https://norvitech.com/indigo/guide/cheats/">
+<meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Indigo on the GameCube: a glass cube showing a GameCube controller, with LIBRARY named underneath">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app doc-hero">
+  <p class="crumb"><a href="/#suite">Suite</a> / <a href="/indigo/">Indigo</a> / <a href="/indigo/guide/">Guide</a></p>
+  <h1>Cheats</h1>
+</section>
+
+<div class="docs">
+<nav class="docnav glass" aria-label="Indigo guide">
+<p>Guide</p>
+<ul>
+<li><a href="/indigo/guide/">Overview</a></li>
+<li><a href="/indigo/guide/install/">Install</a></li>
+<li><a href="/indigo/guide/controls/">Controls</a></li>
+<li><a href="/indigo/guide/home/">Home</a></li>
+<li><a href="/indigo/guide/library/">Library</a></li>
+<li><a href="/indigo/guide/game-details/">Game details</a></li>
+<li><a href="/indigo/guide/cheats/" aria-current="page">Cheats</a></li>
+<li><a href="/indigo/guide/settings/">Settings</a></li>
+<li><a href="/indigo/guide/personalize/">Make it yours</a></li>
+<li><a href="/indigo/guide/source/">Source</a></li>
+<li><a href="/indigo/guide/system/">System</a></li>
+<li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
+<li><a href="/indigo/guide/posters/">Posters</a></li>
+<li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+</ul>
+<p>Reference</p>
+<ul>
+<li><a href="/indigo/guide/settings-file/">Settings files</a></li>
+<li><a href="/indigo/changelog/">Changelog</a></li>
+</ul>
+</nav>
+<article class="doc">
+<p>Indigo runs Gecko codes: cheats that change a game while it runs, from
+infinite health to widescreen fixes. You switch them on per game, and Indigo
+remembers your choice.</p>
+<p align="center">
+  <a href="/indigo/screenshots/game-detail.png"><img alt="Y on the detail screen for LEGO Star Wars II opens the cheat browser; three cheats are switched on and one switched back off, and the detail screen then reads 2 of 130 enabled." src="/indigo/screenshots/game-detail.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<h2 id="get-cheat-files">Get cheat files</h2>
+<p>Indigo reads one file per game, <code>/swiss/cheats/&lt;game ID&gt;.txt</code>, such as
+<code>/swiss/cheats/GALE01.txt</code> for Super Smash Bros. Melee. The quickest way to
+get them is the ready-made pack, which covers every region:</p>
+<ul>
+<li>
+<a href="https://indigo.norvitech.com/indigo-cheats.zip">Download the cheat pack</a>
+and unzip it into the root of the card.</li>
+</ul>
+<p>Cheats that the pack's checks show would break Indigo are switched off in
+the file and marked; the <a href="https://norvitech.com/indigo/">Indigo page</a> says
+what the checks can't cover.</p>
+<p>A game without a file says "No cheats found" on its detail screen.</p>
+<h2 id="switch-cheats-on">Switch cheats on</h2>
+<ol>
+<li>Open a game's <a href="/indigo/guide/game-details/">details</a> and press <strong>Y</strong>.</li>
+<li>Move to a cheat and press <strong>A</strong> to switch it <strong>On</strong> or <strong>Off</strong>.</li>
+<li>Press <strong>B</strong> when you're done. The detail screen now shows how many are
+on, and names them.</li>
+<li>Press <strong>A</strong> to start the game with those cheats.</li>
+</ol>
+<p align="center">
+  <a href="/indigo/guide/images/cheats.png"><img alt="The cheat browser for 1080° Avalanche: Enable 8-Bit Mode and Super Jump are On and the others Off; the top right reads 2 enabled and the list position 5 / 12; the hint line reads A Toggle, B Done, X Enabled only, Z Advanced." src="/indigo/guide/images/cheats.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p>In the browser:</p>
+<ul>
+<li>The top right counts the cheats that are on, and the line above the list
+shows where you are in it, such as "5 / 12".</li>
+<li>
+<strong>X</strong> shows only the cheats that are on; X again shows them all.</li>
+<li>
+<strong>Z</strong> opens <strong>Advanced</strong> (below).</li>
+</ul>
+<p>Indigo saves which cheats are on in a small <code>.chtsel</code> file beside the
+game's cheat file, one per disc revision, so they're still on next time.
+Cheats on a read-only device, such as a data disc, work but aren't saved.</p>
+<h2 id="start-with-your-cheats-every-time">Start with your cheats every time</h2>
+<p>Normally the cheats that are on apply when you start the game after opening
+the browser. Turn on <strong>Auto-load cheats</strong> in Settings › Quick and Indigo
+applies your saved cheats whenever the game starts, without opening the
+browser. It shows "Applied 3 cheats" (or however many) for a second as the
+game starts.</p>
+<h2 id="advanced">Advanced</h2>
+<p align="center">
+  <a href="/indigo/guide/images/cheats-advanced.png"><img alt="Advanced in the cheat browser: the selected cheat, Super Jump; a WiiRD Debug switch that is Off; and a bar showing the cheat memory used, 16 of 5448 bytes." src="/indigo/guide/images/cheats-advanced.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<ul>
+<li>
+<strong>Cheat memory</strong> shows how much of the space for cheats is used. All the
+cheats that are on share it; if it's full, Indigo says "Not enough room.
+Turn off another cheat first."</li>
+<li>
+<strong>WiiRD Debug</strong> starts the game with the WiiRD debugger, for compatible
+debugging tools. It uses cheat memory too.</li>
+</ul>
+<p>B goes back to the list.</p>
+<hr>
+<p align="center"><a href="/indigo/guide/game-details/">← Game details</a> · <a href="/indigo/guide/settings/">Settings →</a></p>
+<nav class="pager" aria-label="Previous and next page">
+<a class="prev" href="/indigo/guide/game-details/"><small>Previous</small>Game details</a>
+<a class="next" href="/indigo/guide/settings/"><small>Next</small>Settings</a>
+</nav>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/cheats.md">docs/guide/cheats.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/cheats.md">Suggest an edit</a>.</p>
+</article>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

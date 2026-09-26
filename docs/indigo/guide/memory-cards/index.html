@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Memory Cards · Indigo · NorviTech</title>
+<meta name="description" content="Memory Cards shows the saves on the memory cards in Slot A and Slot B, and the saves in folders on your SD card, and moves them between the three, much as…">
+<link rel="canonical" href="https://norvitech.com/indigo/guide/memory-cards/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Memory Cards · Indigo · NorviTech">
+<meta property="og:description" content="Memory Cards shows the saves on the memory cards in Slot A and Slot B, and the saves in folders on your SD card, and moves them between the three, much as…">
+<meta property="og:url" content="https://norvitech.com/indigo/guide/memory-cards/">
+<meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Indigo on the GameCube: a glass cube showing a GameCube controller, with LIBRARY named underneath">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app doc-hero">
+  <p class="crumb"><a href="/#suite">Suite</a> / <a href="/indigo/">Indigo</a> / <a href="/indigo/guide/">Guide</a></p>
+  <h1>Memory Cards</h1>
+</section>
+
+<div class="docs">
+<nav class="docnav glass" aria-label="Indigo guide">
+<p>Guide</p>
+<ul>
+<li><a href="/indigo/guide/">Overview</a></li>
+<li><a href="/indigo/guide/install/">Install</a></li>
+<li><a href="/indigo/guide/controls/">Controls</a></li>
+<li><a href="/indigo/guide/home/">Home</a></li>
+<li><a href="/indigo/guide/library/">Library</a></li>
+<li><a href="/indigo/guide/game-details/">Game details</a></li>
+<li><a href="/indigo/guide/cheats/">Cheats</a></li>
+<li><a href="/indigo/guide/settings/">Settings</a></li>
+<li><a href="/indigo/guide/personalize/">Make it yours</a></li>
+<li><a href="/indigo/guide/source/">Source</a></li>
+<li><a href="/indigo/guide/system/">System</a></li>
+<li><a href="/indigo/guide/memory-cards/" aria-current="page">Memory Cards</a></li>
+<li><a href="/indigo/guide/posters/">Posters</a></li>
+<li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+</ul>
+<p>Reference</p>
+<ul>
+<li><a href="/indigo/guide/settings-file/">Settings files</a></li>
+<li><a href="/indigo/changelog/">Changelog</a></li>
+</ul>
+</nav>
+<article class="doc">
+<p>Memory Cards shows the saves on the memory cards in Slot A and Slot B, and
+the saves in folders on your SD card, and moves them between the three, much
+as the GameCube's own Memory Card screen does between its two slots. On Home,
+turn the cube to <strong>System</strong>, press A, choose <strong>Memory Cards</strong> and press A.</p>
+<p align="center">
+  <a href="/indigo/guide/images/memory-cards.png"><img alt="Memory Cards: Slot A lists four saves with their banners. R shows Slot B, then the SD CARD tab with no saves in the Save Folder. Back on Slot A, A on Indigo Quest offers Copy, Move and Delete; Copy to lists Slot B, the Save Folder and Another folder; the save is copied to /swiss/saves, and the SD CARD tab now holds it." src="/indigo/guide/images/memory-cards.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<h2 id="whats-on-the-screen">What's on the screen</h2>
+<p>Three tabs along the top: <strong>SLOT A</strong>, <strong>SLOT B</strong> and <strong>SD CARD</strong>. L and R move
+between them. Memory Cards opens on Slot A.</p>
+<ul>
+<li>
+<strong>A memory card's tab</strong> lists its saves in the card's own order. Each row
+shows the save's banner, the game's name for it (the first line of its
+comment) and how many blocks it takes. The top right says how many blocks
+are free, and the line above the buttons shows the rest of the highlighted
+save's comment and its game code.</li>
+<li>
+<strong>The SD CARD tab</strong> opens on your Save Folder and lists its folders, then
+its saves: <code>.gci</code> files, and Action Replay (<code>.sav</code>) and GameShark (<code>.gcs</code>)
+saves. A opens a folder; the first row, <strong>Up to</strong>, goes back up. The SD
+card is the one Indigo keeps its settings on, the Configuration Device.</li>
+</ul>
+<p align="center">
+  <a href="/indigo/guide/images/memory-cards-slot-a.png"><img alt="Slot A: four saves, Indigo Quest, Puzzle Park, Star Racer and Tiny Tanks, each with its banner (Puzzle Park, which has none, shows a small memory card), its name and its size in blocks; the top right reads 2036 blocks free." src="/indigo/guide/images/memory-cards-slot-a.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p align="center">
+  <a href="/indigo/guide/images/memory-cards-sd.png"><img alt="The SD CARD tab inside the Save Folder, /swiss/saves: an Up to /swiss row, then the Indigo Quest save copied there. The top right names the device, GC Loader." src="/indigo/guide/images/memory-cards-sd.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p>A save without a banner shows a small memory card instead. A slot with no
+card, or with something else in it, says so; put a card in and press L or R
+to look again.</p>
+<h2 id="copy-move-and-delete">Copy, move and delete</h2>
+<p>Highlight a save and press <strong>A</strong>:</p>
+<ul>
+<li>
+<strong>Copy</strong> puts a copy somewhere else and leaves the save where it is.</li>
+<li>
+<strong>Move</strong> puts it somewhere else and then removes it here.</li>
+<li>
+<strong>Delete</strong> removes it, after you choose <strong>Delete</strong> a second time. Cancel is
+highlighted first, so an extra A doesn't delete anything.</li>
+</ul>
+<p align="center">
+  <a href="/indigo/guide/images/memory-cards-options.png"><img alt="A on Indigo Quest opens a card with Copy, Move and Delete." src="/indigo/guide/images/memory-cards-options.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p>Copy and Move then ask where to:</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Choice</th>
+<th>Puts the save</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slot A, Slot B</td>
+<td>On the memory card in that slot. Offered when the slot has a card and the save isn't already on it.</td>
+</tr>
+<tr>
+<td>Save Folder</td>
+<td>In the Save Folder on the SD card, as a <code>.gci</code>.</td>
+</tr>
+<tr>
+<td>Another folder…</td>
+<td>In a folder you choose: A opens a folder, X chooses the one that's open, B cancels.</td>
+</tr>
+</tbody>
+</table></div>
+<p align="center">
+  <a href="/indigo/guide/images/memory-cards-copy-to.png"><img alt="Copy to: Slot B, Save Folder /swiss/saves and Another folder." src="/indigo/guide/images/memory-cards-copy-to.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p>A save copied off a memory card is named the way Dolphin names the saves in
+a GCI folder, such as <code>01-GALE-SuperSmashBros0110290334.gci</code>, so a folder of
+them can also be a Dolphin memory card. When the name is taken, the copy is
+numbered: <code>…_2.gci</code>. A save copied from a folder keeps its file name.</p>
+<p>Indigo reads every copy back and compares it with the original before it
+calls the copy done, and a Move removes the original only after that. If
+anything goes wrong, the message says what, and nothing is moved.</p>
+<p>Memory Cards won't:</p>
+<ul>
+<li>
+<strong>Write over a save.</strong> A card that already has the same save says so; delete
+one of them first.</li>
+<li>
+<strong>Copy to a card without room.</strong> It says how many blocks the card has free
+and how many the save needs.</li>
+<li>
+<strong>Move a save its game marks as not to be moved.</strong> Some games tie a save to
+its memory card, and moving it would lose it. Copy it instead: the original
+stays where it works.</li>
+</ul>
+<h2 id="the-save-folder">The Save Folder</h2>
+<p>Settings › Setup › Storage › <strong>Save Folder</strong> is where saves copied off a
+memory card go, and the folder the SD CARD tab opens on. It starts as
+<code>swiss/saves</code>, which Indigo makes the first time you open Memory Cards. A on
+Save Folder lists the SD card's folders: A opens one, X chooses the one
+that's open, and B keeps the folder you had. Leave Settings with Save &amp; Exit
+to keep your choice.</p>
+<p align="center">
+  <a href="/indigo/guide/images/memory-cards-save-folder.png"><img alt="Settings, Setup, Storage: Save Folder, the second row, reads /swiss/saves, and the line above the buttons reads: where Memory Cards (Home › System) copies saves off a memory card, and the folder it opens first." src="/indigo/guide/images/memory-cards-save-folder.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p align="center">
+  <a href="/indigo/guide/images/memory-cards-chooser.png"><img alt="Choose a Folder, open at /swiss: an Up to / row and the saves folder; A opens a folder, X chooses the one that's open, B cancels." src="/indigo/guide/images/memory-cards-chooser.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<h2 id="good-to-know">Good to know</h2>
+<ul>
+<li>Memory Cards works with memory cards in the slots. <strong>Emulate Memory Card</strong>
+keeps saves in a memory card image on the SD card instead, one per slot and
+region (<code>swiss/saves/MemoryCardA.USA.raw</code> and so on), which Memory Cards
+doesn't open.</li>
+<li>A slot holding an SD adapter that Indigo is using, for your games or its
+settings, isn't read as a memory card.</li>
+<li>Dolphin can't give a GameCube an SD card, so there the SD CARD tab says
+there is no device for settings and saves.</li>
+</ul>
+<hr>
+<p align="center"><a href="/indigo/guide/system/">← System</a> · <a href="/indigo/guide/posters/">Posters →</a></p>
+<nav class="pager" aria-label="Previous and next page">
+<a class="prev" href="/indigo/guide/system/"><small>Previous</small>System</a>
+<a class="next" href="/indigo/guide/posters/"><small>Next</small>Posters</a>
+</nav>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/memory-cards.md">docs/guide/memory-cards.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/memory-cards.md">Suggest an edit</a>.</p>
+</article>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

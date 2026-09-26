@@ -1,0 +1,1227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Settings files · Indigo · NorviTech</title>
+<meta name="description" content="Indigo keeps Swiss&#x27;s settings files exactly as Swiss writes them, so a card works with either. You can write them on a computer before you boot, which is…">
+<link rel="canonical" href="https://norvitech.com/indigo/guide/settings-file/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Settings files · Indigo · NorviTech">
+<meta property="og:description" content="Indigo keeps Swiss&#x27;s settings files exactly as Swiss writes them, so a card works with either. You can write them on a computer before you boot, which is…">
+<meta property="og:url" content="https://norvitech.com/indigo/guide/settings-file/">
+<meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Indigo on the GameCube: a glass cube showing a GameCube controller, with LIBRARY named underneath">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app doc-hero">
+  <p class="crumb"><a href="/#suite">Suite</a> / <a href="/indigo/">Indigo</a></p>
+  <h1>Settings files</h1>
+</section>
+
+<div class="docs">
+<nav class="docnav glass" aria-label="Indigo guide">
+<p>Guide</p>
+<ul>
+<li><a href="/indigo/guide/">Overview</a></li>
+<li><a href="/indigo/guide/install/">Install</a></li>
+<li><a href="/indigo/guide/controls/">Controls</a></li>
+<li><a href="/indigo/guide/home/">Home</a></li>
+<li><a href="/indigo/guide/library/">Library</a></li>
+<li><a href="/indigo/guide/game-details/">Game details</a></li>
+<li><a href="/indigo/guide/cheats/">Cheats</a></li>
+<li><a href="/indigo/guide/settings/">Settings</a></li>
+<li><a href="/indigo/guide/personalize/">Make it yours</a></li>
+<li><a href="/indigo/guide/source/">Source</a></li>
+<li><a href="/indigo/guide/system/">System</a></li>
+<li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
+<li><a href="/indigo/guide/posters/">Posters</a></li>
+<li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+</ul>
+<p>Reference</p>
+<ul>
+<li><a href="/indigo/guide/settings-file/" aria-current="page">Settings files</a></li>
+<li><a href="/indigo/changelog/">Changelog</a></li>
+</ul>
+</nav>
+<article class="doc">
+<p>Indigo keeps Swiss's settings files exactly as Swiss writes them, so a card
+works with either. You can write them on a computer before you boot, which is
+the quickest way to set up a new card or to change settings you only set once.</p>
+<p>Every key and value on this page is checked automatically against the code
+that reads and writes these files.</p>
+<h2 id="where-the-files-go">Where the files go</h2>
+<p>Swiss keeps its settings on the <strong>configuration device</strong>, which is usually the
+SD card (SD2SP2, SD Gecko) or a GC Loader or other drive replacement. Choose it
+on the console in Settings › Setup › Storage › Configuration Device. The choice is
+stored in the console's SRAM, not in a file. Until one is chosen, Swiss uses
+the first device it finds that can hold settings. A new choice reaches SRAM
+only after Save &amp; Exit has written the settings to that device; if the save
+fails, the console keeps the old one.</p>
+<p>To check that your file loaded, open Settings › Setup › Storage. The line
+under the title reads:</p>
+<ul>
+<li>"Settings are saved in swiss/settings/global.ini." when it loaded, or
+after a save has written it.</li>
+<li>"No swiss/settings/global.ini yet: using defaults." when there is no file
+there, or it couldn't be read.</li>
+<li>"No device to save settings to." when no configuration device was found.</li>
+</ul>
+<div class="table"><table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/swiss/settings/global.ini</code></td>
+<td>Every setting that isn't per game. Read once, when Swiss starts.</td>
+</tr>
+<tr>
+<td><code>/swiss/settings/game/&lt;ID4&gt;.ini</code></td>
+<td>One game's own settings. <code>&lt;ID4&gt;</code> is the first four characters of the game ID, such as <code>GALE</code> for Super Smash Bros. Melee (NTSC, <code>GALE01</code>). Read when you pick that game.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every disc and revision that shares those four characters shares one file.</p>
+<h2 id="writing-a-file">Writing a file</h2>
+<ul>
+<li>One setting per line, as <code>Key=Value</code>. Lines starting with <code>#</code> are ignored.
+Windows and Unix line endings both work.</li>
+<li>Keys and values are case-sensitive and must match this page exactly. Nothing
+is trimmed, so <code>Key = Value</code> with spaces doesn't match anything.</li>
+<li>A key you leave out keeps its default. A key Swiss doesn't know is ignored.</li>
+<li>
+<strong>On/off settings:</strong> only <code>Yes</code> turns a setting on. Anything else, including
+<code>yes</code>, <code>1</code>, <code>true</code> or a typo, turns it off.</li>
+<li>
+<strong>Settings with a list of values:</strong> a value that isn't in the list is
+ignored, and the setting keeps its default.</li>
+<li>Numbers are whole numbers. Text is used as written, up to the field's length.</li>
+<li>When you save settings on the console, Indigo keeps what you wrote. Your
+comments, blank lines and keys it doesn't know stay where they are, and each
+known key gets its new value in place. Keys missing from <code>global.ini</code> are
+added before its <code>#!!Swiss Settings End!!</code> line, or at the end. Old key
+names are replaced by their current ones. A game's file keeps only the
+settings that differ from the defaults. Upstream Swiss still rewrites the
+whole file and drops comments if you boot it.</li>
+<li>Network passwords are stored as plain text.</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<p><a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/examples/global.ini"><code>examples/global.ini</code></a> sets a few common options, and
+<a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/examples/game/GALE.ini"><code>examples/game/GALE.ini</code></a> gives one game its own
+video mode and polling rate. Copy them to the paths above and edit them.</p>
+<div class="highlight highlight-source-ini"><pre><span class="pl-k">IGRType</span>=Reboot
+<span class="pl-k">AutoCheats</span>=Yes
+<span class="pl-k">GameBrowserType</span>=Carousel
+Disable Menu <span class="pl-k">Music</span>=Yes</pre></div>
+<h2 id="what-swiss-uses-when-a-setting-is-in-more-than-one-place">What Swiss uses when a setting is in more than one place</h2>
+<p>Swiss starts from its built-in defaults. Each source below overrides the ones
+before it:</p>
+<ol>
+<li>the console's SRAM (sound, video, screen position, language, boot mode);</li>
+<li>the settings your loader passes to Swiss (video cable type, language);</li>
+<li>
+<code>global.ini</code>;</li>
+<li>arguments passed to <code>swiss.dol</code>, if your loader supports them. They use the
+same <code>Key=Value</code> form and last until you restart.</li>
+</ol>
+<p>Swiss then writes the SRAM values back to the console.</p>
+<h2 id="keys-in-globalini">Keys in global.ini</h2>
+<p>The tables follow the console's layout: Quick, Game Defaults, and the six
+Setup sections. The last column names the row on that screen.</p>
+<h3 id="quick">Quick</h3>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+<th>On screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Disable PAD Rumble</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Controller Rumble › Off.</td>
+<td><code>No</code></td>
+<td>Controller Rumble</td>
+</tr>
+<tr>
+<td><code>Disable UI Animations</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> is UI Motion › Off.</td>
+<td><code>No</code></td>
+<td>UI Motion</td>
+</tr>
+<tr>
+<td><code>Reduce UI Animations</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> with <code>Disable UI Animations=No</code> is UI Motion › Reduced.</td>
+<td><code>No</code></td>
+<td>UI Motion</td>
+</tr>
+<tr>
+<td><code>Disable Menu Music</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Menu Music › Off.</td>
+<td><code>No</code></td>
+<td>Menu Music</td>
+</tr>
+<tr>
+<td><code>Disable Menu SFX</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Menu Sounds › Off.</td>
+<td><code>No</code></td>
+<td>Menu Sounds</td>
+</tr>
+<tr>
+<td><code>AutoBoot</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Boot without prompts</td>
+</tr>
+<tr>
+<td><code>IGRType</code></td>
+<td>
+<code>Disabled</code>, <code>Reboot</code>, <code>Apploader</code>
+</td>
+<td><code>Disabled</code></td>
+<td>In-Game Reset</td>
+</tr>
+<tr>
+<td><code>BS2Boot</code></td>
+<td>
+<code>No</code>, <code>Yes</code>, <code>Sound 1</code>, <code>Sound 2</code>
+</td>
+<td><code>No</code></td>
+<td>Load GameCube Main Menu</td>
+</tr>
+<tr>
+<td><code>Emulate Memory Card</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. Applies to every game; there is no per-game version.</td>
+<td><code>No</code></td>
+<td>Emulate Memory Card</td>
+</tr>
+<tr>
+<td><code>AutoCheats</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Auto-load cheats</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="game-defaults">Game Defaults</h3>
+<p>What every game starts with. A game's own file overrides each of them, and
+most use the same key there.</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+<th>On screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Force NTSC Video Mode</code></td>
+<td>
+<code>Auto</code>, <code>480i</code>, <code>480sf</code>, <code>240p</code>, <code>960i</code>, <code>480p</code>, <code>1080i60</code>, <code>540p60</code>. For games that aren't PAL; 50 Hz modes are ignored here.</td>
+<td><code>Auto</code></td>
+<td>Force NTSC Video Mode</td>
+</tr>
+<tr>
+<td><code>Force PAL Video Mode</code></td>
+<td>
+<code>Auto</code>, <code>480i</code>, <code>480sf</code>, <code>240p</code>, <code>960i</code>, <code>480p</code>, <code>1080i60</code>, <code>540p60</code>, <code>576i</code>, <code>576sf</code>, <code>288p</code>, <code>1152i</code>, <code>576p</code>, <code>1080i50</code>, <code>540p50</code>. For PAL games.</td>
+<td><code>Auto</code></td>
+<td>Force PAL Video Mode</td>
+</tr>
+<tr>
+<td><code>Force Horizontal Scale</code></td>
+<td>
+<code>Auto</code>, <code>1:1</code>, <code>11:10</code>, <code>9:8</code>, <code>640px</code>, <code>656px</code>, <code>672px</code>, <code>704px</code>, <code>720px</code>
+</td>
+<td><code>Auto</code></td>
+<td>Force Horizontal Scale</td>
+</tr>
+<tr>
+<td><code>Force Vertical Offset</code></td>
+<td>A signed number. <strong>This one doesn't reach games:</strong> a game starts at <code>-3</code> with GCVideo or GCDigital and <code>+0</code> otherwise. Set it per game instead.</td>
+<td><code>+0</code></td>
+<td>Not shown, since it does nothing</td>
+</tr>
+<tr>
+<td><code>Force Vertical Filter</code></td>
+<td>
+<code>Auto</code>, <code>0</code>, <code>1</code>, <code>2</code>
+</td>
+<td><code>Auto</code></td>
+<td>Force Vertical Filter</td>
+</tr>
+<tr>
+<td><code>Force Field Rendering</code></td>
+<td>
+<code>Auto</code>, <code>On</code>, <code>Off</code>, <code>TAA</code>
+</td>
+<td><code>Auto</code></td>
+<td>Force Field Rendering</td>
+</tr>
+<tr>
+<td><code>Fix Pixel Center</code></td>
+<td>
+<code>No</code>, <code>1/24</code>, <code>1/12</code>
+</td>
+<td><code>No</code></td>
+<td>Fix Pixel Center</td>
+</tr>
+<tr>
+<td><code>Disable Alpha Dithering</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Alpha Dithering › Off.</td>
+<td><code>No</code></td>
+<td>Alpha Dithering</td>
+</tr>
+<tr>
+<td><code>Force Anisotropic Filter</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Force Anisotropic Filter</td>
+</tr>
+<tr>
+<td><code>Force Widescreen</code></td>
+<td>
+<code>No</code>, <code>3D</code>, <code>2D+3D</code>
+</td>
+<td><code>No</code></td>
+<td>Force Widescreen</td>
+</tr>
+<tr>
+<td><code>Force Polling Rate</code></td>
+<td>
+<code>No</code>, <code>VSync</code>, <code>1000Hz</code>, <code>500Hz</code>, <code>350Hz</code>, <code>300Hz</code>, <code>250Hz</code>, <code>200Hz</code>, <code>150Hz</code>, <code>120Hz</code>, <code>100Hz</code>. The console lists 150 Hz and 120 Hz twice; a file can only choose the first of each.</td>
+<td><code>No</code></td>
+<td>Force Polling Rate</td>
+</tr>
+<tr>
+<td><code>Invert Camera Stick</code></td>
+<td>
+<code>No</code>, <code>X</code>, <code>Y</code>, <code>X&amp;Y</code>
+</td>
+<td><code>No</code></td>
+<td>Invert Camera Stick</td>
+</tr>
+<tr>
+<td><code>Swap Camera Stick</code></td>
+<td>
+<code>No</code>, <code>X</code>, <code>Y</code>, <code>X&amp;Y</code>
+</td>
+<td><code>No</code></td>
+<td>Swap Camera Stick</td>
+</tr>
+<tr>
+<td><code>Digital Trigger Level</code></td>
+<td>
+<code>0</code> to <code>200</code>; the console steps by 10.</td>
+<td><code>0</code></td>
+<td>Digital Trigger Level</td>
+</tr>
+<tr>
+<td><code>Emulate Audio Streaming</code></td>
+<td>
+<code>Off</code>, <code>Auto</code>, <code>On</code>
+</td>
+<td><code>Auto</code></td>
+<td>Emulate Audio Streaming</td>
+</tr>
+<tr>
+<td><code>Emulate Read Speed</code></td>
+<td>
+<code>No</code>, <code>Yes</code>, <code>Wii</code>
+</td>
+<td><code>No</code></td>
+<td>Emulate Read Speed</td>
+</tr>
+<tr>
+<td><code>Emulate Broadband Adapter</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Emulate Broadband Adapter</td>
+</tr>
+<tr>
+<td><code>Disable Memory Card</code></td>
+<td>
+<code>No</code>, <code>Slot A</code>, <code>Slot B</code>
+</td>
+<td><code>No</code></td>
+<td>Disable Memory Card</td>
+</tr>
+<tr>
+<td><code>Disable Hypervisor</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Hypervisor › Off.</td>
+<td><code>No</code></td>
+<td>Hypervisor</td>
+</tr>
+<tr>
+<td><code>Prefer Clean Boot</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Prefer Clean Boot</td>
+</tr>
+<tr>
+<td><code>RetroTINK-4K Profile</code></td>
+<td>
+<code>0</code> to <code>12</code>. Also the profile used in the menus.</td>
+<td><code>0</code></td>
+<td>RetroTINK-4K Profile</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="setup--display">Setup › Display</h3>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+<th>On screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>System Video</code></td>
+<td>
+<code>NTSC</code>, <code>PAL</code>, <code>PAL-M</code>. Ignored on a Wii (AVE-RVL).</td>
+<td>the console's region</td>
+<td>System Video</td>
+</tr>
+<tr>
+<td><code>Screen Position</code></td>
+<td>A signed number, such as <code>+0</code> or <code>-2</code>.</td>
+<td>the console's SRAM</td>
+<td>Screen Position</td>
+</tr>
+<tr>
+<td><code>Swiss Video Mode</code></td>
+<td>
+<code>Auto</code>, <code>480i</code>, <code>480sf</code>, <code>480p</code>, <code>576i</code>, <code>576sf</code>, <code>576p</code>
+</td>
+<td><code>Auto</code></td>
+<td>Swiss Video Mode</td>
+</tr>
+<tr>
+<td><code>AVECompat</code></td>
+<td>
+<code>AVE N-DOL</code>, <code>AVE P-DOL</code>, <code>CMPV-DOL</code>, <code>GCDigital</code>, <code>GCVideo</code>, <code>AVE-RVL</code>
+</td>
+<td>
+<code>GCVideo</code>, or what your loader reports</td>
+<td>AVE Compatibility</td>
+</tr>
+<tr>
+<td><code>Force DTV Status</code></td>
+<td>
+<code>No</code>, <code>Yes</code>, <code>Region Switch</code>
+</td>
+<td><code>No</code></td>
+<td>Force DTV Status</td>
+</tr>
+<tr>
+<td><code>RT4KOptim</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>RetroTINK-4K HDMI Input</td>
+</tr>
+<tr>
+<td><code>Disable Video Patches</code></td>
+<td>
+<code>None</code>, <code>Game</code>, <code>All</code>
+</td>
+<td><code>None</code></td>
+<td>Disable Video Patches</td>
+</tr>
+<tr>
+<td><code>Force Video Active</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Force Video Active</td>
+</tr>
+<tr>
+<td><code>Pause for resolution change</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Pause for resolution change</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="setup--console">Setup › Console</h3>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+<th>On screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Menu Color</code></td>
+<td>
+<code>Indigo</code>, <code>Azure</code>, <code>Emerald</code>, <code>Gold</code>, <code>Spice</code>, <code>Crimson</code>, <code>Rose</code>, <code>Jet Black</code>
+</td>
+<td><code>Indigo</code></td>
+<td>Menu Color</td>
+</tr>
+<tr>
+<td><code>Library Icon</code></td>
+<td>
+<code>Controller</code>, <code>Books</code>, <code>Covers</code>, <code>Play</code>. The picture on the cube's Library face, from its own four icons. A name from another face's list is ignored.</td>
+<td><code>Controller</code></td>
+<td>Library Icon</td>
+</tr>
+<tr>
+<td><code>Source Icon</code></td>
+<td>
+<code>Hub</code>, <code>Disc</code>, <code>SD Card</code>, <code>Folder</code>. The picture on the Source face, from its own four icons.</td>
+<td><code>Hub</code></td>
+<td>Source Icon</td>
+</tr>
+<tr>
+<td><code>Settings Icon</code></td>
+<td>
+<code>Sliders</code>, <code>Gear</code>, <code>Toggles</code>, <code>Dial</code>. The picture on the Settings face, from its own four icons.</td>
+<td><code>Sliders</code></td>
+<td>Settings Icon</td>
+</tr>
+<tr>
+<td><code>System Icon</code></td>
+<td>
+<code>Clock</code>, <code>Info</code>, <code>Power</code>, <code>Chip</code>. The picture on the System face, from its own four icons.</td>
+<td><code>Clock</code></td>
+<td>System Icon</td>
+</tr>
+<tr>
+<td><code>System Boot Mode</code></td>
+<td>
+<code>Default</code>, <code>Production</code>. Any other value means <code>Default</code>.</td>
+<td>the console's SRAM</td>
+<td>System Boot Mode</td>
+</tr>
+<tr>
+<td><code>System Sound</code></td>
+<td>
+<code>Mono</code>, <code>Stereo</code>. Any other value means <code>Mono</code>.</td>
+<td>the console's SRAM</td>
+<td>System Sound</td>
+</tr>
+<tr>
+<td><code>System Language</code></td>
+<td>
+<code>English</code>, <code>German</code>, <code>French</code>, <code>Spanish</code>, <code>Italian</code>, <code>Dutch</code>, <code>Japanese</code>, <code>English (US)</code>
+</td>
+<td>the console's SRAM</td>
+<td>System Language</td>
+</tr>
+<tr>
+<td><code>Disable PAD Recalibration</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Controller Recalibration › Off.</td>
+<td><code>No</code></td>
+<td>Controller Recalibration</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="setup--storage">Setup › Storage</h3>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+<th>On screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Save Folder</code></td>
+<td>A folder on the Configuration Device, such as <code>swiss/saves</code>, or <code>/</code> for its root. Where Memory Cards copies saves off a memory card and the folder it opens first. Empty means <code>swiss/saves</code>.</td>
+<td>empty</td>
+<td>Save Folder</td>
+</tr>
+<tr>
+<td><code>Init DVD Drive at startup</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Init DVD Drive at startup</td>
+</tr>
+<tr>
+<td><code>Stop DVD Drive motor</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Stop DVD Drive motor</td>
+</tr>
+<tr>
+<td><code>Configure Audio Buffer</code></td>
+<td>
+<code>Off</code>, <code>Auto</code>, <code>On</code>
+</td>
+<td><code>On</code></td>
+<td>Configure Audio Buffer</td>
+</tr>
+<tr>
+<td><code>SD/IDE Speed</code></td>
+<td>
+<code>32MHz</code> (shown as 27 MHz), <code>16MHz</code> (shown as 13.5 MHz). Any other value, including <code>27MHz</code>, means <code>16MHz</code>.</td>
+<td><code>32MHz</code></td>
+<td>SD/IDE-EXI Speed</td>
+</tr>
+<tr>
+<td><code>Disable MemCard PRO GameID</code></td>
+<td>
+<code>No</code>, <code>Slot A</code>, <code>Slot B</code>, <code>Slot A&amp;B</code>
+</td>
+<td><code>No</code></td>
+<td>Disable MemCard PRO GameID</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="setup--network">Setup › Network</h3>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+<th>On screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>InitNetwork</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Init network at startup</td>
+</tr>
+<tr>
+<td><code>BBAUseDHCP</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>Yes</code></td>
+<td>IPv4 uses DHCP</td>
+</tr>
+<tr>
+<td><code>BBALocalIP</code></td>
+<td>An IPv4 address.</td>
+<td>empty</td>
+<td>IPv4 Address</td>
+</tr>
+<tr>
+<td><code>BBANetmask</code></td>
+<td>The prefix length, such as <code>24</code>.</td>
+<td><code>0</code></td>
+<td>IPv4 Netmask</td>
+</tr>
+<tr>
+<td><code>BBAGateway</code></td>
+<td>An IPv4 address.</td>
+<td>empty</td>
+<td>IPv4 Gateway</td>
+</tr>
+<tr>
+<td><code>FSPHostIP</code></td>
+<td>An IPv4 address.</td>
+<td>empty</td>
+<td>FSP Host IP</td>
+</tr>
+<tr>
+<td><code>FSPPort</code></td>
+<td>A port number.</td>
+<td><code>21</code></td>
+<td>FSP Port</td>
+</tr>
+<tr>
+<td><code>FSPPassword</code></td>
+<td>Text, stored as written.</td>
+<td>empty</td>
+<td>FSP Password</td>
+</tr>
+<tr>
+<td><code>FSPPathMTU</code></td>
+<td>
+<code>576</code> to <code>2030</code>; anything else uses <code>1500</code>.</td>
+<td><code>1500</code></td>
+<td>FSP Path MTU</td>
+</tr>
+<tr>
+<td><code>FTPHostIP</code></td>
+<td>An IPv4 address.</td>
+<td>empty</td>
+<td>FTP Host IP</td>
+</tr>
+<tr>
+<td><code>FTPPort</code></td>
+<td>A port number.</td>
+<td><code>21</code></td>
+<td>FTP Port</td>
+</tr>
+<tr>
+<td><code>FTPUserName</code></td>
+<td>Text.</td>
+<td>empty</td>
+<td>FTP Username</td>
+</tr>
+<tr>
+<td><code>FTPPassword</code></td>
+<td>Text, stored as written.</td>
+<td>empty</td>
+<td>FTP Password</td>
+</tr>
+<tr>
+<td><code>FTPUsePasv</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>FTP PASV Mode</td>
+</tr>
+<tr>
+<td><code>SMBHostIP</code></td>
+<td>An IPv4 address.</td>
+<td>empty</td>
+<td>SMB Host IP</td>
+</tr>
+<tr>
+<td><code>SMBShareName</code></td>
+<td>Text.</td>
+<td>empty</td>
+<td>SMB Share</td>
+</tr>
+<tr>
+<td><code>SMBUserName</code></td>
+<td>Text.</td>
+<td>empty</td>
+<td>SMB Username</td>
+</tr>
+<tr>
+<td><code>SMBPassword</code></td>
+<td>Text, stored as written.</td>
+<td>empty</td>
+<td>SMB Password</td>
+</tr>
+<tr>
+<td><code>RT4KHostIP</code></td>
+<td>An IPv4 address.</td>
+<td>empty</td>
+<td>RetroTINK-4K Host IP</td>
+</tr>
+<tr>
+<td><code>RT4KPort</code></td>
+<td>A port number.</td>
+<td><code>0</code></td>
+<td>RetroTINK-4K Port</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="setup--library">Setup › Library</h3>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+<th>On screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Library Layout</code></td>
+<td>
+<code>Horizontal</code>, <code>Vertical</code>, <code>Grid</code>. How the Library shows your games: a row, a column, or rows of five.</td>
+<td><code>Horizontal</code></td>
+<td>Library Layout</td>
+</tr>
+<tr>
+<td><code>FileBrowserType</code></td>
+<td>
+<code>Standard</code>, <code>Fullwidth</code>, <code>Carousel</code>
+</td>
+<td><code>Standard</code></td>
+<td>File Browser Type</td>
+</tr>
+<tr>
+<td><code>AppsBrowserType</code></td>
+<td>
+<code>Standard</code>, <code>Fullwidth</code>, <code>Carousel</code>
+</td>
+<td><code>Fullwidth</code></td>
+<td>File Browser Type for apps</td>
+</tr>
+<tr>
+<td><code>GameBrowserType</code></td>
+<td>
+<code>Standard</code>, <code>Fullwidth</code>, <code>Carousel</code>
+</td>
+<td><code>Fullwidth</code></td>
+<td>File Browser Type for games</td>
+</tr>
+<tr>
+<td><code>Enable File Management</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>File Management</td>
+</tr>
+<tr>
+<td><code>RecentListLevel</code></td>
+<td>
+<code>Off</code>, <code>Lazy</code>, <code>On</code>
+</td>
+<td><code>On</code></td>
+<td>Recent List</td>
+</tr>
+<tr>
+<td><code>ShowHiddenFiles</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Show hidden files</td>
+</tr>
+<tr>
+<td><code>Hide Unknown file types</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Hide unknown file types</td>
+</tr>
+<tr>
+<td><code>Disable Panel Transparency</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Panel Transparency › Off.</td>
+<td><code>No</code></td>
+<td>Panel Transparency</td>
+</tr>
+<tr>
+<td><code>Disable Animated Backdrop</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Animated Backdrop › Off.</td>
+<td><code>No</code></td>
+<td>Animated Backdrop</td>
+</tr>
+<tr>
+<td><code>FlattenDir</code></td>
+<td>A folder pattern, such as <code>*/games</code>.</td>
+<td><code>*/games</code></td>
+<td>Flatten directory</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="setup--developer">Setup › Developer</h3>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+<th>On screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Enable USB Gecko</code></td>
+<td>
+<code>No</code>, <code>Slot A</code>, <code>Slot B</code>, <code>Serial Port 2</code>
+</td>
+<td>
+<code>No</code>; set automatically when a USB Gecko is connected</td>
+<td>Enable USB Gecko</td>
+</tr>
+<tr>
+<td><code>Wait for USB Gecko</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>Wait for USB Gecko</td>
+</tr>
+<tr>
+<td><code>Simulated MRAM Size</code></td>
+<td>
+<code>None</code>, <code>16 MiB</code>, <code>24 MiB</code>, <code>32 MiB</code>, <code>48 MiB</code>, <code>64 MiB</code>. A size larger than the console's memory is ignored.</td>
+<td><code>None</code></td>
+<td>Simulated MRAM Size</td>
+</tr>
+<tr>
+<td><code>Enable WiiRD debug</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td><code>No</code></td>
+<td>WiiRD debugging</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="old-names-swiss-still-reads">Old names Swiss still reads</h3>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+<th>On screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Enable Debug</code></td>
+<td>Old name, still read: <code>Yes</code> means <code>Enable USB Gecko=Slot B</code>.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>USB Gecko debug output</code></td>
+<td>Old name for <code>Enable USB Gecko</code>, still read.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Stop DVD Motor on startup</code></td>
+<td>Old name for <code>Stop DVD Drive motor</code>, still read.</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="written-by-swiss-not-shown-in-settings">Written by Swiss, not shown in Settings</h3>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+<th>On screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Last DTV Status</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. Swiss writes the cable it detected. Leave it out: if it doesn't match the cable at boot, Swiss opens Settings at AVE Compatibility.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Autoload</code></td>
+<td>The path of the game to start automatically. Set with Z on a game's detail screen, which saves only this key.</td>
+<td>empty</td>
+<td></td>
+</tr>
+<tr>
+<td><code>GCLoaderHWVersion</code></td>
+<td>A number Swiss uses to remind you about GC Loader firmware updates.</td>
+<td><code>0</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>GCLoaderTopVersion</code></td>
+<td>Text Swiss uses to remind you about GC Loader firmware updates.</td>
+<td>empty</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="keys-in-a-games-file">Keys in a game's file</h2>
+<p>A game's file only needs the settings that should differ from the game
+defaults above. The game-defaults keys that aren't listed here work the same
+way in a game's file.</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ID</code></td>
+<td>Written by Swiss, not read: the file name decides the game.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>Name</code></td>
+<td>The game's name.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>Comment</code></td>
+<td>Text, not shown anywhere. Reset to defaults keeps it.</td>
+<td><code>No Comment</code></td>
+</tr>
+<tr>
+<td><code>Status</code></td>
+<td>Text, not shown anywhere. Reset to defaults keeps it.</td>
+<td><code>Unknown</code></td>
+</tr>
+<tr>
+<td><code>Game Language</code></td>
+<td>
+<code>English</code>, <code>German</code>, <code>French</code>, <code>Spanish</code>, <code>Italian</code>, <code>Dutch</code>, <code>Japanese</code>, <code>English (US)</code>, <code>Default</code>. <code>Default</code> uses the System Language.</td>
+<td><code>Default</code></td>
+</tr>
+<tr>
+<td><code>Force Video Mode</code></td>
+<td>
+<code>Auto</code>, <code>480i</code>, <code>480sf</code>, <code>240p</code>, <code>960i</code>, <code>480p</code>, <code>1080i60</code>, <code>540p60</code>, <code>576i</code>, <code>576sf</code>, <code>288p</code>, <code>1152i</code>, <code>576p</code>, <code>1080i50</code>, <code>540p50</code>
+</td>
+<td>
+<code>Force NTSC Video Mode</code> or <code>Force PAL Video Mode</code>, by the game's region</td>
+</tr>
+<tr>
+<td><code>Force Horizontal Scale</code></td>
+<td>
+<code>Auto</code>, <code>1:1</code>, <code>11:10</code>, <code>9:8</code>, <code>640px</code>, <code>656px</code>, <code>672px</code>, <code>704px</code>, <code>720px</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Force Vertical Offset</code></td>
+<td>A signed number, such as <code>-3</code> or <code>+2</code>.</td>
+<td>
+<code>-3</code> with GCVideo or GCDigital, otherwise <code>+0</code>
+</td>
+</tr>
+<tr>
+<td><code>Force Vertical Filter</code></td>
+<td>
+<code>Auto</code>, <code>0</code>, <code>1</code>, <code>2</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Force Field Rendering</code></td>
+<td>
+<code>Auto</code>, <code>On</code>, <code>Off</code>, <code>TAA</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Fix Pixel Center</code></td>
+<td>
+<code>No</code>, <code>1/24</code>, <code>1/12</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Disable Alpha Dithering</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Alpha Dithering › Off.</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Force Anisotropic Filter</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Force Widescreen</code></td>
+<td>
+<code>No</code>, <code>3D</code>, <code>2D+3D</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Force Polling Rate</code></td>
+<td>
+<code>No</code>, <code>VSync</code>, <code>1000Hz</code>, <code>500Hz</code>, <code>350Hz</code>, <code>300Hz</code>, <code>250Hz</code>, <code>200Hz</code>, <code>150Hz</code>, <code>120Hz</code>, <code>100Hz</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Invert Camera Stick</code></td>
+<td>
+<code>No</code>, <code>X</code>, <code>Y</code>, <code>X&amp;Y</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Swap Camera Stick</code></td>
+<td>
+<code>No</code>, <code>X</code>, <code>Y</code>, <code>X&amp;Y</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Digital Trigger Level</code></td>
+<td>
+<code>0</code> to <code>200</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Emulate Audio Streaming</code></td>
+<td>
+<code>Off</code>, <code>Auto</code>, <code>On</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Emulate Read Speed</code></td>
+<td>
+<code>No</code>, <code>Yes</code>, <code>Wii</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Emulate Broadband Adapter</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Disable Memory Card</code></td>
+<td>
+<code>No</code>, <code>Slot A</code>, <code>Slot B</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Disable Hypervisor</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Hypervisor › Off.</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>Prefer Clean Boot</code></td>
+<td>
+<code>Yes</code>, <code>No</code>
+</td>
+<td>from global.ini</td>
+</tr>
+<tr>
+<td><code>RetroTINK-4K Profile</code></td>
+<td>
+<code>0</code> to <code>12</code>
+</td>
+<td>from global.ini</td>
+</tr>
+</tbody>
+</table></div>
+<p>For some games, Swiss starts from its own fix instead of global.ini:
+Fix Pixel Center, Digital Trigger Level, Emulate Audio Streaming, Emulate Read
+Speed or Emulate Broadband Adapter. A game's file still overrides the fix.</p>
+<h2 id="settings-a-file-cant-set">Settings a file can't set</h2>
+<ul>
+<li>
+<strong>Configuration Device</strong> and <strong>CPU Temperature Calibration</strong> live only in
+the console's SRAM. Set them on the console.</li>
+<li>The <strong>Reset to defaults</strong> rows are actions, not settings.</li>
+</ul>
+<nav class="pager" aria-label="Previous and next page">
+<a class="prev" href="/indigo/guide/troubleshooting/"><small>Previous</small>Troubleshooting</a>
+<a class="next" href="/indigo/changelog/"><small>Next</small>Changelog</a>
+</nav>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/SETTINGS.md">docs/SETTINGS.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/SETTINGS.md">Suggest an edit</a>.</p>
+</article>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

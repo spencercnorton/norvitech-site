@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Settings · Indigo · NorviTech</title>
+<meta name="description" content="Settings opens on the things you change between games, keeps what every game starts with on a second tab, and tucks the settings you set once into a…">
+<link rel="canonical" href="https://norvitech.com/indigo/guide/settings/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Settings · Indigo · NorviTech">
+<meta property="og:description" content="Settings opens on the things you change between games, keeps what every game starts with on a second tab, and tucks the settings you set once into a…">
+<meta property="og:url" content="https://norvitech.com/indigo/guide/settings/">
+<meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Indigo on the GameCube: a glass cube showing a GameCube controller, with LIBRARY named underneath">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app doc-hero">
+  <p class="crumb"><a href="/#suite">Suite</a> / <a href="/indigo/">Indigo</a> / <a href="/indigo/guide/">Guide</a></p>
+  <h1>Settings</h1>
+</section>
+
+<div class="docs">
+<nav class="docnav glass" aria-label="Indigo guide">
+<p>Guide</p>
+<ul>
+<li><a href="/indigo/guide/">Overview</a></li>
+<li><a href="/indigo/guide/install/">Install</a></li>
+<li><a href="/indigo/guide/controls/">Controls</a></li>
+<li><a href="/indigo/guide/home/">Home</a></li>
+<li><a href="/indigo/guide/library/">Library</a></li>
+<li><a href="/indigo/guide/game-details/">Game details</a></li>
+<li><a href="/indigo/guide/cheats/">Cheats</a></li>
+<li><a href="/indigo/guide/settings/" aria-current="page">Settings</a></li>
+<li><a href="/indigo/guide/personalize/">Make it yours</a></li>
+<li><a href="/indigo/guide/source/">Source</a></li>
+<li><a href="/indigo/guide/system/">System</a></li>
+<li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
+<li><a href="/indigo/guide/posters/">Posters</a></li>
+<li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+</ul>
+<p>Reference</p>
+<ul>
+<li><a href="/indigo/guide/settings-file/">Settings files</a></li>
+<li><a href="/indigo/changelog/">Changelog</a></li>
+</ul>
+</nav>
+<article class="doc">
+<p>Settings opens on the things you change between games, keeps what every game
+starts with on a second tab, and tucks the settings you set once into a
+third. On Home, turn the cube to <strong>Settings</strong> and press A.</p>
+<p align="center">
+  <a href="/indigo/guide/images/settings-tour.png"><img alt="Settings opens on Quick. R moves to Game Defaults and R again to Setup, whose six sections are listed; A opens Display, its rows go by, and B returns to the list of sections." src="/indigo/guide/images/settings-tour.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<ul>
+<li><a href="#the-three-tabs">The three tabs</a></li>
+<li><a href="#change-a-setting">Change a setting</a></li>
+<li><a href="#leave-keep-or-discard">Leave: keep or discard</a></li>
+<li><a href="#video-changes-ask-first">Video changes ask first</a></li>
+<li><a href="#a-games-own-settings">A game's own settings</a></li>
+<li><a href="#where-settings-are-saved">Where settings are saved</a></li>
+<li><a href="#every-setting">Every setting</a></li>
+</ul>
+<h2 id="the-three-tabs">The three tabs</h2>
+<p><strong>L</strong> and <strong>R</strong> move between the tabs. They sit at the top right, with the
+one you're on lit.</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Tab</th>
+<th>Holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Quick</strong></td>
+<td>Nine settings you might change any day: menu music and sounds, UI motion, rumble, In-Game Reset, the GameCube main menu, memory card emulation, auto-loaded cheats and booting without prompts.</td>
+</tr>
+<tr>
+<td><strong>Game Defaults</strong></td>
+<td>What every game starts with: video modes, widescreen, polling rate, the camera stick, compatibility and picture options. A game's own settings can differ from these.</td>
+</tr>
+<tr>
+<td><strong>Setup</strong></td>
+<td>Everything you set once, in six sections: Display, Console, Storage, Network, Library and Developer. A opens a section and B goes back to the list.</td>
+</tr>
+</tbody>
+</table></div>
+<p align="center">
+  <a href="/indigo/guide/images/settings-setup.png"><img alt="The Setup tab: six sections, each with a summary: Display (video mode, cable, TV), Console (color, icons, language), Storage (settings file, SD, disc), Network (adapter, file servers), Library (browser, recent, look) and Developer (USB Gecko, memory, debug)." src="/indigo/guide/images/settings-setup.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<h2 id="change-a-setting">Change a setting</h2>
+<ul>
+<li>
+<strong>Up and Down</strong> move between settings. Hold to scroll.</li>
+<li>
+<strong>Left and Right</strong> step the highlighted setting to its previous or next
+value, with the change on screen at once.</li>
+<li>
+<strong>A</strong> changes it too.</li>
+<li>
+<strong>Y</strong> explains the highlighted setting. Every setting has help; Y or B
+closes it.</li>
+</ul>
+<p>Settings that are on or off show a switch, <strong>ON</strong> or <strong>OFF</strong>. The line above
+the buttons says what the highlighted setting does, or what its current value
+does, such as "Rumble is turned off in games".</p>
+<p>On a setting with four or more choices, such as a video mode or a language,
+A lists them all instead. Move to a choice and press A, or press B to keep
+what you had. The list holds only the choices your setup can use; video
+modes your cable can't show stay out of it.</p>
+<p align="center">
+  <a href="/indigo/guide/images/settings-picker.png"><img alt="A on Force Video Mode opens a list of video modes, with Auto (Progressive) marked Current; the hint reads A Choose, B Cancel." src="/indigo/guide/images/settings-picker.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p align="center">
+  <a href="/indigo/guide/images/settings-help.png"><img alt="Help for Force Widescreen over the settings list: it stretches games made for 4:3 to fill a 16:9 screen; 3D widens the 3D view only; 2D+3D also widens 2D menus and on-screen displays." src="/indigo/guide/images/settings-help.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p>A dimmed setting doesn't apply to your setup right now, such as IPv4 Address
+while DHCP is on.</p>
+<h2 id="leave-keep-or-discard">Leave: keep or discard</h2>
+<ul>
+<li>
+<strong>B</strong> leaves Settings and keeps your changes, the same as <strong>Save &amp; Exit</strong>.</li>
+<li>
+<strong>Discard &amp; Exit</strong> puts back everything you changed since you opened
+Settings, including Menu Color.</li>
+</ul>
+<p>Both buttons sit under the list; move down past the last setting to reach
+them. In a Setup section, B first goes back to the list of sections.</p>
+<h2 id="video-changes-ask-first">Video changes ask first</h2>
+<p>After you change <strong>Swiss Video Mode</strong>, <strong>System Video</strong>, <strong>AVE
+Compatibility</strong>, <strong>Force DTV Status</strong> or <strong>RetroTINK-4K HDMI Input</strong>,
+Indigo shows the new picture and asks whether to keep it:</p>
+<pre lang="text"><code>Keep Swiss Video Mode: PAL 576i?
+It changes back by itself in 10 s.
+(A) KEEP    (B) CHANGE BACK
+</code></pre>
+<p>Press <strong>A</strong> to keep it. Press <strong>B</strong>, or just wait, and the old mode comes
+back: if your TV can't show the new one, you only have to wait ten seconds.</p>
+<h2 id="a-games-own-settings">A game's own settings</h2>
+<p>Each game can have its own video mode, widescreen, language, polling rate and
+the rest. Open them with <strong>X</strong> on the game's <a href="/indigo/guide/game-details/">details</a>, or
+with <strong>Y</strong> on the game in the <a href="/indigo/guide/library/#moving-around">Library</a>.</p>
+<p align="center">
+  <a href="/indigo/guide/images/settings-game.png"><img alt="The own settings of 1080° Avalanche, saved for this game only: Force Video Mode is 480p and marked Custom, and the top right reads 1 custom; the buttons along the bottom are A Choose, Y Help, X Default and B Done, with Save &amp; Exit and Discard &amp; Exit." src="/indigo/guide/images/settings-game.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<ul>
+<li>The title is the game's name, with "Saved for this game only" under it.</li>
+<li>A setting you change is marked <strong>Custom</strong>. Everything else follows Game
+Defaults, and changes when they do.</li>
+<li>
+<strong>X</strong> puts the highlighted setting back to its Game Defaults value.</li>
+<li>
+<strong>B</strong> is Done. The game's details then show how many of its settings are
+its own, and the first of them.</li>
+<li>
+<strong>Reset to defaults</strong>, at the end of the list, clears them all. It asks
+first, and keeps the game's Comment and Status lines in its file.</li>
+</ul>
+<p>Indigo writes only the settings that differ to
+<code>/swiss/settings/game/&lt;ID4&gt;.ini</code>, where <code>&lt;ID4&gt;</code> is the first four characters
+of the game ID. Discs and revisions that share them share the file.</p>
+<h2 id="where-settings-are-saved">Where settings are saved</h2>
+<p>Settings live in <code>/swiss/settings/global.ini</code> on the <strong>configuration
+device</strong>, usually your SD card. Settings › Setup › Storage shows which device
+that is, and the line under its title tells you whether the file loaded:</p>
+<ul>
+<li>"Settings are saved in swiss/settings/global.ini."</li>
+<li>"No swiss/settings/global.ini yet: using defaults."</li>
+<li>"No device to save settings to."</li>
+</ul>
+<p>To change the device, set <strong>Configuration Device</strong> in Storage and leave with
+Save &amp; Exit. The console keeps the new choice only once the settings are
+written there.</p>
+<p>You can also write the file on a computer before you boot: every key and
+value is in <a href="/indigo/guide/settings-file/">Settings files</a>. When Indigo saves, it keeps
+your comments and any lines it doesn't know.</p>
+<h2 id="every-setting">Every setting</h2>
+<p>Press Y on any row for the same explanations on the console.</p>
+<details>
+<summary><b>Quick</b></summary>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Menu Music</td>
+<td>Indigo's ambient music loop. Changes at once.</td>
+</tr>
+<tr>
+<td>Menu Sounds</td>
+<td>The soft sounds as you move and choose.</td>
+</tr>
+<tr>
+<td>UI Motion</td>
+<td>
+<strong>Full</strong>: calm motion and ambient detail. <strong>Reduced</strong>: faster transitions, no decorative movement. <strong>Off</strong>: everything moves instantly.</td>
+</tr>
+<tr>
+<td>Controller Rumble</td>
+<td>Whether controllers can rumble in games.</td>
+</tr>
+<tr>
+<td>In-Game Reset</td>
+<td>
+<strong>Reboot</strong> or <strong>Apploader</strong> lets you leave a game with A + Z + START (R + Z + START restarts it). Apploader returns to Indigo through <code>/swiss/patches/apploader.img</code>, which the zip includes; Reboot resets the console.</td>
+</tr>
+<tr>
+<td>Load GameCube Main Menu</td>
+<td>Starts games through the GameCube logo and main menu, with patches applied.</td>
+</tr>
+<tr>
+<td>Emulate Memory Card</td>
+<td>Games save to a memory card image on the device they start from, instead of a real memory card. Needs a device that supports it.</td>
+</tr>
+<tr>
+<td>Auto-load cheats</td>
+<td>Applies a game's saved cheats every time it starts. See <a href="/indigo/guide/cheats/#start-with-your-cheats-every-time">Cheats</a>.</td>
+</tr>
+<tr>
+<td>Boot without prompts</td>
+<td>Starts a game as soon as you choose it, without its detail screen. Hold B while choosing to see the screen.</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details>
+<summary><b>Game Defaults</b> (and a game's own settings)</summary>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Force NTSC Video Mode, Force PAL Video Mode</td>
+<td>The video mode games start in. Auto keeps each game's own mode. A game's own settings have one row, <strong>Force Video Mode</strong>.</td>
+</tr>
+<tr>
+<td>Game Language</td>
+<td>
+<em>Game's own settings only.</em> The language the game uses; Default follows System Language. Matters most for PAL games.</td>
+</tr>
+<tr>
+<td>Force Widescreen</td>
+<td>Stretches games made for 4:3 to 16:9. <strong>3D</strong> widens the 3D view; <strong>2D+3D</strong> also widens menus. Set your TV to 16:9.</td>
+</tr>
+<tr>
+<td>Force Polling Rate</td>
+<td>How often the game reads the controller. <strong>VSync</strong> is the most compatible; <strong>1000Hz</strong> has the least delay.</td>
+</tr>
+<tr>
+<td>Invert Camera Stick</td>
+<td>Inverts the C-stick's X axis, Y axis or both.</td>
+</tr>
+<tr>
+<td>Swap Camera Stick</td>
+<td>Swaps the C-stick's axes with the control stick's.</td>
+</tr>
+<tr>
+<td>Digital Trigger Level</td>
+<td>How far L and R travel before they count as fully pressed.</td>
+</tr>
+<tr>
+<td>Prefer Clean Boot</td>
+<td>Resets the console and starts the game with nothing changed. Region restrictions apply. Disc drive and drive replacements only.</td>
+</tr>
+<tr>
+<td>Hypervisor</td>
+<td>Features and fixes that rely on Swiss's hypervisor. Off turns them all off.</td>
+</tr>
+<tr>
+<td>Emulate Read Speed</td>
+<td>Slows loading to match the GameCube (or Wii) disc drive, for games that rely on it and for speedrunning.</td>
+</tr>
+<tr>
+<td>Emulate Audio Streaming</td>
+<td>Plays the background audio some games stream from the disc, for devices that can't stream it.</td>
+</tr>
+<tr>
+<td>Emulate Broadband Adapter</td>
+<td>Gives the game a network adapter over a file server or network module, where memory allows.</td>
+</tr>
+<tr>
+<td>Disable Memory Card</td>
+<td>Hides the memory card in slot A or B from the game, for games that misbehave with it.</td>
+</tr>
+<tr>
+<td>Force Horizontal Scale</td>
+<td>How the picture is scaled across: Auto, 1:1, fixed ratios or a fixed width.</td>
+</tr>
+<tr>
+<td>Force Vertical Offset</td>
+<td>
+<em>Game's own settings only.</em> Moves the picture up or down.</td>
+</tr>
+<tr>
+<td>Force Vertical Filter</td>
+<td>The vertical blend or deflicker filter.</td>
+</tr>
+<tr>
+<td>Force Field Rendering</td>
+<td>How interlaced pictures are drawn: by field, whole frames, or TAA.</td>
+</tr>
+<tr>
+<td>Fix Pixel Center</td>
+<td>Shifts the picture by 1/24 or 1/12 of a pixel, for games drawn off the pixel grid. Swiss turns it on by itself for the few games that need it.</td>
+</tr>
+<tr>
+<td>Alpha Dithering</td>
+<td>The fine dithering the GameCube adds to blended effects. Turn it off if it shows as a dot pattern on digital video.</td>
+</tr>
+<tr>
+<td>Force Anisotropic Filter</td>
+<td>Sharper textures at an angle. It can slow some games badly; use it sparingly.</td>
+</tr>
+<tr>
+<td>RetroTINK-4K Profile</td>
+<td>The RetroTINK-4K profile to switch to for games (and in the menus).</td>
+</tr>
+<tr>
+<td>Reset to defaults</td>
+<td>Puts every setting on the screen back. It asks first.</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details>
+<summary><b>Setup › Display</b></summary>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Swiss Video Mode</td>
+<td>The video mode of Indigo's own screens. Auto picks 480p with a digital cable and otherwise follows the console's region. Asks before it keeps a change.</td>
+</tr>
+<tr>
+<td>System Video</td>
+<td>NTSC, PAL or PAL-M, mainly for the Brazilian console.</td>
+</tr>
+<tr>
+<td>Screen Position</td>
+<td>Moves the picture left or right in games.</td>
+</tr>
+<tr>
+<td>AVE Compatibility</td>
+<td>Workarounds for your video encoder or digital video mod, such as GCVideo or GCDigital.</td>
+</tr>
+<tr>
+<td>Force DTV Status</td>
+<td>
+<strong>No</strong> trusts the Digital AV Out's own cable detection; <strong>Yes</strong> forces it, for a hardware fault; <strong>Region Switch</strong> eases moving between SD and ED TV setups.</td>
+</tr>
+<tr>
+<td>RetroTINK-4K HDMI Input</td>
+<td>Optimizes the signal for a RetroTINK-4K; the help lists the firmware it needs.</td>
+</tr>
+<tr>
+<td>Disable Video Patches</td>
+<td>
+<strong>Game</strong> skips only the fixes for particular games; <strong>All</strong> patches no video, and forced video modes stop working.</td>
+</tr>
+<tr>
+<td>Force Video Active</td>
+<td>A workaround for GCVideo-DVI 3.0 firmware.</td>
+</tr>
+<tr>
+<td>Pause for resolution change</td>
+<td>Pauses a game for 2 seconds when its resolution changes, so your display can catch up.</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details>
+<summary><b>Setup › Console</b></summary>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Menu Color</td>
+<td>The color of the whole interface. See <a href="/indigo/guide/personalize/#menu-color">Make it yours</a>.</td>
+</tr>
+<tr>
+<td>Library Icon, Source Icon, Settings Icon, System Icon</td>
+<td>The icon on each face of the Home cube. See <a href="/indigo/guide/personalize/#cube-icons">Make it yours</a>.</td>
+</tr>
+<tr>
+<td>System Sound</td>
+<td>The audio output most games use: mono or stereo.</td>
+</tr>
+<tr>
+<td>System Language</td>
+<td>The language games use, mainly multi-language PAL games.</td>
+</tr>
+<tr>
+<td>System Boot Mode</td>
+<td>On development hardware, development or production mode. With GC Loader or PicoLoader on a retail console, the default skips the GameCube logo.</td>
+</tr>
+<tr>
+<td>Controller Recalibration</td>
+<td>Off skips controller recalibration, for controllers that don't follow the standard.</td>
+</tr>
+<tr>
+<td>CPU Temperature Calibration</td>
+<td>Adjust it on a cold boot so the temperature at the top right reads about room temperature.</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details>
+<summary><b>Setup › Storage</b></summary>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Configuration Device</td>
+<td>Where <code>global.ini</code> is read and saved. Kept in the console's memory once Save &amp; Exit has written the settings there.</td>
+</tr>
+<tr>
+<td>Save Folder</td>
+<td>Where <a href="/indigo/guide/memory-cards/">Memory Cards</a> copies saves off a memory card, and the folder it opens first: a folder on the Configuration Device, <code>swiss/saves</code> until you choose another. A lists the folders; X chooses the one that's open.</td>
+</tr>
+<tr>
+<td>SD/IDE-EXI Speed</td>
+<td>27 MHz is faster; some SD cards or adapters only work at 13.5 MHz.</td>
+</tr>
+<tr>
+<td>Init DVD Drive at startup</td>
+<td>Needed for the eject button on the Panasonic Q when Indigo replaces the IPL.</td>
+</tr>
+<tr>
+<td>Stop DVD Drive motor</td>
+<td>Stops a disc that is already spinning, as after a save-game exploit.</td>
+</tr>
+<tr>
+<td>Configure Audio Buffer</td>
+<td>Audio streaming: off, only for discs known to use it, or whenever a disc asks. It takes some of the drive's cache, so loading is slower.</td>
+</tr>
+<tr>
+<td>Disable MemCard PRO GameID</td>
+<td>Stops Indigo telling a MemCard PRO in that slot which game is starting.</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details>
+<summary><b>Setup › Network</b></summary>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Init network at startup</td>
+<td>Starts the Broadband Adapter when Indigo starts.</td>
+</tr>
+<tr>
+<td>IPv4 uses DHCP, IPv4 Address, Netmask, Gateway</td>
+<td>Your router assigns the address, or you set it here.</td>
+</tr>
+<tr>
+<td>FSP Host IP, Port, Password, Path MTU</td>
+<td>A computer serving your games over FSP.</td>
+</tr>
+<tr>
+<td>FTP Host IP, Port, Username, Password, PASV Mode</td>
+<td>An FTP server with your games. Try PASV if listings stall.</td>
+</tr>
+<tr>
+<td>SMB Host IP, Share, Username, Password</td>
+<td>A computer sharing your games over SMB.</td>
+</tr>
+<tr>
+<td>RetroTINK-4K Host IP, Port</td>
+<td>A RetroTINK-4K on your network, which Indigo switches to each game's profile.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Passwords are saved as plain text in <code>global.ini</code>.</p>
+</details>
+<details>
+<summary><b>Setup › Library</b></summary>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Library Layout</td>
+<td>How the poster Library lays out your games: <strong>Horizontal</strong>, a row (the default); <strong>Vertical</strong>, a column with the title beside the cover; or <strong>Grid</strong>, rows of five. See <a href="/indigo/guide/library/#choose-a-layout">Library</a>.</td>
+</tr>
+<tr>
+<td>File Browser Type for games, for apps, and for everything else</td>
+<td>How Swiss's file lists look: Standard, Fullwidth or Carousel. The poster Library isn't affected.</td>
+</tr>
+<tr>
+<td>Recent List</td>
+<td>START shows recently played games. <strong>Lazy</strong> updates it only for new games; <strong>Off</strong> saves SD card writes.</td>
+</tr>
+<tr>
+<td>Flatten directory</td>
+<td>A folder pattern whose game folders are listed as if their disc images sat directly in it. The default is <code>*/games</code>.</td>
+</tr>
+<tr>
+<td>Show hidden files</td>
+<td>Lists hidden files and folders, such as <code>/swiss</code>.</td>
+</tr>
+<tr>
+<td>Hide unknown file types</td>
+<td>Hides files that aren't games, programs, music or memory card saves. It also stops a stray file hiding the Library.</td>
+</tr>
+<tr>
+<td>File Management</td>
+<td>Z in a file list opens actions to copy, move, rename or delete.</td>
+</tr>
+<tr>
+<td>Panel Transparency</td>
+<td>Translucent panels, like the GameCube menu, or solid ones.</td>
+</tr>
+<tr>
+<td>Animated Backdrop</td>
+<td>Whether the backdrop behind the cube drifts.</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details>
+<summary><b>Setup › Developer</b></summary>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enable USB Gecko</td>
+<td>Sends debug output to a USB Gecko, and makes wiiload available.</td>
+</tr>
+<tr>
+<td>Wait for USB Gecko</td>
+<td>Waits for the computer to read the Gecko's buffer when it fills.</td>
+</tr>
+<tr>
+<td>Simulated MRAM Size</td>
+<td>Limits memory on development hardware.</td>
+</tr>
+<tr>
+<td>WiiRD debugging</td>
+<td>Starts games with the WiiRD debugger enabled and paused. It uses more memory.</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<hr>
+<p align="center"><a href="/indigo/guide/cheats/">← Cheats</a> · <a href="/indigo/guide/personalize/">Make it yours →</a></p>
+<nav class="pager" aria-label="Previous and next page">
+<a class="prev" href="/indigo/guide/cheats/"><small>Previous</small>Cheats</a>
+<a class="next" href="/indigo/guide/personalize/"><small>Next</small>Make it yours</a>
+</nav>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/settings.md">docs/guide/settings.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/settings.md">Suggest an edit</a>.</p>
+</article>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>System · Indigo · NorviTech</title>
+<meta name="description" content="The System face tells you about your console, manages the saves on your memory cards and restarts Indigo. On Home, turn the cube to System and press A.">
+<link rel="canonical" href="https://norvitech.com/indigo/guide/system/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="System · Indigo · NorviTech">
+<meta property="og:description" content="The System face tells you about your console, manages the saves on your memory cards and restarts Indigo. On Home, turn the cube to System and press A.">
+<meta property="og:url" content="https://norvitech.com/indigo/guide/system/">
+<meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Indigo on the GameCube: a glass cube showing a GameCube controller, with LIBRARY named underneath">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app doc-hero">
+  <p class="crumb"><a href="/#suite">Suite</a> / <a href="/indigo/">Indigo</a> / <a href="/indigo/guide/">Guide</a></p>
+  <h1>System</h1>
+</section>
+
+<div class="docs">
+<nav class="docnav glass" aria-label="Indigo guide">
+<p>Guide</p>
+<ul>
+<li><a href="/indigo/guide/">Overview</a></li>
+<li><a href="/indigo/guide/install/">Install</a></li>
+<li><a href="/indigo/guide/controls/">Controls</a></li>
+<li><a href="/indigo/guide/home/">Home</a></li>
+<li><a href="/indigo/guide/library/">Library</a></li>
+<li><a href="/indigo/guide/game-details/">Game details</a></li>
+<li><a href="/indigo/guide/cheats/">Cheats</a></li>
+<li><a href="/indigo/guide/settings/">Settings</a></li>
+<li><a href="/indigo/guide/personalize/">Make it yours</a></li>
+<li><a href="/indigo/guide/source/">Source</a></li>
+<li><a href="/indigo/guide/system/" aria-current="page">System</a></li>
+<li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
+<li><a href="/indigo/guide/posters/">Posters</a></li>
+<li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+</ul>
+<p>Reference</p>
+<ul>
+<li><a href="/indigo/guide/settings-file/">Settings files</a></li>
+<li><a href="/indigo/changelog/">Changelog</a></li>
+</ul>
+</nav>
+<article class="doc">
+<p>The System face tells you about your console, manages the saves on your
+memory cards and restarts Indigo. On Home, turn the cube to <strong>System</strong> and
+press A.</p>
+<p align="center">
+  <a href="/indigo/screenshots/system.png"><img alt="The System face opened: the cube shows a clock, with System Information, Memory Cards and Restart Indigo listed below it." src="/indigo/screenshots/system.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<h2 id="system-information">System Information</h2>
+<p><strong>System Information</strong> is six pages about the console and the session. <strong>L</strong>
+and <strong>R</strong> move between them, and <strong>B</strong> goes back.</p>
+<p align="center">
+  <a href="/indigo/guide/images/system-info.png"><img alt="System Information's six pages in turn: Overview, Console, Connections, Input / Output, About Indigo and Credits." src="/indigo/guide/images/system-info.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Overview</strong></td>
+<td>The time and date, the CPU temperature and its calibration, and the session: the current source and whether it's ready, the video mode, the region and the build.</td>
+</tr>
+<tr>
+<td><strong>Console</strong></td>
+<td>The console model, IPL version, CPU, graphics chip and the CPU's unique ID.</td>
+</tr>
+<tr>
+<td><strong>Connections</strong></td>
+<td>What's in the memory card slots, serial ports, the disc drive interface and the high-speed port, plus a live look at the slots, the current source and the configuration device.</td>
+</tr>
+<tr>
+<td><strong>Input / Output</strong></td>
+<td>What's plugged into the four controller sockets, and the video mode, progressive scan, region, audio and language.</td>
+</tr>
+<tr>
+<td><strong>About Indigo</strong></td>
+<td>The Swiss version Indigo is built on, the exact commit and revision, where the source lives, and where to get community help.</td>
+</tr>
+<tr>
+<td><strong>Credits</strong></td>
+<td>The people who made Swiss possible.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Connections and Input / Output are read when you open the page; open it again
+to see a change.</p>
+<p>The CPU temperature has no factory calibration. If Overview's reading is off
+on a cold console, adjust Settings › Setup › Console › <strong>CPU Temperature
+Calibration</strong> until it reads about room temperature.</p>
+<h2 id="memory-cards">Memory Cards</h2>
+<p><strong>Memory Cards</strong> lists the saves on the memory cards in Slot A and Slot B and
+in folders on your SD card, with each save's banner, and copies, moves and
+deletes them between the three. See <a href="/indigo/guide/memory-cards/">Memory Cards</a>.</p>
+<p align="center">
+  <a href="/indigo/guide/images/memory-cards-system.png"><img alt="The System face opened with Memory Cards highlighted, the second of its three rows." src="/indigo/guide/images/memory-cards-system.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<h2 id="restart-indigo">Restart Indigo</h2>
+<p><strong>Restart Indigo</strong> resets the console, which then starts the way it does
+after you press its Reset button. If your loader boots Indigo, as PicoBoot
+does with <code>ipl.dol</code>, you're back in Indigo with a fresh session; a loader that
+boots stock Swiss first starts that instead.</p>
+<p>Indigo asks first, with <strong>Cancel</strong> selected, so an extra A can't restart it
+by mistake. Choose <strong>Restart</strong> with Left or Right, then press A.</p>
+<p align="center">
+  <a href="/indigo/guide/images/system-restart.png"><img alt="Restart Indigo? over the cube, with Reloads Indigo and ends this session, and the buttons Cancel, selected, and Restart." src="/indigo/guide/images/system-restart.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<hr>
+<p align="center"><a href="/indigo/guide/source/">← Source</a> · <a href="/indigo/guide/memory-cards/">Memory Cards →</a></p>
+<nav class="pager" aria-label="Previous and next page">
+<a class="prev" href="/indigo/guide/source/"><small>Previous</small>Source</a>
+<a class="next" href="/indigo/guide/memory-cards/"><small>Next</small>Memory Cards</a>
+</nav>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/system.md">docs/guide/system.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/system.md">Suggest an edit</a>.</p>
+</article>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

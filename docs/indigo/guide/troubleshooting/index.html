@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Troubleshooting · Indigo · NorviTech</title>
+<meta name="description" content="The Library appears only when /games holds nothing but games: disc images (.iso, .gcm, .tgc, .fdi) or folders with one in each. A single other file, such…">
+<link rel="canonical" href="https://norvitech.com/indigo/guide/troubleshooting/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Troubleshooting · Indigo · NorviTech">
+<meta property="og:description" content="The Library appears only when /games holds nothing but games: disc images (.iso, .gcm, .tgc, .fdi) or folders with one in each. A single other file, such…">
+<meta property="og:url" content="https://norvitech.com/indigo/guide/troubleshooting/">
+<meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Indigo on the GameCube: a glass cube showing a GameCube controller, with LIBRARY named underneath">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app doc-hero">
+  <p class="crumb"><a href="/#suite">Suite</a> / <a href="/indigo/">Indigo</a> / <a href="/indigo/guide/">Guide</a></p>
+  <h1>Troubleshooting</h1>
+</section>
+
+<div class="docs">
+<nav class="docnav glass" aria-label="Indigo guide">
+<p>Guide</p>
+<ul>
+<li><a href="/indigo/guide/">Overview</a></li>
+<li><a href="/indigo/guide/install/">Install</a></li>
+<li><a href="/indigo/guide/controls/">Controls</a></li>
+<li><a href="/indigo/guide/home/">Home</a></li>
+<li><a href="/indigo/guide/library/">Library</a></li>
+<li><a href="/indigo/guide/game-details/">Game details</a></li>
+<li><a href="/indigo/guide/cheats/">Cheats</a></li>
+<li><a href="/indigo/guide/settings/">Settings</a></li>
+<li><a href="/indigo/guide/personalize/">Make it yours</a></li>
+<li><a href="/indigo/guide/source/">Source</a></li>
+<li><a href="/indigo/guide/system/">System</a></li>
+<li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
+<li><a href="/indigo/guide/posters/">Posters</a></li>
+<li><a href="/indigo/guide/troubleshooting/" aria-current="page">Troubleshooting</a></li>
+</ul>
+<p>Reference</p>
+<ul>
+<li><a href="/indigo/guide/settings-file/">Settings files</a></li>
+<li><a href="/indigo/changelog/">Changelog</a></li>
+</ul>
+</nav>
+<article class="doc">
+<ul>
+<li><a href="#i-see-swisss-file-list-instead-of-the-library">I see Swiss's file list instead of the Library</a></li>
+<li><a href="#home-starts-on-source-or-library-says-select-source">Home starts on Source, or Library says Select Source</a></li>
+<li><a href="#some-games-have-no-box-art">Some games have no box art</a></li>
+<li><a href="#a-message-says-the-file-is-a-bad-dump">A message says the file is a bad dump</a></li>
+<li><a href="#the-screen-went-dark-after-i-changed-a-video-mode">The screen went dark after I changed a video mode</a></li>
+<li><a href="#a-games-picture-is-stretched-shifted-or-wrong">A game's picture is stretched, shifted or wrong</a></li>
+<li><a href="#my-settings-dont-stick">My settings don't stick</a></li>
+<li><a href="#my-cheats-dont-show-up-or-dont-work">My cheats don't show up, or don't work</a></li>
+<li><a href="#in-game-reset-takes-me-to-stock-swiss">In-Game Reset takes me to stock Swiss</a></li>
+<li><a href="#the-same-game-opens-every-time-indigo-starts">The same game opens every time Indigo starts</a></li>
+<li><a href="#still-stuck">Still stuck</a></li>
+</ul>
+<h2 id="i-see-swisss-file-list-instead-of-the-library">I see Swiss's file list instead of the Library</h2>
+<p align="center">
+  <a href="/indigo/guide/images/library-file-list.png"><img alt="Swiss's plain file list, shown in place of the Library." src="/indigo/guide/images/library-file-list.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p>The Library appears only when <code>/games</code> holds nothing but games: disc images
+(<code>.iso</code>, <code>.gcm</code>, <code>.tgc</code>, <code>.fdi</code>) or folders with one in each. A single other
+file, such as a text file or cover image, or an empty folder, brings back the
+file list. Remove it, or turn on <strong>Hide unknown file types</strong> in Settings ›
+Setup › Library. See <a href="/indigo/guide/library/#set-up-the-games-folder">Set up the games folder</a>.</p>
+<h2 id="home-starts-on-source-or-library-says-select-source">Home starts on Source, or Library says Select Source</h2>
+<p>Indigo didn't find a device to read games from when it started. Check that
+the SD card or drive is seated, then choose it on the Source face: see
+<a href="/indigo/guide/source/#change-the-source">Change the source</a>. In the source picker, <strong>Z</strong>
+also lists the devices that weren't detected, and A on one tries again.</p>
+<h2 id="some-games-have-no-box-art">Some games have no box art</h2>
+<p>A game shows its banner card when its game ID isn't in your poster pack:
+it's from the other region, or GameTDB has no cover for it. The card shows
+the ID, so you can check. Use the pack for the region most of your games are
+from, or <a href="/indigo/guide/posters/#build-your-own-pack">build your own</a>.</p>
+<h2 id="a-message-says-the-file-is-a-bad-dump">A message says the file is a bad dump</h2>
+<p align="center">
+  <a href="/indigo/guide/images/troubleshoot-bad-dump.png"><img alt="A message over the Library: File is a bad dump, but may be playable. Please attempt recovery using NKit." src="/indigo/guide/images/troubleshoot-bad-dump.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p>Swiss knows the exact size of each GameCube disc. "File is a bad dump, but may
+be playable" means your image is a different size, so something is probably
+missing or damaged. It shows for five seconds, then the game opens anyway.
+"File is a bad dump and is not playable" stops the game from opening. Try
+NKit's recovery, as the message suggests, or make a fresh copy of the disc.
+<a href="/indigo/guide/game-details/#verify">Verify</a> (R on game details) checks an image's data.</p>
+<h2 id="the-screen-went-dark-after-i-changed-a-video-mode">The screen went dark after I changed a video mode</h2>
+<p>Wait ten seconds. After a change to <strong>Swiss Video Mode</strong>, <strong>System Video</strong>,
+<strong>AVE Compatibility</strong>, <strong>Force DTV Status</strong> or <strong>RetroTINK-4K HDMI Input</strong>,
+Indigo puts the old mode back by itself unless you press A to keep it. See
+<a href="/indigo/guide/settings/#video-changes-ask-first">Video changes ask first</a>.</p>
+<p>If a game starts in a mode your TV can't show, open the game's details, press
+X, highlight <strong>Force Video Mode</strong> and press X to put it back to the default.</p>
+<h2 id="a-games-picture-is-stretched-shifted-or-wrong">A game's picture is stretched, shifted or wrong</h2>
+<p>Look at the game's own settings (X on its details) for anything marked
+<strong>Custom</strong>: <strong>Force Widescreen</strong>, <strong>Force Horizontal Scale</strong> and <strong>Force
+Vertical Offset</strong> change the picture. X puts a setting back to Game Defaults.
+If every game looks wrong, check Settings › Game Defaults instead.</p>
+<h2 id="my-settings-dont-stick">My settings don't stick</h2>
+<p>Open Settings › Setup › Storage and read the line under the title:</p>
+<ul>
+<li>
+<strong>"No device to save settings to."</strong> Indigo found nowhere to save. Check
+your SD card, then set <strong>Configuration Device</strong> and leave with Save &amp;
+Exit.</li>
+<li>
+<strong>"No swiss/settings/global.ini yet: using defaults."</strong> There's no file
+yet, or it couldn't be read. Leaving Settings with B or Save &amp; Exit
+writes one.</li>
+<li>
+<strong>"Settings are saved in swiss/settings/global.ini."</strong> Saving works. If a
+setting you typed into the file on a computer is ignored, check its spelling
+against <a href="/indigo/guide/settings-file/">Settings files</a>: keys and values are
+case-sensitive, and only <code>Yes</code> turns a setting on.</li>
+</ul>
+<p>Leaving with <strong>Discard &amp; Exit</strong> throws away the changes you made.</p>
+<h2 id="my-cheats-dont-show-up-or-dont-work">My cheats don't show up, or don't work</h2>
+<ul>
+<li>
+<strong>"No cheats found" on game details:</strong> the file must be
+<code>/swiss/cheats/&lt;game ID&gt;.txt</code>, named with the six-character ID exactly.
+The <a href="/indigo/guide/cheats/#get-cheat-files">cheat pack</a> has them for every region.</li>
+<li>
+<strong>The cheats don't apply:</strong> cheats apply when you open the cheat browser
+before starting the game. To have them apply every time, turn on
+<strong>Auto-load cheats</strong> in Settings › Quick.</li>
+<li>
+<strong>"Not enough room. Turn off another cheat first.":</strong> the cheats that are on
+have filled the space for cheats. Switch some off; Z in the browser shows
+how much is used.</li>
+</ul>
+<h2 id="in-game-reset-takes-me-to-stock-swiss">In-Game Reset takes me to stock Swiss</h2>
+<p>In-Game Reset set to <strong>Apploader</strong> returns to whatever is in
+<code>/swiss/patches/apploader.img</code>. Copy that file from the zip of the Indigo
+you run: the one stock Swiss ships is stock Swiss. <strong>Reboot</strong> resets the
+console instead, which returns to Indigo only when your loader boots it
+(GC Loader boots <code>boot.iso</code>).</p>
+<h2 id="the-same-game-opens-every-time-indigo-starts">The same game opens every time Indigo starts</h2>
+<p>That game is set to Autoload. Press B to go to the Library, open the game
+again and press <strong>Z</strong>: the shortcut changes from "Autoload On" back to
+"Autoload".</p>
+<h2 id="still-stuck">Still stuck</h2>
+<ul>
+<li>Questions: <a href="https://github.com/spencercnorton/indigo/discussions">Discussions</a>.</li>
+<li>Bugs: <a href="https://github.com/spencercnorton/indigo/issues/new/choose">open an issue</a>,
+with your Indigo version (System › System Information › About Indigo),
+your loader and what you pressed.</li>
+<li>Report problems with Indigo here, not to the Swiss project: Indigo is an
+unofficial fork.</li>
+</ul>
+<hr>
+<p align="center"><a href="/indigo/guide/posters/">← Posters</a> · <a href="/indigo/guide/">Guide</a></p>
+<nav class="pager" aria-label="Previous and next page">
+<a class="prev" href="/indigo/guide/posters/"><small>Previous</small>Posters</a>
+<a class="next" href="/indigo/guide/settings-file/"><small>Next</small>Settings files</a>
+</nav>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/troubleshooting.md">docs/guide/troubleshooting.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/troubleshooting.md">Suggest an edit</a>.</p>
+</article>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Source · Indigo · NorviTech</title>
+<meta name="description" content="The source is the device Indigo reads your games from: the SD card, the disc drive, a drive replacement such as GC Loader, a memory card slot or a network…">
+<link rel="canonical" href="https://norvitech.com/indigo/guide/source/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Source · Indigo · NorviTech">
+<meta property="og:description" content="The source is the device Indigo reads your games from: the SD card, the disc drive, a drive replacement such as GC Loader, a memory card slot or a network…">
+<meta property="og:url" content="https://norvitech.com/indigo/guide/source/">
+<meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Indigo on the GameCube: a glass cube showing a GameCube controller, with LIBRARY named underneath">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="hero app doc-hero">
+  <p class="crumb"><a href="/#suite">Suite</a> / <a href="/indigo/">Indigo</a> / <a href="/indigo/guide/">Guide</a></p>
+  <h1>Source</h1>
+</section>
+
+<div class="docs">
+<nav class="docnav glass" aria-label="Indigo guide">
+<p>Guide</p>
+<ul>
+<li><a href="/indigo/guide/">Overview</a></li>
+<li><a href="/indigo/guide/install/">Install</a></li>
+<li><a href="/indigo/guide/controls/">Controls</a></li>
+<li><a href="/indigo/guide/home/">Home</a></li>
+<li><a href="/indigo/guide/library/">Library</a></li>
+<li><a href="/indigo/guide/game-details/">Game details</a></li>
+<li><a href="/indigo/guide/cheats/">Cheats</a></li>
+<li><a href="/indigo/guide/settings/">Settings</a></li>
+<li><a href="/indigo/guide/personalize/">Make it yours</a></li>
+<li><a href="/indigo/guide/source/" aria-current="page">Source</a></li>
+<li><a href="/indigo/guide/system/">System</a></li>
+<li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
+<li><a href="/indigo/guide/posters/">Posters</a></li>
+<li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+</ul>
+<p>Reference</p>
+<ul>
+<li><a href="/indigo/guide/settings-file/">Settings files</a></li>
+<li><a href="/indigo/changelog/">Changelog</a></li>
+</ul>
+</nav>
+<article class="doc">
+<p>The source is the device Indigo reads your games from: the SD card, the disc
+drive, a drive replacement such as GC Loader, a memory card slot or a
+network share. Indigo picks one when it starts; the Source face lets you
+change it.</p>
+<h2 id="change-the-source">Change the source</h2>
+<ol>
+<li>On Home, turn the cube to <strong>Source</strong> and press A.</li>
+<li>Choose <strong>Change Source</strong>.</li>
+<li>Press <strong>Left</strong> or <strong>Right</strong> until the device you want is on the cube,
+then press <strong>A</strong>.</li>
+<li>You're back on Home, now reading from that device. Turn the cube to
+<strong>Library</strong> and press A to see what's on it.</li>
+</ol>
+<p align="center">
+  <a href="/indigo/guide/images/source-picker.png"><img alt="On the Source face, A shows Change Source and Refresh Library. Change Source shows Game Disc, Boot + Stream, on the cube; Right shows Memory Card Slot A, Files Ready; Z shows every device, so Right reaches Memory Card Slot B, Not Detected; B goes back." src="/indigo/guide/images/source-picker.png" width="640" loading="lazy" decoding="async" height="480"></a>
+</p>
+<p>Under each device's name, the picker says what it can do:</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th>It says</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boot + Stream</td>
+<td>Games start from it, with the disc audio some games stream.</td>
+</tr>
+<tr>
+<td>Boot Ready</td>
+<td>Games start from it.</td>
+</tr>
+<tr>
+<td>Files Ready</td>
+<td>It holds files you can browse and open.</td>
+</tr>
+<tr>
+<td>Not Detected</td>
+<td>Indigo can't find it right now. A tries again.</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>
+<strong>Z</strong> shows every device Indigo supports, not only the ones it found. Z
+again goes back to the ones it found.</li>
+<li>
+<strong>Y</strong> shows details about the device, where it has them.</li>
+<li>
+<strong>X</strong>, on an SD adapter or IDE-EXI device, shows its speed: Left and
+Right choose 13.5 or 27 MHz, and A keeps it. Some SD cards only work at
+the slower speed.</li>
+<li>
+<strong>B</strong> goes back.</li>
+</ul>
+<p>The disc drive is called <strong>Game Disc</strong>.</p>
+<h2 id="what-the-library-face-opens">What the Library face opens</h2>
+<p>If the device has a <code>/games</code> folder holding only games, the Library face
+opens the poster <a href="/indigo/guide/library/">Library</a>. Otherwise it opens Swiss's file list
+of the device, where you can browse folders and open games, homebrew
+programs (<code>.dol</code>, <code>.elf</code>) and MP3s:</p>
+<ul>
+<li>
+<strong>A</strong> opens a file or folder, and <strong>X</strong> goes up a folder.</li>
+<li>With <strong>File Management</strong> on (Settings › Setup › Library), <strong>Z</strong> on a file
+offers to copy, move, rename, hide or delete it.</li>
+<li>Settings › Setup › Library › <strong>File Browser Type</strong> changes how the list
+looks.</li>
+</ul>
+<h2 id="refresh-library">Refresh Library</h2>
+<p>The other choice on the Source face, <strong>Refresh Library</strong>, reads the current
+device again. Use it when what's on it changes while Indigo is running, such
+as a new disc in the drive.</p>
+<hr>
+<p align="center"><a href="/indigo/guide/personalize/">← Make it yours</a> · <a href="/indigo/guide/system/">System →</a></p>
+<nav class="pager" aria-label="Previous and next page">
+<a class="prev" href="/indigo/guide/personalize/"><small>Previous</small>Make it yours</a>
+<a class="next" href="/indigo/guide/system/"><small>Next</small>System</a>
+</nav>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/source.md">docs/guide/source.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/source.md">Suggest an edit</a>.</p>
+</article>
+</div>
+
+</main>
+
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
