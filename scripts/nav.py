@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """nav.py: the header and footer of every page on norvitech.com, from the lists below.
 
-    scripts/nav.py      rewrite the header, footer and product row of every page in docs/
+    scripts/nav.py      rewrite the header, footer and product row of every page
+                        in docs/, and docs/sitemap.xml
 
 The pages are hand-written HTML with no build step, so this file is the one
 place the site's navigation is written down. A page under docs/<slug>/ of a
@@ -16,8 +17,11 @@ check.py refuses a page whose header, footer or row of products is not what
 this renders, a product's home page without that row, a product page that
 none of its product's menus links, and a #fragment that no page carries.
 
+The sitemap is every page's canonical URL, sorted, so a new page is listed the
+next time this runs.
+
 Adding a product: an entry in PRODUCTS, its page at docs/<slug>/index.html
-(copy a sibling's), then run this; every menu, footer and row follows.
+(copy a sibling's), then run this; every menu, footer, row and the sitemap follow.
 """
 from __future__ import annotations
 
@@ -27,6 +31,7 @@ import sys
 from pathlib import Path
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
+SITEMAP = DOCS / "sitemap.xml"
 GH = "https://github.com/spencercnorton"
 
 # The site header, after its Projects menu.
@@ -145,6 +150,7 @@ CLOCK = """<a class="clock" id="clock" href="https://time.globalentry.systems/">
     </a>"""
 CHROME = re.compile(r'<(header|footer) class="masthead">.*?</\1>', re.S)
 SIBLINGS = re.compile(r'<nav class="siblings"[^>]*>.*?</nav>', re.S)
+CANONICAL = re.compile(r'<link rel="canonical" href="([^"]+)">')
 
 
 def url_of(page: Path) -> str:
@@ -216,6 +222,19 @@ def stamp(page: Path, text: str) -> str:
     return SIBLINGS.sub(lambda m: siblings(url), text)
 
 
+def write_sitemap() -> bool:
+    """docs/sitemap.xml: every page's canonical URL, sorted (404.html has none). True if it changed."""
+    urls = sorted(m.group(1) for page in DOCS.rglob("*.html")
+                  for m in [CANONICAL.search(page.read_text(encoding="utf-8"))] if m)
+    rows = "".join(f"  <url><loc>{html.escape(u)}</loc></url>\n" for u in urls)
+    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+           f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{rows}</urlset>\n')
+    if SITEMAP.exists() and SITEMAP.read_text(encoding="utf-8") == xml:
+        return False
+    SITEMAP.write_text(xml, encoding="utf-8")
+    return True
+
+
 def main() -> int:
     changed = 0
     for page in sorted(DOCS.rglob("*.html")):
@@ -224,7 +243,7 @@ def main() -> int:
         if new != text:
             page.write_text(new, encoding="utf-8")
             changed += 1
-    print(f"{changed} page(s) restamped")
+    print(f"{changed} page(s) restamped" + ("; sitemap.xml rewritten" if write_sitemap() else ""))
     return 0
 
 
