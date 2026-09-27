@@ -1,8 +1,9 @@
 /* norvitech.com — the only script on this site.
-   No third party, no analytics, no cookies, no storage, no build step. Three
-   jobs, each of which leaves the page working when this file does not run:
-   the spotlight is a scroll-snap carousel with anchor dots on its own, the
-   install command is selectable text, and the clock is simply blank. */
+   No third party, no analytics, no cookies, no storage, no build step. Every
+   job here leaves the page working when this file does not run: the
+   spotlight is a scroll-snap carousel with anchor dots on its own, the
+   install command is selectable text, the header menus open and close as
+   native <details>, and the clock is simply blank. */
 (function () {
   "use strict";
   document.documentElement.className += " js";
@@ -81,6 +82,19 @@
     mark();
     start();
   }
+
+  /* ---- Header menus -----------------------------------------------------
+     Native <details> sharing one name, so the browser already keeps one open;
+     this adds what <details> cannot do alone: a click anywhere else, a chosen
+     link (a #section on this page navigates nowhere) or Esc closes it. */
+  document.addEventListener("click", function (e) {
+    var open = document.querySelector("details.menu[open]");
+    if (open && (!open.contains(e.target) || e.target.closest("a"))) { open.open = false; }
+  });
+  document.addEventListener("keydown", function (e) {
+    var open = document.querySelector("details.menu[open]");
+    if (open && e.key === "Escape") { open.open = false; open.querySelector("summary").focus(); }
+  });
 
   /* ---- Copy the install command ---------------------------------------- */
   var copy = document.querySelector("[data-copy]");

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """The site's only test: every page parses with balanced tags, every relative link
-resolves inside docs/, nothing tracking or third-party got in, every page
-carries the same header and footer, and sitemap.xml lists exactly the pages that
-declare a canonical URL — since there is no build step to keep any of it in sync.
+and #fragment resolves inside docs/, nothing tracking or third-party got in, every
+page carries the header and footer scripts/nav.py renders for it (and every
+product page is in its product's menus), and sitemap.xml lists exactly the pages
+that declare a canonical URL — since there is no build step to keep any of it in sync.
 
 Exactly one script may run here: `docs/site.js`, same-origin, external, on
 every page. An inline `<script>`, an `on*` handler, a second script, a script
@@ -25,6 +26,8 @@ import sys
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
+
+from nav import CHROME, footer, header, product, url_of
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 SITEMAP = DOCS / "sitemap.xml"
@@ -121,7 +124,6 @@ class Check(HTMLParser):
             self.stack.pop()
 
 
-CHROME = re.compile(r"<(header|footer) class=\"masthead\">.*?</\1>", re.S)
 # About: a pull-quote under a card and the recommendation it is taken from, in full.
 PULL = re.compile(r'<figure class="tv-say" data-rec="([a-z-]+)"[^>]*><blockquote><p>(.*?)</p>', re.S)
 FULL = re.compile(r'<figure class="rec" data-rec="([a-z-]+)">.*?<blockquote>(.*?)</blockquote>', re.S)
@@ -156,19 +158,23 @@ def sitemap_errors(canonicals: set[str]) -> list[str]:
 
 def main() -> int:
     bad = 0
-    chrome: dict[str, str] = {}
     canonicals: set[str] = set()
-    for page in sorted(DOCS.rglob("*.html")):
+    pages = sorted(DOCS.rglob("*.html"))
+    # Every id on every page, by URL, so a link's #fragment is checked against the page it names.
+    ids = {url_of(page): set(re.findall(r'\sid="([^"]+)"', page.read_text(encoding="utf-8"))) for page in pages}
+    for page in pages:
+        url = url_of(page)
         p = Check()
         text = page.read_text(encoding="utf-8")
         p.feed(text)
         errors = list(p.errors) + quote_errors(text)
-        for m in CHROME.finditer(text):
-            first = chrome.setdefault(m.group(1), m.group(0))
-            if m.group(0) != first:
-                errors.append(f"<{m.group(1)}> differs from the first page's")
-        if set(chrome) - {m.group(1) for m in CHROME.finditer(text)}:
-            errors.append("missing the shared header or footer")
+        chrome = [(m.group(1), m.group(0)) for m in CHROME.finditer(text)]
+        for part, want in (("header", header(url)), ("footer", footer())):
+            if [c for k, c in chrome if k == part] != [want]:
+                errors.append(f"<{part}> is not the one scripts/nav.py renders for {url}; run it")
+        home = product(url)
+        if home and url != f"/{home['slug']}/" and url not in {h for _, items in home["menus"] for _, h in items}:
+            errors.append(f"no menu in the {home['name']} header links this page (scripts/nav.py)")
         if p.scripts != 1:
             errors.append(f"expected exactly one <script src=\"{SITE_SCRIPT}\">, found {p.scripts}")
         if p.structured > 1:
@@ -187,13 +193,16 @@ def main() -> int:
         if p.stack:
             errors.append(f"unclosed at EOF: {p.stack}")
         for ref in p.refs:
-            if ref.startswith(("http://", "https://", "#", "mailto:")):
-                if ref.startswith("mailto:"):
-                    errors.append(f"mailto link {ref}")
+            if ref.startswith("mailto:"):
+                errors.append(f"mailto link {ref}")
+            if ref.startswith(("http://", "https://", "mailto:")):
                 continue
-            target = DOCS / ref.lstrip("/").split("#")[0].split(" ")[0]
-            if not target.exists():
+            path, _, fragment = ref.partition("#")
+            path = path.split(" ")[0]
+            if path and not (DOCS / path.lstrip("/")).exists():
                 errors.append(f"dead link {ref}")
+            elif fragment and fragment not in ids.get("/" + path.lstrip("/") if path else url, ()):
+                errors.append(f"dead link {ref}: no id=\"{fragment}\" on that page")
         for e in errors:
             print(f"{page.relative_to(DOCS)}: {e}")
         bad += len(errors)

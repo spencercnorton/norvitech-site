@@ -28,27 +28,47 @@
 <body>
 <header class="masthead">
   <div class="wrap">
-    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28"><span>NorviTech</span></a>
+    <span class="slash" aria-hidden="true">/</span>
+    <a class="product" href="/bitagent/">BitAgent</a>
     <span class="rule" aria-hidden="true"></span>
-    <nav aria-label="Site">
-      <details class="menu">
-        <summary>Apps</summary>
+    <nav aria-label="BitAgent">
+      <details class="menu" name="nav">
+        <summary>Overview</summary>
         <ul>
-          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
-          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
-          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
-          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
-          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
-          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
-          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
-          <li><a href="/conductor/">Conductor<small>Live TV and DVR for Plex</small></a></li>
-          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+          <li><a href="/bitagent/#features">What BitAgent adds</a></li>
+          <li><a href="/bitagent/#dashboard">The dashboard</a></li>
         </ul>
       </details>
-      <a href="/#install">Install</a>
-      <a href="/consulting/">Consulting</a>
-      <a href="/about/">About</a>
-      <a href="https://github.com/spencercnorton">GitHub</a>
+      <details class="menu" name="nav">
+        <summary>Docs</summary>
+        <ul>
+          <li><a href="/bitagent/guide/" aria-current="page">Deployment guide</a></li>
+          <li><a href="/bitagent/vs-bitmagnet/">BitAgent and bitmagnet</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/concepts/architecture.md">Architecture</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/concepts/dht-crawler.md">DHT crawler</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/concepts/classification.md">Classification</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/ui-guide.md">Dashboard guide</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/integrations/private-tracker-mode.md">Private tracker mode</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/operations/security.md">Security</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/operations/monitoring.md">Monitoring</a></li>
+        </ul>
+      </details>
+      <details class="menu" name="nav">
+        <summary>Reference</summary>
+        <ul>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/reference/torznab-api.md">Torznab API</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/reference/graphql-api.md">GraphQL API</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/reference/metrics.md">Metrics</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/project/improvements.md">Improvements over upstream</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/blob/main/docs/legal/disclaimer.md">Legal disclaimer</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/issues/new/choose">Issues</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/discussions">Discussions</a></li>
+          <li><a href="https://github.com/spencercnorton/bitagent/security/advisories/new">Report a vulnerability</a></li>
+        </ul>
+      </details>
+      <a class="act" href="/bitagent/#install">Install</a>
+      <a href="https://github.com/spencercnorton/bitagent">GitHub</a>
     </nav>
     <a class="clock" id="clock" href="https://time.globalentry.systems/">
       <time data-face>--:--:--</time>

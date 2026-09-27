@@ -69,27 +69,32 @@
 
 <header class="masthead">
   <div class="wrap">
-    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28"><span>NorviTech</span></a>
+    <span class="slash" aria-hidden="true">/</span>
+    <a class="product" href="/snipsnap/" aria-current="page">SnipSnap</a>
     <span class="rule" aria-hidden="true"></span>
-    <nav aria-label="Site">
-      <details class="menu">
-        <summary>Apps</summary>
+    <nav aria-label="SnipSnap">
+      <details class="menu" name="nav">
+        <summary>Overview</summary>
         <ul>
-          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
-          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
-          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
-          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
-          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
-          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
-          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
-          <li><a href="/conductor/">Conductor<small>Live TV and DVR for Plex</small></a></li>
-          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+          <li><a href="/snipsnap/#features">What it does</a></li>
+          <li><a href="/snipsnap/#data">Where your data lives</a></li>
         </ul>
       </details>
-      <a href="/#install">Install</a>
-      <a href="/consulting/">Consulting</a>
-      <a href="/about/">About</a>
-      <a href="https://github.com/spencercnorton">GitHub</a>
+      <details class="menu" name="nav">
+        <summary>Docs</summary>
+        <ul>
+          <li><a href="/snipsnap/guide/">Deployment guide</a></li>
+          <li><a href="/snipsnap/wayland-screenshots/">Screenshots on GNOME Wayland</a></li>
+          <li><a href="https://github.com/spencercnorton/snipsnap/blob/main/docs/gnome-shell-bridge.md">The GNOME Shell bridge</a></li>
+          <li><a href="https://github.com/spencercnorton/snipsnap/blob/main/CHANGELOG.md">Changelog</a></li>
+          <li><a href="https://github.com/spencercnorton/snipsnap/issues/new/choose">Issues</a></li>
+          <li><a href="https://github.com/spencercnorton/snipsnap/discussions">Discussions</a></li>
+          <li><a href="https://github.com/spencercnorton/snipsnap/security/advisories/new">Report a vulnerability</a></li>
+        </ul>
+      </details>
+      <a class="act" href="/snipsnap/#install">Install</a>
+      <a href="https://github.com/spencercnorton/snipsnap">GitHub</a>
     </nav>
     <a class="clock" id="clock" href="https://time.globalentry.systems/">
       <time data-face>--:--:--</time>
@@ -113,7 +118,7 @@
 <p>Press a key, drag a region, annotate it, then copy or save. SnipSnap is built for GNOME on Wayland, where an application cannot read the screen and every screenshot tool either flashes a portal permission dialog before each capture or quietly stops working across a multi-monitor desktop. It is a downstream fork of <a href="https://github.com/flameshot-org/flameshot">Flameshot</a> with the capture path moved into the compositor; the editor, CLI, tray icon and configuration file are Flameshot's.</p>
 </div>
 
-<h2>What it does</h2>
+<h2 id="features">What it does</h2>
 <div class="how">
   <div class="glass"><h3>The selection lives in the compositor</h3><p>A GNOME Shell extension draws the dimmed screen and the selection rectangle, so one drag can start on one monitor and end on another, mixed scales and rotations included. The compositor already has the pixels: no portal dialog, no per-monitor boundary.</p></div>
   <div class="glass"><h3>A full editor, in the same process</h3><p>Arrows, rectangles, circles, pencil, marker, numbered pointers, text, secure pixelation, invert, undo and redo, zoom and pan — then copy or save. The editor follows your desktop theme and the overlay follows the GNOME accent colour.</p></div>
@@ -122,19 +127,19 @@
   <div class="glass"><h3>Optional hand-off to satty</h3><p>If you prefer <a href="https://github.com/gabm/Satty">satty</a>'s annotation window, <code>snipsnap-annotator enable</code> sends every committed capture there instead of the built-in editor.</p></div>
 </div>
 
-<h2>Install</h2>
+<h2 id="install">Install</h2>
 <div class="how">
   <div class="glass"><h3>Ubuntu 26.04 — APT</h3><p>Add the NorviTech APT repository once and <code>sudo apt install snipsnap</code>; the package carries the GNOME Shell extension and its schema. Then <code>snipsnap-shell-bridge activate</code> as your normal user — it hands over <kbd>Print</kbd> only after the bridge is proven active. Commands in the <a href="https://github.com/spencercnorton/snipsnap#install">README</a>.</p></div>
   <div class="glass"><h3>Other distributions — from source</h3><p>Qt 6.2+ and CMake 3.22 build SnipSnap; the GNOME Shell bridge needs Shell 50 or 51. Build with <code>-DENABLE_GNOME_SHELL_BRIDGE=ON</code> or you get a build without the compositor capture path — the reason this program exists. No Flatpak, Snap or AppImage.</p></div>
   <div class="glass"><h3>Coming from Flameshot</h3><p>Installing <code>snipsnap</code> replaces the Flameshot package; the <code>flameshot</code> command stays as a compatibility symlink, and your settings are copied into <code>~/.config/snipsnap/</code> without deleting the originals.</p></div>
 </div>
 
-<h2>Where your data lives</h2>
+<h2 id="data">Where your data lives</h2>
 <div class="prose">
 <p>Settings in <code>~/.config/snipsnap/snipsnap.ini</code>, the last selection rectangle under <code>~/.cache/snipsnap/</code>, the bridge socket in your runtime directory while the daemon runs, and your screenshots in the directory you save to — nothing else. SnipSnap makes no network connections at all. The <a href="https://github.com/spencercnorton/snipsnap#where-your-data-lives">README table</a> lists every path.</p>
 </div>
 
-<h2>Documentation</h2>
+<h2 id="docs">Documentation</h2>
 <div class="prose">
 <ul>
   <li><a href="/snipsnap/wayland-screenshots/">Screenshots on GNOME Wayland without a permission prompt</a> — what changed under Wayland, what the portal path costs, and why the selection is drawn in the compositor</li>
