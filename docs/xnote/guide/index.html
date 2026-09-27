@@ -77,6 +77,17 @@ is handled by the separate XNote Placement extension.</p>
 <h2 id="install-and-verify">Install and verify</h2>
 <p>The published APT package targets Ubuntu 26.04 on amd64 and replaces the old
 xpad package. Back up existing notes before the first migration.</p>
+<p>For a manual GitHub install, use v3.2.2 or newer: these Debian packages are
+built and install-tested on Ubuntu 26.04, including a real Wayland smoke test.
+Download the <code>.deb</code>, <code>source.tar.gz</code> and <code>SHA256SUMS.txt</code> from the same
+<a href="https://github.com/spencercnorton/xnote/releases">release</a> into an empty directory:</p>
+<pre><code class="language-bash">sha256sum --check SHA256SUMS.txt
+sudo apt install ./xnote_3.2.2_amd64.deb
+xnote --version
+</code></pre>
+<p>The v3.2.1 asset was built on Ubuntu 24.04. GitHub installs are versioned manual
+updates; the signed APT feed publishes on its own schedule. Use the APT route
+below for managed upgrades and keep a separate backup of your notes:</p>
 <pre><code class="language-bash">curl -fsSL https://apt.globalentry.systems/setup.sh -o /tmp/norvitech-apt-setup.sh
 less /tmp/norvitech-apt-setup.sh
 sudo sh /tmp/norvitech-apt-setup.sh
