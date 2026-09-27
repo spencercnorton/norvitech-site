@@ -65,7 +65,20 @@
   </div>
 </header>
 <main class="wrap"><section class="hero app"><p class="crumb"><a href="/">Suite</a> / Conductor</p><h1>Conductor</h1><p class="tag">Live TV and DVR for Plex, with your provider credentials.</p><p>A Go service that accounts for provider slots, enriches the guide and speaks the tuner protocols Plex already understands.</p><p class="cta"><a class="primary" href="/conductor/guide/">Deployment guide</a><a class="secondary" href="https://github.com/spencercnorton/conductor">Source on GitHub</a></p></section>
-<section class="prose"><img src="/assets/guides/conductor-topology.svg" alt="Deployment diagram: provider streams enter Conductor, Plex consumes the tuner and guide, and PostgreSQL keeps persistent state." width="1000" height="350"><h2>Build a dependable tuner</h2><p>Start with a small lineup. Verify playback and lease release, then guide data and a short recording before enabling a larger automation stack.</p><div class="how"><div class="glass"><h3>Accounted capacity</h3><p>Credential budgets, live reserves and recording admission describe the provider connections you actually own.</p></div><div class="glass"><h3>A useful guide</h3><p>Episode numbers, artwork, metadata and live-event cues are served through XMLTV.</p></div><div class="glass"><h3>Operated deliberately</h3><p>Keep administration authenticated, back up state with the encryption key and verify upgrades from immutable tags.</p></div></div><h2>Start here</h2><p><a href="/conductor/guide/">Install, configure, secure and recover Conductor</a>. The guide includes the exact public Compose workflow and health checks.</p></section></main>
+<section class="prose"><img src="/assets/guides/conductor-topology.svg" alt="Deployment diagram: provider streams enter Conductor, Plex consumes the tuner and guide, and PostgreSQL keeps persistent state." width="1000" height="350"><h2>Build a dependable tuner</h2><p>Start with a small lineup. Verify playback and lease release, then guide data and a short recording before enabling a larger automation stack.</p><div class="how"><div class="glass"><h3>Accounted capacity</h3><p>Credential budgets, live reserves and recording admission describe the provider connections you actually own.</p></div><div class="glass"><h3>A useful guide</h3><p>Episode numbers, artwork, metadata and live-event cues are served through XMLTV.</p></div><div class="glass"><h3>Operated deliberately</h3><p>Keep administration authenticated, back up state with the encryption key and verify upgrades from immutable tags.</p></div></div><h2>Start here</h2><p><a href="/conductor/guide/">Install, configure, secure and recover Conductor</a>. The guide includes the exact public Compose workflow and health checks.</p></section>
+
+<nav class="siblings" aria-label="Other apps">
+  <a class="glass" href="/helios/">Helios</a>
+  <a class="glass" href="/bitagent/">BitAgent</a>
+  <a class="glass" href="/xnote/">XNote</a>
+  <a class="glass" href="/xnote-placement/">XNote Placement</a>
+  <a class="glass" href="/snipsnap/">SnipSnap</a>
+  <a class="glass" href="/conductor/" aria-current="page">Conductor</a>
+  <a class="glass" href="/norvi-os/">NorviOS</a>
+  <a class="glass" href="/indigo/">Indigo</a>
+</nav>
+
+</main>
 <footer class="masthead">
   <div class="wrap">
     <nav aria-label="Products">

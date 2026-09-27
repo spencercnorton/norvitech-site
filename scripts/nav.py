@@ -1,21 +1,23 @@
 #!/usr/bin/env python3
 """nav.py: the header and footer of every page on norvitech.com, from the lists below.
 
-    scripts/nav.py      rewrite the <header> and <footer> of every page in docs/
+    scripts/nav.py      rewrite the header, footer and product row of every page in docs/
 
 The pages are hand-written HTML with no build step, so this file is the one
 place the site's navigation is written down. A page under docs/<slug>/ of a
 product in PRODUCTS carries that product's header: the NorviTech mark, the
 product's name, its menus, its one action and its own repository, and nothing
 about the rest of the site. Every other page carries the site header:
-Projects, Consulting, About and GitHub. The footer is the same on every page.
+Projects, Consulting, About and GitHub. The footer is the same on every page,
+and so is the row of every product at the foot of a product's page, with the
+page's own product marked.
 
-check.py refuses a page whose header or footer is not what this renders, a
-product page that none of its product's menus links, and a #fragment that no
-page carries. build_indigo.py takes Indigo's header and footer from here.
+check.py refuses a page whose header, footer or row of products is not what
+this renders, a product's home page without that row, a product page that
+none of its product's menus links, and a #fragment that no page carries.
 
 Adding a product: an entry in PRODUCTS, its page at docs/<slug>/index.html
-(copy a sibling's), then run this.
+(copy a sibling's), then run this; every menu, footer and row follows.
 """
 from __future__ import annotations
 
@@ -57,7 +59,8 @@ PRODUCTS = [
          action=("Install", "/bitagent/#install"), menus=[
              ("Overview", [("What BitAgent adds", "/bitagent/#features"),
                            ("The dashboard", "/bitagent/#dashboard")]),
-             ("Docs", [("BitAgent and bitmagnet", "/bitagent/vs-bitmagnet/"),
+             ("Docs", [("Deployment guide", "/bitagent/guide/"),
+                       ("BitAgent and bitmagnet", "/bitagent/vs-bitmagnet/"),
                        ("Architecture", f"{GH}/bitagent/blob/main/docs/concepts/architecture.md"),
                        ("DHT crawler", f"{GH}/bitagent/blob/main/docs/concepts/dht-crawler.md"),
                        ("Classification", f"{GH}/bitagent/blob/main/docs/concepts/classification.md"),
@@ -75,7 +78,8 @@ PRODUCTS = [
          action=("Install", "/xnote/#install"), menus=[
              ("Overview", [("What it does", "/xnote/#features"),
                            ("Where your data lives", "/xnote/#data")]),
-             ("Docs", [("User guide", f"{GH}/xnote/blob/main/docs/user-guide.md"),
+             ("Docs", [("Deployment guide", "/xnote/guide/"),
+                       ("User guide", f"{GH}/xnote/blob/main/docs/user-guide.md"),
                        ("Development", f"{GH}/xnote/blob/main/docs/development.md"),
                        ("Changelog", f"{GH}/xnote/blob/main/CHANGELOG.md"),
                        *support("xnote")])]),
@@ -89,13 +93,21 @@ PRODUCTS = [
          action=("Install", "/snipsnap/#install"), menus=[
              ("Overview", [("What it does", "/snipsnap/#features"),
                            ("Where your data lives", "/snipsnap/#data")]),
-             ("Docs", [("Screenshots on GNOME Wayland", "/snipsnap/wayland-screenshots/"),
+             ("Docs", [("Deployment guide", "/snipsnap/guide/"),
+                       ("Screenshots on GNOME Wayland", "/snipsnap/wayland-screenshots/"),
                        ("The GNOME Shell bridge", f"{GH}/snipsnap/blob/main/docs/gnome-shell-bridge.md"),
                        ("Changelog", f"{GH}/snipsnap/blob/main/CHANGELOG.md"),
                        *support("snipsnap")])]),
+    dict(slug="conductor", name="Conductor", note="Live TV and DVR for Plex",
+         action=("Deploy", "/conductor/guide/"), menus=[
+             ("Docs", [("Overview", "/conductor/"),
+                       ("Deployment guide", "/conductor/guide/"),
+                       ("Release procedure", f"{GH}/conductor/blob/main/docs/RELEASING.md"),
+                       *support("conductor")])]),
     dict(slug="norvi-os", name="NorviOS", note="The NorviTech look for Ubuntu",
          action=("Install", "/norvi-os/#install"), menus=[
-             ("Docs", [("How it works", f"{GH}/norvi-os/blob/main/docs/how-it-works.md"),
+             ("Docs", [("Deployment guide", "/norvi-os/guide/"),
+                       ("How it works", f"{GH}/norvi-os/blob/main/docs/how-it-works.md"),
                        ("Changelog", f"{GH}/norvi-os/blob/main/CHANGELOG.md"),
                        *support("norvi-os")])]),
     # Indigo's guide is generated from each release by build_indigo.py. When a
@@ -126,23 +138,13 @@ PRODUCTS = [
                             *support("indigo")])]),
 ]
 
-# Keep deployment guides reachable in each product's own Docs menu.
-for entry in PRODUCTS:
-    if entry['slug'] in {'snipsnap', 'norvi-os', 'xnote', 'bitagent'}:
-        docs_menu = next(items for label, items in entry['menus'] if label == 'Docs')
-        docs_menu.insert(0, ('Deployment guide', f"/{entry['slug']}/guide/"))
-PRODUCTS.insert(5, dict(slug="conductor", name="Conductor", note="Live TV and DVR for Plex",
-    action=("Deploy", "/conductor/guide/"), menus=[
-        ("Docs", [("Overview", "/conductor/"), ("Deployment guide", "/conductor/guide/"),
-                  ("Release procedure", f"{GH}/conductor/blob/main/docs/RELEASING.md"),
-                  *support("conductor")])]))
-
 BRAND = '<a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28"><span>NorviTech</span></a>'
 CLOCK = """<a class="clock" id="clock" href="https://time.globalentry.systems/">
       <time data-face>--:--:--</time>
       <span data-note></span>
     </a>"""
 CHROME = re.compile(r'<(header|footer) class="masthead">.*?</\1>', re.S)
+SIBLINGS = re.compile(r'<nav class="siblings"[^>]*>.*?</nav>', re.S)
 
 
 def url_of(page: Path) -> str:
@@ -199,9 +201,19 @@ def footer() -> str:
             f"  </div>\n</footer>")
 
 
+def siblings(url: str) -> str:
+    """Every product, at the foot of a product's page; the page's own product marked."""
+    here, rows = product(url), ""
+    for p in PRODUCTS:
+        mark = ' aria-current="page"' if p is here else ""
+        rows += f'  <a class="glass" href="/{p["slug"]}/"{mark}>{html.escape(p["name"])}</a>\n'
+    return f'<nav class="siblings" aria-label="Other apps">\n{rows}</nav>'
+
+
 def stamp(page: Path, text: str) -> str:
     url = url_of(page)
-    return CHROME.sub(lambda m: header(url) if m.group(1) == "header" else footer(), text)
+    text = CHROME.sub(lambda m: header(url) if m.group(1) == "header" else footer(), text)
+    return SIBLINGS.sub(lambda m: siblings(url), text)
 
 
 def main() -> int:

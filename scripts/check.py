@@ -27,7 +27,7 @@ import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
 
-from nav import CHROME, footer, header, product, url_of
+from nav import CHROME, SIBLINGS, footer, header, product, siblings, url_of
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 SITEMAP = DOCS / "sitemap.xml"
@@ -175,6 +175,11 @@ def main() -> int:
         home = product(url)
         if home and url != f"/{home['slug']}/" and url not in {h for _, items in home["menus"] for _, h in items}:
             errors.append(f"no menu in the {home['name']} header links this page (scripts/nav.py)")
+        rows = SIBLINGS.findall(text)
+        if home and url == f"/{home['slug']}/" and len(rows) != 1:
+            errors.append("a product's home page carries one row of the other products (scripts/nav.py)")
+        if any(row != siblings(url) for row in rows):
+            errors.append(f"<nav class=\"siblings\"> is not the one scripts/nav.py renders for {url}; run it")
         if p.scripts != 1:
             errors.append(f"expected exactly one <script src=\"{SITE_SCRIPT}\">, found {p.scripts}")
         if p.structured > 1:
