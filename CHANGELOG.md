@@ -9,4 +9,7 @@
   navigation list, so every row now includes Conductor, and check it.
 - Keep Conductor and the deployment guides in the navigation list itself.
 - Describe the home page without listing products, which had left out Indigo and Conductor.
+- Bring the Indigo page builder into this repository, so Indigo's pages are
+  regenerated here from each stable release; it reproduces the current pages exactly.
+- `scripts/nav.py` also writes the sitemap from every page's canonical URL.
 

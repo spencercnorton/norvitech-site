@@ -106,7 +106,14 @@ python3 -m http.server -d docs 8000    # then open http://localhost:8000
 ## Development
 
 ```bash
-python3 scripts/check.py      # what CI runs: tag balance, links, one same-origin script, no e-mail, one shared header/footer
+python3 scripts/check.py      # what CI runs: tag balance, links and #fragments, one same-origin script, no e-mail, generated navigation
+python3 scripts/nav.py        # after changing the navigation: rewrite every header, footer, product row and the sitemap
+```
+
+Indigo's pages are generated from each stable Indigo release, never edited by hand:
+
+```bash
+python3 scripts/build_indigo.py --indigo <clone at vX.Y.Z> --ref vX.Y.Z --videos <dir> --zip Indigo-vX.Y.Z.zip
 ```
 
 ## Licence
