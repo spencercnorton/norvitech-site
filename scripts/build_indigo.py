@@ -236,12 +236,12 @@ def landing_data(landing: str, description_text: str) -> str:
     app = {**APP, "description": description_text, "applicationSubCategory": "Homebrew",
            "softwareRequirements": "A Nintendo GameCube, or a Wii in GameCube mode, that runs Swiss "
                                    "from an SD card: PicoBoot, GC Loader, SD2SP2 or SD Gecko.",
-           "featureList": features, "programmingLanguage": "C",
+           "@id": f"{BASE}/indigo/#app", "featureList": features,
            "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
            "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
            "isBasedOn": {"@type": "SoftwareSourceCode", "name": "Swiss",
                          "codeRepository": "https://github.com/emukidid/swiss-gc"},
-           "codeRepository": f"https://github.com/{REPO}", "sameAs": [f"https://github.com/{REPO}"],
+           "sameAs": [f"https://github.com/{REPO}"],
            "downloadUrl": f"https://github.com/{REPO}/releases/latest",
            "softwareHelp": f"{BASE}/indigo/guide/", "screenshot": f"{BASE}/indigo/screenshots/home.png",
            "image": f"{BASE}/assets/og-indigo.png", "author": AUTHOR, "publisher": PUBLISHER}
@@ -249,7 +249,10 @@ def landing_data(landing: str, description_text: str) -> str:
                   "acceptedAnswer": {"@type": "Answer",
                                      "text": html.unescape(re.sub(r"<[^>]+>", "", a)).strip()}}
                  for q, a in re.findall(r"<details><summary>(.*?)</summary><p>(.*?)</p></details>", landing, re.S)]
-    graph = [app, breadcrumbs([("NorviTech", "/"), ("Indigo", "/indigo/")])]
+    # The code is its own thing in schema.org: a SoftwareSourceCode whose product is the app.
+    source = {"@type": "SoftwareSourceCode", "name": "Indigo", "codeRepository": f"https://github.com/{REPO}",
+              "programmingLanguage": "C", "license": app["license"], "targetProduct": {"@id": app["@id"]}}
+    graph = [app, source, breadcrumbs([("NorviTech", "/"), ("Indigo", "/indigo/")])]
     if questions:
         graph.append({"@type": "FAQPage", "mainEntity": questions})
     return structured(graph)
