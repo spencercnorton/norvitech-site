@@ -159,11 +159,21 @@
       </div>
     </li>
 
+    <li class="slide glass" id="slide-conductor">
+      <img src="/assets/guides/conductor-topology.svg" width="1000" height="350" loading="lazy" alt="Conductor architecture: authorized provider streams, a Plex tuner and guide, and persistent PostgreSQL state.">
+      <div>
+        <h3><a href="/conductor/">Conductor</a></h3>
+        <p><strong>Live TV and DVR for Plex, with accounted provider capacity.</strong></p>
+        <p class="sub">A Go service that pools authorized provider connections, enriches guide data and exposes an HDHomeRun-compatible tuner. Deploy it with authenticated administration and a tested recovery plan.</p>
+        <div class="pills"><span class="pill">Docker · PostgreSQL</span><span class="pill">Go</span></div>
+        <div class="links"><a href="/conductor/">Overview</a><a href="/conductor/guide/">Deployment guide</a><a href="https://github.com/spencercnorton/conductor">GitHub</a></div>
+      </div>
+    </li>
+
     <li class="slide glass" id="slide-norvi-os">
       <img src="/assets/spotlight/norvi-os.png" width="1280" height="720" loading="lazy" alt="The NorviOS desktop on Ubuntu 26.04: a transparent top bar with named workspaces and the weather, three sticky notes on the right, a Files window rendered as frosted glass, and a centred dock with a blurred plate.">
       <div>
-        <h3><a href="/conductor/">Conductor</a>
-      <a href="/norvi-os/">NorviOS</a></h3>
+        <h3><a href="/norvi-os/">NorviOS</a></h3>
         <p><strong>The NorviTech look for Ubuntu 26.04, from the boot splash to the window glass.</strong></p>
         <p class="sub">Boot splash, login screen and About logo rebranded, GTK windows turned to frosted glass, and a desktop of NorviTech extensions around it — dock, workspaces, weather, lock screen. One command removes the branding.</p>
         <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">From source · Ubuntu 26.04</span><span class="pill">GNOME 50 · Shell · CSS</span></div>
