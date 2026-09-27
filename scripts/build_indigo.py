@@ -53,6 +53,9 @@ BASE = "https://norvitech.com"
 # Pages that are not in docs/guide but belong with it on the site.
 EXTRA = {"docs/SETTINGS.md": ("guide/settings-file/", "Settings files"),
          "CHANGELOG.md": ("changelog/", "Changelog")}
+# A page whose first paragraph does not say what the page is gets its own words.
+DESCRIPTIONS = {"CHANGELOG.md": "What changed in each Indigo release, newest first: "
+                                "new screens and settings, fixes, and the betas before each release."}
 PICTURES = (".png", ".jpg", ".jpeg", ".webp")
 
 
@@ -113,6 +116,8 @@ def site_path(repo_path: str, pages: dict[str, str]) -> str | None:
 
 def link(href: str, source: str, pages: dict[str, str], ref: str) -> str:
     """A link as written in `source` (a repository path), rewritten for the site."""
+    if href.startswith(BASE + "/"):
+        return href[len(BASE):]  # the docs link this site: here, that is a site link
     if re.match(r"^[a-z][a-z0-9+.-]*:", href) or href.startswith(("#", "//")):
         return href
     path, _, fragment = href.partition("#")
@@ -166,6 +171,7 @@ def transform(fragment: str, source: str, pages: dict[str, str], ref: str,
         return f'{attr}="{html.escape(link(value, source, pages, ref), quote=True)}"'
 
     fragment = re.sub(r'\b(href|src)="([^"]*)"', relink, fragment)
+    fragment = re.sub(r'(<a href="/[^"]*">[^<]*</a>) on norvitech\.com', r"\1", fragment)
 
     def picture(m: re.Match) -> str:
         tag = m.group(0)
@@ -191,8 +197,66 @@ def transform(fragment: str, source: str, pages: dict[str, str], ref: str,
     return title, fragment.strip()
 
 
+APP = {"@type": "SoftwareApplication", "name": "Indigo", "url": f"{BASE}/indigo/",
+       "applicationCategory": "UtilitiesApplication", "operatingSystem": "Nintendo GameCube"}
+AUTHOR = {"@type": "Person", "name": "Spencer Norton", "url": f"{BASE}/about/"}
+PUBLISHER = {"@type": "Organization", "name": "NorviTech", "url": f"{BASE}/",
+             "logo": f"{BASE}/assets/logo.svg", "sameAs": ["https://github.com/spencercnorton"]}
+
+
+def breadcrumbs(trail: list[tuple[str, str]]) -> dict:
+    """schema.org BreadcrumbList for (name, site path) from the top down."""
+    return {"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": n, "name": name, "item": BASE + path}
+        for n, (name, path) in enumerate(trail, 1)]}
+
+
+def structured(graph: list[dict]) -> str:
+    """The page's one structured-data block (check.py allows exactly one)."""
+    doc = json.dumps({"@context": "https://schema.org", "@graph": graph}, indent=2, ensure_ascii=False)
+    doc = doc.replace("</", "<\\/")  # text in a <script> must never close it
+    return '<script type="application/ld+json">\n' + doc + "\n</script>"
+
+
+def page_data(title: str, text: str, url: str, trail: list[tuple[str, str]], body: str) -> str:
+    """A guide page: a TechArticle about Indigo, and where it sits on the site."""
+    article = {"@type": "TechArticle", "headline": title, "description": text, "url": BASE + url,
+               "inLanguage": "en", "about": APP, "author": AUTHOR, "publisher": PUBLISHER,
+               "isPartOf": {"@type": "WebSite", "name": "NorviTech", "url": f"{BASE}/"}}
+    picture = re.search(r'<img\b[^>]*\bsrc="(/indigo/[^"]+)"', body)
+    if picture:
+        article["image"] = BASE + picture.group(1)
+    return structured([article, breadcrumbs(trail)])
+
+
+def landing_data(landing: str, description_text: str) -> str:
+    """The product page: Indigo itself, its place on the site, and the questions it answers."""
+    features = [html.unescape(re.sub(r"<[^>]+>", "", m)) for m in
+                re.findall(r'<div class="glass"><h3>(.*?)</h3>', landing.split('id="features"', 1)[1].split("</div>\n</div>", 1)[0])]
+    app = {**APP, "description": description_text, "applicationSubCategory": "Homebrew",
+           "softwareRequirements": "A Nintendo GameCube, or a Wii in GameCube mode, that runs Swiss "
+                                   "from an SD card: PicoBoot, GC Loader, SD2SP2 or SD Gecko.",
+           "featureList": features, "programmingLanguage": "C",
+           "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+           "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+           "isBasedOn": {"@type": "SoftwareSourceCode", "name": "Swiss",
+                         "codeRepository": "https://github.com/emukidid/swiss-gc"},
+           "codeRepository": f"https://github.com/{REPO}", "sameAs": [f"https://github.com/{REPO}"],
+           "downloadUrl": f"https://github.com/{REPO}/releases/latest",
+           "softwareHelp": f"{BASE}/indigo/guide/", "screenshot": f"{BASE}/indigo/screenshots/home.png",
+           "image": f"{BASE}/assets/og-indigo.png", "author": AUTHOR, "publisher": PUBLISHER}
+    questions = [{"@type": "Question", "name": html.unescape(re.sub(r"<[^>]+>", "", q)).strip(),
+                  "acceptedAnswer": {"@type": "Answer",
+                                     "text": html.unescape(re.sub(r"<[^>]+>", "", a)).strip()}}
+                 for q, a in re.findall(r"<details><summary>(.*?)</summary><p>(.*?)</p></details>", landing, re.S)]
+    graph = [app, breadcrumbs([("NorviTech", "/"), ("Indigo", "/indigo/")])]
+    if questions:
+        graph.append({"@type": "FAQPage", "mainEntity": questions})
+    return structured(graph)
+
+
 def description(body: str, fallback: str) -> str:
-    for m in re.finditer(r"<p>(.*?)</p>", body, re.S):
+    for m in re.finditer(r"<p\b[^>]*>(.*?)</p>", body, re.S):
         text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", m.group(1)))).strip()
         if len(text) > 60:
             return text if len(text) <= 158 else text[:155].rsplit(" ", 1)[0] + "…"
@@ -259,8 +323,16 @@ def main() -> int:
         title, body = rendered[src]
         url = pages[src]
         crumbs = '<a href="/#suite">Suite</a> / <a href="/indigo/">Indigo</a>'
+        trail = [("NorviTech", "/"), ("Indigo", "/indigo/")]
         if url != "/indigo/guide/":
             crumbs += ' / <a href="/indigo/guide/">Guide</a>' if src.startswith("docs/guide/") else ""
+            trail += [("Guide", "/indigo/guide/")] if src.startswith("docs/guide/") else []
+        trail.append((title, url))
+        # What a search result shows: the page, then where it belongs.
+        head = ("Indigo guide · NorviTech" if url == "/indigo/guide/" else
+                f"{title} · Indigo guide · NorviTech" if src.startswith("docs/guide/") else
+                f"{title} · Indigo · NorviTech")
+        summary = DESCRIPTIONS.get(src) or description(body, f"{title}: the Indigo guide.")
         pager = []
         if i > 0:
             p = flow[i - 1]
@@ -269,8 +341,9 @@ def main() -> int:
             n = flow[i + 1]
             pager.append(f'<a class="next" href="{pages[n]}"><small>Next</small>{html.escape(rendered[n][0])}</a>')
         out = page_tpl.format(
-            title=html.escape(title), crumbs=crumbs, nav=nav(src), body=body, pager="\n".join(pager),
-            canonical=BASE + url, description=html.escape(description(body, f"{title}: the Indigo guide.")),
+            title=html.escape(title), head=html.escape(head), crumbs=crumbs, nav=nav(src), body=body,
+            pager="\n".join(pager), canonical=BASE + url, description=html.escape(summary),
+            structured=page_data(title, summary, url, trail, body),
             source=html.escape(f"https://github.com/{REPO}/blob/{ref}/{src}"),
             edit=html.escape(f"https://github.com/{REPO}/edit/main/{src}"),
             path=html.escape(src), ref=html.escape(ref), header=header(url), footer=footer())
@@ -279,18 +352,21 @@ def main() -> int:
         target.write_text(out, encoding="utf-8")
 
     zip_url = f"https://github.com/{REPO}/releases/download/{ref}/Indigo-{ref}.zip"
-    zip_meta = "the SD card zip"
+    zip_size, zip_sum = "the SD card zip", "listed on the release"
     if args.zip:
-        mb = args.zip.stat().st_size / 1e6
-        zip_meta = f"{mb:.1f} MB · SHA-256 <code>{hashlib.sha256(args.zip.read_bytes()).hexdigest()[:16]}…</code>"
+        zip_size = f"{args.zip.stat().st_size / 1e6:.1f} MB"
+        zip_sum = f"<code>{hashlib.sha256(args.zip.read_bytes()).hexdigest()[:16]}…</code>"
     guide_cards = "\n".join(
         f'  <a class="glass" href="{url}"><strong>{html.escape(title)}</strong></a>'
         for src, url, title in nav_guide[1:] + nav_ref)
     landing = (TEMPLATES / "landing.html").read_text(encoding="utf-8")
     for key, value in {"{{header}}": header("/indigo/"), "{{footer}}": footer(), "{{ref}}": ref,
-                       "{{version}}": ref[1:], "{{zip_url}}": zip_url, "{{zip_meta}}": zip_meta,
-                       "{{guide_cards}}": guide_cards, "{{siblings}}": siblings("/indigo/")}.items():
+                       "{{version}}": ref[1:], "{{zip_url}}": zip_url, "{{zip_size}}": zip_size,
+                       "{{zip_sum}}": zip_sum, "{{guide_cards}}": guide_cards,
+                       "{{siblings}}": siblings("/indigo/")}.items():
         landing = landing.replace(key, value)
+    summary = html.unescape(re.search(r'<meta name="description" content="([^"]*)">', landing).group(1))
+    landing = landing.replace("{{structured}}", landing_data(landing, summary))
     landing = re.sub(r"\{\{video:([a-z-]+)\|([^|]*)\|([^}]*)\}\}",
                      lambda m: video_or_picture(m.group(1), m.group(2), m.group(3), videos), landing)
     if "{{" in landing:

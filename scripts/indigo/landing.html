@@ -7,13 +7,13 @@
 <meta name="theme-color" content="#241f31">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="stylesheet" href="/style.css">
-<title>Indigo · NorviTech</title>
-<meta name="description" content="A fork of Swiss for the Nintendo GameCube with the interface rebuilt. An animated Home, a poster library and game details, drawn in the console's own visual language.">
+<title>Indigo: Swiss for GameCube, rebuilt · NorviTech</title>
+<meta name="description" content="Indigo is a free fork of Swiss for the Nintendo GameCube with the interface rebuilt: an animated Home cube, a poster library, game details and cheats.">
 <link rel="canonical" href="https://norvitech.com/indigo/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NorviTech">
-<meta property="og:title" content="Indigo · NorviTech">
-<meta property="og:description" content="A fork of Swiss for the Nintendo GameCube with the interface rebuilt. An animated Home, a poster library and game details, drawn in the console's own visual language.">
+<meta property="og:title" content="Indigo: Swiss for GameCube, rebuilt · NorviTech">
+<meta property="og:description" content="Indigo is a free fork of Swiss for the Nintendo GameCube with the interface rebuilt: an animated Home cube, a poster library, game details and cheats.">
 <meta property="og:url" content="https://norvitech.com/indigo/">
 <meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
 <meta property="og:image:width" content="1280">
@@ -21,50 +21,10 @@
 <meta property="og:image:alt" content="Indigo on the GameCube: a glass cube showing a GameCube controller, with LIBRARY named underneath">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="max-image-preview:large">
 <link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
 <script src="/site.js" defer></script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Indigo",
-  "url": "https://norvitech.com/indigo/",
-  "description": "A fork of Swiss for the Nintendo GameCube with the interface rebuilt. An animated Home, a poster library and game details, drawn in the console's own visual language.",
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "Nintendo GameCube",
-  "programmingLanguage": "C",
-  "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
-  "isAccessibleForFree": true,
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "codeRepository": "https://github.com/spencercnorton/indigo",
-  "downloadUrl": "https://github.com/spencercnorton/indigo/releases/latest",
-  "softwareHelp": "https://norvitech.com/indigo/guide/",
-  "screenshot": "https://norvitech.com/indigo/screenshots/home.png",
-  "author": {
-    "@type": "Person",
-    "name": "Spencer Norton",
-    "url": "https://norvitech.com/about/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "NorviTech",
-    "url": "https://norvitech.com/",
-    "logo": "https://norvitech.com/assets/logo.svg",
-    "founder": {
-      "@type": "Person",
-      "name": "Spencer Norton",
-      "url": "https://norvitech.com/about/"
-    },
-    "sameAs": [
-      "https://github.com/spencercnorton"
-    ]
-  }
-}
-</script>
+{{structured}}
 </head>
 <body>
 
@@ -79,7 +39,7 @@
   <p>An animated Home, a poster library and game details, drawn in the console's own visual language.</p>
   <div class="pills"><span class="pill lic">GPL-2.0-or-later</span><span class="pill">Nintendo GameCube</span><span class="pill">SD card · drag and drop</span><span class="pill">C · devkitPPC</span></div>
   <p class="cta"><a class="primary" href="{{zip_url}}">Download Indigo {{version}}</a><a class="secondary" href="/indigo/guide/">Read the guide</a><a class="secondary" href="https://github.com/spencercnorton/indigo">Source on GitHub</a></p>
-  <p class="meta">Indigo-{{ref}}.zip · {{zip_meta}} · <a href="https://github.com/spencercnorton/indigo/releases/tag/{{ref}}">Release notes</a> · <a href="#downloads">Every download</a></p>
+  <p class="meta">Indigo-{{ref}}.zip · {{zip_size}} · <a href="https://github.com/spencercnorton/indigo/releases/tag/{{ref}}">Release notes</a> · <a href="#downloads">All downloads</a></p>
 </section>
 
 <figure class="showcase glass">
@@ -134,8 +94,8 @@
 
 <h2 id="downloads">Downloads</h2>
 <div class="dl">
-  <div class="glass"><h3>Indigo {{version}}</h3><p>The release for everyday use. Unzip, drag everything onto the SD card.</p><p class="cta"><a class="primary" href="{{zip_url}}">Indigo-{{ref}}.zip</a></p><p class="meta">{{zip_meta}} · <a href="https://github.com/spencercnorton/indigo/releases/tag/{{ref}}">Release notes</a></p></div>
-  <div class="glass"><h3>Beta</h3><p>What comes next, a release early. Betas are GitHub pre-releases, tagged <code>vX.Y.Z-beta.N</code> from the <code>beta</code> branch; use them if you'd like to help test.</p><p class="cta"><a class="secondary" href="https://github.com/spencercnorton/indigo/releases">Every release, betas included</a></p></div>
+  <div class="glass"><h3>Indigo {{version}}</h3><p>The release for everyday use. Unzip, drag everything onto the SD card.</p><p class="cta"><a class="primary" href="{{zip_url}}">Indigo-{{ref}}.zip</a></p><p class="meta">{{zip_size}} · <a href="https://github.com/spencercnorton/indigo/releases/tag/{{ref}}">Release notes</a></p><p class="meta">SHA-256 {{zip_sum}}</p></div>
+  <div class="glass"><h3>Beta</h3><p>What comes next, a release early. Betas are GitHub pre-releases, tagged <code>vX.Y.Z-beta.N</code> from the <code>beta</code> branch; use them if you'd like to help test.</p><p class="cta"><a class="secondary" href="https://github.com/spencercnorton/indigo/releases">All releases</a></p></div>
   <div class="glass"><h3>Posters: USA &amp; Japan</h3><p>Box art for NTSC games: USA, Japan, Korea and Taiwan. Drag its <code>swiss</code> folder onto the card.</p><p class="cta"><a class="secondary" href="https://indigo.norvitech.com/indigo-posters-ntsc.zip">indigo-posters-ntsc.zip</a></p></div>
   <div class="glass"><h3>Posters: Europe &amp; Australia</h3><p>Box art for PAL games. Indigo reads one pack, so pick the region most of your games are from.</p><p class="cta"><a class="secondary" href="https://indigo.norvitech.com/indigo-posters-pal.zip">indigo-posters-pal.zip</a></p></div>
   <div class="glass"><h3>Cheats: every region</h3><p>Gecko codes for 609 games. Cheats the files show would break Indigo are switched off and marked. Open a game and press Y.</p><p class="cta"><a class="secondary" href="https://indigo.norvitech.com/indigo-cheats.zip">indigo-cheats.zip</a></p></div>
