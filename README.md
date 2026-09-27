@@ -27,8 +27,16 @@ to explain the release process and the support routes were cut on 2026-09-22,
 because every one of them is already said, per product, in the place someone
 actually reads it. `docs/<app>/` is that app's own page (what it does, how to install
 it, where its data lives, its documentation, written from its README) and
-`docs/about/` is Spencer. The Apps menu in the header is a native `<details>`
-element.
+`docs/about/` is Spencer.
+
+**A header that follows the page.** On a product's pages the header is about
+that product alone: its sections, its documentation, how to get it and its
+repository, in the same places for every product. Everywhere else it is
+Projects, Consulting, About and GitHub. `scripts/nav.py` holds the list of
+products and every menu as data and writes each page's header, footer and row
+of products from it, so adding a product is one entry there plus its page.
+The menus are native `<details>` elements, and `scripts/check.py` refuses a
+page whose header, footer or row is not what `nav.py` renders for it.
 
 **Guides that answer the question before the product does.** Each explains the
 platform problem first, says what the sanctioned answer costs, and only then

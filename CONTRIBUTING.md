@@ -31,11 +31,14 @@ moves forward by a release. That has two consequences for contributors:
 
 ```bash
 python3 -m http.server -d docs 8000   # then open http://localhost:8000
-python3 scripts/check.py              # what CI runs: tag balance, links, no scripts
+python3 scripts/nav.py                # after changing the navigation: rewrite every header, footer and product row
+python3 scripts/check.py              # what CI runs: tags, links and #fragments, one script, generated navigation
 ```
 
 - Everything under `docs/` is served as-is by GitHub Pages; there is no build
-  step, and nothing outside `docs/` reaches the site.
+  step, and nothing outside `docs/` reaches the site. The one exception is each
+  page's header, footer and row of products, which `scripts/nav.py` writes:
+  change the navigation there and run it, never in a page.
 - Keep a change to one concern. A pull request that fixes a bug and
   reformats a file is two pull requests.
 - Tests: a bug fix carries a regression test; a feature carries the smallest
