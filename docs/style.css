@@ -60,7 +60,7 @@
 }
 
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:84px} /* a #section lands below the sticky header, not under it */
 body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font);
   background-image:radial-gradient(70vw 60vh at 100% -10%,var(--glow-a),transparent 70%),
                    radial-gradient(60vw 60vh at -10% 100%,var(--glow-b),transparent 70%),
@@ -92,7 +92,16 @@ header .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding
 .rule{width:1px;align-self:stretch;min-height:26px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.28),transparent)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
 .brand img{height:28px;width:auto}
+/* a product's page names the product beside the mark; its header is about that product only (scripts/nav.py) */
+.slash{color:rgba(255,255,255,.35);font-size:22px;font-weight:300;margin:0 -8px}
+.product{font-weight:700;font-size:20px}
 header nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;font-weight:600;margin-right:auto}
+/* the one thing a visitor came to a product for, a pill in the same place on every product */
+header nav .act{padding:2px 12px;border:1px solid rgba(255,255,255,.35);border-radius:999px}
+header nav .act:hover{border-color:var(--brand);text-decoration:none}
+/* where you are: the link to this page, and the menu that holds it */
+header nav>a[aria-current]{color:var(--brand)}
+.menu:has([aria-current])>summary{color:var(--brand)}
 
 /* the clock: our time, read from the public NTP edge (site.js) */
 .clock{display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;color:#FFFFFF}
@@ -101,7 +110,8 @@ header nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;font-weig
 .clock [data-note]{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#bdb6cc}
 html:not(.js) .clock{display:none} /* a clock that cannot tick shows nothing */
 
-/* the Apps menu: a native <details>, no script. It closes on a second click or Esc-less tab-away; that is the trade for zero JavaScript. */
+/* the header menus: native <details> sharing one name, so the browser keeps one open at a time;
+   site.js adds closing on a click elsewhere, a chosen link or Esc, and without it they still open and close */
 .menu{position:relative}
 .menu summary{list-style:none;cursor:pointer;color:#FFFFFF;padding:4px 0}
 .menu summary::-webkit-details-marker{display:none}
@@ -109,12 +119,14 @@ html:not(.js) .clock{display:none} /* a clock that cannot tick shows nothing */
 .menu[open] summary::after{content:" ▴"}
 .menu summary:hover{color:var(--brand)}
 .menu ul{position:absolute;left:0;top:calc(100% + 10px);z-index:20;min-width:280px;margin:0;padding:8px;list-style:none;border-radius:14px;
-  background:var(--glass-strong);border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow)} /* no blur here: a nested backdrop-filter only sees its parent's box */
+  background:var(--card);border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow)} /* opaque: a nested backdrop-filter only sees its parent's box, and a see-through list shows the page's text */
 .menu li a{display:block;padding:8px 10px;border-radius:9px;color:var(--fg);font-weight:600;line-height:1.3}
 .menu li a:hover{background:var(--pill);color:var(--fg);text-decoration:none}
 .menu li a[aria-current]{background:var(--pill)}
 .menu li small{display:block;font-weight:400;font-size:13px;color:var(--muted)}
-.menu li.all{border-top:1px solid var(--line);margin-top:6px;padding-top:6px}
+.menu li{break-inside:avoid}
+.menu ul:has(>li:nth-child(10)){columns:2;column-gap:4px;min-width:430px} /* a long list reads as two columns */
+.menu li a[href^="http"]::after{content:" ↗";content:" ↗" / "";font-weight:400;color:var(--muted)} /* leaves the site */
 
 .hero{padding:40px 0 22px}
 .hero h1{font-size:clamp(27px,3.4vw,40px);margin:0 0 12px;max-width:34ch}
@@ -218,16 +230,31 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
   .slide img{max-height:46vh;width:100%}
   .slide h3{font-size:22px}
 }
+/* a product's header outgrows one row first: below 1000px it is always two, its name and the clock, then its menus */
+@media (max-width:1000px){
+  .product~.rule{display:none}
+  .product~nav{order:2;width:100%;margin-right:0}
+  .product~.clock{order:1;margin-left:auto}
+}
+@media (min-width:601px) and (max-width:1000px){html:has(.product){scroll-padding-top:118px}}
 @media (max-width:600px){
   .hero{padding:36px 0 20px}h2{margin-top:36px}
   /* stacked, a sticky header would be a third of a phone screen */
   header.masthead{position:static}
+  html{scroll-padding-top:0}
   .masthead .wrap{padding-left:20px;padding-right:20px}
   .rule{display:none}
   .clock{order:1;margin-left:auto;align-items:flex-end}
   .clock [data-face]{font-size:16px}
+  /* beside a product's name: the mark alone (its name is still read aloud), and no clock, which would take a row of its own */
+  .brand:has(+.slash) span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .product~.clock{display:none}
   header nav{order:2;width:100%;margin-right:0}
-  header nav{width:100%}.menu{width:100%}.menu ul{position:static;min-width:0;margin-top:8px}
+  /* the menus stay in one row; an open one drops the width of the screen under the header */
+  header .wrap{position:relative}
+  .menu{position:static}
+  .menu ul{left:12px;right:12px;top:100%;min-width:0}
+  .menu ul:has(>li:nth-child(10)){min-width:0}
 }
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}.track{scroll-behavior:auto}}
 
@@ -864,7 +891,7 @@ button.tv-av:not(:disabled):hover{transform:translateY(-2px) scale(1.1)}
 }
 @media print{.docnav,.pager{display:none}.docs{display:block}}
 
-/* Operational guides: readable commands and comparison tables on phones. */
+/* Operational guides: commands and tables remain readable on phones. */
 .doc img{max-width:100%;height:auto}
 .doc table{display:block;max-width:100%;overflow-x:auto}
 .guide-entry{margin-top:32px;padding-top:20px;border-top:1px solid var(--line)}

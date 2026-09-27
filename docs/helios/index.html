@@ -69,27 +69,33 @@
 
 <header class="masthead">
   <div class="wrap">
-    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28"><span>NorviTech</span></a>
+    <span class="slash" aria-hidden="true">/</span>
+    <a class="product" href="/helios/" aria-current="page">Helios</a>
     <span class="rule" aria-hidden="true"></span>
-    <nav aria-label="Site">
-      <details class="menu">
-        <summary>Apps</summary>
+    <nav aria-label="Helios">
+      <details class="menu" name="nav">
+        <summary>Overview</summary>
         <ul>
-          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
-          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
-          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
-          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
-          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
-          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
-          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
-          <li><a href="/conductor/">Conductor<small>Live TV and DVR for Plex</small></a></li>
-          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+          <li><a href="/helios/#features">What it does</a></li>
+          <li><a href="/helios/#providers">Three providers</a></li>
+          <li><a href="/helios/#data">Where your data lives</a></li>
         </ul>
       </details>
-      <a href="/#install">Install</a>
-      <a href="/consulting/">Consulting</a>
-      <a href="/about/">About</a>
-      <a href="https://github.com/spencercnorton">GitHub</a>
+      <details class="menu" name="nav">
+        <summary>Docs</summary>
+        <ul>
+          <li><a href="/helios/vs-terminal/">Compared with a terminal</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/blob/main/docs/user-guide.md">User guide</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/blob/main/docs/agent-setup.md">Agent setup</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/blob/main/CHANGELOG.md">Changelog</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/issues/new/choose">Issues</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/discussions">Discussions</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/security/advisories/new">Report a vulnerability</a></li>
+        </ul>
+      </details>
+      <a class="act" href="/helios/#install">Install</a>
+      <a href="https://github.com/spencercnorton/helios">GitHub</a>
     </nav>
     <a class="clock" id="clock" href="https://time.globalentry.systems/">
       <time data-face>--:--:--</time>
@@ -113,7 +119,7 @@
 <p>Helios is named for the sun that, in the old stories, saw everything that happened on earth. That is the whole idea. Terminal agents are powerful and easy to lose track of: which session is waiting on you, what a command is about to touch, how much a long task has cost. Helios keeps every session in one window and puts the controls that matter — permissions, budgets, the plan you agreed to — where you can see them, not in flags.</p>
 </div>
 
-<h2>What it does</h2>
+<h2 id="features">What it does</h2>
 <div class="how">
   <div class="glass"><h3>Every session in one place</h3><p>The sidebar lists every project and session on the machine with a live status dot; the transcript streams markdown, syntax-highlighted code, thinking, and one card per tool call with its result and elapsed time. Sessions keep working in the background, and a session that needs you says so.</p></div>
   <div class="glass"><h3>The model, the effort and the permissions, one click each</h3><p>The toolbar above the composer holds the model picker — the models the connected CLI actually ships, latest per family first — and the Execution capsule: workflow, reasoning effort and permission mode for this conversation, in one panel.</p></div>
@@ -123,26 +129,26 @@
   <div class="glass"><h3>Wears your desktop's colours</h3><p>A libadwaita application: it takes the accent colour from your system settings and follows it live, and the sidebar can be translucent over your wallpaper.</p></div>
 </div>
 
-<h2>Three providers, one workbench</h2>
+<h2 id="providers">Three providers, one workbench</h2>
 <div class="how">
   <div class="glass"><h3>Claude</h3><p>Drives the official <code>claude</code> CLI you already have signed in. Its context files, history and sign-in stay the CLI's own.</p></div>
   <div class="glass"><h3>GPT</h3><p>Binds to a persistent Codex App Server from the <code>codex</code> CLI, with native approvals, plans and compaction. Optional.</p></div>
   <div class="glass"><h3>OpenRouter</h3><p>Runs Helios's own agent loop against any model in the live catalog, with your key in a file under <code>~/.helios</code>. Optional.</p></div>
 </div>
 
-<h2>Install</h2>
+<h2 id="install">Install</h2>
 <div class="how">
   <div class="glass"><h3>Ubuntu 26.04 — APT</h3><p>Add the NorviTech APT repository once and <code>sudo apt install helios</code>; it updates with everything else. The exact two commands, and what <code>setup.sh</code> does, are in the <a href="https://github.com/spencercnorton/helios#install">README's Install section</a>.</p></div>
   <div class="glass"><h3>Other distributions — from source</h3><p>Any distribution with GTK 4.10+, libadwaita 1.5+, GtkSourceView 5 and Python 3.11+ works, Ubuntu 24.04 included: clone, <code>./scripts/helios</code>, and optionally <code>./scripts/install-desktop.sh</code> for an app-grid entry.</p></div>
   <div class="glass"><h3>Then sign in to the agents</h3><p>Helios copies no credentials. Sign in to the <code>claude</code> CLI and, if you use them, <code>codex login</code> or an OpenRouter key under Settings → Providers.</p></div>
 </div>
 
-<h2>Where your data lives</h2>
+<h2 id="data">Where your data lives</h2>
 <div class="prose">
 <p>Transcripts stay where the CLIs put them (<code>~/.claude/projects/…</code>); Helios's own state — Works, goals, settings, the log, an OpenRouter key if you add one — lives under <code>~/.helios</code> with restrictive permissions. Nothing is sent anywhere by Helios itself; what each provider receives is what you typed and what the agent read. The README's <a href="https://github.com/spencercnorton/helios#where-your-data-lives">path-by-path table</a> and <a href="https://github.com/spencercnorton/helios/blob/main/SECURITY.md">SECURITY.md</a> spell it out.</p>
 </div>
 
-<h2>Documentation</h2>
+<h2 id="docs">Documentation</h2>
 <div class="prose">
 <ul>
   <li><a href="/helios/vs-terminal/">Compared with a terminal</a> — what changes when the same CLI runs inside Helios, and when it should not</li>

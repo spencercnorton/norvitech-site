@@ -54,27 +54,33 @@
 
 <header class="masthead">
   <div class="wrap">
-    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28"><span>NorviTech</span></a>
+    <span class="slash" aria-hidden="true">/</span>
+    <a class="product" href="/helios/">Helios</a>
     <span class="rule" aria-hidden="true"></span>
-    <nav aria-label="Site">
-      <details class="menu">
-        <summary>Apps</summary>
+    <nav aria-label="Helios">
+      <details class="menu" name="nav">
+        <summary>Overview</summary>
         <ul>
-          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
-          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
-          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
-          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
-          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
-          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
-          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
-          <li><a href="/conductor/">Conductor<small>Live TV and DVR for Plex</small></a></li>
-          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+          <li><a href="/helios/#features">What it does</a></li>
+          <li><a href="/helios/#providers">Three providers</a></li>
+          <li><a href="/helios/#data">Where your data lives</a></li>
         </ul>
       </details>
-      <a href="/#install">Install</a>
-      <a href="/consulting/">Consulting</a>
-      <a href="/about/">About</a>
-      <a href="https://github.com/spencercnorton">GitHub</a>
+      <details class="menu" name="nav">
+        <summary>Docs</summary>
+        <ul>
+          <li><a href="/helios/vs-terminal/" aria-current="page">Compared with a terminal</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/blob/main/docs/user-guide.md">User guide</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/blob/main/docs/agent-setup.md">Agent setup</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/blob/main/CHANGELOG.md">Changelog</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/issues/new/choose">Issues</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/discussions">Discussions</a></li>
+          <li><a href="https://github.com/spencercnorton/helios/security/advisories/new">Report a vulnerability</a></li>
+        </ul>
+      </details>
+      <a class="act" href="/helios/#install">Install</a>
+      <a href="https://github.com/spencercnorton/helios">GitHub</a>
     </nav>
     <a class="clock" id="clock" href="https://time.globalentry.systems/">
       <time data-face>--:--:--</time>

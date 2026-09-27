@@ -1,2 +1,45 @@
-<?xml version='1.0' encoding='utf-8'?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://norvitech.com/about/</loc></url><url><loc>https://norvitech.com/bitagent/guide/</loc></url><url><loc>https://norvitech.com/bitagent/</loc></url><url><loc>https://norvitech.com/bitagent/vs-bitmagnet/</loc></url><url><loc>https://norvitech.com/conductor/guide/</loc></url><url><loc>https://norvitech.com/conductor/</loc></url><url><loc>https://norvitech.com/consulting/automating-da2-extracts/</loc></url><url><loc>https://norvitech.com/consulting/da2-dates-and-time-zones/</loc></url><url><loc>https://norvitech.com/consulting/da2-inflated-totals/</loc></url><url><loc>https://norvitech.com/consulting/da2-on-continuum-and-communityworks/</loc></url><url><loc>https://norvitech.com/consulting/da2-to-google-azure-warehouse/</loc></url><url><loc>https://norvitech.com/consulting/da2-vs-discern-explorer/</loc></url><url><loc>https://norvitech.com/consulting/</loc></url><url><loc>https://norvitech.com/helios/</loc></url><url><loc>https://norvitech.com/helios/vs-terminal/</loc></url><url><loc>https://norvitech.com/</loc></url><url><loc>https://norvitech.com/indigo/changelog/</loc></url><url><loc>https://norvitech.com/indigo/guide/cheats/</loc></url><url><loc>https://norvitech.com/indigo/guide/controls/</loc></url><url><loc>https://norvitech.com/indigo/guide/game-details/</loc></url><url><loc>https://norvitech.com/indigo/guide/home/</loc></url><url><loc>https://norvitech.com/indigo/guide/</loc></url><url><loc>https://norvitech.com/indigo/guide/install/</loc></url><url><loc>https://norvitech.com/indigo/guide/library/</loc></url><url><loc>https://norvitech.com/indigo/guide/memory-cards/</loc></url><url><loc>https://norvitech.com/indigo/guide/personalize/</loc></url><url><loc>https://norvitech.com/indigo/guide/posters/</loc></url><url><loc>https://norvitech.com/indigo/guide/settings/</loc></url><url><loc>https://norvitech.com/indigo/guide/settings-file/</loc></url><url><loc>https://norvitech.com/indigo/guide/source/</loc></url><url><loc>https://norvitech.com/indigo/guide/system/</loc></url><url><loc>https://norvitech.com/indigo/guide/troubleshooting/</loc></url><url><loc>https://norvitech.com/indigo/</loc></url><url><loc>https://norvitech.com/norvi-os/guide/</loc></url><url><loc>https://norvitech.com/norvi-os/</loc></url><url><loc>https://norvitech.com/snipsnap/guide/</loc></url><url><loc>https://norvitech.com/snipsnap/</loc></url><url><loc>https://norvitech.com/snipsnap/wayland-screenshots/</loc></url><url><loc>https://norvitech.com/xnote/guide/</loc></url><url><loc>https://norvitech.com/xnote/</loc></url><url><loc>https://norvitech.com/xnote-placement/</loc></url><url><loc>https://norvitech.com/xnote-placement/wayland-window-placement/</loc></url></urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://norvitech.com/</loc></url>
+  <url><loc>https://norvitech.com/about/</loc></url>
+  <url><loc>https://norvitech.com/bitagent/</loc></url>
+  <url><loc>https://norvitech.com/bitagent/guide/</loc></url>
+  <url><loc>https://norvitech.com/bitagent/vs-bitmagnet/</loc></url>
+  <url><loc>https://norvitech.com/conductor/</loc></url>
+  <url><loc>https://norvitech.com/conductor/guide/</loc></url>
+  <url><loc>https://norvitech.com/consulting/</loc></url>
+  <url><loc>https://norvitech.com/consulting/automating-da2-extracts/</loc></url>
+  <url><loc>https://norvitech.com/consulting/da2-dates-and-time-zones/</loc></url>
+  <url><loc>https://norvitech.com/consulting/da2-inflated-totals/</loc></url>
+  <url><loc>https://norvitech.com/consulting/da2-on-continuum-and-communityworks/</loc></url>
+  <url><loc>https://norvitech.com/consulting/da2-to-google-azure-warehouse/</loc></url>
+  <url><loc>https://norvitech.com/consulting/da2-vs-discern-explorer/</loc></url>
+  <url><loc>https://norvitech.com/helios/</loc></url>
+  <url><loc>https://norvitech.com/helios/vs-terminal/</loc></url>
+  <url><loc>https://norvitech.com/indigo/</loc></url>
+  <url><loc>https://norvitech.com/indigo/changelog/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/cheats/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/controls/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/game-details/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/home/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/install/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/library/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/memory-cards/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/personalize/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/posters/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/settings-file/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/settings/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/source/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/system/</loc></url>
+  <url><loc>https://norvitech.com/indigo/guide/troubleshooting/</loc></url>
+  <url><loc>https://norvitech.com/norvi-os/</loc></url>
+  <url><loc>https://norvitech.com/norvi-os/guide/</loc></url>
+  <url><loc>https://norvitech.com/snipsnap/</loc></url>
+  <url><loc>https://norvitech.com/snipsnap/guide/</loc></url>
+  <url><loc>https://norvitech.com/snipsnap/wayland-screenshots/</loc></url>
+  <url><loc>https://norvitech.com/xnote-placement/</loc></url>
+  <url><loc>https://norvitech.com/xnote-placement/wayland-window-placement/</loc></url>
+  <url><loc>https://norvitech.com/xnote/</loc></url>
+  <url><loc>https://norvitech.com/xnote/guide/</loc></url>
+</urlset>
