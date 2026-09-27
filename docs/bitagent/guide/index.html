@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>BitAgent deployment guide · NorviTech</title>
+<meta name="description" content="Install, configure, secure, verify, upgrade and recover BitAgent. Public setup commands, real demonstrations and an operational troubleshooting reference.">
+<link rel="canonical" href="https://norvitech.com/bitagent/guide/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="BitAgent · NorviTech">
+<meta property="og:description" content="Install, configure, secure, verify, upgrade and recover BitAgent. Public setup commands, real demonstrations and an operational troubleshooting reference.">
+<meta property="og:url" content="https://norvitech.com/bitagent/guide/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="BitAgent releases" href="https://github.com/spencercnorton/bitagent/guide/releases.atom">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li><a href="/conductor/">Conductor<small>Live TV and DVR for Plex</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+<main class="wrap"><section class="hero app doc-hero"><p class="crumb"><a href="/">Suite</a> / <a href="/bitagent/">BitAgent</a> / Deployment guide</p><h1>BitAgent deployment guide</h1><p class="tag">From a clean install to a verified recovery.</p><p>Requirements, setup, configuration, security, upgrades and troubleshooting in one operational reference.</p></section><div class="docs"><aside class="docnav glass" aria-label="Guide contents"><p>In this guide</p><div class="toc">
+<ul>
+<li><a href="#install-the-reproducible-public-stack">Install the reproducible public stack</a></li>
+<li><a href="#configure-integrations">Configure integrations</a></li>
+<li><a href="#security-and-data-handling">Security and data handling</a></li>
+<li><a href="#health-capacity-and-verification">Health, capacity and verification</a></li>
+<li><a href="#backup-upgrades-and-restore">Backup, upgrades and restore</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</div>
+<p>Project</p><ul><li><a href="https://github.com/spencercnorton/bitagent">Source on GitHub</a></li><li><a href="https://github.com/spencercnorton/bitagent/releases">Releases</a></li><li><a href="https://github.com/spencercnorton/bitagent/blob/main/SECURITY.md">Private security reporting</a></li></ul></aside><article class="doc">
+<p>BitAgent combines the Go indexer with an optional Python operator console.
+The public Compose stack builds from this repository and stores catalog
+state in PostgreSQL. Optional LLM stages are explicitly configured features;
+installing the application is not evidence that those stages are active.</p>
+<h2 id="install-the-reproducible-public-stack">Install the reproducible public stack</h2>
+<p>Use Docker and Compose with persistent disk, sufficient database capacity and
+UDP network access for DHT. Start with a small deployment and measure memory,
+disk growth and crawl rate before sizing a larger instance.</p>
+<pre><code class="language-bash">git clone https://github.com/spencercnorton/bitagent.git
+cd bitagent
+cp examples/.env.example examples/.env.public
+openssl rand -hex 32   # POSTGRES_PASSWORD
+openssl rand -hex 32   # TORZNAB_API_KEY
+</code></pre>
+<p>Put the two values in <code>examples/.env.public</code>, then:</p>
+<pre><code class="language-bash">docker compose -f examples/docker-compose.public.yml --env-file examples/.env.public config --quiet
+docker compose -f examples/docker-compose.public.yml --env-file examples/.env.public up -d --build
+docker compose -f examples/docker-compose.public.yml --env-file examples/.env.public ps
+curl --fail http://localhost:3333/metrics
+</code></pre>
+<p>The console is at <code>http://localhost:8080</code>; the example binds it to loopback and
+uses no login. Keep that binding for initial setup. Place authentication and
+TLS in front of any exposed console. Review the core's separate API bindings;
+a loopback console does not make another published port private.</p>
+<p><img alt="Public-stack quickstart recording with counts only" src="/assets/guides/bitagent/quickstart.png" /></p>
+<h2 id="configure-integrations">Configure integrations</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Configure and verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL</td>
+<td>Required password, persistent volume, disk capacity and backup</td>
+</tr>
+<tr>
+<td>DHT</td>
+<td>UDP access and routing; verify peers and persisted-torrent metrics</td>
+</tr>
+<tr>
+<td>Torznab</td>
+<td>Set a key; test capabilities before adding an indexer to an *arr app</td>
+</tr>
+<tr>
+<td>Console</td>
+<td><code>UI_ENABLED</code>; authenticated access when exposed outside loopback</td>
+</tr>
+<tr>
+<td>Metadata</td>
+<td>Your own provider key; verify provider quota and error handling</td>
+</tr>
+<tr>
+<td>LLM workflows</td>
+<td>Explicit keys, budgets, modes and independent evaluation</td>
+</tr>
+</tbody>
+</table>
+<p>Use <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/configuration.md">configuration</a> as the setting reference. Connect Sonarr,
+Radarr or Prowlarr using an address reachable from their own container/network,
+not blindly <code>localhost</code>. Follow <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/quickstart.md">the quickstart</a> for the exact
+public Compose layout and <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/ui-guide.md">UI guide</a> for console behavior.</p>
+<h2 id="security-and-data-handling">Security and data handling</h2>
+<p>Do not expose PostgreSQL. Protect Torznab with its API key and review GraphQL,
+metrics and evidence-webhook exposure independently. Keep API keys in an
+ignored environment file or a secret manager; do not paste Compose-rendered
+configuration into an issue.</p>
+<p>Real torrent names, acquisition history and evaluation rows may identify a
+person. Use generated records for screenshots and tests. Publish aggregate
+benchmarks only when their measurement procedure and limits are clear. Do
+not enable destructive classification or purge modes without independently
+reviewed evidence and a tested recovery path.</p>
+<h2 id="health-capacity-and-verification">Health, capacity and verification</h2>
+<p>Verify both services are healthy, metrics remain reachable and the persisted
+counter changes after bootstrap. Use the console's System health checks and
+check database disk growth, queue depth and provider errors. An empty search
+immediately after startup can reflect DHT warmup; repeated empty results need
+network and worker checks rather than an assumed fixed startup duration.</p>
+<p>Test Torznab capabilities and one synthetic integration request before
+connecting an entire automation stack. Test LLM stages with their budgets and
+shadow/evaluation modes before accepting live verdicts.</p>
+<h2 id="backup-upgrades-and-restore">Backup, upgrades and restore</h2>
+<p>Back up PostgreSQL, operator configuration and any additional persistent state
+listed in your deployment. Save secrets separately in an encrypted backup.
+Rehearse restoration into an isolated database with external API calls and
+DHT traffic disabled until the recovered settings have been reviewed.</p>
+<p>Record the release version and image digest before upgrading. Build from an
+immutable public tag; verify service health, migrations, API compatibility,
+crawl progress and UI behavior afterward. Restore the matching database
+backup when a migration makes a binary-only downgrade unsafe.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Check and next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No DHT progress</td>
+<td>Check UDP access, bootstrap peers and worker enablement.</td>
+</tr>
+<tr>
+<td>Database restarts or workers stall</td>
+<td>Check disk, memory, PostgreSQL health and connection limits.</td>
+</tr>
+<tr>
+<td>Torznab returns 401</td>
+<td>Compare the configured key with the caller's key privately.</td>
+</tr>
+<tr>
+<td>*arr cannot connect</td>
+<td>Test reachability from its network; check the host/port and API path.</td>
+</tr>
+<tr>
+<td>Console is unavailable</td>
+<td>Check UI_ENABLED, the worker, port binding and reverse-proxy configuration.</td>
+</tr>
+<tr>
+<td>LLM feature appears inert</td>
+<td>Check mode, key, budget and actual workflow metrics.</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/troubleshooting.md">troubleshooting</a>, <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/operations/monitoring.md">monitoring</a>
+and <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/operations/security.md">security</a> for the detailed operational references.</p><p class="docsrc">Maintained with the <a href="https://github.com/spencercnorton/bitagent/blob/main/docs/OPERATIONS.md">repository operations guide</a>. Demonstrations use demo data; diagrams describe architecture.</p></article></div></main>
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/conductor/">Conductor</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

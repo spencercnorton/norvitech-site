@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Conductor deployment guide · NorviTech</title>
+<meta name="description" content="Install, configure, secure, verify, upgrade and recover Conductor. Public setup commands, real demonstrations and an operational troubleshooting reference.">
+<link rel="canonical" href="https://norvitech.com/conductor/guide/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Conductor · NorviTech">
+<meta property="og:description" content="Install, configure, secure, verify, upgrade and recover Conductor. Public setup commands, real demonstrations and an operational troubleshooting reference.">
+<meta property="og:url" content="https://norvitech.com/conductor/guide/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Conductor releases" href="https://github.com/spencercnorton/conductor/guide/releases.atom">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li><a href="/conductor/">Conductor<small>Live TV and DVR for Plex</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+<main class="wrap"><section class="hero app doc-hero"><p class="crumb"><a href="/">Suite</a> / <a href="/conductor/">Conductor</a> / Deployment guide</p><h1>Conductor deployment guide</h1><p class="tag">From a clean install to a verified recovery.</p><p>Requirements, setup, configuration, security, upgrades and troubleshooting in one operational reference.</p></section><div class="docs"><aside class="docnav glass" aria-label="Guide contents"><p>In this guide</p><div class="toc">
+<ul>
+<li><a href="#requirements-and-first-deployment">Requirements and first deployment</a></li>
+<li><a href="#configuration-map">Configuration map</a></li>
+<li><a href="#network-and-access-controls">Network and access controls</a></li>
+<li><a href="#verify-a-working-system">Verify a working system</a></li>
+<li><a href="#backup-upgrades-and-recovery">Backup, upgrades and recovery</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</div>
+<p>Project</p><ul><li><a href="https://github.com/spencercnorton/conductor">Source on GitHub</a></li><li><a href="https://github.com/spencercnorton/conductor/releases">Releases</a></li><li><a href="https://github.com/spencercnorton/conductor/blob/main/SECURITY.md">Private security reporting</a></li></ul></aside><article class="doc">
+<p>Conductor presents an HDHomeRun-compatible tuner to Plex and pools your IPTV
+provider connections. PostgreSQL stores guide, provider and recording state.
+Provider passwords are encrypted with an operator-owned credential key.</p>
+<h2 id="requirements-and-first-deployment">Requirements and first deployment</h2>
+<p>Use Docker with Compose, persistent storage and PostgreSQL 16 or newer. Your
+provider must authorize the channels and concurrent streams you configure.
+Plex must be able to reach the advertised Conductor URL.</p>
+<pre><code class="language-bash">git clone https://github.com/spencercnorton/conductor.git
+cd conductor
+cp .env.example .env
+openssl rand -hex 32   # POSTGRES_PASSWORD
+openssl rand -hex 32   # CONDUCTOR_CRED_KEY
+openssl rand -hex 32   # CONDUCTOR_ADMIN_API_KEY
+</code></pre>
+<p>Put these separately generated values in the local <code>.env</code>. Set
+<code>CONDUCTOR_BASE_URL</code> to the URL reachable from Plex. The example binds to
+loopback initially; set <code>CONDUCTOR_BIND_ADDRESS=0.0.0.0</code> only on a trusted
+network with firewall restrictions when Plex runs on another host; <code>localhost</code> inside a Plex
+container means that container, not Conductor. Check out a reviewed release
+tag for a reproducible deployment.</p>
+<pre><code class="language-bash">docker compose -f docker-compose.example.yml config --quiet
+docker compose -f docker-compose.example.yml up --build -d
+docker compose -f docker-compose.example.yml ps
+curl --fail http://localhost:8409/healthz
+curl --fail http://localhost:8409/discover.json
+curl --fail http://localhost:8409/lineup.json
+</code></pre>
+<p>An empty lineup is expected until providers, credentials and channels exist.
+Pair Plex through Live TV &amp; DVR → Set up Plex DVR → manual address, using
+<code>http://your-host:8409</code>. Add configuration through the authenticated admin API;
+the API contract is in <a href="https://github.com/spencercnorton/conductor/blob/main/docs/spec/dispatcharr-replacement-spec.md">the technical specification</a>.</p>
+<h2 id="configuration-map">Configuration map</h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CONDUCTOR_BASE_URL</code></td>
+<td>Reachable public device, lineup and artwork URLs</td>
+</tr>
+<tr>
+<td><code>CONDUCTOR_POSTGRES_DSN</code></td>
+<td>Persistent state connection; use the Compose-provided value in the example stack</td>
+</tr>
+<tr>
+<td><code>CONDUCTOR_CRED_KEY</code></td>
+<td>Stable 32-byte hexadecimal credential-encryption key</td>
+</tr>
+<tr>
+<td><code>CONDUCTOR_ADMIN_API_KEY</code></td>
+<td>Bearer key for administration</td>
+</tr>
+<tr>
+<td><code>CONDUCTOR_AUTH_ENABLED</code></td>
+<td>Explicitly require admin authentication</td>
+</tr>
+<tr>
+<td><code>CONDUCTOR_DVR_INDEXER_KEY</code></td>
+<td>Optional Torznab/DVR integration key</td>
+</tr>
+<tr>
+<td><code>CONDUCTOR_UPSTREAM_PROXY</code></td>
+<td>Optional provider-traffic proxy URL; may contain credentials</td>
+</tr>
+<tr>
+<td><code>CONDUCTOR_TMDB_API_KEY</code></td>
+<td>Optional metadata enrichment key</td>
+</tr>
+</tbody>
+</table>
+<p>Keep the credential key stable. Losing or replacing it can make stored
+provider passwords unreadable. Keep database and proxy credentials out of
+shell history, copied Compose output and public reports.</p>
+<h2 id="network-and-access-controls">Network and access controls</h2>
+<p>The HDHomeRun and XMLTV surfaces are intended for Plex and are not admin
+interfaces. Keep the service on a trusted network. Require authentication for
+administration and restrict its routes at your reverse proxy. Do not expose
+PostgreSQL. The example stack is a starting point; configure TLS and network
+access controls before exposing a service beyond your trusted network.</p>
+<h2 id="verify-a-working-system">Verify a working system</h2>
+<ol>
+<li>Add one provider credential with its actual connection limit.</li>
+<li>Add a small test lineup and guide feed before importing the full catalog.</li>
+<li>Tune one channel in Plex, then end playback and verify its lease releases.</li>
+<li>Verify guide times, timezone, artwork and episode numbering.</li>
+<li>Test one short recording before enabling automated scheduling.</li>
+</ol>
+<p>Avoid bulk provider probes while diagnosing a failure. Providers may throttle
+or block the source IP; increasing retries can make the incident worse.</p>
+<h2 id="backup-upgrades-and-recovery">Backup, upgrades and recovery</h2>
+<p>Back up PostgreSQL, the credential key and the persistent Conductor data
+volume as one recovery set. Keep the key in a separate encrypted secret
+backup. Back up recording outputs according to your retention requirements.
+Test a restore with a disposable database and storage, with provider access
+blocked until the recovered configuration has been checked.</p>
+<p>Record the current version and image digest before an upgrade. Rebuild from
+the new public tag, then check health, device identity, lineup, tune and lease
+release. For an incompatible migration, restore the matching database backup
+rather than only downgrading the binary.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Check and next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plex cannot discover the tuner</td>
+<td>Add it manually; verify its advertised base URL from Plex's network.</td>
+</tr>
+<tr>
+<td>Healthy service, no channels</td>
+<td>Check provider credentials, channel mapping and lineup import.</td>
+</tr>
+<tr>
+<td>Tune fails after a burst of requests</td>
+<td>Check provider throttling or source-IP blocks; stop aggressive probes.</td>
+</tr>
+<tr>
+<td>Guide looks empty or stale</td>
+<td>Check ingest errors, provider horizon and timezone configuration.</td>
+</tr>
+<tr>
+<td>Stored credentials cannot decrypt</td>
+<td>Recover the original credential key; do not overwrite it.</td>
+</tr>
+<tr>
+<td>DVR conflicts</td>
+<td>Check provider slots, live reserve, padding and concurrent recordings.</td>
+</tr>
+</tbody>
+</table>
+<p>Share scrubbed error categories and version information. Never share a
+provider URL with embedded credentials, your key, a raw database dump or a
+full guide capture containing account details.</p><p class="docsrc">Maintained with the <a href="https://github.com/spencercnorton/conductor/blob/main/docs/OPERATIONS.md">repository operations guide</a>. Demonstrations use demo data; diagrams describe architecture.</p></article></div></main>
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/conductor/">Conductor</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

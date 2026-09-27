@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>SnipSnap deployment guide · NorviTech</title>
+<meta name="description" content="Install, configure, secure, verify, upgrade and recover SnipSnap. Public setup commands, real demonstrations and an operational troubleshooting reference.">
+<link rel="canonical" href="https://norvitech.com/snipsnap/guide/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="SnipSnap · NorviTech">
+<meta property="og:description" content="Install, configure, secure, verify, upgrade and recover SnipSnap. Public setup commands, real demonstrations and an operational troubleshooting reference.">
+<meta property="og:url" content="https://norvitech.com/snipsnap/guide/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="SnipSnap releases" href="https://github.com/spencercnorton/snipsnap/guide/releases.atom">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li><a href="/conductor/">Conductor<small>Live TV and DVR for Plex</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+<main class="wrap"><section class="hero app doc-hero"><p class="crumb"><a href="/">Suite</a> / <a href="/snipsnap/">SnipSnap</a> / Deployment guide</p><h1>SnipSnap deployment guide</h1><p class="tag">From a clean install to a verified recovery.</p><p>Requirements, setup, configuration, security, upgrades and troubleshooting in one operational reference.</p></section><div class="docs"><aside class="docnav glass" aria-label="Guide contents"><p>In this guide</p><div class="toc">
+<ul>
+<li><a href="#requirements-and-installation">Requirements and installation</a></li>
+<li><a href="#first-capture-and-configuration">First capture and configuration</a></li>
+<li><a href="#security-and-backup">Security and backup</a></li>
+<li><a href="#upgrades-and-verification">Upgrades and verification</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</div>
+<p>Project</p><ul><li><a href="https://github.com/spencercnorton/snipsnap">Source on GitHub</a></li><li><a href="https://github.com/spencercnorton/snipsnap/releases">Releases</a></li><li><a href="https://github.com/spencercnorton/snipsnap/blob/main/SECURITY.md">Private security reporting</a></li></ul></aside><article class="doc">
+<p>SnipSnap captures and annotates screenshots on Linux. On GNOME Wayland the
+Shell bridge owns selection; the daemon owns decoding, editing and saving.
+Other Wayland compositors use the screenshot portal. The portable ScreenCast
+backend is not part of the stable release.</p>
+<h2 id="requirements-and-installation">Requirements and installation</h2>
+<p>The published package targets Ubuntu 26.04 on amd64. Use a normal GNOME
+Wayland user session for the Shell bridge. Confirm your session with
+<code>echo "$XDG_SESSION_TYPE"</code> and record <code>gnome-shell --version</code> before diagnosing
+extension compatibility.</p>
+<pre><code class="language-bash">curl -fsSL https://apt.globalentry.systems/setup.sh -o /tmp/norvitech-apt-setup.sh
+# Read the downloaded repository setup script before running it.
+less /tmp/norvitech-apt-setup.sh
+sudo sh /tmp/norvitech-apt-setup.sh
+sudo apt install snipsnap
+snipsnap-shell-bridge activate
+</code></pre>
+<p>The package replaces Flameshot because it owns the compatibility command.
+The first bridge activation verifies the extension before taking over Print.
+If activation requests a session restart, log out and back in, then activate
+again. Do not restart GNOME Shell in a live Wayland session.</p>
+<h2 id="first-capture-and-configuration">First capture and configuration</h2>
+<p>Press Print, select a region, release and press Enter. Add annotations, then
+copy or save. Check a second monitor and a mixed-scale layout if you use them.
+The portal path is also available through <code>snipsnap gui</code>.</p>
+<pre><code class="language-bash">snipsnap --version
+snipsnap-shell-bridge status
+snipsnap config
+snipsnap config --check
+</code></pre>
+<p>Configure tools, colors, save location and filename pattern in the settings
+window. Settings live in <code>~/.config/snipsnap/snipsnap.ini</code>. Prefer a private
+save directory when captures may contain documents or account information.
+SnipSnap does not provide an uploader or a network update checker.</p>
+<p><img alt="A demo capture from selection through annotation" src="/assets/guides/snipsnap/flow.png" /></p>
+<h2 id="security-and-backup">Security and backup</h2>
+<p>The GNOME extension can see the unlocked session's pixels; install it only
+from a source you trust. The bridge uses an owner-only runtime socket and
+refuses locked-session captures. Saved images and the clipboard may contain
+private data even though the program does not send them over the network.</p>
+<p>Back up your settings and the directories where you save captures. The
+runtime socket and cache are temporary state, not backup targets. Review
+image pixels and metadata before sharing. Blur or remove account names,
+notifications, URLs and document text in published examples.</p>
+<h2 id="upgrades-and-verification">Upgrades and verification</h2>
+<p>Upgrade with your package manager. Confirm the installed version and bridge
+status, then capture, copy and save a test region. Verify both light and dark
+editor appearance and all monitors. Keep the previous package if you need a
+rollback; save the current configuration before reinstalling it.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Check and next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Print opens GNOME's capture UI</td>
+<td>Run bridge status and activation; check for a shortcut conflict.</td>
+</tr>
+<tr>
+<td>Extension is installed but inactive</td>
+<td>Confirm the supported Shell version; complete a requested logout/login.</td>
+</tr>
+<tr>
+<td>Portal permission dialog appears</td>
+<td>Confirm GNOME bridge activation; other compositors use the portal.</td>
+</tr>
+<tr>
+<td>Capture cannot be saved</td>
+<td>Check target-directory permissions and free disk space.</td>
+</tr>
+<tr>
+<td>A monitor selection is wrong</td>
+<td>Report display scale, rotation and topology with synthetic captures.</td>
+</tr>
+</tbody>
+</table>
+<p>For bridge diagnostics, use a scrubbed user-journal excerpt. Do not post the
+complete desktop journal or a screenshot of a real workspace. See
+<a href="https://github.com/spencercnorton/snipsnap/blob/main/docs/gnome-shell-bridge.md">the bridge guide</a> and <a href="https://github.com/spencercnorton/snipsnap/blob/main/docs/architecture.md">architecture</a>
+for protocol and backend details.</p><p class="docsrc">Maintained with the <a href="https://github.com/spencercnorton/snipsnap/blob/main/docs/OPERATIONS.md">repository operations guide</a>. Demonstrations use demo data; diagrams describe architecture.</p></article></div></main>
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/conductor/">Conductor</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

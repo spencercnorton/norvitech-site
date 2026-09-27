@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>XNote deployment guide · NorviTech</title>
+<meta name="description" content="Install, configure, secure, verify, upgrade and recover XNote. Public setup commands, real demonstrations and an operational troubleshooting reference.">
+<link rel="canonical" href="https://norvitech.com/xnote/guide/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="XNote · NorviTech">
+<meta property="og:description" content="Install, configure, secure, verify, upgrade and recover XNote. Public setup commands, real demonstrations and an operational troubleshooting reference.">
+<meta property="og:url" content="https://norvitech.com/xnote/guide/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="XNote releases" href="https://github.com/spencercnorton/xnote/guide/releases.atom">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li><a href="/conductor/">Conductor<small>Live TV and DVR for Plex</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+<main class="wrap"><section class="hero app doc-hero"><p class="crumb"><a href="/">Suite</a> / <a href="/xnote/">XNote</a> / Deployment guide</p><h1>XNote deployment guide</h1><p class="tag">From a clean install to a verified recovery.</p><p>Requirements, setup, configuration, security, upgrades and troubleshooting in one operational reference.</p></section><div class="docs"><aside class="docnav glass" aria-label="Guide contents"><p>In this guide</p><div class="toc">
+<ul>
+<li><a href="#install-and-verify">Install and verify</a></li>
+<li><a href="#configure-the-application">Configure the application</a></li>
+<li><a href="#set-up-encrypted-backup">Set up encrypted backup</a></li>
+<li><a href="#rehearse-recovery">Rehearse recovery</a></li>
+<li><a href="#upgrades-and-troubleshooting">Upgrades and troubleshooting</a></li>
+</ul>
+</div>
+<p>Project</p><ul><li><a href="https://github.com/spencercnorton/xnote">Source on GitHub</a></li><li><a href="https://github.com/spencercnorton/xnote/releases">Releases</a></li><li><a href="https://github.com/spencercnorton/xnote/blob/main/SECURITY.md">Private security reporting</a></li></ul></aside><article class="doc">
+<p>XNote is a native GTK4 sticky-note application. Live notes are local plaintext;
+optional cloud recovery kits are encrypted. Window placement on GNOME Wayland
+is handled by the separate XNote Placement extension.</p>
+<h2 id="install-and-verify">Install and verify</h2>
+<p>The published APT package targets Ubuntu 26.04 on amd64 and replaces the old
+xpad package. Back up existing notes before the first migration.</p>
+<pre><code class="language-bash">curl -fsSL https://apt.globalentry.systems/setup.sh -o /tmp/norvitech-apt-setup.sh
+less /tmp/norvitech-apt-setup.sh
+sudo sh /tmp/norvitech-apt-setup.sh
+sudo apt install xnote
+xnote --version
+xnote
+</code></pre>
+<p>Create an invented test note, change its color, close and reopen the app.
+Confirm text persists and the tray menu works if AppIndicator is installed.
+Use the companion extension's instructions when verifying position, monitor
+and workspace restoration; ordinary Wayland clients cannot place windows.</p>
+<p><img alt="XNote with invented notes" src="/assets/guides/xnote/xnote-desktop.png" /></p>
+<h2 id="configure-the-application">Configure the application</h2>
+<p>Preferences controls font, colors, default size, toolbar, scrollbars and
+window decorations. A note can override its own appearance. Data is in
+<code>~/.config/xnote</code>, including note content and per-note state. Treat this whole
+directory as private. The app saves atomically on a four-second tick; it is
+not a substitute for an off-machine backup.</p>
+<p><img alt="Layout preferences" src="/assets/guides/xnote/xnote-preferences-layout.png" /></p>
+<h2 id="set-up-encrypted-backup">Set up encrypted backup</h2>
+<p>Install rclone if using a supported remote provider. Configure a remote named
+<code>dropbox</code>, or use your own remote name and set <code>CLOUD_REMOTE</code> accordingly.</p>
+<pre><code class="language-bash">rclone config
+xnote-cloud-backup init
+# Edit ~/.config/xnote/cloud-backup.conf:
+# CLOUD_REMOTE=dropbox:xnote-backup
+xnote-cloud-backup backup
+xnote-cloud-backup status
+xnote-cloud-backup remote-list
+systemctl --user enable --now xnote-cloud-backup.timer
+</code></pre>
+<p>Initialization prints a recovery code once. Store it separately from your
+passphrase and backup target. A successful local snapshot is not proof of a
+successful remote upload: check status and confirm a complete remote kit.
+The provider sees device names, timestamps, sizes and cadence, but not note
+contents. Use a non-identifying <code>CLOUD_DEVICE</code> label if needed.</p>
+<h2 id="rehearse-recovery">Rehearse recovery</h2>
+<p>Use a disposable account or VM. Never rehearse over your current live notes.
+Configure access to the remote, then:</p>
+<pre><code class="language-bash">xnote-cloud-backup import latest
+xnote-cloud-backup unlock --recovery
+# Close XNote before restoring a snapshot.
+xnote-cloud-backup restore latest
+</code></pre>
+<p>Import validates a kit and installs local recovery state; it does not itself
+restore live notes. Unlock the imported key explicitly, then restore while
+XNote is closed. Inspect the recovered notes in the disposable environment.
+Without the passphrase or recovery code, encrypted kits cannot be recovered.</p>
+<h2 id="upgrades-and-troubleshooting">Upgrades and troubleshooting</h2>
+<p>Back up notes before upgrading; verify version, save/reopen, placement and
+remote backup afterward. Preserve the previous package and a matching data
+backup when testing rollback.</p>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Check and next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Notes return in the wrong position</td>
+<td>Verify the placement extension and its Shell compatibility.</td>
+</tr>
+<tr>
+<td>Backup fails as uninitialized</td>
+<td>Run init and preserve the one-time recovery code.</td>
+</tr>
+<tr>
+<td>Local backup succeeds, remote fails</td>
+<td>Check remote configuration, provider authorization and helper status.</td>
+</tr>
+<tr>
+<td>Imported snapshot cannot be opened</td>
+<td>Unlock the imported key with passphrase or recovery code.</td>
+</tr>
+<tr>
+<td>Tray is missing</td>
+<td>Check the AppIndicator extension; notes can still run without the tray.</td>
+</tr>
+</tbody>
+</table>
+<p>Do not upload note directories, recovery codes, rclone configuration or
+complete logs to a public issue. Consult <code>man xnote-cloud-backup</code> for command
+semantics, snapshot retention and force-operation safeguards.</p><p class="docsrc">Maintained with the <a href="https://github.com/spencercnorton/xnote/blob/main/docs/OPERATIONS.md">repository operations guide</a>. Demonstrations use demo data; diagrams describe architecture.</p></article></div></main>
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/conductor/">Conductor</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

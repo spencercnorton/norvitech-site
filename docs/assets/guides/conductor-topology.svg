@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="350" viewBox="0 0 1000 350" role="img" aria-labelledby="title desc">
+<title id="title">Conductor deployment topology</title><desc id="desc">Provider streams enter Conductor, which serves Plex through HDHomeRun and XMLTV. PostgreSQL stores persistent state. Administrative access is authenticated.</desc>
+<rect width="1000" height="350" rx="22" fill="#241f31"/>
+<g stroke="#FD8024" stroke-width="3" fill="none"><path d="M260 110H390M650 110H780M520 160V220M260 270H390"/></g>
+<g fill="#362e48" stroke="#655775"><rect x="40" y="60" width="220" height="100" rx="15"/><rect x="390" y="60" width="260" height="100" rx="15"/><rect x="780" y="60" width="180" height="100" rx="15"/><rect x="390" y="220" width="260" height="90" rx="15"/><rect x="40" y="220" width="220" height="90" rx="15"/></g>
+<g fill="#ffffff" font-family="sans-serif" text-anchor="middle" font-size="23"><text x="150" y="103">Provider streams</text><text x="520" y="103">Conductor</text><text x="870" y="103">Plex</text><text x="520" y="255">PostgreSQL</text><text x="150" y="255">Administration</text></g>
+<g fill="#c9c1d8" font-family="sans-serif" text-anchor="middle" font-size="15"><text x="150" y="130">Operator credentials</text><text x="520" y="130">Lease pool · guide · DVR</text><text x="870" y="130">Tuner + XMLTV</text><text x="520" y="283">Persistent state</text><text x="150" y="283">Bearer authentication</text></g></svg>

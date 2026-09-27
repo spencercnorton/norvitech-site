@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>NorviOS deployment guide · NorviTech</title>
+<meta name="description" content="Install, configure, secure, verify, upgrade and recover NorviOS. Public setup commands, real demonstrations and an operational troubleshooting reference.">
+<link rel="canonical" href="https://norvitech.com/norvi-os/guide/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="NorviOS · NorviTech">
+<meta property="og:description" content="Install, configure, secure, verify, upgrade and recover NorviOS. Public setup commands, real demonstrations and an operational troubleshooting reference.">
+<meta property="og:url" content="https://norvitech.com/norvi-os/guide/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="NorviOS releases" href="https://github.com/spencercnorton/norvi-os/guide/releases.atom">
+<script src="/site.js" defer></script>
+
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28">NorviTech</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Site">
+      <details class="menu">
+        <summary>Apps</summary>
+        <ul>
+          <li><a href="/helios/">Helios<small>A desktop for your coding agents</small></a></li>
+          <li><a href="/bitagent/">BitAgent<small>DHT crawler and indexer for the *arr stack</small></a></li>
+          <li><a href="/xnote/">XNote<small>Sticky notes for GNOME</small></a></li>
+          <li><a href="/xnote-placement/">XNote Placement<small>Notes back where you left them</small></a></li>
+          <li><a href="/snipsnap/">SnipSnap<small>Screenshots on GNOME Wayland</small></a></li>
+          <li><a href="/norvi-os/">NorviOS<small>The NorviTech look for Ubuntu</small></a></li>
+          <li><a href="/indigo/">Indigo<small>Swiss for GameCube, rebuilt</small></a></li>
+          <li><a href="/conductor/">Conductor<small>Live TV and DVR for Plex</small></a></li>
+          <li class="all"><a href="/#install">Install them all<small>One APT command</small></a></li>
+        </ul>
+      </details>
+      <a href="/#install">Install</a>
+      <a href="/consulting/">Consulting</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/spencercnorton">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+<main class="wrap"><section class="hero app doc-hero"><p class="crumb"><a href="/">Suite</a> / <a href="/conductor/">Conductor</a>
+      <a href="/norvi-os/">NorviOS</a> / Deployment guide</p><h1>NorviOS deployment guide</h1><p class="tag">From a clean install to a verified recovery.</p><p>Requirements, setup, configuration, security, upgrades and troubleshooting in one operational reference.</p></section><div class="docs"><aside class="docnav glass" aria-label="Guide contents"><p>In this guide</p><div class="toc">
+<ul>
+<li><a href="#supported-environment">Supported environment</a></li>
+<li><a href="#install-and-configure">Install and configure</a></li>
+<li><a href="#verify-each-surface">Verify each surface</a></li>
+<li><a href="#configuration-and-ownership">Configuration and ownership</a></li>
+<li><a href="#rollback-and-upgrades">Rollback and upgrades</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</div>
+<p>Project</p><ul><li><a href="https://github.com/spencercnorton/norvi-os">Source on GitHub</a></li><li><a href="https://github.com/spencercnorton/norvi-os/releases">Releases</a></li><li><a href="https://github.com/spencercnorton/norvi-os/blob/main/SECURITY.md">Private security reporting</a></li></ul></aside><article class="doc">
+<p>NorviOS is a reversible branding and glass-style layer for Ubuntu, rather
+than a separate distribution. The screenshots show a wider desktop suite;
+this repository does not install every extension pictured.</p>
+<h2 id="supported-environment">Supported environment</h2>
+<p>The supported baseline is Ubuntu 26.04 LTS, GNOME 50 and a Wayland desktop.
+Have a working backup, a normal user account, sudo access and enough free
+space in <code>/boot</code> for initramfs regeneration. Test organizational desktop
+policies in a virtual machine before rolling them out to workstations.</p>
+<pre><code class="language-bash">cat /etc/os-release
+gnome-shell --version
+df -h /boot
+</code></pre>
+<h2 id="install-and-configure">Install and configure</h2>
+<pre><code class="language-bash">git clone https://github.com/spencercnorton/norvi-os.git
+cd norvi-os
+# For reproducibility, check out a reviewed version tag before installation.
+sudo ./install.sh
+./desktop/install-desktop.sh
+</code></pre>
+<p>The first command installs Plymouth, the greeter logo and About-panel logos.
+It updates boot files and needs sudo. The desktop command changes only your
+user's GTK styles and blur settings; run it without sudo.</p>
+<p>Install and enable a compatible Blur my Shell first. Without it the desktop
+installer refuses to make windows translucent. <code>--stylesheet-only</code> is an
+explicit alternative when you manage blur separately.</p>
+<p><img alt="NorviOS with a demo account and synthetic notes" src="/assets/guides/norvi-os/desktop.png" /></p>
+<h2 id="verify-each-surface">Verify each surface</h2>
+<ol>
+<li>Read the installers' final checks and keep the output privately.</li>
+<li>Reopen Settings → About and inspect both light and dark appearance.</li>
+<li>Open Files and a text editor; confirm labels are legible over your wallpaper.</li>
+<li>On the next planned reboot, check the splash and login logo.</li>
+<li>Verify launcher, workspace and weather extensions separately if you installed
+   them. Those components have their own compatibility and configuration.</li>
+</ol>
+<p><img alt="The launcher and search workflow" src="/assets/guides/norvi-os/launcher.png" /></p>
+<h2 id="configuration-and-ownership">Configuration and ownership</h2>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Configuration owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boot splash</td>
+<td>Plymouth alternative and generated initramfs</td>
+</tr>
+<tr>
+<td>Greeter logo</td>
+<td>Debian's greeter customization conffile</td>
+</tr>
+<tr>
+<td>About logos</td>
+<td>Local package diversions, preserving original files</td>
+</tr>
+<tr>
+<td>GTK glass</td>
+<td>Per-user GTK3 and GTK4 stylesheets</td>
+</tr>
+<tr>
+<td>Background blur</td>
+<td>The user's Blur my Shell settings</td>
+</tr>
+<tr>
+<td>Reversal record</td>
+<td><code>~/.local/state/norvi-os/</code></td>
+</tr>
+</tbody>
+</table>
+<p>Keep the reversal record and the saved pre-install stylesheets. They tell the
+uninstaller what was yours before installation. Do not delete them as cache.
+The installers themselves do not access the network.</p>
+<h2 id="rollback-and-upgrades">Rollback and upgrades</h2>
+<pre><code class="language-bash">sudo ./uninstall.sh
+./desktop/install-desktop.sh --uninstall
+</code></pre>
+<p>These restore the original branding and the user's recorded desktop settings.
+Check About, GTK styles and the next boot again after rollback. Before a major
+Ubuntu or GNOME upgrade, verify compatibility in a fresh VM. Do not assume an
+extension for one Shell major version works on another.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Check and next action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Installer refuses the desktop</td>
+<td>Check Ubuntu/GNOME versions and Blur my Shell availability.</td>
+</tr>
+<tr>
+<td>Background is translucent but sharp</td>
+<td>Confirm blur is enabled; inspect extension compatibility.</td>
+</tr>
+<tr>
+<td>Boot branding looks unchanged</td>
+<td>Check installer output and reboot into the regenerated kernel image.</td>
+</tr>
+<tr>
+<td>User stylesheet already existed</td>
+<td>Preserve the pre-install copy; use the uninstall path to restore it.</td>
+</tr>
+<tr>
+<td>Empty folder looks opaque</td>
+<td>Some GTK status pages remain opaque; this is a known styling boundary.</td>
+</tr>
+</tbody>
+</table>
+<p>Use a demo account for public reports. Remove usernames, wallpaper metadata,
+window titles and real notes from screenshots. See <a href="https://github.com/spencercnorton/norvi-os/blob/main/docs/how-it-works.md">how it works</a>
+for the exact override points and contrast checks.</p><p class="docsrc">Maintained with the <a href="https://github.com/spencercnorton/norvi-os/blob/main/docs/OPERATIONS.md">repository operations guide</a>. Demonstrations use demo data; diagrams describe architecture.</p></article></div></main>
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/conductor/">Conductor</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

@@ -863,3 +863,8 @@ button.tv-av:not(:disabled):hover{transform:translateY(-2px) scale(1.1)}
   .docnav{position:static;max-height:none;order:2} /* the page first on a phone; its list after */
 }
 @media print{.docnav,.pager{display:none}.docs{display:block}}
+
+/* Operational guides: readable commands and comparison tables on phones. */
+.doc img{max-width:100%;height:auto}
+.doc table{display:block;max-width:100%;overflow-x:auto}
+.guide-entry{margin-top:32px;padding-top:20px;border-top:1px solid var(--line)}
