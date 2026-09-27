@@ -80,6 +80,18 @@ backend is not part of the stable release.</p>
 Wayland user session for the Shell bridge. Confirm your session with
 <code>echo "$XDG_SESSION_TYPE"</code> and record <code>gnome-shell --version</code> before diagnosing
 extension compatibility.</p>
+<p>For a manual GitHub install, use v2.0.4 or newer: these Debian packages are
+built and install-tested on Ubuntu 26.04. Download the <code>.deb</code>, <code>source.tar.gz</code>
+and <code>SHA256SUMS.txt</code> from the same <a href="https://github.com/spencercnorton/snipsnap/releases">release</a>
+into an empty directory, then verify all downloaded bytes before installation:</p>
+<pre><code class="language-bash">sha256sum --check SHA256SUMS.txt
+sudo apt install ./snipsnap_2.0.4-1_amd64.deb
+snipsnap --version
+</code></pre>
+<p>Version 2.0.3's Debian asset was built on Ubuntu 24.04 and cannot satisfy its
+Qt dependency on 26.04. Its tag and assets remain available for historical
+reference. GitHub installs are versioned manual updates; the signed APT feed
+publishes on its own schedule. Use the APT route for managed upgrades:</p>
 <pre><code class="language-bash">curl -fsSL https://apt.globalentry.systems/setup.sh -o /tmp/norvitech-apt-setup.sh
 # Read the downloaded repository setup script before running it.
 less /tmp/norvitech-apt-setup.sh
