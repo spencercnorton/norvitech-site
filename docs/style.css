@@ -194,6 +194,13 @@ h2{font-size:24px;margin:44px 0 16px}
 .how h3{margin:0 0 4px;font-size:16px}
 .how p{margin:0;color:var(--muted)}
 .how p+p{margin-top:8px}
+/* a card that is one link: all of it goes to the page it sums up */
+.how>a{display:flex;flex-direction:column;border-radius:14px;padding:16px 16px 14px 18px;border-left:3px solid var(--brand);color:var(--fg);
+  transition:transform .15s ease}
+.how>a:hover{text-decoration:none;transform:translateY(-2px)}
+.how .go{margin-top:auto;padding-top:10px;font-weight:600;color:var(--link)}
+.how .go::after{content:" \2192" / ""}
+.how>a:hover .go{text-decoration:underline}
 .how code,.prose code{font-size:.92em;background:var(--pill);border-radius:5px;padding:1px 5px}
 
 /* longer text on app and about pages */
@@ -256,7 +263,7 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
   .menu ul{left:12px;right:12px;top:100%;min-width:0}
   .menu ul:has(>li:nth-child(10)){min-width:0}
 }
-@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}.track{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){.card,.how>a{transition:none}.card:hover,.how>a:hover{transform:none}.track{scroll-behavior:auto}}
 
 /* ---- About: the career timeline -------------------------------------------
    One column so the chronology is unambiguous. Every moving part is a CSS
@@ -817,14 +824,34 @@ button.tv-av:not(:disabled):hover{transform:translateY(-2px) scale(1.1)}
    style plain elements inside .doc rather than classes the pages would carry.
    --------------------------------------------------------------------------- */
 .hero .meta,p.meta{font-size:14px;color:var(--muted);margin:10px 0 0}
-.showcase{margin:8px 0 28px;padding:14px;border-radius:22px;text-align:center}
-.showcase img,.showcase video{display:block;margin:0 auto;width:100%;max-width:960px;height:auto;border-radius:12px;background:#000}
+.showcase{margin:8px 0 28px;text-align:center}
+.showcase .clip,.showcase>img{max-width:1040px;margin:0 auto}
 .showcase figcaption{font-size:14px;color:var(--muted);margin-top:10px}
 .reel{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr));gap:16px}
 .reel figure{margin:0;padding:12px;border-radius:16px}
-.reel img,.reel video{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;border-radius:10px;background:#000}
 .reel figcaption{margin-top:10px;color:var(--muted);font-size:15px}
 .reel figcaption strong{display:block;color:var(--fg);font-size:16px}
+/* Clips are short silent recordings of the console, played like animations (site.js):
+   no player chrome and no black box. In the light scheme each is a rounded screen; in
+   the dark one its edges fade into the page, as the console's own background does. */
+.clip{position:relative}
+.clip video,.showcase>img,.reel img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:14px;background:#0b0a1e;
+  box-shadow:0 18px 44px -22px rgba(36,31,49,.5)}
+.js .clip video{cursor:pointer}
+@media (prefers-color-scheme:dark){
+  .clip video,.showcase>img,.reel img{border-radius:0;background:none;box-shadow:none;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent,#000 6%,#000 94%,transparent);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent,#000 6%,#000 94%,transparent);
+    mask-composite:intersect}
+}
+/* the one control a looping clip needs (WCAG 2.2.2): pause it, play it again */
+.clip-toggle{position:absolute;right:10px;bottom:10px;width:28px;height:28px;padding:0;display:grid;place-items:center;cursor:pointer;
+  border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(20,16,40,.55);opacity:.7;transition:opacity .15s ease;
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.clip:hover .clip-toggle,.clip-toggle:focus-visible{opacity:1}
+.clip-toggle::before{content:"";width:8px;height:10px;border:solid #fff;border-width:0 2.5px}
+.clip-toggle[aria-pressed="true"]::before{width:0;height:0;margin-left:2px;border-width:6px 0 6px 9px;border-color:transparent transparent transparent #fff}
 .steps{list-style:none;counter-reset:step;padding:0;margin:0 0 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:16px}
 .steps li{counter-increment:step;border-radius:14px;padding:16px 18px}
 .steps h3{margin:0 0 6px;font-size:17px}
@@ -840,6 +867,7 @@ button.tv-av:not(:disabled):hover{transform:translateY(-2px) scale(1.1)}
 .guide-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:10px;margin:0 0 16px}
 .guide-links a{display:block;padding:12px 16px;border-radius:12px;color:var(--fg)}
 .guide-links a:hover{text-decoration:none;border-color:var(--brand)}
+.note{border-radius:12px;padding:12px 16px;border-left:3px solid var(--brand);margin:0 0 16px}
 .faq details{border-bottom:1px solid var(--line);padding:10px 0}
 .faq summary{cursor:pointer;font-weight:600}
 .faq details p{margin:8px 0 0}

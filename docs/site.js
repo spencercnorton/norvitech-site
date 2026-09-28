@@ -662,4 +662,53 @@
     setInterval(sync, 600000);
     document.addEventListener("visibilitychange", function () { if (!document.hidden) { sync(); } });
   }
+
+  /* ---- Clips -------------------------------------------------------------
+     A .clip is a short, silent recording of a screen, so it plays like the
+     animation it is: looping while it is on screen and paused off it, with a
+     button (or a click on the clip) to hold it still. With reduced motion, or
+     without this file, it keeps its native controls and plays only when asked. */
+  (function () {
+  var clips = document.querySelectorAll(".clip video");
+  if (clips.length && window.IntersectionObserver &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var play = function (v) {
+      var p = v.play();
+      if (p) { p.catch(function () {}); } // autoplay refused: it stays on its poster
+    };
+    var onScreen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && !e.target.hasAttribute("data-held")) {
+          play(e.target);
+        } else {
+          e.target.pause();
+        }
+      });
+    }, { threshold: 0.3 });
+    [].forEach.call(clips, function (v) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "clip-toggle";
+      b.setAttribute("aria-label", "Pause");
+      var toggle = function () {
+        if (v.paused) {
+          v.removeAttribute("data-held");
+          play(v);
+        } else {
+          v.setAttribute("data-held", "");
+          v.pause();
+        }
+      };
+      var show = function () { b.setAttribute("aria-pressed", String(v.paused)); };
+      b.addEventListener("click", toggle);
+      v.addEventListener("click", toggle);
+      v.addEventListener("play", show);
+      v.addEventListener("pause", show);
+      v.removeAttribute("controls");
+      show();
+      v.parentNode.appendChild(b);
+      onScreen.observe(v);
+    });
+  }
+  })();
 })();
