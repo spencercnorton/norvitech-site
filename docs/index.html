@@ -7,18 +7,19 @@
 <meta name="theme-color" content="#241f31">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/home.css">
 <title>NorviTech Suite</title>
-<meta name="description" content="Open-source apps for the Linux desktop, the self-hosted stack and the Nintendo GameCube, by Spencer Norton. No telemetry, no accounts, no hosted service.">
+<meta name="description" content="Open-source software by Spencer Norton for Linux desktops, self-hosted systems and Nintendo GameCube. Explore product previews, guides and source code.">
 <link rel="canonical" href="https://norvitech.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NorviTech">
 <meta property="og:title" content="NorviTech Suite">
-<meta property="og:description" content="Open-source apps for the Linux desktop, the self-hosted stack and the Nintendo GameCube, by Spencer Norton. No telemetry, no accounts, no hosted service.">
+<meta property="og:description" content="Open-source software by Spencer Norton for Linux desktops, self-hosted systems and Nintendo GameCube. Explore product previews, guides and source code.">
 <meta property="og:url" content="https://norvitech.com/">
 <meta property="og:image" content="https://norvitech.com/assets/og.png">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
-<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:image:alt" content="NorviTech: open-source software for desktops, home servers and GameCube">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <script src="/site.js" defer></script>
@@ -46,7 +47,7 @@
       "@id": "https://norvitech.com/#website",
       "url": "https://norvitech.com/",
       "name": "NorviTech Suite",
-      "description": "Open-source apps for the Linux desktop, the self-hosted stack and the Nintendo GameCube, by Spencer Norton. No telemetry, no accounts, no hosted service.",
+      "description": "Open-source software by Spencer Norton for Linux desktops, self-hosted systems and Nintendo GameCube. Explore product previews, guides and source code.",
       "publisher": {
         "@id": "https://norvitech.com/#organization"
       }
@@ -55,7 +56,7 @@
 }
 </script>
 </head>
-<body>
+<body class="home">
 
 <header class="masthead">
   <div class="wrap">
@@ -86,139 +87,70 @@
   </div>
 </header>
 
-<main>
-
+<main id="suite">
 <div class="wrap">
-<section class="hero">
-  <h1>Open-source apps for the Linux desktop and the self-hosted stack.</h1>
-  <p>Small tools, one developer. No telemetry, no accounts, no hosted service; each README says exactly what leaves the machine, and each release is a tag you can read end to end.</p>
-</section>
-</div>
-
-<div class="wrap wide">
-<section class="spot" id="suite" aria-label="The suite">
-  <ul class="track" data-track>
-
-    <li class="slide glass" id="slide-helios">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="/assets/spotlight/helios-dark.png">
-        <img src="/assets/spotlight/helios-light.png" width="1200" height="772" alt="A live Helios session: the request is sent, the agent thinks, reads a file, writes a test, runs the suite and streams its answer while each step appears in the transcript.">
-      </picture>
-      <div>
-        <h3><a href="/helios/">Helios</a></h3>
-        <p><strong>The desktop that sees everything your coding agents do.</strong></p>
-        <p class="sub">A native GTK4/libadwaita workbench for Claude Code, OpenAI Codex and OpenRouter models. Every session in one window, with permissions, budgets and the plan you agreed to where you can see them.</p>
-        <div class="pills"><span class="pill lic">MIT</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GTK4 · Python</span></div>
-        <div class="links"><a href="/helios/">Overview</a><a href="https://github.com/spencercnorton/helios">GitHub</a></div>
-      </div>
-    </li>
-
-    <li class="slide glass" id="slide-bitagent">
-      <img src="/assets/spotlight/bitagent.png" width="1000" height="600" loading="lazy" alt="The BitAgent quickstart running: two containers start, the DHT crawler's persisted count climbs and the operator console comes up.">
-      <div>
-        <h3><a href="/bitagent/">BitAgent</a></h3>
-        <p><strong>A self-hosted BitTorrent DHT crawler and indexer built for the *arr stack.</strong></p>
-        <p class="sub">It crawls the DHT into Postgres, classifies what it finds, serves it over Torznab — and watches what your *arrs actually keep, feeding that back into what it indexes.</p>
-        <div class="pills"><span class="pill lic">MIT</span><span class="pill">Docker Compose</span><span class="pill">Go · Python · Postgres</span></div>
-        <div class="links"><a href="/bitagent/">Overview</a><a href="https://github.com/spencercnorton/bitagent">GitHub</a></div>
-      </div>
-    </li>
-
-    <li class="slide glass" id="slide-xnote">
-      <img src="/assets/spotlight/xnote.png" width="1100" height="688" loading="lazy" alt="An XNote session: notes are created, typed into, recoloured from the hover toolbar's swatches and moved around the desktop.">
-      <div>
-        <h3><a href="/xnote/">XNote</a></h3>
-        <p><strong>Sticky notes that stay on your desktop, and stay yours.</strong></p>
-        <p class="sub">A GTK4 descendant of Xpad for GNOME on Wayland: each note its own window, saved as you type, with optional encrypted backup to Dropbox or any rclone remote.</p>
-        <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GTK4 · C</span></div>
-        <div class="links"><a href="/xnote/">Overview</a><a href="https://github.com/spencercnorton/xnote">GitHub</a></div>
-      </div>
-    </li>
-
-    <li class="slide glass" id="slide-xnote-placement">
-      <img src="/assets/spotlight/xnote-placement.png" width="1280" height="800" loading="lazy" alt="A desktop of XNote sticky notes arranged across the screen, each one back in the position it was left in.">
-      <div>
-        <h3><a href="/xnote-placement/">XNote Placement</a></h3>
-        <p><strong>Puts every XNote sticky note back where you left it.</strong></p>
-        <p class="sub">Wayland forbids an app from placing its own windows, so this GNOME Shell extension does it from the compositor side — position, monitor and workspace, on every login. Nothing to configure.</p>
-        <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">GNOME Shell · JavaScript</span></div>
-        <div class="links"><a href="/xnote-placement/">Overview</a><a href="https://github.com/spencercnorton/xnote-placement">GitHub</a></div>
-      </div>
-    </li>
-
-    <li class="slide glass" id="slide-snipsnap">
-      <img src="/assets/spotlight/snipsnap.png" width="1400" height="394" loading="lazy" alt="A SnipSnap capture: the screen dims, a region is dragged across two monitors, and the editor opens with exactly that region.">
-      <div>
-        <h3><a href="/snipsnap/">SnipSnap</a></h3>
-        <p><strong>Screenshot any region of any monitor on GNOME Wayland, with no permission dialog.</strong></p>
-        <p class="sub">The selection is drawn inside the compositor by a Shell extension, so one drag can cross monitors and there is no portal prompt. A full annotate-and-copy editor comes with it.</p>
-        <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">APT · Ubuntu 26.04</span><span class="pill">Qt 6 · C++</span></div>
-        <div class="links"><a href="/snipsnap/">Overview</a><a href="https://github.com/spencercnorton/snipsnap">GitHub</a></div>
-      </div>
-    </li>
-
-    <li class="slide glass" id="slide-conductor">
-      <img src="/assets/guides/conductor-topology.svg" width="1000" height="350" loading="lazy" alt="Conductor architecture: authorized provider streams, a Plex tuner and guide, and persistent PostgreSQL state.">
-      <div>
-        <h3><a href="/conductor/">Conductor</a></h3>
-        <p><strong>Live TV and DVR for Plex, with accounted provider capacity.</strong></p>
-        <p class="sub">A Go service that pools authorized provider connections, enriches guide data and exposes an HDHomeRun-compatible tuner. Deploy it with authenticated administration and a tested recovery plan.</p>
-        <div class="pills"><span class="pill">Docker · PostgreSQL</span><span class="pill">Go</span></div>
-        <div class="links"><a href="/conductor/">Overview</a><a href="/conductor/guide/">Deployment guide</a><a href="https://github.com/spencercnorton/conductor">GitHub</a></div>
-      </div>
-    </li>
-
-    <li class="slide glass" id="slide-norvi-os">
-      <img src="/assets/spotlight/norvi-os.png" width="1280" height="720" loading="lazy" alt="The NorviOS desktop on Ubuntu 26.04: a transparent top bar with named workspaces and the weather, three sticky notes on the right, a Files window rendered as frosted glass, and a centred dock with a blurred plate.">
-      <div>
-        <h3><a href="/norvi-os/">NorviOS</a></h3>
-        <p><strong>The NorviTech look for Ubuntu 26.04, from the boot splash to the window glass.</strong></p>
-        <p class="sub">Boot splash, login screen and About logo rebranded, GTK windows turned to frosted glass, and a desktop of NorviTech extensions around it — dock, workspaces, weather, lock screen. One command removes the branding.</p>
-        <div class="pills"><span class="pill lic">GPL-3.0-or-later</span><span class="pill">From source · Ubuntu 26.04</span><span class="pill">GNOME 50 · Shell · CSS</span></div>
-        <div class="links"><a href="/norvi-os/">Overview</a><a href="https://github.com/spencercnorton/norvi-os">GitHub</a></div>
-      </div>
-    </li>
-
-    <li class="slide glass" id="slide-indigo">
-      <img src="/assets/spotlight/indigo.png" width="1280" height="960" loading="lazy" alt="The Indigo Home screen on a GameCube: a clear glass cube on its Library face, a GameCube controller glowing on the glass and LIBRARY named underneath.">
-      <div>
-        <h3><a href="/indigo/">Indigo</a></h3>
-        <p><strong>A fork of Swiss for the Nintendo GameCube with the interface rebuilt.</strong></p>
-        <p class="sub">An animated Home, a poster library and game details, drawn in the console's own visual language. Unzip it, drag it onto the SD card and power on.</p>
-        <div class="pills"><span class="pill lic">GPL-2.0-or-later</span><span class="pill">SD card · GameCube</span><span class="pill">C · devkitPPC</span></div>
-        <div class="links"><a href="/indigo/">Overview</a><a href="https://github.com/spencercnorton/indigo">GitHub</a></div>
-      </div>
-    </li>
-
-  </ul>
-  <ul class="dots">
-    <li><a data-dot href="#slide-helios" aria-label="Helios"></a></li>
-    <li><a data-dot href="#slide-bitagent" aria-label="BitAgent"></a></li>
-    <li><a data-dot href="#slide-xnote" aria-label="XNote"></a></li>
-    <li><a data-dot href="#slide-xnote-placement" aria-label="XNote Placement"></a></li>
-    <li><a data-dot href="#slide-snipsnap" aria-label="SnipSnap"></a></li>
-    <li><a data-dot href="#slide-norvi-os" aria-label="NorviOS"></a></li>
-    <li><a data-dot href="#slide-indigo" aria-label="Indigo"></a></li>
-  </ul>
-</section>
-</div>
-
-<div class="wrap">
-
-<section class="install glass" id="install">
-  <div class="lede">
-    <h2>Add the APT</h2>
-    <p>Ubuntu 26.04 · amd64 · signed · Helios, XNote, XNote Placement and SnipSnap</p>
+<section class="home-hero" aria-labelledby="home-title">
+  <div class="home-intro">
+    <p class="eyebrow">Independent software · Spencer Norton</p>
+    <h1 id="home-title">For the way<br>you work.<br><span>And play.</span></h1>
+    <p class="intro-copy">Open-source tools for your Linux desktop, your home server, and your GameCube. Built around real work. Made to feel at home.</p>
+    <div class="cta"><a class="primary" href="#projects">Explore the projects <span aria-hidden="true">↗</span></a><a class="secondary" href="/about/">Meet the developer</a></div>
   </div>
-  <div class="cmd">
-    <pre id="apt-command"><code>curl -fsSL https://apt.globalentry.systems/setup.sh | sudo sh
-sudo apt install helios xnote snipsnap</code></pre>
-    <button type="button" data-copy="apt-command" hidden>Copy</button>
+  <figure class="desktop-scene">
+    <div class="scene-heading"><span class="eyebrow">A desktop, made yours</span><span aria-hidden="true">01 / NorviOS</span></div>
+    <a href="/norvi-os/" aria-label="Explore NorviOS"><img src="/assets/spotlight/norvi-os.png" width="1280" height="720" fetchpriority="high" alt="NorviOS desktop with a frosted-glass Files window, colourful sticky notes and a centred dock."></a>
+    <figcaption><a href="/norvi-os/">NorviOS <span aria-hidden="true">↗</span></a><span>Ubuntu, with a personal touch.<br>Preview includes companion extensions in development.</span></figcaption>
+  </figure>
+</section>
+
+<section class="project-section" id="projects" aria-labelledby="projects-title">
+  <div class="section-heading"><div><p class="eyebrow">The NorviTech suite</p><h2 id="projects-title">See what’s taking shape.</h2></div><p>Eight projects. One developer.<br>Explore the software, the source, and the story.</p></div>
+  <div class="featured-projects">
+    <article class="project-feature indigo-feature" id="slide-indigo" data-project="indigo">
+      <div class="feature-topline"><span class="eyebrow">Nintendo GameCube</span><a href="https://github.com/spencercnorton/indigo/releases/tag/v2.0.0">Release 2.0.0 <span aria-hidden="true">↗</span></a></div>
+      <div class="feature-media clip"><video controls muted loop playsinline preload="none" poster="/indigo/videos/home-tour.png" width="1280" height="960" aria-label="Indigo’s glass Home cube turns between Library, Source, Settings and System."><source src="/indigo/videos/home-tour.mp4" type="video/mp4"></video></div>
+      <div class="feature-copy"><h3><a href="/indigo/">Indigo <span aria-hidden="true">↗</span></a></h3><p class="project-tagline">A familiar console. A new experience.</p><p>Swiss, with the interface rebuilt: a glass Home, a cover-led library, game details and cheats, and a new animated launch screen.</p><div class="links"><a href="/indigo/">Explore Indigo</a><a href="https://github.com/spencercnorton/indigo">Source code</a></div></div>
+    </article>
+    <article class="project-feature bitagent-feature" id="slide-bitagent" data-project="bitagent">
+      <div class="feature-topline"><span class="eyebrow">Self-hosted · Docker</span><span>Go / Python / PostgreSQL</span></div>
+      <div class="feature-media dashboard-scene"><a href="/bitagent/" aria-label="Explore BitAgent"><img src="/assets/home/bitagent-dashboard.png" width="1600" height="900" loading="lazy" alt="BitAgent’s dashboard with indexing activity, matching rates and library health, using demonstration data."></a><span class="media-note">The operator console · demonstration data</span></div>
+      <div class="feature-copy"><h3><a href="/bitagent/">BitAgent <span aria-hidden="true">↗</span></a></h3><p class="project-tagline">An indexer that learns from what works.</p><p>Crawl the DHT, serve results to the *arr stack over Torznab, and see indexing, matching and library activity in one console.</p><div class="links"><a href="/bitagent/">Explore BitAgent</a><a href="https://github.com/spencercnorton/bitagent">Source code</a></div></div>
+    </article>
+  </div>
+  <div class="section-heading everyday-heading"><div><p class="eyebrow">Tools with a place in your day</p><h2>Make yourself at home.</h2></div><p>From the first note to the last screenshot.<br>Useful software, on your own machine.</p></div>
+  <div class="project-grid">
+    <article class="project-tile" id="slide-helios" data-project="helios">
+      <div class="tile-media clip"><video controls muted loop playsinline preload="none" poster="/assets/home/helios-dark-poster.png" width="1200" height="772" aria-label="A Helios coding session shows the agent’s work and answer in a native desktop window."><source src="/assets/home/helios-dark.mp4" type="video/mp4"></video></div>
+      <div class="tile-copy"><p class="eyebrow">Linux · Coding agents</p><h3><a href="/helios/">Helios <span aria-hidden="true">↗</span></a></h3><p>Claude Code, Codex and OpenRouter in one native workbench. Keep the plan, permissions and spending controls in view.</p><a class="project-link" href="/helios/">Explore Helios</a></div>
+    </article>
+    <article class="project-tile" id="slide-xnote" data-project="xnote">
+      <div class="tile-media clip"><video controls muted loop playsinline preload="none" poster="/assets/home/xnote-poster.png" width="1280" height="800" aria-label="XNote sticky notes are written, recoloured and arranged on the desktop."><source src="/assets/home/xnote.mp4" type="video/mp4"></video></div>
+      <div class="tile-copy"><p class="eyebrow">Linux · Notes</p><h3><a href="/xnote/">XNote <span aria-hidden="true">↗</span></a></h3><p>A thought, a list, a little reminder. Sticky notes for GNOME that save as you type, with optional encrypted backup.</p><a class="project-link" href="/xnote/">Explore XNote</a></div>
+    </article>
+    <article class="project-tile" id="slide-snipsnap" data-project="snipsnap">
+      <div class="tile-media clip"><video controls muted loop playsinline preload="none" poster="/assets/home/snipsnap-poster.png" width="1400" height="394" aria-label="SnipSnap selects a region across two monitors, then opens it in the annotation editor."><source src="/assets/home/snipsnap.mp4" type="video/mp4"></video></div>
+      <div class="tile-copy"><p class="eyebrow">Linux · Screenshots</p><h3><a href="/snipsnap/">SnipSnap <span aria-hidden="true">↗</span></a></h3><p>Capture across monitors on GNOME Wayland, then annotate and copy. Selection happens inside the compositor, without a portal prompt.</p><a class="project-link" href="/snipsnap/">Explore SnipSnap</a></div>
+    </article>
+    <article class="project-tile" id="slide-norvi-os" data-project="norvi-os">
+      <a class="tile-media still" href="/norvi-os/" aria-label="Explore NorviOS"><img src="/assets/spotlight/norvi-os.png" width="1280" height="720" loading="lazy" alt="A preview of the NorviOS desktop with translucent window glass."></a>
+      <div class="tile-copy"><p class="eyebrow">Ubuntu · Branding + glass</p><h3><a href="/norvi-os/">NorviOS <span aria-hidden="true">↗</span></a></h3><p>A reversible branding and glass layer for Ubuntu 26.04 and GNOME 50, from boot splash to window chrome.</p><p class="project-note">Companion desktop extensions shown in the preview are still in development.</p><a class="project-link" href="/norvi-os/">Explore NorviOS</a></div>
+    </article>
+    <article class="project-tile" id="slide-conductor" data-project="conductor">
+      <a class="tile-media topology" href="/conductor/" aria-label="Explore Conductor"><img src="/assets/guides/conductor-topology.svg" width="1000" height="350" loading="lazy" alt="Conductor connects authorized provider streams to Plex, backed by PostgreSQL."></a>
+      <div class="tile-copy"><p class="eyebrow">Self-hosted · Live TV</p><h3><a href="/conductor/">Conductor <span aria-hidden="true">↗</span></a></h3><p>Live TV and DVR for Plex. Pool authorized provider connections, enrich guide data, and keep stream capacity accounted for.</p><a class="project-link" href="/conductor/">Explore Conductor</a></div>
+    </article>
+    <article class="project-tile" id="slide-xnote-placement" data-project="xnote-placement">
+      <a class="tile-media still" href="/xnote-placement/" aria-label="Explore XNote Placement"><img src="/assets/spotlight/xnote-placement.png" width="1280" height="800" loading="lazy" alt="A collection of XNote notes arranged in their saved desktop positions."></a>
+      <div class="tile-copy"><p class="eyebrow">GNOME · XNote companion</p><h3><a href="/xnote-placement/">XNote Placement <span aria-hidden="true">↗</span></a></h3><p>Your notes, where you left them. A GNOME Shell extension that restores each note’s position, monitor and workspace.</p><a class="project-link" href="/xnote-placement/">Explore XNote Placement</a></div>
+    </article>
   </div>
 </section>
 
-</div>
+<section class="maker-strip" aria-labelledby="maker-title"><div><p class="eyebrow">The person behind the projects</p><h2 id="maker-title">Hi, I’m Spencer.</h2><p>I work in healthcare data and automation, and build the tools I want to use. NorviTech is where that work becomes software you can make your own.</p></div><div class="maker-links"><a href="/about/">My story <span aria-hidden="true">↗</span></a><a href="/consulting/">Work with me <span aria-hidden="true">↗</span></a><a href="https://github.com/spencercnorton">Follow the code <span aria-hidden="true">↗</span></a></div></section>
 
+<section class="install glass" id="install"><div class="lede"><h2>Bring the desktop tools home.</h2><p>Signed APT packages for Ubuntu 26.04 · amd64</p><p>Helios, XNote and SnipSnap. See each project for its requirements.</p></div><div class="cmd"><pre id="apt-command"><code>curl -fsSL https://apt.globalentry.systems/setup.sh | sudo sh
+sudo apt install helios xnote snipsnap</code></pre><button type="button" data-copy="apt-command" hidden>Copy</button></div></section>
+</div>
 </main>
 
 <footer class="masthead">

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Replace the homepage carousel with an illustrated, responsive project overview,
+  featuring Indigo 2.0.0, the BitAgent dashboard and all eight current projects.
+- Use the available page width with fluid gutters, and restore the MSc timeline label.
+- Refresh the About project list and release-workflow description.
+- Give animated previews pause controls, static posters, off-screen suspension and
+  live reduced-motion support; clarify the NorviOS preview's development status.
+
 - Establish GitHub pull requests as the development workflow, with privacy checks.
 - Add deployment, configuration, security, upgrade and recovery documentation.
 - Add five illustrated operations guides and a Conductor product page.
