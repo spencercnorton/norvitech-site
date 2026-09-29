@@ -72,8 +72,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var
 .masthead a:focus-visible,.masthead summary:focus-visible{outline-color:var(--brand)} /* 6.3:1 on #241f31 in both modes */
 img{max-width:100%;height:auto}
 h1,h2,h3{line-height:1.2;overflow-wrap:anywhere}
-.wrap{max-width:min(1600px,94vw);margin:0 auto;padding:0 20px}
-.wrap.wide{max-width:min(2100px,97vw)}
+.wrap{width:100%;max-width:none;margin:0 auto;padding:0 clamp(20px,3vw,96px)}
+.wrap.wide{max-width:none}
 /* Header and footer are chrome, not content: the mark sits hard left and the
    clock hard right, whatever the window is. Centring these inside the content
    column left both of them marooned in the middle of a wide desktop. */
@@ -464,8 +464,8 @@ footer a{text-decoration:underline;text-decoration-color:#6b6480}
 [data-org="sjtu"]{--accent:#a80c30;--lbl:#ffffff}
 [data-org="zhaw"]{--accent:#1266ac;--lbl:#ffffff}
 [data-org="norvitech"]{--accent:#fd8024;--lbl:#241f31}
-[data-org="leeds"]{--accent:#3a8556;--lbl:transparent}
-[data-org="leeds"] .g-lbl{visibility:hidden}
+[data-org="leeds"]{--accent:#3a8556;--lbl:#ffffff}
+
 [data-org="parkview"]{--accent:#267a3e;--lbl:#ffffff}
 [data-org="usf"]{--accent:#1e588d;--lbl:#ffffff}
 [data-org="care"]{--accent:#8d8a96;--lbl:#241f31}

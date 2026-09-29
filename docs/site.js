@@ -1,87 +1,11 @@
 /* norvitech.com — the only script on this site.
    No third party, no analytics, no cookies, no storage, no build step. Every
-   job here leaves the page working when this file does not run: the
-   spotlight is a scroll-snap carousel with anchor dots on its own, the
-   install command is selectable text, the header menus open and close as
-   native <details>, and the clock is simply blank. */
+   job here leaves the page working when this file does not run: videos
+   keep native controls, the install command is selectable text, the header
+   menus open and close as native <details>, and the clock is simply blank. */
 (function () {
   "use strict";
   document.documentElement.className += " js";
-
-  /* ---- Spotlight -------------------------------------------------------
-     The track scrolls and snaps without us; we add auto-advance, keep the
-     dots in step, and get out of the way the moment a visitor takes over. */
-  var track = document.querySelector("[data-track]");
-  if (track) {
-    var slides = track.children;
-    var dots = document.querySelectorAll("[data-dot]");
-    var index = 0;
-    var timer = null;
-    var still = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    function mark() {
-      for (var d = 0; d < dots.length; d++) {
-        if (d === index) {
-          dots[d].setAttribute("aria-current", "true");
-        } else {
-          dots[d].removeAttribute("aria-current");
-        }
-      }
-    }
-
-    function go(n) {
-      index = (n + slides.length) % slides.length;
-      track.scrollTo({ left: slides[index].offsetLeft - slides[0].offsetLeft, behavior: "smooth" });
-      mark();
-    }
-
-    function stop() {
-      if (timer) { clearInterval(timer); timer = null; }
-    }
-
-    function start() {
-      stop();
-      // A paused tab still fires intervals; advancing one nobody can see just
-      // burns a decode, so the visibility check is the cheap half of this.
-      if (still.matches || document.hidden) { return; }
-      timer = setInterval(function () { go(index + 1); }, 7000);
-    }
-
-    // Manual scrolling is authoritative: follow it rather than fight it.
-    var settle = null;
-    track.addEventListener("scroll", function () {
-      clearTimeout(settle);
-      settle = setTimeout(function () {
-        var nearest = 0;
-        var best = Infinity;
-        for (var s = 0; s < slides.length; s++) {
-          var d = Math.abs(slides[s].offsetLeft - slides[0].offsetLeft - track.scrollLeft);
-          if (d < best) { best = d; nearest = s; }
-        }
-        index = nearest;
-        mark();
-      }, 120);
-    }, { passive: true });
-
-    for (var i = 0; i < dots.length; i++) {
-      (function (n) {
-        dots[n].addEventListener("click", function (e) {
-          e.preventDefault();
-          go(n);
-          start();
-        });
-      })(i);
-    }
-
-    track.addEventListener("pointerenter", stop);
-    track.addEventListener("pointerleave", start);
-    track.addEventListener("focusin", stop);
-    track.addEventListener("focusout", start);
-    document.addEventListener("visibilitychange", start);
-    if (still.addEventListener) { still.addEventListener("change", start); }
-    mark();
-    start();
-  }
 
   /* ---- Header menus -----------------------------------------------------
      Native <details> sharing one name, so the browser already keeps one open;
@@ -669,46 +593,99 @@
      button (or a click on the clip) to hold it still. With reduced motion, or
      without this file, it keeps its native controls and plays only when asked. */
   (function () {
-  var clips = document.querySelectorAll(".clip video");
-  if (clips.length && window.IntersectionObserver &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    var play = function (v) {
-      var p = v.play();
-      if (p) { p.catch(function () {}); } // autoplay refused: it stays on its poster
-    };
+    var clips = document.querySelectorAll(".clip video");
+    if (!clips.length || !window.IntersectionObserver) { return; }
+    var motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var items = [];
+
+    function show(item) {
+      item.button.setAttribute("aria-label", item.video.paused ? "Play" : "Pause");
+      item.button.setAttribute("aria-pressed", String(item.video.paused));
+    }
+
+    function pause(item) {
+      // Pausing for visibility or motion preferences must not replace the
+      // visitor's own choice, including one made with the native controls.
+      item.systemPaused = true;
+      item.video.pause();
+      show(item);
+    }
+
+    function play(item) {
+      if (!item.video.paused) { return; }
+      item.systemPaused = false;
+      var pending = item.video.play();
+      // The play event updates the button; a rejected autoplay stays "Play".
+      if (pending) { pending.catch(function () { show(item); }); }
+    }
+
+    function sync(item) {
+      if (!item.visible || document.hidden) {
+        pause(item);
+      } else if (!motion.matches && !item.held) {
+        play(item);
+      }
+    }
+
+    function mode(item) {
+      item.video.controls = motion.matches;
+      if (motion.matches) {
+        // Detaching also avoids styles that override the hidden attribute.
+        item.button.remove();
+        pause(item);
+      } else {
+        item.video.parentNode.appendChild(item.button);
+        sync(item);
+      }
+    }
+
     var onScreen = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting && !e.target.hasAttribute("data-held")) {
-          play(e.target);
-        } else {
-          e.target.pause();
-        }
+      entries.forEach(function (entry) {
+        var item = items.filter(function (candidate) { return candidate.video === entry.target; })[0];
+        item.visible = entry.isIntersecting && entry.intersectionRatio >= 0.3;
+        sync(item);
       });
     }, { threshold: 0.3 });
+
     [].forEach.call(clips, function (v) {
       var b = document.createElement("button");
       b.type = "button";
       b.className = "clip-toggle";
-      b.setAttribute("aria-label", "Pause");
-      var toggle = function () {
+      var item = { video: v, button: b, visible: false, held: false, systemPaused: false };
+      items.push(item);
+      function toggle() {
+        if (motion.matches) { return; } // Native controls own reduced-motion playback.
         if (v.paused) {
-          v.removeAttribute("data-held");
-          play(v);
+          item.held = false;
+          play(item);
         } else {
-          v.setAttribute("data-held", "");
+          item.held = true;
           v.pause();
         }
-      };
-      var show = function () { b.setAttribute("aria-pressed", String(v.paused)); };
+        show(item);
+      }
       b.addEventListener("click", toggle);
       v.addEventListener("click", toggle);
-      v.addEventListener("play", show);
-      v.addEventListener("pause", show);
-      v.removeAttribute("controls");
-      show();
-      v.parentNode.appendChild(b);
+      v.addEventListener("play", function () {
+        if (!v.paused) {
+          if (v.controls) { item.held = false; }
+          item.systemPaused = false;
+          if (!item.visible || document.hidden) { pause(item); }
+        }
+        show(item);
+      });
+      v.addEventListener("pause", function () {
+        if (v.controls && v.paused && !item.systemPaused) { item.held = true; }
+        show(item);
+      });
+      show(item);
+      mode(item);
       onScreen.observe(v);
     });
-  }
+
+    document.addEventListener("visibilitychange", function () { items.forEach(sync); });
+    var changeMotion = function () { items.forEach(mode); };
+    if (motion.addEventListener) { motion.addEventListener("change", changeMotion); }
+    else if (motion.addListener) { motion.addListener(changeMotion); }
   })();
 })();

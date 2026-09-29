@@ -1,0 +1,27 @@
+.about-hero{display:flex;align-items:center;justify-content:space-between;gap:clamp(32px,5vw,96px);padding:clamp(32px,4vw,72px) 0 36px}
+.about-intro{flex:1 1 42rem;min-width:0}
+.about-hero h1{font-size:clamp(36px,4.1vw,64px);letter-spacing:-.035em;line-height:1.08}
+.about-hero p{max-width:72ch}
+.about-portrait{flex:0 1 380px;min-width:240px;margin:0}
+.about-portrait img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 30%;border-radius:24px;box-shadow:0 20px 64px rgba(36,31,49,.14)}
+.about-portrait figcaption{font-size:13px;color:var(--muted);margin-top:10px}
+@media (max-width:760px){
+  .about-hero{flex-direction:column;align-items:stretch;gap:24px}
+  .about-intro{flex-basis:auto}
+  .about-portrait{flex-basis:auto;min-width:0;width:min(100%,360px);align-self:center}
+  .about-portrait img{aspect-ratio:1/1;object-position:center 25%}
+}
+@media print{
+  .about-hero{display:block;padding:0}
+  .about-hero h1{font-size:22pt;letter-spacing:normal}
+  .about-portrait{display:none}
+}
+
+/* Keep degree names readable even when the chart is scrolled on a phone.
+   A degree occupies only ten months of an eighteen-year axis, so these
+   abbreviations need less padding than the longer work-role labels. */
+.g-plot{min-width:800px}
+.g-scroll{overflow-x:auto;overscroll-behavior-x:contain}
+.g-scroll:focus-visible{outline:2px solid var(--link);outline-offset:4px;border-radius:6px}
+.g-track[data-lane="edu"] .g-bar{padding:0;justify-content:center}
+.g-track[data-lane="edu"] .g-lbl{display:block;font-size:11px}
