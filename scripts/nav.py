@@ -136,7 +136,6 @@ PRODUCTS = [
                         ("System", "/indigo/guide/system/"),
                         ("Memory Cards", "/indigo/guide/memory-cards/"),
                         ("Posters", "/indigo/guide/posters/"),
-                        ("Apps", "/indigo/guide/apps/"),
                         ("Troubleshooting", "/indigo/guide/troubleshooting/")]),
              ("Reference", [("Settings files", "/indigo/guide/settings-file/"),
                             ("Changelog", "/indigo/changelog/"),
