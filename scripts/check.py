@@ -27,7 +27,7 @@ import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
 
-from nav import CHROME, SIBLINGS, footer, header, product, siblings, url_of
+from nav import CHROME, PRODUCTS, SIBLINGS, footer, header, product, siblings, url_of
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 SITEMAP = DOCS / "sitemap.xml"
@@ -172,6 +172,11 @@ def main() -> int:
         text = page.read_text(encoding="utf-8")
         p.feed(text)
         errors = list(p.errors) + quote_errors(text)
+        if url == "/":
+            featured = re.findall(r'<article\b[^>]*\sdata-project="([^"]+)"', text)
+            expected = [item["slug"] for item in PRODUCTS]
+            if sorted(featured) != sorted(expected):
+                errors.append("homepage must feature every product in scripts/nav.py exactly once")
         chrome = [(m.group(1), m.group(0)) for m in CHROME.finditer(text)]
         for part, want in (("header", header(url)), ("footer", footer())):
             if [c for k, c in chrome if k == part] != [want]:

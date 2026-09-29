@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>The front door of the NorviTech Suite.</strong><br>
-  Plain HTML pages, one stylesheet and one script, served by GitHub Pages from <code>docs/</code>.
+  Plain HTML pages, shared styles and one script, served by GitHub Pages from <code>docs/</code>.
 </p>
 
 <p align="center">
@@ -13,21 +13,18 @@
 </p>
 
 This repository is the source of [norvitech.com](https://norvitech.com): the
-suite spotlight, one page per app, a handful of guides, and the shared brand
+illustrated project overview, one page per app, a handful of guides, and the shared brand
 assets every NorviTech README embeds. It is deliberately plain — no framework, no build step, no
 analytics, and exactly one script — so a change is a diff you can read in full.
 
 ## What it does
 
-**A spotlight, then one command, and nothing else.** The front page is a
-carousel of each app actually running — the animations are the products' own
-reviewed recordings — over a one-line install block that copies the whole APT
-setup to the clipboard. That is the whole page: the prose sections that used
-to explain the release process and the support routes were cut on 2026-09-22,
-because every one of them is already said, per product, in the place someone
-actually reads it. `docs/<app>/` is that app's own page (what it does, how to install
-it, where its data lives, its documentation, written from its README) and
-`docs/about/` is Spencer.
+**A visual overview of the whole suite.** The front page pairs real product
+screenshots with short, controllable recordings. Featured releases lead into
+an always-visible project grid and the APT install block. `scripts/check.py`
+requires every product in the navigation registry to appear exactly once, so
+adding a project cannot silently leave the homepage behind. `docs/<app>/` is
+that app's own page and guides; `docs/about/` is Spencer.
 
 **A header that follows the page.** On a product's pages the header is about
 that product alone: its sections, its documentation, how to get it and its
@@ -66,18 +63,18 @@ canonical URL, is listed in `docs/sitemap.xml` (which `check.py` keeps in sync),
 and carries one `application/ld+json` block describing what it is. Nothing on a
 page is rendered by script, so a crawler that never runs JavaScript sees all of it.
 
-**One script, and the page works without it.** `docs/site.js` auto-advances
-the spotlight, drives the copy button, and ticks a clock that reads its time
-from [our own public NTP service](https://time.globalentry.systems/) rather
-than the visitor's machine. With JavaScript off the carousel is still a
-swipeable scroll-snap track, the command is still selectable text, and the
-clock simply does not appear. `scripts/check.py` refuses a second script, an
+**One script, and the page works without it.** `docs/site.js` plays short
+previews only while visible, provides pause controls, drives the copy button,
+and ticks a clock that reads from [our public NTP service](https://time.globalentry.systems/).
+Reduced motion leaves playback in the visitor's hands. With JavaScript off,
+projects remain visible, videos retain native controls, the command remains
+selectable text, and the clock does not appear. `scripts/check.py` refuses a second script, an
 inline one, an `on*` handler, or anything loaded from another host, so what
 executes here stays one reviewable file.
 
 **Light and dark** follow the visitor's system setting; the glass panels fall
 back to solid ones where `backdrop-filter` is unavailable or the visitor asked
-for reduced transparency; the layout runs from phone width to 1680 px.
+for reduced transparency; fluid page gutters use the available width from phones to wide desktops.
 
 **Shared brand assets.** `docs/assets/` holds the NorviTech mark, the README
 banner (`banner.svg`) and the Open Graph card. Every product README hot-links
