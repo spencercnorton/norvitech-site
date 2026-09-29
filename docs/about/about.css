@@ -3,7 +3,7 @@
 .about-hero h1{font-size:clamp(36px,4.1vw,64px);letter-spacing:-.035em;line-height:1.08}
 .about-hero p{max-width:72ch}
 .about-portrait{flex:0 1 380px;min-width:240px;margin:0}
-.about-portrait img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 30%;border-radius:24px;box-shadow:0 20px 64px rgba(36,31,49,.14)}
+.about-portrait img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:center;border-radius:24px;box-shadow:0 20px 64px rgba(36,31,49,.14)}
 .about-portrait figcaption{font-size:13px;color:var(--muted);margin-top:10px}
 @media (max-width:760px){
   .about-hero{flex-direction:column;align-items:stretch;gap:24px}
