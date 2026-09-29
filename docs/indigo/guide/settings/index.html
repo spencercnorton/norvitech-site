@@ -22,7 +22,6 @@
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="max-image-preview:large">
-<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
 <script src="/site.js" defer></script>
 <script type="application/ld+json">
 {
@@ -107,9 +106,9 @@
       <details class="menu" name="nav">
         <summary>Overview</summary>
         <ul>
-          <li><a href="/indigo/#features">What it does</a></li>
+          <li><a href="/indigo/#features">Features</a></li>
           <li><a href="/indigo/#videos">See it in action</a></li>
-          <li><a href="/indigo/#channels">Release channels</a></li>
+          <li><a href="/indigo/#channels">Releases</a></li>
           <li><a href="/indigo/#faq">Questions</a></li>
         </ul>
       </details>
@@ -137,7 +136,7 @@
         <ul>
           <li><a href="/indigo/guide/settings-file/">Settings files</a></li>
           <li><a href="/indigo/changelog/">Changelog</a></li>
-          <li><a href="https://github.com/spencercnorton/indigo/releases">Release notes</a></li>
+          <li><a href="https://github.com/spencercnorton/indigo/releases/latest">Release notes</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/issues/new/choose">Issues</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/discussions">Discussions</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/security/advisories/new">Report a vulnerability</a></li>
@@ -217,8 +216,9 @@ one you're on lit.</p>
 <td>Nine settings you might change any day: menu music and sounds, UI motion, rumble, In-Game Reset, the GameCube main menu, memory card emulation, auto-loaded cheats and booting without prompts.</td>
 </tr>
 <tr>
-<td><strong>Game Defaults</strong></td>
-<td>What every game starts with: video modes, widescreen, polling rate, the camera stick, compatibility and picture options. A game's own settings can differ from these.</td>
+<td><strong>Defaults</strong></td>
+<td>
+<strong>Game Defaults</strong>, what every game starts with: video modes, widescreen, polling rate, the camera stick, compatibility and picture options. A game's own settings can differ from these.</td>
 </tr>
 <tr>
 <td><strong>Setup</strong></td>
@@ -235,7 +235,8 @@ one you're on lit.</p>
 <strong>Up and Down</strong> move between settings. Hold to scroll.</li>
 <li>
 <strong>Left and Right</strong> step the highlighted setting to its previous or next
-value, with the change on screen at once.</li>
+value, with the change on screen at once. Video settings wait for A: see
+<a href="#video-changes-ask-first">Video changes ask first</a>.</li>
 <li>
 <strong>A</strong> changes it too.</li>
 <li>
@@ -255,8 +256,8 @@ modes your cable can't show stay out of it.</p>
 <p align="center">
   <a href="/indigo/guide/images/settings-help.png"><img alt="Help for Force Widescreen over the settings list: it stretches games made for 4:3 to fill a 16:9 screen; 3D widens the 3D view only; 2D+3D also widens 2D menus and on-screen displays." src="/indigo/guide/images/settings-help.png" width="640" loading="lazy" decoding="async" height="480"></a>
 </p>
-<p>A dimmed setting doesn't apply to your setup right now, such as IPv4 Address
-while DHCP is on.</p>
+<p>A dimmed setting doesn't apply to your setup right now, such as Save Folder
+when there's no Configuration Device.</p>
 <h2 id="leave-keep-or-discard">Leave: keep or discard</h2>
 <ul>
 <li>
@@ -268,15 +269,19 @@ Settings, including Menu Color.</li>
 <p>Both buttons sit under the list; move down past the last setting to reach
 them. In a Setup section, B first goes back to the list of sections.</p>
 <h2 id="video-changes-ask-first">Video changes ask first</h2>
-<p>After you change <strong>Swiss Video Mode</strong>, <strong>System Video</strong>, <strong>AVE
-Compatibility</strong>, <strong>Force DTV Status</strong> or <strong>RetroTINK-4K HDMI Input</strong>,
-Indigo shows the new picture and asks whether to keep it:</p>
+<p>On <strong>Swiss Video Mode</strong>, <strong>System Video</strong>, <strong>AVE Compatibility</strong>, <strong>Force
+DTV Status</strong> and <strong>RetroTINK-4K HDMI Input</strong>, Left and Right only choose a
+value. The setting shows it and the line above the buttons reads "Not
+applied yet", but the picture stays as it is. Step to the one you want and
+press <strong>A</strong>: Indigo switches to it and asks whether to keep it:</p>
 <pre lang="text"><code>Keep Swiss Video Mode: PAL 576i?
 It changes back by itself in 10 s.
 (A) KEEP    (B) CHANGE BACK
 </code></pre>
 <p>Press <strong>A</strong> to keep it. Press <strong>B</strong>, or just wait, and the old mode comes
-back: if your TV can't show the new one, you only have to wait ten seconds.</p>
+back: if your TV can't show the new one, you only have to wait ten seconds.
+Moving to another setting or leaving before you press A puts the old value
+back.</p>
 <h2 id="a-games-own-settings">A game's own settings</h2>
 <p>Each game can have its own video mode, widescreen, language, polling rate and
 the rest. Open them with <strong>X</strong> on the game's <a href="/indigo/guide/game-details/">details</a>, or
@@ -329,7 +334,7 @@ your comments and any lines it doesn't know.</p>
 <tbody>
 <tr>
 <td>Menu Music</td>
-<td>Indigo's ambient music loop. Changes at once.</td>
+<td>"Up in the Sky", Indigo's menu music: a quiet intro, then a loop. Changes at once.</td>
 </tr>
 <tr>
 <td>Menu Sounds</td>
@@ -483,7 +488,11 @@ your comments and any lines it doesn't know.</p>
 <tbody>
 <tr>
 <td>Swiss Video Mode</td>
-<td>The video mode of Indigo's own screens. Auto picks 480p with a digital cable and otherwise follows the console's region. Asks before it keeps a change.</td>
+<td>The video mode of Indigo's own screens. Auto picks 480p with a digital cable and otherwise follows the console's region. A switches to a new mode and asks before it keeps it.</td>
+</tr>
+<tr>
+<td>Menu Widescreen</td>
+<td>Draws Indigo's own screens for a TV set to 16:9: the background fills the screen and the menus keep their shape in the middle. Set your TV or HDMI adapter to 16:9 too. Games follow <strong>Force Widescreen</strong> instead.</td>
 </tr>
 <tr>
 <td>System Video</td>
@@ -674,7 +683,7 @@ your comments and any lines it doesn't know.</p>
 </tr>
 <tr>
 <td>Hide unknown file types</td>
-<td>Hides files that aren't games, programs, music or memory card saves. It also stops a stray file hiding the Library.</td>
+<td>Hides files that aren't games, programs, music or memory card saves. It also stops a stray text file or picture hiding the Library; folders and programs still do.</td>
 </tr>
 <tr>
 <td>File Management</td>
@@ -726,7 +735,7 @@ your comments and any lines it doesn't know.</p>
 <a class="prev" href="/indigo/guide/cheats/"><small>Previous</small>Cheats</a>
 <a class="next" href="/indigo/guide/personalize/"><small>Next</small>Make it yours</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/settings.md">docs/guide/settings.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/settings.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.0.0/docs/guide/settings.md">docs/guide/settings.md</a> in Indigo v2.0.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/guide/settings.md">Suggest an edit</a>.</p>
 </article>
 </div>
 

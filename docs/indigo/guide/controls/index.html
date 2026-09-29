@@ -22,7 +22,6 @@
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="max-image-preview:large">
-<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
 <script src="/site.js" defer></script>
 <script type="application/ld+json">
 {
@@ -107,9 +106,9 @@
       <details class="menu" name="nav">
         <summary>Overview</summary>
         <ul>
-          <li><a href="/indigo/#features">What it does</a></li>
+          <li><a href="/indigo/#features">Features</a></li>
           <li><a href="/indigo/#videos">See it in action</a></li>
-          <li><a href="/indigo/#channels">Release channels</a></li>
+          <li><a href="/indigo/#channels">Releases</a></li>
           <li><a href="/indigo/#faq">Questions</a></li>
         </ul>
       </details>
@@ -137,7 +136,7 @@
         <ul>
           <li><a href="/indigo/guide/settings-file/">Settings files</a></li>
           <li><a href="/indigo/changelog/">Changelog</a></li>
-          <li><a href="https://github.com/spencercnorton/indigo/releases">Release notes</a></li>
+          <li><a href="https://github.com/spencercnorton/indigo/releases/latest">Release notes</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/issues/new/choose">Issues</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/discussions">Discussions</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/security/advisories/new">Report a vulnerability</a></li>
@@ -190,7 +189,7 @@
 every screen shows the buttons that work there, drawn as the controller's
 own buttons.</p>
 <p align="center">
-  <a href="/indigo/guide/images/controls-hints.png"><img alt="The hint lines of five screens, one above the other: Home (the stick and D-pad to turn, A Open), the Library (D-pad Browse, A Open, Y Settings, X Back, B Home), game details (A Launch, B Library, X Settings, Y Cheats), the cheat browser (A Toggle, B Done, X Enabled only, Z Advanced) and a list of choices in Settings (A Choose, B Cancel)." src="/indigo/guide/images/controls-hints.png" width="640" loading="lazy" decoding="async" height="264"></a>
+  <a href="/indigo/guide/images/controls-hints.png"><img alt="The hint lines of five screens, one above the other: Home (the stick and D-pad to turn, A Open), the Library (D-pad Browse, A Open, Y Settings, X Back, B Home), game details (D-pad Move, A Select, B Library, X Settings, Y Cheats), the cheat browser (A Toggle, B Done, X Enabled only, Z Advanced) and a list of choices in Settings (A Choose, B Cancel)." src="/indigo/guide/images/controls-hints.png" width="640" loading="lazy" decoding="async" height="264"></a>
 </p>
 <h2 id="the-short-version">The short version</h2>
 <div class="table"><table>
@@ -267,8 +266,8 @@ B goes back. See <a href="/indigo/guide/home/">Home</a>.</p>
 </thead>
 <tbody>
 <tr>
-<td>Left, Right</td>
-<td>Show the next device.</td>
+<td>Left, Right, L, R</td>
+<td>Slide the previous or next device into the middle. The stick works too: hold it to keep going.</td>
 </tr>
 <tr>
 <td>A</td>
@@ -366,8 +365,12 @@ B goes back. See <a href="/indigo/guide/home/">Home</a>.</p>
 </thead>
 <tbody>
 <tr>
+<td>Up, Down</td>
+<td>Move between Launch Game, Cheats and Settings.</td>
+</tr>
+<tr>
 <td>A</td>
-<td>Launch the game.</td>
+<td>Open the one you're on: launch the game, or its cheats or settings.</td>
 </tr>
 <tr>
 <td>L + A</td>
@@ -395,8 +398,8 @@ B goes back. See <a href="/indigo/guide/home/">Home</a>.</p>
 </tr>
 </tbody>
 </table></div>
-<p>Z appears when Indigo has a device to save settings to. See
-<a href="/indigo/guide/game-details/">Game details</a>.</p>
+<p>The other buttons work wherever you are on the screen. Z appears when Indigo
+has a device to save settings to. See <a href="/indigo/guide/game-details/">Game details</a>.</p>
 <h3 id="cheats">Cheats</h3>
 <div class="table"><table>
 <thead>
@@ -440,11 +443,11 @@ B goes back. See <a href="/indigo/guide/home/">Home</a>.</p>
 </tr>
 <tr>
 <td>Left, Right</td>
-<td>Step the highlighted setting to its previous or next value.</td>
+<td>Step the highlighted setting to its previous or next value. A video setting waits for A.</td>
 </tr>
 <tr>
 <td>A</td>
-<td>Change the value. On a setting with four or more choices, list them all.</td>
+<td>Change the value. On a setting with four or more choices, list them all. On a video setting, switch to the value shown.</td>
 </tr>
 <tr>
 <td>Y</td>
@@ -452,7 +455,7 @@ B goes back. See <a href="/indigo/guide/home/">Home</a>.</p>
 </tr>
 <tr>
 <td>L, R</td>
-<td>Switch between Quick, Game Defaults and Setup.</td>
+<td>Switch between the Quick, Defaults and Setup tabs.</td>
 </tr>
 <tr>
 <td>X</td>
@@ -548,7 +551,7 @@ See <a href="/indigo/guide/settings/">Settings</a>.</p>
 <a class="prev" href="/indigo/guide/install/"><small>Previous</small>Install</a>
 <a class="next" href="/indigo/guide/home/"><small>Next</small>Home</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/controls.md">docs/guide/controls.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/controls.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.0.0/docs/guide/controls.md">docs/guide/controls.md</a> in Indigo v2.0.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/guide/controls.md">Suggest an edit</a>.</p>
 </article>
 </div>
 

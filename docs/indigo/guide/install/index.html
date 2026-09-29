@@ -22,7 +22,6 @@
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="max-image-preview:large">
-<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
 <script src="/site.js" defer></script>
 <script type="application/ld+json">
 {
@@ -107,9 +106,9 @@
       <details class="menu" name="nav">
         <summary>Overview</summary>
         <ul>
-          <li><a href="/indigo/#features">What it does</a></li>
+          <li><a href="/indigo/#features">Features</a></li>
           <li><a href="/indigo/#videos">See it in action</a></li>
-          <li><a href="/indigo/#channels">Release channels</a></li>
+          <li><a href="/indigo/#channels">Releases</a></li>
           <li><a href="/indigo/#faq">Questions</a></li>
         </ul>
       </details>
@@ -137,7 +136,7 @@
         <ul>
           <li><a href="/indigo/guide/settings-file/">Settings files</a></li>
           <li><a href="/indigo/changelog/">Changelog</a></li>
-          <li><a href="https://github.com/spencercnorton/indigo/releases">Release notes</a></li>
+          <li><a href="https://github.com/spencercnorton/indigo/releases/latest">Release notes</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/issues/new/choose">Issues</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/discussions">Discussions</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/security/advisories/new">Report a vulnerability</a></li>
@@ -189,9 +188,11 @@
 <p>Indigo is a single program, <code>ipl.dol</code>, that runs in place of Swiss. It reads
 the same settings, cheats and saves as Swiss, so nothing on your card has to
 move.</p>
-<p><strong>You need</strong> a GameCube that already starts Swiss from an SD card or a drive
-replacement (PicoBoot, GC Loader, SD2SP2, SD Gecko and the like), and a
-computer to copy files to the card.</p>
+<p><strong>You need</strong> a GameCube that already starts Swiss (with PicoBoot, PicoLoader,
+FlippyDrive, GC Loader or the like) and reads an SD card, in an SD2SP2, an SD
+Gecko or the loader's own slot, and a computer to copy files to the card. A
+Wii with GameCube ports works too, running Swiss in GameCube mode with the
+card in an SD Gecko.</p>
 <h2 id="1-download">1. Download</h2>
 <p>Each <a href="https://github.com/spencercnorton/indigo/releases/latest">release</a> has
 an <code>Indigo-vX.Y.Z.zip</code>. It is laid out exactly as it goes on the card, so
@@ -205,24 +206,33 @@ swiss/indigo/                  the licence and notice
 </code></pre>
 <h2 id="2-put-it-on-the-card">2. Put it on the card</h2>
 <p>Pick the line that matches how your console starts Swiss.</p>
-<p><strong>PicoBoot, and other modchips that boot <code>ipl.dol</code> from the card.</strong>
-If the root of the card already has an <code>ipl.dol</code>, that is your current Swiss:
-rename it to <code>z.dol</code>. Then unzip the download, select everything inside and
-drag it onto the root of the card. PicoBoot starts <code>z.dol</code> when you hold Z at power-on, so stock Swiss
-stays one button away.</p>
-<p><strong>PicoBoot with no <code>ipl.dol</code> on the card.</strong> Swiss is flashed onto the Pico
-itself. Flash PicoBoot's standard firmware first (see its
-<a href="https://support.webhdx.dev/gc/picoboot/installation-guide">installation guide</a>),
-then follow the step above.</p>
+<p><strong>PicoBoot, PicoLoader, and other modchips that boot <code>ipl.dol</code> from the card.</strong>
+First, before you copy anything: if the root of the card already has an
+<code>ipl.dol</code>, that is your current Swiss. Rename it to <code>z.dol</code> to keep it.
+PicoBoot and PicoLoader start <code>z.dol</code> when you hold Z at power-on, so stock
+Swiss stays one button away. Then unzip the download, select everything
+inside and drag it onto the root of the card, and let it replace files of
+the same name.</p>
+<p><strong>PicoBoot or PicoLoader with no <code>ipl.dol</code> on the card.</strong> Swiss is in the
+chip's flash. First flash the firmware that starts the card's <code>ipl.dol</code>:
+PicoBoot's <code>picoboot_full_pico.uf2</code>, or <code>picoboot_full_pico2.uf2</code> on a Pico 2
+(see its <a href="https://support.webhdx.dev/gc/picoboot/installation-guide">installation guide</a>),
+or PicoLoader's <code>picoloader_gekkoboot.uf2</code>. Then follow the step above.</p>
 <p><strong>A loader that boots a <code>.dol</code> from the card by name.</strong> Replace that file
-with <code>ipl.dol</code>, keeping the old file's name.</p>
+with <code>ipl.dol</code>, keeping the old file's name. FlippyDrive, for one, boots
+<code>boot.dol</code>.</p>
 <p><strong>GC Loader, or a loader that boots a disc image.</strong> Drag everything in the
 download onto the root of the card, start Swiss the way you do now, and open
 <code>ipl.dol</code> from Swiss's file list. Indigo doesn't build a <code>boot.iso</code>.</p>
+<p><strong>On a Mac</strong>, hold Option as you drop the files on the card and choose
+<strong>Merge</strong>. <strong>Replace</strong> deletes what is already in the card's <code>games</code> and
+<code>swiss</code> folders: your games, settings, cheats and saves.</p>
+<p>Then put your games in <code>/games</code>, with nothing else in it or in the game
+folders: see <a href="/indigo/guide/library/#set-up-the-games-folder">Set up the games folder</a>.</p>
 <h2 id="3-first-boot">3. First boot</h2>
 <p>Indigo opens on Home, a glass cube with one destination on each face. If it
-finds your games, the cube faces <strong>Library</strong>; press A to see them. If it
-finds no device to read from yet, it faces <strong>Source</strong>, where you choose one.</p>
+found a device to read from, the cube faces <strong>Library</strong>; press A to see your
+games. If it found none yet, it faces <strong>Source</strong>, where you choose one.</p>
 <p align="center">
   <a href="/indigo/guide/images/home-library-face.png"><img alt="Home on the Library face: the glass cube shows a GameCube controller, LIBRARY is written underneath, and the hint line reads Turn and A Open." src="/indigo/guide/images/home-library-face.png" width="640" loading="lazy" decoding="async" height="480"></a>
 </p>
@@ -237,21 +247,31 @@ want them.</li>
 <li>Learn the <a href="/indigo/guide/controls/">controls</a>.</li>
 </ul>
 <h2 id="update-indigo">Update Indigo</h2>
-<p>Download the new release and replace <code>ipl.dol</code> (or the file you replaced in
-step 2) and <code>swiss/patches/apploader.img</code> with the new ones. Your settings,
-poster pack and cheats stay where they are.</p>
+<p>Don't rename anything this time: your <code>ipl.dol</code> (or the file you replaced
+in step 2) is already Indigo. Unzip the new release and copy its files over
+the old ones as in step 2, letting them replace files of the same name (on a
+Mac, choose <strong>Merge</strong>). Your settings, poster pack, cheats and saves stay
+where they are.</p>
+<p>Updating from Indigo 1.x: if you renamed stock Swiss to <code>swiss.dol</code> for
+1.25.0, you can rename it back to <code>z.dol</code>. 2.0 no longer starts it by itself
+(<a href="https://github.com/spencercnorton/indigo/issues/3">#3</a>).</p>
 <h2 id="go-back-to-stock-swiss">Go back to stock Swiss</h2>
 <ul>
 <li>
-<strong>PicoBoot:</strong> hold Z while you switch the console on to start <code>z.dol</code>.</li>
+<strong>PicoBoot and PicoLoader:</strong> hold Z while you switch the console on to
+start <code>z.dol</code>.</li>
 <li>
 <strong>Other loaders:</strong> put your old file back, or start stock Swiss from your
 loader as before.</li>
 <li>In-Game Reset set to Apploader returns to Indigo until you put back stock
-Swiss's own <code>swiss/patches/apploader.img</code>.</li>
+Swiss's own <code>swiss/patches/apploader.img</code>, from <code>Apploader/EXTRACT_TO_ROOT.zip</code>
+in the Swiss release.</li>
 </ul>
 <p>Both use the same settings file. Indigo keeps your comments in it when it
-saves; stock Swiss rewrites the whole file when it saves.</p>
+saves. Stock Swiss rewrites the whole file when it saves and leaves out the
+settings only Indigo has, such as Menu Color, the face icons, Library Layout
+and Save Folder, so those are back to their defaults the next time Indigo
+starts.</p>
 <h2 id="leaving-a-game">Leaving a game</h2>
 <p>With <strong>In-Game Reset</strong> turned on (Settings › Quick), hold <strong>A + Z + START</strong>
 during a game to leave it, or <strong>R + Z + START</strong> to restart it. Set it to
@@ -264,7 +284,7 @@ installed on your computer:</p>
 <div class="highlight highlight-source-shell"><pre>git clone https://github.com/spencercnorton/indigo.git
 <span class="pl-c1">cd</span> indigo
 docker run --rm -u <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s"><span class="pl-pds">$(</span>id -u<span class="pl-pds">)</span></span>:<span class="pl-s"><span class="pl-pds">$(</span>id -g<span class="pl-pds">)</span></span><span class="pl-pds">"</span></span> -v <span class="pl-s"><span class="pl-pds">"</span><span class="pl-smi">$PWD</span>:/work<span class="pl-pds">"</span></span> -w /work \
-  ghcr.io/extremscorner/libogc2 make dev</pre></div>
+  ghcr.io/extremscorner/libogc2@sha256:84dcb9aa7c9ee716d4953a3985a9551996cdb7a24c2d95e32153ad0da83da575 make dev</pre></div>
 <p>This writes <code>cube/swiss/swiss.dol</code>. That is the same program as <code>ipl.dol</code>
 in the release zip; copy it to the card under the name your loader expects.
 <code>buildtools/sd_package.sh vX.Y.Z</code> packs it into the zip, with the
@@ -275,7 +295,7 @@ in the release zip; copy it to the card under the name your loader expects.
 <a class="prev" href="/indigo/guide/"><small>Previous</small>Indigo guide</a>
 <a class="next" href="/indigo/guide/controls/"><small>Next</small>Controls</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/install.md">docs/guide/install.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/install.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.0.0/docs/guide/install.md">docs/guide/install.md</a> in Indigo v2.0.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/guide/install.md">Suggest an edit</a>.</p>
 </article>
 </div>
 

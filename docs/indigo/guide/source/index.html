@@ -22,7 +22,6 @@
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="max-image-preview:large">
-<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
 <script src="/site.js" defer></script>
 <script type="application/ld+json">
 {
@@ -107,9 +106,9 @@
       <details class="menu" name="nav">
         <summary>Overview</summary>
         <ul>
-          <li><a href="/indigo/#features">What it does</a></li>
+          <li><a href="/indigo/#features">Features</a></li>
           <li><a href="/indigo/#videos">See it in action</a></li>
-          <li><a href="/indigo/#channels">Release channels</a></li>
+          <li><a href="/indigo/#channels">Releases</a></li>
           <li><a href="/indigo/#faq">Questions</a></li>
         </ul>
       </details>
@@ -137,7 +136,7 @@
         <ul>
           <li><a href="/indigo/guide/settings-file/">Settings files</a></li>
           <li><a href="/indigo/changelog/">Changelog</a></li>
-          <li><a href="https://github.com/spencercnorton/indigo/releases">Release notes</a></li>
+          <li><a href="https://github.com/spencercnorton/indigo/releases/latest">Release notes</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/issues/new/choose">Issues</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/discussions">Discussions</a></li>
           <li><a href="https://github.com/spencercnorton/indigo/security/advisories/new">Report a vulnerability</a></li>
@@ -193,16 +192,19 @@ change it.</p>
 <h2 id="change-the-source">Change the source</h2>
 <ol>
 <li>On Home, turn the cube to <strong>Source</strong> and press A.</li>
-<li>Choose <strong>Change Source</strong>.</li>
-<li>Press <strong>Left</strong> or <strong>Right</strong> until the device you want is on the cube,
-then press <strong>A</strong>.</li>
+<li>Choose <strong>Change Source</strong>. The cube lifts out of the way and the devices
+Indigo found line up under it, each with its picture.</li>
+<li>Push the control stick or the D-pad <strong>Left</strong> or <strong>Right</strong> (or press <strong>L</strong>
+or <strong>R</strong>) until the device you want is in the middle, then press <strong>A</strong>.
+Hold the stick to keep moving; the row goes round.</li>
 <li>You're back on Home, now reading from that device. Turn the cube to
 <strong>Library</strong> and press A to see what's on it.</li>
 </ol>
 <p align="center">
-  <a href="/indigo/guide/images/source-picker.png"><img alt="On the Source face, A shows Change Source and Refresh Library. Change Source shows Game Disc, Boot + Stream, on the cube; Right shows Memory Card Slot A, Files Ready; Z shows every device, so Right reaches Memory Card Slot B, Not Detected; B goes back." src="/indigo/guide/images/source-picker.png" width="640" loading="lazy" decoding="async" height="480"></a>
+  <a href="/indigo/guide/images/source-picker.png"><img alt="On the Source face, A shows Change Source and Refresh Library. Change Source lifts the cube and lines up the devices under it, Game Disc in the middle: Boot + Stream, Disc Drive, Detected, Current. Right slides Memory Card - Slot A into the middle: Files, Slot A. Z shows every device, so Right reaches Memory Card - Slot B, Not Detected; B goes back." src="/indigo/guide/images/source-picker.png" width="640" loading="lazy" decoding="async" height="480"></a>
 </p>
-<p>Under each device's name, the picker says what it can do:</p>
+<p>Under the device in the middle, the picker says what it can do, where it
+plugs in, and whether Indigo found it:</p>
 <div class="table"><table>
 <thead>
 <tr>
@@ -216,16 +218,32 @@ then press <strong>A</strong>.</li>
 <td>Games start from it, with the disc audio some games stream.</td>
 </tr>
 <tr>
-<td>Boot Ready</td>
+<td>Boot</td>
 <td>Games start from it.</td>
 </tr>
 <tr>
-<td>Files Ready</td>
+<td>Files</td>
 <td>It holds files you can browse and open.</td>
+</tr>
+<tr>
+<td>Slot A, Slot B, Serial Port 1, Serial Port 2, Hi-Speed Port, Disc Drive, Console</td>
+<td>Where it plugs in.</td>
+</tr>
+<tr>
+<td>Detected</td>
+<td>Indigo found it.</td>
 </tr>
 <tr>
 <td>Not Detected</td>
 <td>Indigo can't find it right now. A tries again.</td>
+</tr>
+<tr>
+<td>Current</td>
+<td>You're reading from it now.</td>
+</tr>
+<tr>
+<td>Settings</td>
+<td>Your settings are saved on it.</td>
 </tr>
 </tbody>
 </table></div>
@@ -252,7 +270,8 @@ programs (<code>.dol</code>, <code>.elf</code>) and MP3s:</p>
 <li>
 <strong>A</strong> opens a file or folder, and <strong>X</strong> goes up a folder.</li>
 <li>With <strong>File Management</strong> on (Settings › Setup › Library), <strong>Z</strong> on a file
-offers to copy, move, rename, hide or delete it.</li>
+offers to copy, move, rename, hide or delete it. Copy and Move choose the
+device to put it on in the same picker, headed Destination.</li>
 <li>Settings › Setup › Library › <strong>File Browser Type</strong> changes how the list
 looks.</li>
 </ul>
@@ -266,7 +285,7 @@ as a new disc in the drive.</p>
 <a class="prev" href="/indigo/guide/personalize/"><small>Previous</small>Make it yours</a>
 <a class="next" href="/indigo/guide/system/"><small>Next</small>System</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/source.md">docs/guide/source.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/source.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.0.0/docs/guide/source.md">docs/guide/source.md</a> in Indigo v2.0.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/guide/source.md">Suggest an edit</a>.</p>
 </article>
 </div>
 
