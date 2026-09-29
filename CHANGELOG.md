@@ -26,4 +26,9 @@
   --stable vX.Y.Z`): the candidate is the main download, labelled as one, with
   the release beside it; the Features describe Indigo 2.0; the structured data
   names the version offered, and the changelog names its section.
+- Indigo's pages are built from v2.0.0, the Latest release: its guide,
+  pictures and changelog, the 2.0 clips (and a new one of the device picker),
+  and the 2.0 share image and home page spotlight.
+- `check.py` fails on any Indigo link that can lead to a beta: the list of
+  releases, its feed, the tags or a `-beta` tag.
 
