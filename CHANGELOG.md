@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add Spencer’s portrait to the About introduction.
+
 - Replace the homepage carousel with an illustrated, responsive project overview,
   featuring Indigo 2.0.1, the BitAgent dashboard and all eight current projects.
 - Use the available page width with fluid gutters, and restore the MSc timeline label.
