@@ -22,7 +22,6 @@
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="max-image-preview:large">
-<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
 <script src="/site.js" defer></script>
 <script type="application/ld+json">
 {
@@ -190,7 +189,7 @@
 or in a grid, as you choose. On Home, turn the cube to <strong>Library</strong> and press
 A.</p>
 <p align="center">
-  <a href="/indigo/guide/images/library-browse.png"><img alt="The Library: moving right through the James Bond games to 1080° Avalanche, each cover raised in turn with its title and publisher below; A opens its details, B returns to the Library, and 1080° Avalanche is still selected." src="/indigo/guide/images/library-browse.png" width="640" loading="lazy" decoding="async" height="480"></a>
+  <a href="/indigo/guide/images/library-browse.png"><img alt="The Library: moving right through the James Bond games to 1080° Avalanche, each cover raised in turn between two covers either side, with its title and publisher below; A opens its details, B returns to the Library, and 1080° Avalanche is still selected." src="/indigo/guide/images/library-browse.png" width="640" loading="lazy" decoding="async" height="480"></a>
 </p>
 <h2 id="choose-a-layout">Choose a layout</h2>
 <p><strong>Library Layout</strong>, the first row of <a href="/indigo/guide/settings/">Settings</a> › Setup ›
@@ -201,9 +200,9 @@ through the three, and the line above the buttons says how each one moves.</p>
 </p>
 <ul>
 <li>
-<strong>Horizontal</strong>, the default: a row of covers. The game in the middle is
-raised, with its title and publisher underneath, as the disc's own banner
-gives them.</li>
+<strong>Horizontal</strong>, the default: a row of covers, two either side of the
+game in the middle. That one is raised, with its title and publisher
+underneath, as the disc's own banner gives them.</li>
 <li>
 <strong>Vertical</strong>: a column of covers down the left of the screen, turning like
 a wheel. The selected cover is large, with its title, publisher and game ID
@@ -283,14 +282,16 @@ its own folder, or put the disc images there directly:</p>
 /games/Super Mario Sunshine.iso
 </code></pre>
 <p>Disc images end in <code>.iso</code>, <code>.gcm</code>, <code>.tgc</code> or <code>.fdi</code>, in capitals or not.
-Keep nothing else in <code>/games</code>: any other file (a text file, a cover image)
-or an empty folder turns the Library back into Swiss's plain file list.</p>
+Keep nothing else in <code>/games</code> or in the game folders: any other file (a text
+file, a cover image), an empty folder or a folder inside a game's folder turns
+the Library back into Swiss's plain file list.</p>
 <p align="center">
   <a href="/indigo/guide/images/library-file-list.png"><img alt="Swiss's plain file list of the games folder, one game per row with its banner, name and region flag, which Indigo shows instead of the Library when the folder holds something other than games." src="/indigo/guide/images/library-file-list.png" width="640" loading="lazy" decoding="async" height="480"></a>
 </p>
-<p>If you see the list above instead of posters, look in <code>/games</code> for the file
-that isn't a game. Or turn on <strong>Hide unknown file types</strong> in Settings ›
-Setup › Library, which hides stray files so the Library can take over.</p>
+<p>If you see the list above instead of posters, look in <code>/games</code> and its
+folders for what isn't a game. <strong>Hide unknown file types</strong> in Settings ›
+Setup › Library hides stray text files and pictures so the Library can take
+over; it doesn't hide folders, programs (<code>.dol</code>, <code>.elf</code>) or music.</p>
 <p>Games on two discs appear twice, once for each disc.</p>
 <h2 id="posters">Posters</h2>
 <p>The box art comes from a poster pack, which is optional. Without one, each
@@ -309,7 +310,7 @@ Indigo is running, for example when you swap the game disc, turn to
 <a class="prev" href="/indigo/guide/home/"><small>Previous</small>Home</a>
 <a class="next" href="/indigo/guide/game-details/"><small>Next</small>Game details</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/library.md">docs/guide/library.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/library.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.0.0/docs/guide/library.md">docs/guide/library.md</a> in Indigo v2.0.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/guide/library.md">Suggest an edit</a>.</p>
 </article>
 </div>
 

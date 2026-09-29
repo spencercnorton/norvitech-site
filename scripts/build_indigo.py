@@ -2,8 +2,13 @@
 """build_indigo.py: Indigo's pages on norvitech.com, from one public Indigo tag.
 
     scripts/build_indigo.py --indigo DIR --ref vX.Y.Z [--videos DIR] [--zip FILE]
+    scripts/build_indigo.py --indigo DIR --ref vX.Y.Z-rc.N --stable vX.Y.Z [...]
 
 --indigo is a clone of github.com/spencercnorton/indigo checked out at --ref.
+--ref is a release, or a release candidate while one is out: then the pages are
+the candidate's, its zip is the main download, and --stable names the release
+offered beside it. A beta is never built: the site links releases and release
+candidates only.
 Everything under docs/indigo/ is (re)written from it:
 
   index.html                      the product page (scripts/indigo/landing.html)
@@ -57,37 +62,6 @@ EXTRA = {"docs/SETTINGS.md": ("guide/settings-file/", "Settings files"),
 DESCRIPTIONS = {"CHANGELOG.md": "What changed in each Indigo release, newest first: "
                                 "new screens and settings, fixes and documentation."}
 PICTURES = (".png", ".jpg", ".jpeg", ".webp")
-# A release's own docs can be wrong about that release. A correction goes where a
-# reader would act on it: "landing" swaps text in landing.html (each old text must
-# still be there), a guide source gets a note above its page. Keyed by the tag, so
-# building a later release drops them.
-ISSUE3 = "https://github.com/spencercnorton/indigo/issues/3"
-STARTS_SWISS = ("<code>z.dol</code>, <code>a.dol</code>, <code>b.dol</code>, <code>x.dol</code>, <code>y.dol</code>, "
-                "<code>start.dol</code>, <code>boot.dol</code> or <code>swiss_r….dol</code>")
-ERRATA: dict[str, dict] = {"v1.25.0": {
-    "landing": [
-        ("rename it to <code>z.dol</code> first to keep it one button away.</p>",
-         "rename it to <code>swiss.dol</code> first to keep it. Not <code>z.dol</code>: Indigo 1.25.0 starts a "
-         f'stock Swiss it finds under that name in place of itself (<a href="{ISSUE3}">fixed for the next '
-         "release</a>).</p>"),
-        (" Hold Z at power-on for the <code>z.dol</code> you kept.</td>", "</td>"),
-        ("keeping its name: FlippyDrive, for one, boots <code>boot.dol</code>.</td>",
-         "keeping its name, unless that is <code>boot.dol</code> (FlippyDrive, for one): Indigo 1.25.0 named "
-         "<code>boot.dol</code> starts itself over and over.</td>"),
-        ("Keep stock Swiss as <code>z.dol</code> if you want it one button away.</p>",
-         "Keep stock Swiss on the card as <code>swiss.dol</code> if you want it; with 1.25.0, not as "
-         '<code>z.dol</code> (see <a href="#install">Install</a>).</p>'),
-    ],
-    "docs/guide/install.md":
-        "<strong>A known problem in 1.25.0.</strong> Don't keep a stock Swiss in the root of the card as "
-        f"{STARTS_SWISS}, and don't name Indigo <code>boot.dol</code>: at startup, 1.25.0 starts such a file in "
-        "place of itself. Name your old Swiss <code>swiss.dol</code> instead of <code>z.dol</code> in step 2; "
-        f'holding Z won\'t start it until the next release, which fixes this (<a href="{ISSUE3}">issue 3</a>).',
-    "docs/guide/troubleshooting.md":
-        "<strong>Indigo starts, then stock Swiss appears?</strong> Indigo 1.25.0 starts a stock Swiss it finds "
-        f"in the root of the card as {STARTS_SWISS}, and In-Game Reset lands there too. Rename it "
-        f'<code>swiss.dol</code>, or take it off the card. The next release fixes this (<a href="{ISSUE3}">issue 3</a>).',
-}}
 
 
 def render(markdown: str, token: str | None) -> str:
@@ -260,7 +234,7 @@ def page_data(title: str, text: str, url: str, trail: list[tuple[str, str]], bod
     return structured([article, breadcrumbs(trail)])
 
 
-def landing_data(landing: str, description_text: str) -> str:
+def landing_data(landing: str, description_text: str, ref: str) -> str:
     """The product page: Indigo itself, its place on the site, and the questions it answers."""
     section = landing.split('id="features"', 1)[1].split('id="videos"', 1)[0]
     features = [html.unescape(re.sub(r"<[^>]+>", "", m)) for m in re.findall(r"<h3>(.*?)</h3>", section)]
@@ -275,7 +249,7 @@ def landing_data(landing: str, description_text: str) -> str:
            "isBasedOn": {"@type": "SoftwareSourceCode", "name": "Swiss",
                          "codeRepository": "https://github.com/emukidid/swiss-gc"},
            "sameAs": [f"https://github.com/{REPO}"],
-           "downloadUrl": f"https://github.com/{REPO}/releases/latest",
+           "softwareVersion": ref[1:], "downloadUrl": f"https://github.com/{REPO}/releases/tag/{ref}",
            "softwareHelp": f"{BASE}/indigo/guide/", "screenshot": f"{BASE}/indigo/screenshots/home.png",
            "image": f"{BASE}/assets/og-indigo.png", "author": AUTHOR, "publisher": PUBLISHER}
     questions = [{"@type": "Question", "name": html.unescape(re.sub(r"<[^>]+>", "", q)).strip(),
@@ -302,17 +276,24 @@ def description(body: str, fallback: str) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--indigo", required=True, type=Path, help="Indigo clone at --ref")
-    ap.add_argument("--ref", required=True, help="the release tag the pages show, e.g. v1.25.0")
+    ap.add_argument("--ref", required=True, help="the release (vX.Y.Z) or release candidate (vX.Y.Z-rc.N) the pages show")
+    ap.add_argument("--stable", help="with a release candidate as --ref: the release offered beside it, e.g. v1.25.0")
     ap.add_argument("--videos", type=Path, help="directory of <name>.mp4 + <name>.png")
     ap.add_argument("--zip", type=Path, help="the release's Indigo-<ref>.zip, for size and SHA-256")
     args = ap.parse_args()
     indigo, ref = args.indigo.resolve(), args.ref
-    if not re.fullmatch(r"v\d+\.\d+\.\d+", ref):
-        raise SystemExit("--ref must be a stable release tag (vX.Y.Z)")
+    m = re.fullmatch(r"v(\d+)\.(\d+)\.(\d+)(-rc\.\d+)?", ref)
+    if not m:
+        raise SystemExit("--ref must be a release (vX.Y.Z) or a release candidate (vX.Y.Z-rc.N)")
+    rc, base = bool(m.group(4)), ".".join(m.groups()[:3])
+    stable = args.stable
+    if rc != bool(stable) or (stable and not (
+            re.fullmatch(r"v\d+\.\d+\.\d+", stable)
+            and tuple(map(int, stable[1:].split("."))) < tuple(map(int, m.groups()[:3])))):
+        raise SystemExit("--stable goes with a release candidate as --ref, and names an older release")
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
 
     names = guide_order(indigo)
-    errata = ERRATA.get(ref, {})
     pages = {f"docs/guide/{n}.md": ("/indigo/guide/" if n == "README" else f"/indigo/guide/{n}/")
              for n in names}
     pages.update({src: f"/indigo/{dst}" for src, (dst, _) in EXTRA.items()})
@@ -324,6 +305,10 @@ def main() -> int:
         md = regular(indigo / src, indigo).read_text(encoding="utf-8")
         rendered[src] = transform(render(md, token), src, pages, ref, indigo)
     rendered["docs/guide/README.md"] = ("Indigo guide", rendered["docs/guide/README.md"][1])
+    if rc:  # a candidate's changes still sit under Unreleased: say what they are
+        title, body = rendered["CHANGELOG.md"]
+        rendered["CHANGELOG.md"] = (title, body.replace('<h2 id="unreleased">Unreleased</h2>',
+                                                        f'<h2 id="unreleased">{base} release candidate</h2>', 1))
 
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -377,13 +362,12 @@ def main() -> int:
         if i + 1 < len(flow):
             n = flow[i + 1]
             pager.append(f'<a class="next" href="{pages[n]}"><small>Next</small>{html.escape(rendered[n][0])}</a>')
-        note = f'<p class="note glass">{errata[src]}</p>\n' if errata.get(src) else ""
         out = page_tpl.format(
-            title=html.escape(title), head=html.escape(head), crumbs=crumbs, nav=nav(src), body=note + body,
+            title=html.escape(title), head=html.escape(head), crumbs=crumbs, nav=nav(src), body=body,
             pager="\n".join(pager), canonical=BASE + url, description=html.escape(summary),
             structured=page_data(title, summary, url, trail, body),
             source=html.escape(f"https://github.com/{REPO}/blob/{ref}/{src}"),
-            edit=html.escape(f"https://github.com/{REPO}/edit/main/{src}"),
+            edit=html.escape(f"https://github.com/{REPO}/edit/beta/{src}"),  # changes go to beta, never main
             path=html.escape(src), ref=html.escape(ref), header=header(url), footer=footer())
         target = DOCS / url.lstrip("/") / "index.html"
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -394,21 +378,27 @@ def main() -> int:
     if args.zip:
         zip_size = f"{args.zip.stat().st_size / 1e6:.1f} MB"
         zip_sum = f"<code>{hashlib.sha256(args.zip.read_bytes()).hexdigest()[:16]}…</code>"
+    name = f"Indigo {base} release candidate" if rc else f"Indigo {base}"
+    blurb = (f"{base} as it is meant to ship, for a last round of testing before it does." if rc
+             else "The release for everyday use.")
+    stable_card = ""
+    if stable:
+        stable_card = (f'  <div class="glass"><h3>Indigo {stable[1:]}</h3><p>The current release, for everyday use.'
+                       f'</p><p class="cta"><a class="secondary" href="https://github.com/{REPO}/releases/'
+                       f'download/{stable}/Indigo-{stable}.zip">Indigo-{stable}.zip</a></p><p class="meta"><a '
+                       f'href="https://github.com/{REPO}/releases/tag/{stable}">Release notes</a></p></div>\n')
     guide_cards = "\n".join(
         f'  <a class="glass" href="{url}"><strong>{html.escape(title)}</strong></a>'
         for src, url, title in nav_guide[1:] + nav_ref)
     landing = (TEMPLATES / "landing.html").read_text(encoding="utf-8")
     for key, value in {"{{header}}": header("/indigo/"), "{{footer}}": footer(), "{{ref}}": ref,
-                       "{{version}}": ref[1:], "{{zip_url}}": zip_url, "{{zip_size}}": zip_size,
+                       "{{name}}": name, "{{blurb}}": blurb, "{{stable}}\n": stable_card,
+                       "{{zip_url}}": zip_url, "{{zip_size}}": zip_size,
                        "{{zip_sum}}": zip_sum, "{{guide_cards}}": guide_cards,
                        "{{siblings}}": siblings("/indigo/")}.items():
         landing = landing.replace(key, value)
-    for old, new in errata.get("landing", []):
-        if old not in landing:
-            raise SystemExit(f"errata for {ref}: landing.html no longer says {old[:60]!r}")
-        landing = landing.replace(old, new)
     summary = html.unescape(re.search(r'<meta name="description" content="([^"]*)">', landing).group(1))
-    landing = landing.replace("{{structured}}", landing_data(landing, summary))
+    landing = landing.replace("{{structured}}", landing_data(landing, summary, ref))
     landing = re.sub(r"\{\{video:([a-z-]+)\|([^|]*)\|([^}]*)\}\}",
                      lambda m: video_or_picture(m.group(1), m.group(2), m.group(3), videos), landing)
     if "{{" in landing:

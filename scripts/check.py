@@ -32,6 +32,10 @@ from nav import CHROME, SIBLINGS, footer, header, product, siblings, url_of
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 SITEMAP = DOCS / "sitemap.xml"
 SITEMAP_NS = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+# Indigo's pages link a release or a release candidate, never a beta: not the list of
+# every release or its feed (the newest pre-release comes first there), not the tags.
+PRE_RELEASE = re.compile(r"github\.com/spencercnorton/indigo/(?:releases/?(?:[?#]|$)|releases\.atom|tags\b"
+                         r"|releases/(?:tag|download)/v[^/]*-beta\.)")
 # 404.html is served with `robots: noindex` and has no canonical, so it is the
 # one page that must NOT appear in the sitemap.
 UNLISTED = "404.html"
@@ -198,6 +202,8 @@ def main() -> int:
         if p.stack:
             errors.append(f"unclosed at EOF: {p.stack}")
         for ref in p.refs:
+            if PRE_RELEASE.search(ref):
+                errors.append(f"{ref} can lead to a beta: link a release or a release candidate")
             if ref.startswith("mailto:"):
                 errors.append(f"mailto link {ref}")
             if ref.startswith(("http://", "https://", "mailto:")):

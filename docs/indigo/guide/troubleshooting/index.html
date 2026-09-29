@@ -8,12 +8,12 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="stylesheet" href="/style.css">
 <title>Troubleshooting · Indigo guide · NorviTech</title>
-<meta name="description" content="The Library appears only when /games holds nothing but games: disc images (.iso, .gcm, .tgc, .fdi) or folders with one in each. A single other file, such…">
+<meta name="description" content="The Library appears only when /games holds nothing but games: disc images (.iso, .gcm, .tgc, .fdi) or folders with one in each and nothing else. A single…">
 <link rel="canonical" href="https://norvitech.com/indigo/guide/troubleshooting/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="NorviTech">
 <meta property="og:title" content="Troubleshooting · Indigo guide · NorviTech">
-<meta property="og:description" content="The Library appears only when /games holds nothing but games: disc images (.iso, .gcm, .tgc, .fdi) or folders with one in each. A single other file, such…">
+<meta property="og:description" content="The Library appears only when /games holds nothing but games: disc images (.iso, .gcm, .tgc, .fdi) or folders with one in each and nothing else. A single…">
 <meta property="og:url" content="https://norvitech.com/indigo/guide/troubleshooting/">
 <meta property="og:image" content="https://norvitech.com/assets/og-indigo.png">
 <meta property="og:image:width" content="1280">
@@ -22,7 +22,6 @@
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="max-image-preview:large">
-<link rel="alternate" type="application/atom+xml" title="Indigo releases" href="https://github.com/spencercnorton/indigo/releases.atom">
 <script src="/site.js" defer></script>
 <script type="application/ld+json">
 {
@@ -31,7 +30,7 @@
     {
       "@type": "TechArticle",
       "headline": "Troubleshooting",
-      "description": "The Library appears only when /games holds nothing but games: disc images (.iso, .gcm, .tgc, .fdi) or folders with one in each. A single other file, such…",
+      "description": "The Library appears only when /games holds nothing but games: disc images (.iso, .gcm, .tgc, .fdi) or folders with one in each and nothing else. A single…",
       "url": "https://norvitech.com/indigo/guide/troubleshooting/",
       "inLanguage": "en",
       "about": {
@@ -186,7 +185,6 @@
 </ul>
 </nav>
 <article class="doc">
-<p class="note glass"><strong>Indigo starts, then stock Swiss appears?</strong> Indigo 1.25.0 starts a stock Swiss it finds in the root of the card as <code>z.dol</code>, <code>a.dol</code>, <code>b.dol</code>, <code>x.dol</code>, <code>y.dol</code>, <code>start.dol</code>, <code>boot.dol</code> or <code>swiss_r….dol</code>, and In-Game Reset lands there too. Rename it <code>swiss.dol</code>, or take it off the card. The next release fixes this (<a href="https://github.com/spencercnorton/indigo/issues/3">issue 3</a>).</p>
 <ul>
 <li><a href="#i-see-swisss-file-list-instead-of-the-library">I see Swiss's file list instead of the Library</a></li>
 <li><a href="#home-starts-on-source-or-library-says-select-source">Home starts on Source, or Library says Select Source</a></li>
@@ -196,6 +194,7 @@
 <li><a href="#a-games-picture-is-stretched-shifted-or-wrong">A game's picture is stretched, shifted or wrong</a></li>
 <li><a href="#my-settings-dont-stick">My settings don't stick</a></li>
 <li><a href="#my-cheats-dont-show-up-or-dont-work">My cheats don't show up, or don't work</a></li>
+<li><a href="#indigo-starts-then-stock-swiss-appears">Indigo starts, then stock Swiss appears</a></li>
 <li><a href="#in-game-reset-takes-me-to-stock-swiss">In-Game Reset takes me to stock Swiss</a></li>
 <li><a href="#the-same-game-opens-every-time-indigo-starts">The same game opens every time Indigo starts</a></li>
 <li><a href="#still-stuck">Still stuck</a></li>
@@ -205,10 +204,12 @@
   <a href="/indigo/guide/images/library-file-list.png"><img alt="Swiss's plain file list, shown in place of the Library." src="/indigo/guide/images/library-file-list.png" width="640" loading="lazy" decoding="async" height="480"></a>
 </p>
 <p>The Library appears only when <code>/games</code> holds nothing but games: disc images
-(<code>.iso</code>, <code>.gcm</code>, <code>.tgc</code>, <code>.fdi</code>) or folders with one in each. A single other
-file, such as a text file or cover image, or an empty folder, brings back the
-file list. Remove it, or turn on <strong>Hide unknown file types</strong> in Settings ›
-Setup › Library. See <a href="/indigo/guide/library/#set-up-the-games-folder">Set up the games folder</a>.</p>
+(<code>.iso</code>, <code>.gcm</code>, <code>.tgc</code>, <code>.fdi</code>) or folders with one in each and nothing else.
+A single other file, such as a text file or cover image, or an empty folder,
+brings back the file list, whether it is in <code>/games</code> or in a game's folder.
+Remove it. <strong>Hide unknown file types</strong> in Settings › Setup › Library hides
+text files and pictures, but not folders, programs or music. See
+<a href="/indigo/guide/library/#set-up-the-games-folder">Set up the games folder</a>.</p>
 <h2 id="home-starts-on-source-or-library-says-select-source">Home starts on Source, or Library says Select Source</h2>
 <p>Indigo didn't find a device to read games from when it started. Check that
 the SD card or drive is seated, then choose it on the Source face: see
@@ -230,9 +231,10 @@ missing or damaged. It shows for five seconds, then the game opens anyway.
 NKit's recovery, as the message suggests, or make a fresh copy of the disc.
 <a href="/indigo/guide/game-details/#verify">Verify</a> (R on game details) checks an image's data.</p>
 <h2 id="the-screen-went-dark-after-i-changed-a-video-mode">The screen went dark after I changed a video mode</h2>
-<p>Wait ten seconds. After a change to <strong>Swiss Video Mode</strong>, <strong>System Video</strong>,
-<strong>AVE Compatibility</strong>, <strong>Force DTV Status</strong> or <strong>RetroTINK-4K HDMI Input</strong>,
-Indigo puts the old mode back by itself unless you press A to keep it. See
+<p>Wait ten seconds. When A switches <strong>Swiss Video Mode</strong>, <strong>System Video</strong>,
+<strong>AVE Compatibility</strong>, <strong>Force DTV Status</strong> or <strong>RetroTINK-4K HDMI Input</strong>
+to a new value, Indigo puts the old mode back by itself unless you press A
+again to keep it. See
 <a href="/indigo/guide/settings/#video-changes-ask-first">Video changes ask first</a>.</p>
 <p>If a game starts in a mode your TV can't show, open the game's details, press
 X, highlight <strong>Force Video Mode</strong> and press X to put it back to the default.</p>
@@ -240,7 +242,8 @@ X, highlight <strong>Force Video Mode</strong> and press X to put it back to the
 <p>Look at the game's own settings (X on its details) for anything marked
 <strong>Custom</strong>: <strong>Force Widescreen</strong>, <strong>Force Horizontal Scale</strong> and <strong>Force
 Vertical Offset</strong> change the picture. X puts a setting back to Game Defaults.
-If every game looks wrong, check Settings › Game Defaults instead.</p>
+If every game looks wrong, check Game Defaults instead (Settings, the
+Defaults tab).</p>
 <h2 id="my-settings-dont-stick">My settings don't stick</h2>
 <p>Open Settings › Setup › Storage and read the line under the title:</p>
 <ul>
@@ -274,6 +277,12 @@ before starting the game. To have them apply every time, turn on
 have filled the space for cheats. Switch some off; Z in the browser shows
 how much is used.</li>
 </ul>
+<h2 id="indigo-starts-then-stock-swiss-appears">Indigo starts, then stock Swiss appears</h2>
+<p>Indigo 1.25.0 and earlier start a stock Swiss they find in the root of the
+card as <code>z.dol</code>, <code>a.dol</code>, <code>b.dol</code>, <code>x.dol</code>, <code>y.dol</code>, <code>start.dol</code>, <code>boot.dol</code>
+or <code>swiss_r….dol</code>, in place of themselves, and In-Game Reset lands there too.
+Update Indigo: later releases don't look for them, so stock Swiss can stay on
+the card as <code>z.dol</code>.</p>
 <h2 id="in-game-reset-takes-me-to-stock-swiss">In-Game Reset takes me to stock Swiss</h2>
 <p>In-Game Reset set to <strong>Apploader</strong> returns to whatever is in
 <code>/swiss/patches/apploader.img</code>. Copy that file from the zip of the Indigo
@@ -288,8 +297,8 @@ again and press <strong>Z</strong>: the shortcut changes from "Autoload On" back
 <ul>
 <li>Questions: <a href="https://github.com/spencercnorton/indigo/discussions">Discussions</a>.</li>
 <li>Bugs: <a href="https://github.com/spencercnorton/indigo/issues/new/choose">open an issue</a>,
-with your Indigo version (System › System Information › About Indigo),
-your loader and what you pressed.</li>
+with the version you downloaded, or the commit System › System
+Information › About Indigo shows, your loader and what you pressed.</li>
 <li>Report problems with Indigo here, not to the Swiss project: Indigo is an
 unofficial fork.</li>
 </ul>
@@ -299,7 +308,7 @@ unofficial fork.</li>
 <a class="prev" href="/indigo/guide/posters/"><small>Previous</small>Posters</a>
 <a class="next" href="/indigo/guide/settings-file/"><small>Next</small>Settings files</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v1.25.0/docs/guide/troubleshooting.md">docs/guide/troubleshooting.md</a> in Indigo v1.25.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/main/docs/guide/troubleshooting.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.0.0/docs/guide/troubleshooting.md">docs/guide/troubleshooting.md</a> in Indigo v2.0.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/guide/troubleshooting.md">Suggest an edit</a>.</p>
 </article>
 </div>
 
