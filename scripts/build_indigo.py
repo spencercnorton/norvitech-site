@@ -62,40 +62,6 @@ EXTRA = {"docs/SETTINGS.md": ("guide/settings-file/", "Settings files"),
 DESCRIPTIONS = {"CHANGELOG.md": "What changed in each Indigo release, newest first: "
                                 "new screens and settings, fixes and documentation."}
 PICTURES = (".png", ".jpg", ".jpeg", ".webp")
-# A release's own docs can be wrong about that release. A correction goes where a
-# reader would act on it: "landing" swaps text in landing.html (each old text must
-# still be there), a guide source gets a note above its page. Keyed by the tag, so
-# building a later release drops them.
-ISSUE3 = "https://github.com/spencercnorton/indigo/issues/3"
-STARTS_SWISS = ("<code>z.dol</code>, <code>a.dol</code>, <code>b.dol</code>, <code>x.dol</code>, <code>y.dol</code>, "
-                "<code>start.dol</code>, <code>boot.dol</code> or <code>swiss_r….dol</code>")
-ERRATA: dict[str, dict] = {"v1.25.0": {
-    "landing": [
-        ("rename it to <code>z.dol</code> first to keep it one button away.</p>",
-         "rename it to <code>swiss.dol</code> first to keep it. Not <code>z.dol</code>: Indigo 1.25.0 starts a "
-         f'stock Swiss it finds under that name in place of itself (<a href="{ISSUE3}">fixed for the next '
-         "release</a>).</p>"),
-        (" Hold Z at power-on for the <code>z.dol</code> you kept.</td>", "</td>"),
-        ("keeping its name: FlippyDrive, for one, boots <code>boot.dol</code>.</td>",
-         "keeping its name, unless that is <code>boot.dol</code> (FlippyDrive, for one): Indigo 1.25.0 named "
-         "<code>boot.dol</code> starts itself over and over.</td>"),
-        ("Keep stock Swiss as <code>z.dol</code> if you want it one button away.</p>",
-         "Keep stock Swiss on the card as <code>swiss.dol</code> if you want it; with 1.25.0, not as "
-         '<code>z.dol</code> (see <a href="#install">Install</a>).</p>'),
-    ],
-    "docs/guide/install.md":
-        "<strong>A known problem in 1.25.0.</strong> Don't keep a stock Swiss in the root of the card as "
-        f"{STARTS_SWISS}, and don't name Indigo <code>boot.dol</code>: at startup, 1.25.0 starts such a file in "
-        "place of itself. Name your old Swiss <code>swiss.dol</code> instead of <code>z.dol</code> in step 2; "
-        f'holding Z won\'t start it until the next release, which fixes this (<a href="{ISSUE3}">issue 3</a>).',
-    "download":
-        "On 1.25.0, keep an old Swiss as <code>swiss.dol</code>, not <code>z.dol</code>: 1.25.0 starts a stock "
-        f'Swiss it finds as <code>z.dol</code> in place of itself (<a href="{ISSUE3}">issue 3</a>).',
-    "docs/guide/troubleshooting.md":
-        "<strong>Indigo starts, then stock Swiss appears?</strong> Indigo 1.25.0 starts a stock Swiss it finds "
-        f"in the root of the card as {STARTS_SWISS}, and In-Game Reset lands there too. Rename it "
-        f'<code>swiss.dol</code>, or take it off the card. The next release fixes this (<a href="{ISSUE3}">issue 3</a>).',
-}}
 
 
 def render(markdown: str, token: str | None) -> str:
@@ -328,7 +294,6 @@ def main() -> int:
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
 
     names = guide_order(indigo)
-    errata = ERRATA.get(ref, {})
     pages = {f"docs/guide/{n}.md": ("/indigo/guide/" if n == "README" else f"/indigo/guide/{n}/")
              for n in names}
     pages.update({src: f"/indigo/{dst}" for src, (dst, _) in EXTRA.items()})
@@ -397,13 +362,12 @@ def main() -> int:
         if i + 1 < len(flow):
             n = flow[i + 1]
             pager.append(f'<a class="next" href="{pages[n]}"><small>Next</small>{html.escape(rendered[n][0])}</a>')
-        note = f'<p class="note glass">{errata[src]}</p>\n' if errata.get(src) else ""
         out = page_tpl.format(
-            title=html.escape(title), head=html.escape(head), crumbs=crumbs, nav=nav(src), body=note + body,
+            title=html.escape(title), head=html.escape(head), crumbs=crumbs, nav=nav(src), body=body,
             pager="\n".join(pager), canonical=BASE + url, description=html.escape(summary),
             structured=page_data(title, summary, url, trail, body),
             source=html.escape(f"https://github.com/{REPO}/blob/{ref}/{src}"),
-            edit=html.escape(f"https://github.com/{REPO}/edit/{'beta' if rc else 'main'}/{src}"),
+            edit=html.escape(f"https://github.com/{REPO}/edit/beta/{src}"),  # changes go to beta, never main
             path=html.escape(src), ref=html.escape(ref), header=header(url), footer=footer())
         target = DOCS / url.lstrip("/") / "index.html"
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -419,9 +383,8 @@ def main() -> int:
              else "The release for everyday use.")
     stable_card = ""
     if stable:
-        note = ERRATA.get(stable, {}).get("download", "")
-        stable_card = (f'  <div class="glass"><h3>Indigo {stable[1:]}</h3><p>The current release, for everyday use. '
-                       f'{note}</p><p class="cta"><a class="secondary" href="https://github.com/{REPO}/releases/'
+        stable_card = (f'  <div class="glass"><h3>Indigo {stable[1:]}</h3><p>The current release, for everyday use.'
+                       f'</p><p class="cta"><a class="secondary" href="https://github.com/{REPO}/releases/'
                        f'download/{stable}/Indigo-{stable}.zip">Indigo-{stable}.zip</a></p><p class="meta"><a '
                        f'href="https://github.com/{REPO}/releases/tag/{stable}">Release notes</a></p></div>\n')
     guide_cards = "\n".join(
@@ -434,10 +397,6 @@ def main() -> int:
                        "{{zip_sum}}": zip_sum, "{{guide_cards}}": guide_cards,
                        "{{siblings}}": siblings("/indigo/")}.items():
         landing = landing.replace(key, value)
-    for old, new in errata.get("landing", []):
-        if old not in landing:
-            raise SystemExit(f"errata for {ref}: landing.html no longer says {old[:60]!r}")
-        landing = landing.replace(old, new)
     summary = html.unescape(re.search(r'<meta name="description" content="([^"]*)">', landing).group(1))
     landing = landing.replace("{{structured}}", landing_data(landing, summary, ref))
     landing = re.sub(r"\{\{video:([a-z-]+)\|([^|]*)\|([^}]*)\}\}",
