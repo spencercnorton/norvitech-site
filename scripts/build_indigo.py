@@ -55,8 +55,39 @@ EXTRA = {"docs/SETTINGS.md": ("guide/settings-file/", "Settings files"),
          "CHANGELOG.md": ("changelog/", "Changelog")}
 # A page whose first paragraph does not say what the page is gets its own words.
 DESCRIPTIONS = {"CHANGELOG.md": "What changed in each Indigo release, newest first: "
-                                "new screens and settings, fixes, and the betas before each release."}
+                                "new screens and settings, fixes and documentation."}
 PICTURES = (".png", ".jpg", ".jpeg", ".webp")
+# A release's own docs can be wrong about that release. A correction goes where a
+# reader would act on it: "landing" swaps text in landing.html (each old text must
+# still be there), a guide source gets a note above its page. Keyed by the tag, so
+# building a later release drops them.
+ISSUE3 = "https://github.com/spencercnorton/indigo/issues/3"
+STARTS_SWISS = ("<code>z.dol</code>, <code>a.dol</code>, <code>b.dol</code>, <code>x.dol</code>, <code>y.dol</code>, "
+                "<code>start.dol</code>, <code>boot.dol</code> or <code>swiss_r….dol</code>")
+ERRATA: dict[str, dict] = {"v1.25.0": {
+    "landing": [
+        ("rename it to <code>z.dol</code> first to keep it one button away.</p>",
+         "rename it to <code>swiss.dol</code> first to keep it. Not <code>z.dol</code>: Indigo 1.25.0 starts a "
+         f'stock Swiss it finds under that name in place of itself (<a href="{ISSUE3}">fixed for the next '
+         "release</a>).</p>"),
+        (" Hold Z at power-on for the <code>z.dol</code> you kept.</td>", "</td>"),
+        ("keeping its name: FlippyDrive, for one, boots <code>boot.dol</code>.</td>",
+         "keeping its name, unless that is <code>boot.dol</code> (FlippyDrive, for one): Indigo 1.25.0 named "
+         "<code>boot.dol</code> starts itself over and over.</td>"),
+        ("Keep stock Swiss as <code>z.dol</code> if you want it one button away.</p>",
+         "Keep stock Swiss on the card as <code>swiss.dol</code> if you want it; with 1.25.0, not as "
+         '<code>z.dol</code> (see <a href="#install">Install</a>).</p>'),
+    ],
+    "docs/guide/install.md":
+        "<strong>A known problem in 1.25.0.</strong> Don't keep a stock Swiss in the root of the card as "
+        f"{STARTS_SWISS}, and don't name Indigo <code>boot.dol</code>: at startup, 1.25.0 starts such a file in "
+        "place of itself. Name your old Swiss <code>swiss.dol</code> instead of <code>z.dol</code> in step 2; "
+        f'holding Z won\'t start it until the next release, which fixes this (<a href="{ISSUE3}">issue 3</a>).',
+    "docs/guide/troubleshooting.md":
+        "<strong>Indigo starts, then stock Swiss appears?</strong> Indigo 1.25.0 starts a stock Swiss it finds "
+        f"in the root of the card as {STARTS_SWISS}, and In-Game Reset lands there too. Rename it "
+        f'<code>swiss.dol</code>, or take it off the card. The next release fixes this (<a href="{ISSUE3}">issue 3</a>).',
+}}
 
 
 def render(markdown: str, token: str | None) -> str:
@@ -231,11 +262,13 @@ def page_data(title: str, text: str, url: str, trail: list[tuple[str, str]], bod
 
 def landing_data(landing: str, description_text: str) -> str:
     """The product page: Indigo itself, its place on the site, and the questions it answers."""
-    features = [html.unescape(re.sub(r"<[^>]+>", "", m)) for m in
-                re.findall(r'<div class="glass"><h3>(.*?)</h3>', landing.split('id="features"', 1)[1].split("</div>\n</div>", 1)[0])]
+    section = landing.split('id="features"', 1)[1].split('id="videos"', 1)[0]
+    features = [html.unescape(re.sub(r"<[^>]+>", "", m)) for m in re.findall(r"<h3>(.*?)</h3>", section)]
     app = {**APP, "description": description_text, "applicationSubCategory": "Homebrew",
-           "softwareRequirements": "A Nintendo GameCube, or a Wii in GameCube mode, that runs Swiss "
-                                   "from an SD card: PicoBoot, GC Loader, SD2SP2 or SD Gecko.",
+           "softwareRequirements": "A Nintendo GameCube that already runs Swiss (PicoBoot, PicoLoader, "
+                                   "FlippyDrive, GC Loader or the like) and reads an SD card (SD2SP2, "
+                                   "SD Gecko or the loader's own slot), or a Wii with GameCube ports in "
+                                   "GameCube mode.",
            "@id": f"{BASE}/indigo/#app", "featureList": features,
            "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
            "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
@@ -279,6 +312,7 @@ def main() -> int:
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
 
     names = guide_order(indigo)
+    errata = ERRATA.get(ref, {})
     pages = {f"docs/guide/{n}.md": ("/indigo/guide/" if n == "README" else f"/indigo/guide/{n}/")
              for n in names}
     pages.update({src: f"/indigo/{dst}" for src, (dst, _) in EXTRA.items()})
@@ -343,8 +377,9 @@ def main() -> int:
         if i + 1 < len(flow):
             n = flow[i + 1]
             pager.append(f'<a class="next" href="{pages[n]}"><small>Next</small>{html.escape(rendered[n][0])}</a>')
+        note = f'<p class="note glass">{errata[src]}</p>\n' if errata.get(src) else ""
         out = page_tpl.format(
-            title=html.escape(title), head=html.escape(head), crumbs=crumbs, nav=nav(src), body=body,
+            title=html.escape(title), head=html.escape(head), crumbs=crumbs, nav=nav(src), body=note + body,
             pager="\n".join(pager), canonical=BASE + url, description=html.escape(summary),
             structured=page_data(title, summary, url, trail, body),
             source=html.escape(f"https://github.com/{REPO}/blob/{ref}/{src}"),
@@ -368,6 +403,10 @@ def main() -> int:
                        "{{zip_sum}}": zip_sum, "{{guide_cards}}": guide_cards,
                        "{{siblings}}": siblings("/indigo/")}.items():
         landing = landing.replace(key, value)
+    for old, new in errata.get("landing", []):
+        if old not in landing:
+            raise SystemExit(f"errata for {ref}: landing.html no longer says {old[:60]!r}")
+        landing = landing.replace(old, new)
     summary = html.unescape(re.search(r'<meta name="description" content="([^"]*)">', landing).group(1))
     landing = landing.replace("{{structured}}", landing_data(landing, summary))
     landing = re.sub(r"\{\{video:([a-z-]+)\|([^|]*)\|([^}]*)\}\}",
@@ -405,11 +444,14 @@ def main() -> int:
 
 
 def video_or_picture(name: str, fallback: str, alt: str, videos: list[str]) -> str:
-    """A clip when --videos had it, else the README's own picture of the same thing."""
+    """A clip when --videos had it, else the README's own picture of the same thing.
+    Clips are short and silent: site.js loops each one while it is on screen and
+    gives it a pause button. Without site.js, or with reduced motion, it keeps
+    these native controls and plays only when asked."""
     if name in videos:
-        return (f'<video controls muted playsinline preload="none" poster="/indigo/videos/{name}.png" '
-                f'aria-label="{html.escape(alt, quote=True)}"><source src="/indigo/videos/{name}.mp4" '
-                f'type="video/mp4"></video>')
+        return (f'<div class="clip"><video controls muted loop playsinline preload="none" '
+                f'poster="/indigo/videos/{name}.png" aria-label="{html.escape(alt, quote=True)}">'
+                f'<source src="/indigo/videos/{name}.mp4" type="video/mp4"></video></div>')
     return f'<img src="{fallback}" alt="{html.escape(alt, quote=True)}" loading="lazy" decoding="async">'
 
 

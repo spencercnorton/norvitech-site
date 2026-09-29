@@ -119,9 +119,9 @@ PRODUCTS = [
     # release adds a page, check.py fails until it is listed here.
     dict(slug="indigo", name="Indigo", note="Swiss for GameCube, rebuilt",
          action=("Download", "/indigo/#downloads"), menus=[
-             ("Overview", [("What it does", "/indigo/#features"),
+             ("Overview", [("Features", "/indigo/#features"),
                            ("See it in action", "/indigo/#videos"),
-                           ("Release channels", "/indigo/#channels"),
+                           ("Releases", "/indigo/#channels"),
                            ("Questions", "/indigo/#faq")]),
              ("Guide", [("Guide overview", "/indigo/guide/"),
                         ("Install", "/indigo/guide/install/"),
@@ -139,7 +139,7 @@ PRODUCTS = [
                         ("Troubleshooting", "/indigo/guide/troubleshooting/")]),
              ("Reference", [("Settings files", "/indigo/guide/settings-file/"),
                             ("Changelog", "/indigo/changelog/"),
-                            ("Release notes", f"{GH}/indigo/releases"),
+                            ("Release notes", f"{GH}/indigo/releases/latest"),
                             *support("indigo")])]),
 ]
 
