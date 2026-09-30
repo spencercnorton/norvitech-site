@@ -128,6 +128,7 @@
           <li><a href="/indigo/guide/system/">System</a></li>
           <li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
           <li><a href="/indigo/guide/posters/" aria-current="page">Posters</a></li>
+          <li><a href="/indigo/guide/apps/">Apps</a></li>
           <li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
         </ul>
       </details>
@@ -177,6 +178,7 @@
 <li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
 <li><a href="/indigo/guide/posters/" aria-current="page">Posters</a></li>
 <li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+<li><a href="/indigo/guide/apps/">Apps</a></li>
 </ul>
 <p>Reference</p>
 <ul>
@@ -192,21 +194,22 @@ banner and its six-character game ID.</p>
 <p align="center">
   <a href="/indigo/guide/images/posters-compare.png"><img alt="1080° Avalanche in the Library twice: on the left without a poster pack, a card with its disc banner and game ID, GTEE01; on the right with one, its box art." src="/indigo/guide/images/posters-compare.png" width="640" loading="lazy" decoding="async" height="399"></a>
 </p>
-<h2 id="download-a-pack">Download a pack</h2>
-<p>Ready-made packs are made from GameTDB's cover art:</p>
+<h2 id="download-the-pack">Download the pack</h2>
+<p>The ready-made pack is made from GameTDB's cover art, and one pack covers
+every region:</p>
 <ul>
 <li>
-<a href="https://indigo.norvitech.com/indigo-posters-ntsc.zip">Posters: USA &amp; Japan</a> (NTSC)</li>
-<li>
-<a href="https://indigo.norvitech.com/indigo-posters-pal.zip">Posters: Europe &amp; Australia</a> (PAL)</li>
+<a href="https://indigo.norvitech.com/indigo-posters-all.zip">Download the poster pack</a> (about 90 MB)</li>
 </ul>
-<p>Unzip the one you want into the root of the card; it holds
-<code>swiss/ui/posters.pak</code>. Indigo reads one pack at a time, so pick the region
-most of your games are from. Checksums are in
+<p>Unzip it into the root of the card. It holds <code>swiss/ui/posters.pak</code>, with the
+<a href="#gameplay-stills">gameplay stills</a> and <a href="#game-descriptions">descriptions</a>
+Spotlight shows beside it. Checksums are in
 <a href="https://indigo.norvitech.com/SHA256SUMS.txt">SHA256SUMS.txt</a>, and the
 <a href="/indigo/">Indigo page</a> has the details.</p>
-<p>A game gets its poster when its game ID is in the pack. Games from the other
-region, and the few games GameTDB has no art for, keep their banner card.</p>
+<p>A game gets its poster when its game ID is in the pack: every game GameTDB has
+a cover for, from any region. The few it has none for keep their banner card.
+The pack needs Indigo 2.1 or later: 2.0 and earlier refuse a pack this big and
+show banners.</p>
 <h2 id="build-your-own-pack">Build your own pack</h2>
 <p>You can make a pack from your own cover images, from this repository:</p>
 <ol>
@@ -228,19 +231,44 @@ python3 buildtools/ui/poster_pack.py --covers <span class="pl-k">~</span>/covers
 <p>Copy <code>posters.pak</code> to <code>/swiss/ui/posters.pak</code> on the card.</p>
 </li>
 </ol>
-<p>A pack holds up to 1,024 covers.</p>
+<p>A pack holds up to 2,048 covers. Indigo 2.0 and earlier read up to 1,024 and
+show banners with a bigger pack.</p>
+<h2 id="gameplay-stills">Gameplay stills</h2>
+<p>The <strong>Spotlight</strong> layout (Settings › Setup › Library › Library Layout) shows
+the selected game's gameplay still, a 320×240 screenshot, from a second file
+next to the posters, <code>/swiss/ui/stills.pak</code>. It's optional too: without it,
+or for a game it has no still for, Spotlight shows the game's cover instead.
+The poster pack above carries both files, so unzipping it gives you posters
+and stills together. The stills come from the
+<a href="https://github.com/libretro-thumbnails/Nintendo_-_GameCube">libretro-thumbnails</a>
+project's GameCube screenshots.</p>
+<p>To build your own, put screenshots in one folder, each named after its game
+ID and at least 320×240 (Dolphin saves one with F9), and build the pack as
+you would posters:</p>
+<div class="highlight highlight-source-shell"><pre>python3 buildtools/ui/poster_pack.py --stills <span class="pl-k">~</span>/screenshots --out stills.pak</pre></div>
+<p>Screenshots are cropped to 4:3 from the center. Copy <code>stills.pak</code> to
+<code>/swiss/ui/stills.pak</code> on the card.</p>
+<h2 id="game-descriptions">Game descriptions</h2>
+<p>Spotlight shows a few sentences about the selected game beside its still.
+They come from <code>/swiss/ui/descriptions.txt</code>, which the poster pack carries
+too: English descriptions from <a href="https://www.gametdb.com/">GameTDB</a>, for
+every game it knows. Without the file, or for a game it doesn't list,
+Spotlight shows the description from the game's disc banner.</p>
+<p>It's a text file you can edit: one game per line, its game ID, a space, then
+the description. Add lines for games it doesn't know, such as homebrew or a
+translation. The format is in <a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/docs/PACKS.md#game-descriptions">PACKS.md</a>.</p>
 <h2 id="where-the-game-id-comes-from">Where the game ID comes from</h2>
 <p>Every GameCube disc has a six-character ID: four for the game and region, two
 for the publisher. Super Mario Sunshine for North America is <code>GMSE01</code>. A game
 without a poster shows its ID on its card, and you can look up any game's ID
 on <a href="https://www.gametdb.com/">GameTDB</a>.</p>
 <hr>
-<p align="center"><a href="/indigo/guide/memory-cards/">← Memory Cards</a> · <a href="/indigo/guide/troubleshooting/">Troubleshooting →</a></p>
+<p align="center"><a href="/indigo/guide/memory-cards/">← Memory Cards</a> · <a href="/indigo/guide/apps/">Apps →</a></p>
 <nav class="pager" aria-label="Previous and next page">
 <a class="prev" href="/indigo/guide/memory-cards/"><small>Previous</small>Memory Cards</a>
 <a class="next" href="/indigo/guide/troubleshooting/"><small>Next</small>Troubleshooting</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/docs/guide/posters.md">docs/guide/posters.md</a> in Indigo v2.0.1, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/guide/posters.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/docs/guide/posters.md">docs/guide/posters.md</a> in Indigo v2.1.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/guide/posters.md">Suggest an edit</a>.</p>
 </article>
 </div>
 
