@@ -163,6 +163,10 @@ volume as one recovery set. Keep the key in a separate encrypted secret
 backup. Back up recording outputs according to your retention requirements.
 Test a restore with a disposable database and storage, with provider access
 blocked until the recovered configuration has been checked.</p>
+<p>Use the <a href="https://rack.norvitech.com/tools/recovery-check/">free Docker
+recovery checker</a> to inventory storage declared in your Compose file and
+record backup details in your browser. It does not inspect your host or
+verify that backups exist or can be restored.</p>
 <p>Record the current version and image digest before an upgrade. Rebuild from
 the new public tag, then check health, device identity, lineup, tune and lease
 release. For an incompatible migration, restore the matching database backup
