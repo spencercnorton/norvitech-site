@@ -350,10 +350,10 @@ def main() -> int:
             crumbs += ' / <a href="/indigo/guide/">Guide</a>' if src.startswith("docs/guide/") else ""
             trail += [("Guide", "/indigo/guide/")] if src.startswith("docs/guide/") else []
         trail.append((title, url))
-        # What a search result shows: the page, then where it belongs.
-        head = ("Indigo guide · NorviTech" if url == "/indigo/guide/" else
-                f"{title} · Indigo guide · NorviTech" if src.startswith("docs/guide/") else
-                f"{title} · Indigo · NorviTech")
+        # What a search result shows: the page, then what Indigo is. "Indigo" alone
+        # is also a GameCube color, so the name always travels with Swiss and GameCube.
+        head = ("Indigo guide · Swiss for GameCube · NorviTech" if url == "/indigo/guide/" else
+                f"{title} · Indigo, Swiss for GameCube · NorviTech")
         summary = DESCRIPTIONS.get(src) or description(body, f"{title}: the Indigo guide.")
         pager = []
         if i > 0:

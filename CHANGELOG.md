@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Indigo pages: every guide page's title now says "Indigo, Swiss for GameCube"
+  (the name alone is also a GameCube color), and the product page's search
+  description says "box-art library", the words people search for.
+
 - Restore visible recommendation previews and direct links to all 15 full
   recommendations. Bring achievements into a desktop sidebar, feature Eagle
   Scout with matching award icons, and keep Microsoft certifications secondary.
