@@ -175,6 +175,10 @@ shadow/evaluation modes before accepting live verdicts.</p>
 listed in your deployment. Save secrets separately in an encrypted backup.
 Rehearse restoration into an isolated database with external API calls and
 DHT traffic disabled until the recovered settings have been reviewed.</p>
+<p>Use the <a href="https://rack.norvitech.com/tools/recovery-check/">free Docker
+recovery checker</a> to inventory storage declared in your Compose file and
+record backup details in your browser. It does not inspect your host or
+verify that backups exist or can be restored.</p>
 <p>Record the release version and image digest before upgrading. Build from an
 immutable public tag; verify service health, migrations, API compatibility,
 crawl progress and UI behavior afterward. Restore the matching database
