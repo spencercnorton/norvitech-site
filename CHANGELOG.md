@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add a recommendation spotlight with 15-second rotation, pause/navigation
+  controls, reduced-motion support and links to each full recommendation.
+- Show academic awards beneath their degree entries and place current Natera
+  work beside the patent. Keep recommendation navigation valid across filters.
+
 - Indigo pages: every guide page's title now says "Indigo, Swiss for GameCube"
   (the name alone is also a GameCube color), and the product page's search
   description says "box-art library", the words people search for.
@@ -53,4 +58,3 @@
   and the 2.0 share image and home page spotlight.
 - `check.py` fails on any Indigo link that can lead to a beta: the list of
   releases, its feed, the tags or a `-beta` tag.
-

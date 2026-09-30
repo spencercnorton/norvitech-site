@@ -65,17 +65,20 @@
   // line (with its Clear button) was written into the header clock's link. Sealed off now.
   (function () {
   var career = document.querySelector("[data-career]");
-  var openSheet = function (id) {
-    // No <dialog>: fall back to the entry itself, opened in place.
-    var d = document.getElementById("e-" + id);
-    if (d) { d.open = true; d.scrollIntoView({ block: "center" }); }
-  };
+  var openSheet;
   if (career) {
     var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
     var list = career.querySelector(".tl-list");
     var items = [].slice.call(career.querySelectorAll(".tl-item"));
     var byId = {};
     items.forEach(function (el) { byId[el.dataset.id] = el; });
+    openSheet = function (id) {
+      // No <dialog>: reveal the entry before opening it in place.
+      if (!byId[id]) { return; }
+      if (!shown(byId[id])) { setKind("all"); }
+      var d = document.getElementById("e-" + id);
+      if (d) { d.open = true; d.scrollIntoView({ block: "center" }); }
+    };
     var marks = [].slice.call(career.querySelectorAll("[data-bar]"));
     var cities = [].slice.call(career.querySelectorAll(".m-city"));
     var keys = [].slice.call(career.querySelectorAll("[data-key]"));
@@ -164,6 +167,11 @@
     // surviving entries jump to their new rows the instant one is hidden.
     function setKind(kind) {
       state.kind = kind;
+      fbtns.forEach(function (btn) {
+        var selected = btn.dataset.filter === kind;
+        btn.setAttribute("aria-pressed", String(selected));
+        if (selected) { park(btn); }
+      });
       var first = {};
       items.forEach(function (el) { if (shown(el)) { first[el.dataset.i] = el.getBoundingClientRect().top; } });
       items.forEach(function (el) { el.classList.toggle("out", kind !== "all" && el.dataset.kind !== kind); });
@@ -187,8 +195,6 @@
     }
     fbtns.forEach(function (btn) {
       btn.addEventListener("click", function () {
-        fbtns.forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
-        park(btn);
         setKind(btn.dataset.filter);
       });
     });
@@ -421,6 +427,7 @@
       };
       openSheet = function (id, from, rec) {
         if (!byId[id]) { return; }
+        if (!shown(byId[id])) { setKind("all"); }
         opener = from || null;
         first = id;
         // Remember the address the page had, so closing puts it back (#career stays #career).
@@ -469,6 +476,118 @@
       window.addEventListener("hashchange", fromHash);
       fromHash();
     }
+
+    /* ---- Recommendation spotlight ----------------------------------------
+       The same excerpts and attribution as the timeline, with one quiet
+       rotation timer. The initial recommendation remains useful without JS. */
+    (function () {
+      var spotlight = document.querySelector("[data-rec-spotlight]");
+      if (!spotlight) { return; }
+      var person = spotlight.querySelector("[data-spotlight-person]");
+      var quote = spotlight.querySelector("[data-spotlight-quote]");
+      var quoteFigure = quote && quote.closest("figure");
+      var read = spotlight.querySelector("[data-spotlight-read]");
+      var position = spotlight.querySelector("[data-spotlight-position]");
+      var controls = spotlight.querySelector("[data-spotlight-controls]");
+      var previous = spotlight.querySelector("[data-spotlight-prev]");
+      var toggle = spotlight.querySelector("[data-spotlight-toggle]");
+      var next = spotlight.querySelector("[data-spotlight-next]");
+      if (!person || !quote || !quoteFigure || !read || !position || !controls || !previous || !toggle || !next) { return; }
+      var recommendations = [];
+      items.forEach(function (item) {
+        [].forEach.call(item.querySelectorAll(".tv-say"), function (preview) {
+          var full = [].filter.call(item.querySelectorAll(".tl-body .rec"), function (rec) {
+            return rec.dataset.rec === preview.dataset.rec;
+          })[0];
+          var attribution = full && full.querySelector("figcaption");
+          var excerpt = preview.querySelector("blockquote");
+          if (attribution && excerpt) {
+            recommendations.push({ entry: item.dataset.id, id: preview.dataset.rec, person: attribution, quote: excerpt });
+          }
+        });
+      });
+      if (recommendations.length < 2) { return; }
+      var index = 0, timer = null, visible = false, hovered = false;
+      var playing = !calm.matches, pointerWasPlaying = null;
+      spotlight.setAttribute("aria-live", "off");
+      quoteFigure.setAttribute("aria-atomic", "true");
+      position.setAttribute("aria-live", "off");
+
+      function copyChildren(from, to) {
+        to.textContent = "";
+        [].forEach.call(from.childNodes, function (child) { to.appendChild(child.cloneNode(true)); });
+      }
+      function show(manual) {
+        var recommendation = recommendations[index];
+        quoteFigure.setAttribute("aria-live", manual ? "polite" : "off");
+        copyChildren(recommendation.person, person);
+        copyChildren(recommendation.quote, quote);
+        read.dataset.open = recommendation.entry;
+        read.dataset.rec = recommendation.id;
+        read.setAttribute("href", "#e-" + recommendation.entry);
+        position.textContent = (index + 1) + " / " + recommendations.length;
+      }
+      function sync() {
+        if (timer !== null) { clearTimeout(timer); timer = null; }
+        toggle.textContent = playing ? "Pause" : "Play";
+        toggle.setAttribute("aria-label", playing ? "Pause automatic recommendations" : "Play automatic recommendations");
+        if (!playing || !visible || hovered || document.hidden) { return; }
+        timer = setTimeout(function () {
+          timer = null;
+          if (!playing || !visible || hovered || document.hidden) { sync(); return; }
+          index = (index + 1) % recommendations.length;
+          show(false);
+          sync();
+        }, 15000);
+      }
+      function step(direction) {
+        index = (index + direction + recommendations.length) % recommendations.length;
+        show(true);
+        sync();
+      }
+      previous.setAttribute("aria-label", "Previous recommendation");
+      next.setAttribute("aria-label", "Next recommendation");
+      previous.addEventListener("click", function () { step(-1); });
+      next.addEventListener("click", function () { step(1); });
+      // Focusing the control stops rotation before click fires. Keep the
+      // pointer's original Pause intent, so that first click cannot restart it.
+      toggle.addEventListener("pointerdown", function () { pointerWasPlaying = playing; });
+      toggle.addEventListener("pointercancel", function () { pointerWasPlaying = null; });
+      toggle.addEventListener("click", function (event) {
+        playing = !(event.detail > 0 && pointerWasPlaying !== null ? pointerWasPlaying : playing);
+        pointerWasPlaying = null;
+        sync();
+      });
+      spotlight.addEventListener("focusin", function () { playing = false; sync(); });
+      spotlight.addEventListener("pointerenter", function (event) {
+        if (event.pointerType === "touch") { return; }
+        hovered = true;
+        sync();
+      });
+      spotlight.addEventListener("pointerleave", function () { hovered = false; sync(); });
+      document.addEventListener("visibilitychange", sync);
+      var changeMotion = function () { if (calm.matches) { playing = false; } sync(); };
+      if (calm.addEventListener) { calm.addEventListener("change", changeMotion); }
+      else if (calm.addListener) { calm.addListener(changeMotion); }
+      if (window.IntersectionObserver) {
+        new IntersectionObserver(function (entries) {
+          visible = entries[0].isIntersecting;
+          sync();
+        }).observe(spotlight);
+      } else {
+        var checkVisibility = function () {
+          var bounds = spotlight.getBoundingClientRect();
+          var onScreen = bounds.bottom > 0 && bounds.top < window.innerHeight;
+          if (visible !== onScreen) { visible = onScreen; sync(); }
+        };
+        window.addEventListener("scroll", checkVisibility, { passive: true });
+        window.addEventListener("resize", checkVisibility);
+        checkVisibility();
+      }
+      controls.hidden = false;
+      show(false);
+      sync();
+    })();
 
     /* ---- By the numbers --------------------------------------------------- */
     [].slice.call(document.querySelectorAll("[data-open]")).forEach(function (a) {

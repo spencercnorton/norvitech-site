@@ -158,3 +158,60 @@
   .achievement-extra{display:block}
   .career .tl-voice{display:block;background:none}
 }
+
+/* A compact, manually controllable recommendation at the top of the page. */
+.about-hero{align-items:flex-start}
+.about-portrait{margin-top:12px}
+.recommendation-spotlight{max-width:780px;margin:28px 0 0;padding:22px 24px;border-radius:18px;background:var(--glass-strong)}
+.spotlight-top,.spotlight-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.spotlight-top .eyebrow{margin:0;font-size:12px}
+.spotlight-position{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.spotlight-recommendation{margin:16px 0}
+.spotlight-recommendation blockquote{margin:0 0 18px;min-height:4.5em;font-size:clamp(16px,1.3vw,20px);line-height:1.5;text-wrap:pretty}
+.spotlight-recommendation blockquote p{margin:0;max-width:none;color:var(--fg);font-size:inherit;line-height:inherit}
+.spotlight-recommendation blockquote p::before{content:"\201C"}
+.spotlight-recommendation blockquote p::after{content:"\201D"}
+.spotlight-recommendation figcaption{display:flex;align-items:center;gap:12px;min-height:52px}
+.spotlight-recommendation .tv-av{width:40px;height:40px;font-size:13px}
+.spotlight-recommendation .rec-who strong{font-size:14px}
+.spotlight-recommendation .rec-who > span{font-size:12px}
+.spotlight-bottom > a{font-size:13px;font-weight:600}
+.spotlight-controls{display:flex;align-items:center;gap:6px;flex:none}
+.spotlight-controls[hidden]{display:none}
+.spotlight-controls button{appearance:none;min-height:36px;min-width:36px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--glass);color:var(--fg);font:600 12px var(--font);cursor:pointer}
+.spotlight-controls [data-spotlight-toggle]{min-width:60px}
+.spotlight-controls button:hover{border-color:var(--link)}
+.spotlight-controls button:focus-visible{outline:2px solid var(--link);outline-offset:3px}
+.tl-achievements{margin:10px 0 10px 22px;padding:0 16px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:14px;background:var(--glass-strong)}
+.tl-achievements .achievement-item:last-child{border-bottom:0}
+.tl-achievements .achievement-item{padding:12px 0}
+.tl-achievements .achievement-icon{color:var(--accent)}
+.c-overview .patent-feature{display:grid;grid-template-columns:1fr 1fr;align-items:start;padding:28px;gap:28px}
+.patent-summary{min-width:0}
+.patent-summary h2,.natera-impact h2{margin:0 0 16px;font-size:clamp(23px,2vw,30px);line-height:1.15;letter-spacing:-.02em}
+.patent-summary p:not(.eyebrow){font-size:15px;line-height:1.65;margin:0 0 16px}
+.patent-summary .patent-date{font-size:12px;color:var(--muted);margin:14px 0 0}
+.patent-summary a,.natera-impact > a{font-size:14px;font-weight:600}
+.natera-impact{min-width:0;border-left:1px solid var(--line);padding-left:28px}
+.impact-scope{list-style:none;padding:0;margin:0 0 18px}
+.impact-scope li+li{margin-top:16px}
+.impact-scope strong{display:block;font-size:14px}
+.impact-scope span{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+@media (max-width:760px){
+  .about-portrait{margin-top:0}
+  .recommendation-spotlight{padding:20px;margin-top:24px}
+  .spotlight-bottom{align-items:flex-start;flex-wrap:wrap;gap:12px}
+  .spotlight-recommendation blockquote{min-height:10.5em}
+  .c-overview .patent-feature{grid-template-columns:1fr;padding:24px;gap:24px}
+  .natera-impact{padding:24px 0 0;border-left:0;border-top:1px solid var(--line)}
+  .tl-achievements{margin-left:10px}
+}
+@media print{
+  .recommendation-spotlight{display:none}
+  .about-hero{display:block}
+  .c-overview .patent-feature{display:block;padding:12pt}
+  .natera-impact{padding:12pt 0 0;margin-top:12pt;border-left:0;border-top:1pt solid #ddd}
+  .tl-achievements{break-inside:avoid;background:none;box-shadow:none}
+}
+.tl-item.dim .tl-achievements{opacity:.36;filter:saturate(.25)}
+@media print{.tl-achievements{opacity:1 !important;filter:none !important}}
