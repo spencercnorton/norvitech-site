@@ -25,3 +25,80 @@
 .g-scroll:focus-visible{outline:2px solid var(--link);outline-offset:4px;border-radius:6px}
 .g-track[data-lane="edu"] .g-bar{padding:0;justify-content:center}
 .g-track[data-lane="edu"] .g-lbl{display:block;font-size:11px}
+
+/* A quiet, viewport-sized map follows the career section while its content
+   stays in normal document flow. Location buttons are the accessible controls. */
+.about-hero{position:relative;z-index:1;padding-top:32px;padding-bottom:28px}
+.about-hero .tag{max-width:58ch}
+.about-portrait{flex-basis:300px;min-width:210px}
+.career{position:relative;isolation:isolate}
+.career > :not(.c-rail){position:relative;z-index:1}
+.career .c-rail{position:fixed;inset:26vh auto auto 50%;width:min(1600px,96vw);max-width:none;transform:translateX(-50%);margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;pointer-events:none;opacity:0;z-index:0;transition:opacity .35s ease}
+.career.map-active .c-rail{opacity:.72}
+.career .map{width:100%;aspect-ratio:720/268}
+.career .map-land path{stroke-width:2.4}
+.career .m-city::before{display:none}
+.career .m-city.now .m-dot{animation:none}
+.career .m-name{font-size:clamp(12px,1.1vw,17px)}
+.career .m-yrs{display:none}
+.career .c-controls{gap:10px 24px}
+.career .c-note:empty{display:none}
+.career .c-note:not(:empty){padding:8px 12px;background:var(--glass-strong);border-radius:8px}
+.career .gantt{margin-bottom:28px}
+.career .g-legend{gap:8px}
+.career .g-legend .key-n{display:none}
+.career .c-body{display:block}
+.career .c-list{width:min(100%,960px);min-width:0}
+.career .tl-card{background:var(--glass-strong)}
+.career .tl-hint{margin:24px 0 16px}
+.eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0 0 8px}
+.patent-feature{display:flex;align-items:center;gap:clamp(24px,4vw,64px);padding:clamp(24px,3vw,44px);border-radius:24px;border-color:color-mix(in srgb,var(--link) 35%,var(--line));background:var(--glass-strong)}
+.patent-seal{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;flex:0 0 150px;aspect-ratio:1;border:1px solid color-mix(in srgb,var(--link) 45%,var(--line));outline:1px solid var(--line);outline-offset:7px;border-radius:50%;color:var(--link);font-size:12px;letter-spacing:.07em}
+.patent-seal strong{font-size:27px;letter-spacing:-.02em}
+.patent-copy{max-width:850px}
+.patent-copy h2{font-size:clamp(25px,2.5vw,36px);margin:0 0 12px;letter-spacing:-.025em}
+.patent-copy p:not(.eyebrow){margin:0 0 16px}
+.patent-copy a{font-weight:700}
+.patent-copy .patent-date{font-size:12px;color:var(--muted);margin:12px 0 0}
+.about-current{background:var(--glass-strong);border-radius:18px;display:grid;grid-template-columns:minmax(0,1.5fr) repeat(2,minmax(0,1fr));gap:24px;padding:24px;margin:20px 0;border-bottom:1px solid var(--line)}
+.about-current > div{max-width:55ch;padding:12px 20px 12px 0}
+.about-current p:last-child{margin:0}
+.current-metric{display:flex;flex-direction:column;justify-content:center;gap:6px;padding:12px 24px;border-left:1px solid var(--line);color:var(--fg);text-decoration:none}
+.current-metric strong{font-size:42px;line-height:1;letter-spacing:-.04em}
+.current-metric span{font-size:14px;color:var(--muted)}
+.current-metric:hover span{color:var(--link);text-decoration:underline}
+.about-credentials{position:relative;z-index:1;border-radius:16px;margin:32px 0 24px;padding:18px 22px;background:var(--glass-strong)}
+.about-credentials summary{cursor:pointer;font-weight:600}
+.credentials-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:20px}
+.credentials-grid h3{margin-top:0}
+.about-end{display:flex;flex-wrap:wrap;gap:16px 32px;margin:24px 0 48px}
+@media (min-width:1600px){.career .c-list{width:65%;max-width:1300px}}
+@media (max-width:760px){
+  .about-hero{gap:24px}
+  .about-portrait{flex-basis:auto;width:min(100%,280px)}
+  .career .c-rail{width:96vw;top:38vh}
+  .career.map-active .c-rail{opacity:.5}
+  .career .c-keys{flex-wrap:wrap;overflow:visible;margin:0;padding:0}
+  .patent-feature{align-items:flex-start;gap:24px}
+  .patent-seal{display:none}
+  .about-current{grid-template-columns:1fr 1fr;gap:16px}
+  .about-current > div{grid-column:1 / -1;padding:0}
+  .current-metric{padding:8px 16px}
+  .current-metric strong{font-size:34px}
+  .credentials-grid{grid-template-columns:1fr;gap:12px}
+}
+@media (prefers-reduced-motion:reduce){.career .c-rail{transition:none}}
+@media (prefers-reduced-transparency:reduce){.career .c-rail{display:none}}
+@media print{
+  .career .c-rail,.patent-seal{display:none}
+  .career .c-list{width:100%;max-width:none}
+  .about-hero{padding:0}
+  .patent-feature{break-inside:avoid;padding:12pt;border:1pt solid #ddd;background:none;box-shadow:none}
+  .patent-copy h2{font-size:16pt}
+  .about-current{padding:12pt 0;gap:12pt}
+  .current-metric strong{font-size:22pt}
+}
+
+/* Keep the Zurich study-tour marker clear of the neighbouring MSc label. */
+.g-track[data-lane="edu"] .g-pt{top:0}
+@media (max-width:760px){.career .m-city[data-city="shanghai"] .m-name{left:auto;right:10px}}

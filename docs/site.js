@@ -58,8 +58,8 @@
      state object; every control changes it and calls paint(), and paint() is
      the only code that touches the linked classes, so no view can drift out
      of step with another. Without this block every view is still plain
-     markup: the list is native <details>, and bars, cities and stat tiles
-     are links to their entries. */
+     markup: the list is native <details>, and bars and stat tiles are links
+     to their entries. The background map mirrors the foreground controls. */
   // Its own function scope. site.js is one function, and `var` is function-scoped: this
   // module's `var note` and the clock's `var note` below were one variable, so the focus
   // line (with its Clear button) was written into the header clock's link. Sealed off now.
@@ -72,7 +72,6 @@
   };
   if (career) {
     var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
-    var wide = window.matchMedia("(min-width: 1280px)");
     var list = career.querySelector(".tl-list");
     var items = [].slice.call(career.querySelectorAll(".tl-item"));
     var byId = {};
@@ -121,7 +120,6 @@
         var mine = items.filter(function (el) { return el.dataset.city === c.dataset.city && shown(el); });
         c.classList.toggle("dim", !mine.some(lit));
         c.classList.toggle("hot", !!state.hot && byId[state.hot].dataset.city === c.dataset.city);
-        c.setAttribute("aria-pressed", String(state.key === "city:" + c.dataset.city));
       });
       keys.forEach(function (k) { k.setAttribute("aria-pressed", String(k.dataset.key === state.key)); });
       if (!noteEl) { return; }
@@ -198,10 +196,6 @@
     keys.forEach(function (k) {
       k.disabled = false;
       k.addEventListener("click", function () { setKey(k.dataset.key); });
-    });
-    cities.forEach(function (c) {
-      c.setAttribute("role", "button");
-      c.addEventListener("click", function (e) { e.preventDefault(); setKey("city:" + c.dataset.city); });
     });
 
     // Linked hover: pointing at a bar lights its entry and its city, and the
@@ -306,10 +300,11 @@
     });
 
     /* ---- The list: reveal, spine, and the rail that follows you ---------- */
-    var rail = career.querySelector("[data-rail]");
     var nowBox = career.querySelector("[data-now]");
     var tracked = null;
     function track() {
+      var bounds = career.getBoundingClientRect();
+      career.classList.toggle("map-active", bounds.top < window.innerHeight * 0.85 && bounds.bottom > 0);
       var vis = items.filter(shown);
       if (!vis.length) { return; }
       var mid = window.innerHeight * 0.42, pick = vis[0], seen = {};
@@ -318,12 +313,10 @@
       });
       seen[pick.dataset.city] = 1;
       cities.forEach(function (c) {
-        // Narrow screens show the map above the list, not beside it: every
-        // place is simply lit there, because nothing tracks what you can't see.
-        c.classList.toggle("seen", !wide.matches || !!seen[c.dataset.city]);
-        c.classList.toggle("now", wide.matches && c.dataset.city === pick.dataset.city);
+        c.classList.toggle("seen", !!seen[c.dataset.city]);
+        c.classList.toggle("now", c.dataset.city === pick.dataset.city);
       });
-      if (pick === tracked || !nowBox || !wide.matches) { return; }
+      if (pick === tracked || !nowBox) { return; }
       tracked = pick;
       nowBox.setAttribute("data-org", pick.dataset.org);
       nowBox.querySelector("[data-now-yr]").textContent = pick.dataset.span;
@@ -522,6 +515,7 @@
     var reopened = [];
     window.addEventListener("beforeprint", function () {
       items.forEach(function (el) { var d = el.querySelector("details"); if (!d.open) { d.open = true; reopened.push(d); } });
+      [].forEach.call(document.querySelectorAll("details.about-credentials"), function (d) { if (!d.open) { d.open = true; reopened.push(d); } });
       counters.forEach(function (el) { el.removeAttribute("data-show"); });
     });
     window.addEventListener("afterprint", function () { reopened.forEach(function (d) { d.open = false; }); reopened = []; });
