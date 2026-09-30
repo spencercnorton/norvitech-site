@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Indigo page: See it in action links the two-minute demo on YouTube.
+
 - Place the About recommendation card between the introduction and portrait on
   desktop, bringing the career timeline higher on the page. Version its
   stylesheet so returning visitors receive the matching layout immediately.
