@@ -160,9 +160,10 @@
 }
 
 /* A compact, manually controllable recommendation at the top of the page. */
-.about-hero{align-items:flex-start}
-.about-portrait{margin-top:12px}
-.recommendation-spotlight{max-width:780px;margin:28px 0 0;padding:22px 24px;border-radius:18px;background:var(--glass-strong)}
+.about-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,300px);grid-template-areas:"intro portrait" "recommendation recommendation";align-items:start;gap:24px 32px}
+.about-intro{grid-area:intro}
+.about-portrait{grid-area:portrait;margin-top:12px}
+.recommendation-spotlight{grid-area:recommendation;min-width:0;max-width:780px;margin:0;padding:22px 24px;border-radius:18px;background:var(--glass-strong)}
 .spotlight-top,.spotlight-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .spotlight-top .eyebrow{margin:0;font-size:12px}
 .spotlight-position{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -175,6 +176,7 @@
 .spotlight-recommendation .tv-av{width:40px;height:40px;font-size:13px}
 .spotlight-recommendation .rec-who strong{font-size:14px}
 .spotlight-recommendation .rec-who > span{font-size:12px}
+.spotlight-bottom{flex-wrap:wrap}
 .spotlight-bottom > a{font-size:13px;font-weight:600}
 .spotlight-controls{display:flex;align-items:center;gap:6px;flex:none}
 .spotlight-controls[hidden]{display:none}
@@ -197,9 +199,15 @@
 .impact-scope li+li{margin-top:16px}
 .impact-scope strong{display:block;font-size:14px}
 .impact-scope span{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+@media (min-width:1200px){
+  .about-hero{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) clamp(210px,19vw,300px);grid-template-areas:"intro recommendation portrait";gap:clamp(24px,2vw,40px)}
+  .recommendation-spotlight{margin-top:12px;padding:20px}
+  .spotlight-recommendation blockquote{min-height:7.5em}
+}
 @media (max-width:760px){
-  .about-portrait{margin-top:0}
-  .recommendation-spotlight{padding:20px;margin-top:24px}
+  .about-hero{grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "recommendation" "portrait"}
+  .about-portrait{margin-top:0;justify-self:center}
+  .recommendation-spotlight{padding:20px}
   .spotlight-bottom{align-items:flex-start;flex-wrap:wrap;gap:12px}
   .spotlight-recommendation blockquote{min-height:10.5em}
   .c-overview .patent-feature{grid-template-columns:1fr;padding:24px;gap:24px}

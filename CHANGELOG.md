@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Place the About recommendation card between the introduction and portrait on
+  desktop, bringing the career timeline higher on the page.
+
 - Add a recommendation spotlight with 15-second rotation, pause/navigation
   controls, reduced-motion support and links to each full recommendation.
 - Show academic awards beneath their degree entries and place current Natera
