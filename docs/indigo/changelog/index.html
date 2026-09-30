@@ -121,6 +121,7 @@
           <li><a href="/indigo/guide/system/">System</a></li>
           <li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
           <li><a href="/indigo/guide/posters/">Posters</a></li>
+          <li><a href="/indigo/guide/apps/">Apps</a></li>
           <li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
         </ul>
       </details>
@@ -170,6 +171,7 @@
 <li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
 <li><a href="/indigo/guide/posters/">Posters</a></li>
 <li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+<li><a href="/indigo/guide/apps/">Apps</a></li>
 </ul>
 <p>Reference</p>
 <ul>
@@ -181,10 +183,166 @@
 <p>Versions follow <a href="https://semver.org/">semantic versioning</a>. Each release is a
 <code>vX.Y.Z</code> tag on <code>main</code>, and a release candidate before it is a <code>vX.Y.Z-rc.N</code>
 tag on <code>beta</code>. The newest changes are at the top until their release is named.</p>
+<h2 id="v210--spotlight-apps-and-one-poster-pack-for-every-region">v2.1.0 — Spotlight, Apps and one poster pack for every region</h2>
+<p>A fourth Library layout, Spotlight, with a gameplay still and a description
+for every game; Apps, a fifth face of the cube for your emulators and other
+programs, with your own pictures as posters; one poster pack for every
+region; and everything upstream Swiss changed up to r2119. The code is
+2.1.0-rc.1's, unchanged.</p>
+<h3 id="swiss-r2119">Swiss r2119</h3>
+<p>Indigo is built on upstream Swiss r2119 now, up from a July build between
+r2073 and r2092, and has everything upstream changed since:</p>
+<ul>
+<li>Games start with Swiss's current video timings: the timing tables Swiss
+gives every game, and a +0 vertical offset by default. Under GCVideo or
+GCDigital compatibility, the default, every game started at -3 (#42).</li>
+<li>Turning off controller rumble no longer makes games reset after 32
+minutes.</li>
+<li>Neighbours from Hell returns to its menu. Animal Crossing Deluxe starts
+without disc read speed emulation, and discs with Kawasedo's NES emulator
+without the forced anisotropic filter.</li>
+<li>Swiss Video Mode offers 240p and 288p.</li>
+<li>Setup › Library › Load at startup chooses a device and a folder for Indigo
+to open when it starts. Z on a game's details still sets a game.</li>
+<li>A game's name and description from its banner, when written in another
+encoding such as Japanese Shift JIS, show far fewer garbled characters.</li>
+<li>In the file lists, a clap on the DK Bongos jumps to the next game that
+uses them.</li>
+<li>Fixes to the SD card file system (FatFs R0.16-p2), the FTP client,
+copying a file onto a name that already exists, and the stub that
+reloads Swiss.</li>
+<li>An NKit.iso of an ArtX diagnostic disc says it can't be played in that
+format.</li>
+<li>The Redump and [T-En] Collection game databases are current.</li>
+<li>The first start from a GC Loader or PicoLoader boot image says that
+System Boot Mode › Production brings back the GameCube logo screen.</li>
+</ul>
+<h3 id="library">Library</h3>
+<ul>
+<li>A fourth Library Layout, <strong>Spotlight</strong>: the selected game's gameplay still
+fills a 4:3 panel, with its title, publisher, a description and its game
+ID in the column beside it, over a row of disc banners, the selected
+game's in the middle and a little larger. Left and Right move along the
+row, as in Horizontal; the still changes with the title. A game without a still shows its cover there, and leaves from it
+for its details. Choose it in Settings › Setup › Library › Library
+Layout.</li>
+<li>Spotlight's stills come from <code>/swiss/ui/stills.pak</code>, a second pack next to
+the posters: one 320×240 screenshot per game. The poster pack carries it
+beside <code>posters.pak</code>, made from the libretro-thumbnails project's
+GameCube screenshots; <code>poster_pack.py --stills</code> builds one from your own.</li>
+<li>Spotlight describes every game: a few sentences from
+<code>/swiss/ui/descriptions.txt</code>, which the poster pack carries too
+(English descriptions from GameTDB), else the description on the game's
+disc banner. A game with neither says so. The file is plain text you can
+edit, one game per line.</li>
+<li>The Spotlight layout's design comes from
+<a href="https://github.com/mvizensk/gameplay-spotlight">Gameplay Spotlight</a> by mvizensk,
+with its author's permission. System › Credits and <code>NOTICE</code> thank them.</li>
+</ul>
+<h3 id="one-poster-pack">One poster pack</h3>
+<ul>
+<li>Posters are one download now, for every region: box art for every
+GameCube game GameTDB has a cover for, with Spotlight's stills and
+descriptions. There is no region to choose, and a card that mixes USA,
+Japanese and European games gets posters for all of them. A pack holds up
+to 2,048 games, up from 1,024. Indigo 2.0 and earlier refuse a pack this
+big; the regional packs their release notes link stay online for them.</li>
+</ul>
+<h3 id="apps">Apps</h3>
+<ul>
+<li>New: Apps, for the programs on your card that aren't games (emulators,
+Game Boy Interface, tools). Put their <code>.dol</code>, <code>.dol+cli</code> or <code>.elf</code> files in
+<code>/apps</code> at the root of the card, loose or each in a folder of its own, and
+Home gets a fifth face, Apps, one turn left of Library. A on it shows them
+as posters in your Library Layout, moving the same way; A starts one, with
+the launch screen games have, and B goes back to Home. Swiss's <code>.cli</code> and
+<code>.dcp</code> files beside a program still work. Without apps on the card, Home is
+the four faces it was.</li>
+<li>Setup › Console › Apps Face (<code>Hide Apps Face</code> in <code>global.ini</code>) turns the
+Apps face off, and Indigo then doesn't look in <code>/apps</code> at all. It is On by
+default.</li>
+<li>Each app's poster is your own picture: a PNG beside the program with its
+name (<code>gbi.png</code> for <code>gbi.dol</code>), or its folder's <code>icon.png</code>, up to 2048
+pixels a side. Indigo converts it on the console, so there is no pack to
+build. A poster-shaped picture fills the card; a square icon or a Homebrew
+Channel banner sits in the middle over a backdrop in its own colours.</li>
+<li>An app without a picture gets a poster of its name, in big letters split
+where the name has a <code>-</code>, <code>_</code> or space, in a colour picked from its first
+word: Game Boy Interface's <code>gbihf-ossc</code> and <code>gbihf-direct-hdmi</code> share one,
+and its <code>gbisr</code> variants have another.</li>
+<li>
+<code>boot.dol</code> is left out of Apps, since the Wii's Homebrew Channel layout uses
+that name for the Wii program, and so are hidden files and names starting
+with a dot.</li>
+<li>The cube's icons fade one by one. When a turn has to move an icon to
+another side, as turning sideways and then tipping at once does, only that
+icon fades out and back in, where every icon used to. With five faces the
+icons you can see never have to move: only ones facing away do.</li>
+</ul>
+<h3 id="fixes">Fixes</h3>
+<ul>
+<li>
+<code>ipl.dol</code> is compressed, as stock Swiss's own download is: 2.9 MB for a
+loader to read at power-on instead of 5.5 MB, and the console checks it as
+it unpacks. A copy the loader read only in part could stop Indigo on a black
+screen; now the console restarts and the loader reads it again. Unpacking
+adds a moment before the cube appears.</li>
+<li>A file in <code>/games</code> that isn't a game no longer hides the Library. A text
+file, a cover picture or an empty folder there, or in a game's folder,
+turned the whole Library into Swiss's plain file list, with no sign of
+which file did it, and Library Layout and posters then seemed to do
+nothing. The Library now skips them and shows the games. Swiss's list
+comes back only when <code>/games</code> holds no disc images at all.</li>
+<li>The glass cube no longer sparkles along its edges on a console. Single
+pixels flickered where a face meets a bevel and where a bevel meets a
+corner: the glass's refraction, reflection and sheen cut a face's side and
+the bevel beside it at different points, and the GameCube snaps every
+point to a sixteenth of a pixel, which opened and closed pixels along the
+seam as the cube moved. Both sides are now cut at the same points, made
+the same way. The round ends of the icons' strokes (the controller's
+triggers and X and Y, the disc's glints) had the same fault and are fixed
+too. Dolphin's finer snap hid it.</li>
+<li>System Information shows the whole date: weekdays and months are three
+letters (TUE  SEP 29, 2026). A long one, such as a Tuesday in September,
+ended in an ellipsis.</li>
+</ul>
+<h3 id="for-developers">For developers</h3>
+<ul>
+<li>
+<a href="https://github.com/spencercnorton/indigo/tree/v2.1.0/UPSTREAM"><code>UPSTREAM</code></a> names the upstream Swiss commit Indigo is built on,
+now r2119, and lists the upstream files Indigo changes, each with the
+reason. CI checks it both ways: a change to an
+upstream file that the list leaves out fails, and so does a listed file
+that matches upstream again. It replaces the interface-only gate and its
+exact-line exceptions, which are now lines in that list.
+<code>buildtools/upstream_merge.sh &lt;commit&gt;</code> moves to another upstream commit:
+it merges upstream's changes over the difference in line endings, updates
+the commit, and lists anything left to resolve.</li>
+<li>The size tripwires are 6 MiB for the DOL (<code>verify_dol.py</code>) and 7 MiB for
+the zip (<code>check_package.py</code>), up from 5 and 6: the DOL is about 5.2 MiB
+and the zip about 5.5 MiB with the text-encoding libraries r2119 links.</li>
+<li>The zip's <code>ipl.dol</code> is <code>cube/packer/swiss.dol</code>: the DOL compressed by
+upstream's packer, which <code>make dev</code> already built for In-Game Reset's
+<code>apploader.img</code>. <code>verify_dol.py --packed</code> checks that it unpacks to exactly
+the DOL CI checks, in the one .xz format the console's decoder reads, and
+that the unpacker stays clear of what it unpacks and of its stack. The
+Emulator job boots it through <code>buildtools/ui/emulator/dolphin_ipl.py</code>, a copy
+past the unpacker's console-only check, and Reproducible build compares both
+files.</li>
+<li>The pack builder makes gameplay stills as well as posters:
+<code>poster_pack.py --stills &lt;folder&gt;</code> writes <code>stills.pak</code>, one 320×240
+screenshot per game in the poster pack's format. The Library's art cache
+loads a stills pack next to the poster pack, in three slots of its own.
+<a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/docs/PACKS.md">docs/PACKS.md</a> describes
+the format, which the source cited but the repository never had.</li>
+<li>Game details read no further than a disc banner's 128-character
+description, which need not end in a NUL; they could read on into the
+memory after it.</li>
+</ul>
 <h2 id="v201--the-download-keeps-your-games-folder">v2.0.1 — The download keeps your games folder</h2>
 <p>Three fixes to 2.0: the download, where System Information sends you for help, and a
 flash between a game's details and its settings.</p>
-<h3 id="fixes">Fixes</h3>
+<h3 id="fixes-1">Fixes</h3>
 <ul>
 <li>The download no longer carries an empty <code>games</code> folder. On a Mac,
 choosing Replace when dropping it on the card swapped the card's own
@@ -202,7 +360,7 @@ the cube showed. The page now comes up on the press and stays until the
 button is let go. Opening and leaving Settings from Home flashed the same
 way and is fixed too.</li>
 </ul>
-<h3 id="for-developers">For developers</h3>
+<h3 id="for-developers-1">For developers</h3>
 <ul>
 <li>A CI machine names its runners "indigo" unless <code>INDIGO_CI_NAME</code> says
 otherwise, instead of after its hostname: runner names show in public job
@@ -245,7 +403,7 @@ the cube, the text and the menus keep their size in the middle. The clock
 moves into the corner. It changes as soon as you switch it. Games still
 follow Force Widescreen.</li>
 </ul>
-<h3 id="library">Library</h3>
+<h3 id="library-1">Library</h3>
 <ul>
 <li>The Horizontal layout shows two covers either side of the selected game
 instead of one. The second on each side, until now a thin strip seen
@@ -313,7 +471,7 @@ glints along the rounded edges, drawn sharp to the pixel; they slide
 across the glass as the cube turns and drift a little while Home rests
 (not with UI Motion set to Reduced or Off).</li>
 </ul>
-<h3 id="fixes-1">Fixes</h3>
+<h3 id="fixes-2">Fixes</h3>
 <ul>
 <li>Indigo stays on screen when stock Swiss is kept on the card as <code>z.dol</code>, as
 the install guide says. At startup Indigo still ran Swiss's search for a
@@ -390,13 +548,13 @@ cards.</li>
 CONTRIBUTING.md the route for a fix to a release.</li>
 <li>The issue forms are brought up to date for 2.0.</li>
 </ul>
-<h3 id="for-developers-1">For developers</h3>
+<h3 id="for-developers-2">For developers</h3>
 <ul>
 <li>Indigo is developed on GitHub. Changes land on the <code>beta</code> branch by pull
 request, betas ship as <code>vX.Y.Z-beta.N</code> pre-releases, and a release
 candidate that holds up is promoted to <code>main</code> as a release.
-<a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/docs/RELEASING.md">docs/RELEASING.md</a> has the procedure and
-<a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/AGENTS.md">AGENTS.md</a> the working detail.</li>
+<a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/docs/RELEASING.md">docs/RELEASING.md</a> has the procedure and
+<a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/AGENTS.md">AGENTS.md</a> the working detail.</li>
 <li>GitHub Actions builds the DOL and the SD card zip for every push and pull
 request, runs the three host-test lanes and the source checks (whitespace
 and the UI isolation guardrail), and keeps the zip as an artifact to try on
@@ -410,7 +568,7 @@ removes the Makefile's own target lists, so a new test is cleaned too.</li>
 <li>CI and releases run on the maintainer's own machines: every job gets a
 fresh container that takes that one job and is thrown away, runs without
 privileges, and can reach GitHub and nothing else
-(<a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/buildtools/ci/runner/README.md">buildtools/ci/runner/</a>).</li>
+(<a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/buildtools/ci/runner/README.md">buildtools/ci/runner/</a>).</li>
 <li>CI checks more: the DOL's structure, size and the commit it names; the
 zip's exact layout; a second build that must match the first byte for
 byte; the host tests under Clang's sanitizers as well as GCC's; and a
@@ -422,7 +580,7 @@ Library moves between games and opens one's details, where UP and A open
 the game's settings, on a demonstration disc of fictitious games.
 Dolphin emulates the MMU, so a crash stops the test as it would stop a
 console. Every step's picture is kept with the run
-(<a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/buildtools/ui/emulator/README.md">buildtools/ui/emulator/</a>).</li>
+(<a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/buildtools/ui/emulator/README.md">buildtools/ui/emulator/</a>).</li>
 <li>CI fuzzes the files Indigo reads from a card: poster packs, the play
 history, saves, settings files and disc images' file tables, each with
 AddressSanitizer and UBSan, starting from real files of each kind. The
@@ -434,7 +592,7 @@ again and the fuzzers run for ten minutes each.</li>
 device's name, RIGHT shows another, and B leaves it.</li>
 <li>Release candidates: a <code>vX.Y.Z-rc.N</code> tag on <code>beta</code> publishes a pre-release
 like a beta, its notes opening with "Release candidate"
-(<a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/docs/RELEASING.md">docs/RELEASING.md</a>).</li>
+(<a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/docs/RELEASING.md">docs/RELEASING.md</a>).</li>
 <li>Release notes link the repository's files by full URL at the release's
 tag, so the links also work where GitHub doesn't rewrite them: through the
 API and <code>gh</code>.</li>
@@ -499,7 +657,7 @@ root of the SD card. Before, everything sat in an <code>Indigo-vX.Y.Z/SD card/</
 folder inside the zip. An <code>Indigo-README.txt</code> says what each file is for,
 and the licence and notice now travel in <code>swiss/indigo/</code>.</li>
 </ul>
-<h3 id="fixes-2">Fixes</h3>
+<h3 id="fixes-3">Fixes</h3>
 <ul>
 <li>Starting a game from the Library opens its file afresh. A read error while
 browsing, which a slow SD card adapter (SD2SP2, SD Gecko) can cause, no
@@ -520,7 +678,7 @@ tour and the Indigo page at norvitech.com/indigo; the poster and cheat
 downloads stay at indigo.norvitech.com, with their checksums.</li>
 <li>The guide says Settings help closes with B as well as Y.</li>
 </ul>
-<h3 id="for-developers-2">For developers</h3>
+<h3 id="for-developers-3">For developers</h3>
 <ul>
 <li>
 <code>make dev</code> also builds the packer (<code>cube/packer/reboot.dol</code>), compressing
@@ -933,7 +1091,7 @@ error.</li>
 <code>global.ini</code> and from a game's own settings file, with its values, its
 default and where it appears in Settings, so a card can be set up on a
 computer before it goes in the console. Example files are in
-<a href="https://github.com/spencercnorton/indigo/tree/v2.0.1/docs/examples">docs/examples/</a>.</li>
+<a href="https://github.com/spencercnorton/indigo/tree/v2.1.0/docs/examples">docs/examples/</a>.</li>
 <li>The README no longer says Settings was rebuilt: it keeps Swiss's six tabs,
 restyled.</li>
 </ul>
@@ -1044,7 +1202,7 @@ upstream Swiss.</li>
 <nav class="pager" aria-label="Previous and next page">
 <a class="prev" href="/indigo/guide/settings-file/"><small>Previous</small>Settings files</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/CHANGELOG.md">CHANGELOG.md</a> in Indigo v2.0.1, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/CHANGELOG.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/CHANGELOG.md">CHANGELOG.md</a> in Indigo v2.1.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/CHANGELOG.md">Suggest an edit</a>.</p>
 </article>
 </div>
 

@@ -121,6 +121,7 @@
           <li><a href="/indigo/guide/system/">System</a></li>
           <li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
           <li><a href="/indigo/guide/posters/">Posters</a></li>
+          <li><a href="/indigo/guide/apps/">Apps</a></li>
           <li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
         </ul>
       </details>
@@ -170,6 +171,7 @@
 <li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
 <li><a href="/indigo/guide/posters/">Posters</a></li>
 <li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
+<li><a href="/indigo/guide/apps/">Apps</a></li>
 </ul>
 <p>Reference</p>
 <ul>
@@ -243,8 +245,8 @@ whole file and drops comments if you boot it.</li>
 <li>Network passwords are stored as plain text.</li>
 </ul>
 <h2 id="examples">Examples</h2>
-<p><a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/docs/examples/global.ini"><code>examples/global.ini</code></a> sets a few common options, and
-<a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/docs/examples/game/GALE.ini"><code>examples/game/GALE.ini</code></a> gives one game its own
+<p><a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/docs/examples/global.ini"><code>examples/global.ini</code></a> sets a few common options, and
+<a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/docs/examples/game/GALE.ini"><code>examples/game/GALE.ini</code></a> gives one game its own
 video mode and polling rate. Copy them to the paths above and edit them.</p>
 <div class="highlight highlight-source-ini"><pre><span class="pl-k">IGRType</span>=Reboot
 <span class="pl-k">AutoCheats</span>=Yes
@@ -389,9 +391,9 @@ most use the same key there.</p>
 </tr>
 <tr>
 <td><code>Force Vertical Offset</code></td>
-<td>A signed number. <strong>This one doesn't reach games:</strong> a game starts at <code>-3</code> with GCVideo or GCDigital and <code>+0</code> otherwise. Set it per game instead.</td>
+<td>A signed number. Every game starts at this value unless its own settings change it.</td>
 <td><code>+0</code></td>
-<td>Not shown, since it does nothing</td>
+<td>Not shown; a game's own settings have it</td>
 </tr>
 <tr>
 <td><code>Force Vertical Filter</code></td>
@@ -553,7 +555,7 @@ most use the same key there.</p>
 <tr>
 <td><code>Swiss Video Mode</code></td>
 <td>
-<code>Auto</code>, <code>480i</code>, <code>480sf</code>, <code>480p</code>, <code>576i</code>, <code>576sf</code>, <code>576p</code>
+<code>Auto</code>, <code>480i</code>, <code>480sf</code>, <code>240p</code>, <code>480p</code>, <code>576i</code>, <code>576sf</code>, <code>288p</code>, <code>576p</code>
 </td>
 <td><code>Auto</code></td>
 <td>Swiss Video Mode</td>
@@ -662,6 +664,13 @@ most use the same key there.</p>
 <code>Clock</code>, <code>Info</code>, <code>Power</code>, <code>Chip</code>. The picture on the System face, from its own four icons.</td>
 <td><code>Clock</code></td>
 <td>System Icon</td>
+</tr>
+<tr>
+<td><code>Hide Apps Face</code></td>
+<td>
+<code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Apps Face › Off: Home never shows Apps, even with programs in <code>/apps</code>.</td>
+<td><code>No</code></td>
+<td>Apps Face</td>
 </tr>
 <tr>
 <td><code>System Boot Mode</code></td>
@@ -906,7 +915,7 @@ most use the same key there.</p>
 <tr>
 <td><code>Library Layout</code></td>
 <td>
-<code>Horizontal</code>, <code>Vertical</code>, <code>Grid</code>. How the Library shows your games: a row, a column, or rows of five.</td>
+<code>Horizontal</code>, <code>Vertical</code>, <code>Grid</code>, <code>Spotlight</code>. How the Library shows your games: a row, a column, rows of five, or a gameplay still over a row of banners.</td>
 <td><code>Horizontal</code></td>
 <td>Library Layout</td>
 </tr>
@@ -979,6 +988,12 @@ most use the same key there.</p>
 <code>Yes</code>, <code>No</code>. <code>Yes</code> shows as Animated Backdrop › Off.</td>
 <td><code>No</code></td>
 <td>Animated Backdrop</td>
+</tr>
+<tr>
+<td><code>Autoload</code></td>
+<td>The path of the game or folder to open when Indigo starts. Z on a game's detail screen sets a game and saves only this key.</td>
+<td>empty</td>
+<td>Load at startup</td>
 </tr>
 <tr>
 <td><code>FlattenDir</code></td>
@@ -1083,12 +1098,6 @@ most use the same key there.</p>
 <td></td>
 </tr>
 <tr>
-<td><code>Autoload</code></td>
-<td>The path of the game to start automatically. Set with Z on a game's detail screen, which saves only this key.</td>
-<td>empty</td>
-<td></td>
-</tr>
-<tr>
 <td><code>GCLoaderHWVersion</code></td>
 <td>A number Swiss uses to remind you about GC Loader firmware updates.</td>
 <td><code>0</code></td>
@@ -1159,9 +1168,7 @@ way in a game's file.</p>
 <tr>
 <td><code>Force Vertical Offset</code></td>
 <td>A signed number, such as <code>-3</code> or <code>+2</code>.</td>
-<td>
-<code>-3</code> with GCVideo or GCDigital, otherwise <code>+0</code>
-</td>
+<td>from global.ini</td>
 </tr>
 <tr>
 <td><code>Force Vertical Filter</code></td>
@@ -1293,10 +1300,10 @@ the console's SRAM. Set them on the console.</li>
 <li>The <strong>Reset to defaults</strong> rows are actions, not settings.</li>
 </ul>
 <nav class="pager" aria-label="Previous and next page">
-<a class="prev" href="/indigo/guide/troubleshooting/"><small>Previous</small>Troubleshooting</a>
+<a class="prev" href="/indigo/guide/apps/"><small>Previous</small>Apps</a>
 <a class="next" href="/indigo/changelog/"><small>Next</small>Changelog</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/docs/SETTINGS.md">docs/SETTINGS.md</a> in Indigo v2.0.1, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/SETTINGS.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/docs/SETTINGS.md">docs/SETTINGS.md</a> in Indigo v2.1.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/SETTINGS.md">Suggest an edit</a>.</p>
 </article>
 </div>
 

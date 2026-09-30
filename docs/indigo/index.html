@@ -40,6 +40,8 @@
       "featureList": [
         "Home is a glass cube",
         "Your games as posters",
+        "Spotlight: the game, not just its box",
+        "Your homebrew in Apps",
         "Game details, not a dialogue",
         "A launch screen, not progress boxes",
         "Cheats that read clearly",
@@ -66,8 +68,8 @@
       "sameAs": [
         "https://github.com/spencercnorton/indigo"
       ],
-      "softwareVersion": "2.0.1",
-      "downloadUrl": "https://github.com/spencercnorton/indigo/releases/tag/v2.0.1",
+      "softwareVersion": "2.1.0",
+      "downloadUrl": "https://github.com/spencercnorton/indigo/releases/tag/v2.1.0",
       "softwareHelp": "https://norvitech.com/indigo/guide/",
       "screenshot": "https://norvitech.com/indigo/screenshots/home.png",
       "image": "https://norvitech.com/assets/og-indigo.png",
@@ -142,10 +144,18 @@
         },
         {
           "@type": "Question",
+          "name": "Can I start emulators and other homebrew?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Put their .dol files in /apps, and Home gets an Apps face that shows them as posters and starts them the way Swiss's file list does, .cli and .dcp files included. Game Boy Interface's download is already laid out that way. Settings › Setup › Console › Apps Face hides the face if you don't want it. See Apps."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "Where do the posters and cheats come from?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The poster packs are GameTDB's box art, cropped to the front cover; the cheat pack is the gc-forever collection plus geckocodes. You can build a poster pack from your own covers instead: see Posters."
+            "text": "The poster pack is GameTDB's box art, cropped to the front cover, with gameplay stills from libretro-thumbnails and descriptions from GameTDB; the cheat pack is the gc-forever collection plus geckocodes. You can build a pack from your own covers and screenshots instead: see Posters."
           }
         },
         {
@@ -196,6 +206,7 @@
           <li><a href="/indigo/guide/system/">System</a></li>
           <li><a href="/indigo/guide/memory-cards/">Memory Cards</a></li>
           <li><a href="/indigo/guide/posters/">Posters</a></li>
+          <li><a href="/indigo/guide/apps/">Apps</a></li>
           <li><a href="/indigo/guide/troubleshooting/">Troubleshooting</a></li>
         </ul>
       </details>
@@ -228,8 +239,8 @@
   <p class="tag">A fork of Swiss for the Nintendo GameCube with the interface rebuilt.</p>
   <p>An animated Home, a poster library and game details, drawn in the console's own visual language.</p>
   <div class="pills"><span class="pill lic">GPL-2.0-or-later</span><span class="pill">Nintendo GameCube</span><span class="pill">SD card · drag and drop</span><span class="pill">C · devkitPPC</span></div>
-  <p class="cta"><a class="primary" href="https://github.com/spencercnorton/indigo/releases/download/v2.0.1/Indigo-v2.0.1.zip">Download Indigo 2.0.1</a><a class="secondary" href="/indigo/guide/">Read the guide</a><a class="secondary" href="https://github.com/spencercnorton/indigo">Source on GitHub</a></p>
-  <p class="meta">Indigo-v2.0.1.zip · 5.0 MB · <a href="https://github.com/spencercnorton/indigo/releases/tag/v2.0.1">Release notes</a> · <a href="#downloads">All downloads</a></p>
+  <p class="cta"><a class="primary" href="https://github.com/spencercnorton/indigo/releases/download/v2.1.0/Indigo-v2.1.0.zip">Download Indigo 2.1.0</a><a class="secondary" href="/indigo/guide/">Read the guide</a><a class="secondary" href="https://github.com/spencercnorton/indigo">Source on GitHub</a></p>
+  <p class="meta">Indigo-v2.1.0.zip · 5.8 MB · <a href="https://github.com/spencercnorton/indigo/releases/tag/v2.1.0">Release notes</a> · <a href="#downloads">All downloads</a></p>
 </section>
 
 <figure class="showcase">
@@ -243,8 +254,10 @@
 
 <h2 id="features">Features</h2>
 <div class="how">
-  <a class="glass" href="/indigo/guide/home/"><h3>Home is a glass cube</h3><p>Four faces, one destination each: left and right turn it, up and down tip it over. It flies in when Indigo starts, and it is clear glass: it bends what is behind it, parts the light at its edges and mirrors soft lights that slide across it as it turns. The Library face is a controller that mirrors yours.</p><span class="go">Home</span></a>
-  <a class="glass" href="/indigo/guide/library/"><h3>Your games as posters</h3><p>A row of covers with two either side of the game in the middle, a column with the title beside each cover, or a grid five covers wide. Box art comes from a ready-made pack or your own; without one, each game shows its disc banner.</p><span class="go">Library</span></a>
+  <a class="glass" href="/indigo/guide/home/"><h3>Home is a glass cube</h3><p>Four faces, one destination each, and a fifth, Apps, when your card has programs: left and right turn it, up and down tip it over. It flies in when Indigo starts, and it is clear glass: it bends what is behind it, parts the light at its edges and mirrors soft lights that slide across it as it turns. The Library face is a controller that mirrors yours.</p><span class="go">Home</span></a>
+  <a class="glass" href="/indigo/guide/library/"><h3>Your games as posters</h3><p>A row of covers with two either side of the game in the middle, a column with the title beside each cover, or a grid five covers wide. Box art comes from one ready-made pack for every region, or your own; without one, each game shows its disc banner.</p><span class="go">Library</span></a>
+  <a class="glass" href="/indigo/guide/library/#choose-a-layout"><h3>Spotlight: the game, not just its box</h3><p>A fourth layout: the selected game's gameplay still fills a 4:3 panel, with its title, publisher and a few sentences about it beside it, over a row of disc banners. The poster pack carries a still and a description for every game. Its design is mvizensk's Gameplay Spotlight, used with permission.</p><span class="go">Spotlight</span></a>
+  <a class="glass" href="/indigo/guide/apps/"><h3>Your homebrew in Apps</h3><p>Emulators, Game Boy Interface and other programs go in <code>/apps</code> and get a face of the cube to themselves, shown as posters the way the Library shows games. Each poster is a PNG you put beside the program, converted on the console; a program without one gets a poster of its name.</p><span class="go">Apps</span></a>
   <a class="glass" href="/indigo/guide/game-details/"><h3>Game details, not a dialogue</h3><p>Artwork, last played, cheats, the game's own settings and its boot options on one screen. Up and down move between Launch Game, Cheats and Settings, and A opens the one you're on.</p><span class="go">Game details</span></a>
   <a class="glass" href="/indigo/guide/game-details/#start-the-game"><h3>A launch screen, not progress boxes</h3><p>Starting a game centres its cover in a ring that fills as Indigo applies the game's settings and your cheats and loads it, one line saying which step it is on. Then the screen fades to the game.</p><span class="go">Start the game</span></a>
   <a class="glass" href="/indigo/guide/cheats/"><h3>Cheats that read clearly</h3><p>Gecko codes switch on and off one by one, with each cheat's state plain to see. Codes the files show would break Indigo are switched off and marked.</p><span class="go">Cheats</span></a>
@@ -260,7 +273,8 @@
 <h2 id="videos">See it in action</h2>
 <div class="reel">
   <figure class="glass"><div class="clip"><video controls muted loop playsinline preload="none" poster="/indigo/videos/intro.png" aria-label="Indigo starting: a small cube spins toward you out of the distance and comes to rest on the Library face as its name and hints fade in."><source src="/indigo/videos/intro.mp4" type="video/mp4"></video></div><figcaption><strong>The cube flies in</strong> Indigo starting, from the distance to Library. <a href="/indigo/guide/home/">Home</a></figcaption></figure>
-  <figure class="glass"><div class="clip"><video controls muted loop playsinline preload="none" poster="/indigo/videos/library-layouts.png" aria-label="The game library in its three layouts: a row of box art with two covers either side of the selected game, a column with the title beside the cover, and a grid five covers wide."><source src="/indigo/videos/library-layouts.mp4" type="video/mp4"></video></div><figcaption><strong>Three library layouts</strong> Horizontal, Vertical and Grid. <a href="/indigo/guide/library/">Library</a></figcaption></figure>
+  <figure class="glass"><div class="clip"><video controls muted loop playsinline preload="none" poster="/indigo/videos/library-layouts.png" aria-label="The game library in its four layouts: a row of box art with two covers either side of the selected game, a column with the title beside the cover, a grid five covers wide, and Spotlight, a gameplay still with a description over a row of disc banners."><source src="/indigo/videos/library-layouts.mp4" type="video/mp4"></video></div><figcaption><strong>Four library layouts</strong> Horizontal, Vertical, Grid and Spotlight. <a href="/indigo/guide/library/">Library</a></figcaption></figure>
+  <figure class="glass"><div class="clip"><video controls muted loop playsinline preload="none" poster="/indigo/videos/apps.png" aria-label="Apps: from Home on the Library face the cube turns left to the Apps face, and A shows the programs in /apps as posters: Arcade&#x27;s poster of its name, Pixel Painter&#x27;s small icon, Starfield&#x27;s own picture and Toolbox&#x27;s Homebrew Channel banner. B goes back to Home."><source src="/indigo/videos/apps.mp4" type="video/mp4"></video></div><figcaption><strong>Apps</strong> Emulators and other homebrew get a face of their own, with your pictures as posters. <a href="/indigo/guide/apps/">Apps</a></figcaption></figure>
   <figure class="glass"><div class="clip"><video controls muted loop playsinline preload="none" poster="/indigo/videos/game-detail-cheats.png" aria-label="A game opened from the Library: on its detail screen the frame moves to Cheats, A opens the list, cheats switch on and off, and the details then count how many are on."><source src="/indigo/videos/game-detail-cheats.mp4" type="video/mp4"></video></div><figcaption><strong>Details and cheats</strong> One screen per game, cheats a button away. <a href="/indigo/guide/cheats/">Cheats</a></figcaption></figure>
   <figure class="glass"><div class="clip"><video controls muted loop playsinline preload="none" poster="/indigo/videos/launch-screen.png" aria-label="In Game Details for Star Wars: The Clone Wars, A on Launch Game clears the details and centres the game&#x27;s cover inside a glowing ring that fills as captions report Checking game and Loading game, then the screen fades to black as the game starts."><source src="/indigo/videos/launch-screen.mp4" type="video/mp4"></video></div><figcaption><strong>A launch screen</strong> The cover in a ring that fills, then the game. <a href="/indigo/guide/game-details/#start-the-game">Start the game</a></figcaption></figure>
   <figure class="glass"><div class="clip"><video controls muted loop playsinline preload="none" poster="/indigo/videos/source-picker.png" aria-label="Change Source: the cube lifts and the devices Indigo found line up under it, each with its picture; the row slides from Game Disc to System and Memory Card - Slot A, and B goes back to Home."><source src="/indigo/videos/source-picker.mp4" type="video/mp4"></video></div><figcaption><strong>Every device by its picture</strong> Change Source, on a sliding row. <a href="/indigo/guide/source/">Source</a></figcaption></figure>
@@ -271,7 +285,7 @@
 
 <h2 id="install">Install: drag and drop</h2>
 <ol class="steps">
-  <li class="glass"><h3>Download</h3><p><a href="https://github.com/spencercnorton/indigo/releases/download/v2.0.1/Indigo-v2.0.1.zip">Indigo-v2.0.1.zip</a>. Everything inside it is laid out exactly as it goes on the card.</p></li>
+  <li class="glass"><h3>Download</h3><p><a href="https://github.com/spencercnorton/indigo/releases/download/v2.1.0/Indigo-v2.1.0.zip">Indigo-v2.1.0.zip</a>. Everything inside it is laid out exactly as it goes on the card.</p></li>
   <li class="glass"><h3>Keep your Swiss, then drag</h3><p>First, if the card has an <code>ipl.dol</code>, that is your current Swiss: rename it to <code>z.dol</code> before copying anything. With PicoBoot or PicoLoader, holding Z at power-on starts it. Then unzip, select everything inside and drag it onto the root of the card. On a Mac, hold Option as you drop and choose Merge: Replace deletes what is already in the card's <code>swiss</code> folder, your settings, cheats and saves.</p></li>
   <li class="glass"><h3>Add games and power on</h3><p>Put your disc images in <code>/games</code> (make the folder if the card has none), one folder per game or the images directly, with nothing else in it or in the game folders. On Home, turn the cube to Library and press A.</p></li>
 </ol>
@@ -291,20 +305,19 @@
 
 <h2 id="downloads">Downloads</h2>
 <div class="dl">
-  <div class="glass"><h3>Indigo 2.0.1</h3><p>The release for everyday use. Unzip it and drag everything onto the SD card, choosing Merge on a Mac (see <a href="#install">Install</a>).</p><p class="cta"><a class="primary" href="https://github.com/spencercnorton/indigo/releases/download/v2.0.1/Indigo-v2.0.1.zip">Indigo-v2.0.1.zip</a></p><p class="meta">5.0 MB · <a href="https://github.com/spencercnorton/indigo/releases/tag/v2.0.1">Release notes</a></p><p class="meta">SHA-256 <code>90b021510f263db7…</code></p></div>
-  <div class="glass"><h3>Posters: USA &amp; Japan</h3><p>Box art for NTSC games: USA, Japan, Korea and Taiwan. Drag its <code>swiss</code> folder onto the card.</p><p class="cta"><a class="secondary" href="https://indigo.norvitech.com/indigo-posters-ntsc.zip">indigo-posters-ntsc.zip</a></p></div>
-  <div class="glass"><h3>Posters: Europe &amp; Australia</h3><p>Box art for PAL games. Indigo reads one pack, so pick the region most of your games are from.</p><p class="cta"><a class="secondary" href="https://indigo.norvitech.com/indigo-posters-pal.zip">indigo-posters-pal.zip</a></p></div>
+  <div class="glass"><h3>Indigo 2.1.0</h3><p>The release for everyday use. Unzip it and drag everything onto the SD card, choosing Merge on a Mac (see <a href="#install">Install</a>).</p><p class="cta"><a class="primary" href="https://github.com/spencercnorton/indigo/releases/download/v2.1.0/Indigo-v2.1.0.zip">Indigo-v2.1.0.zip</a></p><p class="meta">5.8 MB · <a href="https://github.com/spencercnorton/indigo/releases/tag/v2.1.0">Release notes</a></p><p class="meta">SHA-256 <code>a17402c9ecbb13fd…</code></p></div>
+  <div class="glass"><h3>Posters: every region</h3><p>Box art for 1,622 games from every region, with a gameplay still and a description for Spotlight. Drag its <code>swiss</code> folder onto the card.</p><p class="cta"><a class="secondary" href="https://indigo.norvitech.com/indigo-posters-all.zip">indigo-posters-all.zip</a></p></div>
   <div class="glass"><h3>Cheats: every region</h3><p>Gecko codes for 609 games. Cheats the files show would break Indigo are switched off and marked. Open a game and press Y.</p><p class="cta"><a class="secondary" href="https://indigo.norvitech.com/indigo-cheats.zip">indigo-cheats.zip</a></p></div>
 </div>
 <div class="prose">
 <h3>Posters and cheats: good to know</h3>
 <ul>
-  <li>Unzip a pack and drag its <code>swiss</code> folder onto the root of the card; unzipping over existing files replaces cheat files of the same name. Posters: <strong>908 NTSC</strong> and <strong>714 PAL</strong> games (about 26 MB and 21 MB). Cheats: <strong>609 games</strong>, 22,960 cheats (about 1.4 MB).</li>
-  <li>Indigo reads one poster pack, so pick the region most of your games are from. A game without a poster shows its disc banner.</li>
+  <li>Unzip a pack and drag its <code>swiss</code> folder onto the root of the card; unzipping over existing files replaces cheat files of the same name. Posters: <strong>1,622 games</strong> from every region, with 1,574 gameplay stills and a description for all 1,708 (about 91 MB). Cheats: <strong>609 games</strong>, 22,960 cheats (about 1.4 MB).</li>
+  <li>One poster pack covers every region, so there is nothing to pick. It needs Indigo 2.1 or later; 2.0 and earlier read only the regional packs their release notes link. A game without a poster shows its disc banner, and in Spotlight a game without a still shows its cover.</li>
   <li>Files named like <code>GALE01_v102.txt</code> are for one disc revision; Indigo picks the right one on its own. A few PAL games have one file per language: <code>GAFP01.txt</code> is the English one, and for another language you copy <code>GAFP01_fre.txt</code> (or <code>_ger</code>, <code>_ita</code>, <code>_spa</code>) over it.</li>
   <li>Cheats are provided as published and are not play-tested; save first. 290 cheats that the files show would break Indigo are switched off and marked <code>[disabled for Indigo]</code>. That check is a filter for known ways a cheat breaks Indigo (a cut-off code block, an Action Replay line, a write into memory Indigo uses), not a guarantee. 2,860 cheats run their own code or write through a pointer the game sets while it runs; those can only be judged on the console, as with any loader.</li>
 </ul>
-<p class="meta">Checksums: each Indigo release lists its SHA-256 on GitHub; the packs' are in <a href="https://indigo.norvitech.com/SHA256SUMS.txt">SHA256SUMS.txt</a>. Box art from <a href="https://www.gametdb.com/">GameTDB</a>; the artwork belongs to each game's publisher. Cheats from the <a href="https://www.gc-forever.com/forums/viewtopic.php?t=2165">gc-forever WiiRD/Gecko code collection</a> (07.04.2023) by Ralf and its contributors, and the geckocodes.org database via <a href="https://codes.rc24.xyz/">codes.rc24.xyz</a>; authors are credited in each file. Not affiliated with Nintendo. Rights holder or problem? <a href="https://github.com/spencercnorton/indigo/issues">Open an issue</a>.</p>
+<p class="meta">Checksums: each Indigo release lists its SHA-256 on GitHub; the packs' are in <a href="https://indigo.norvitech.com/SHA256SUMS.txt">SHA256SUMS.txt</a>. Box art and descriptions from <a href="https://www.gametdb.com/">GameTDB</a>; the artwork belongs to each game's publisher. Gameplay stills from <a href="https://github.com/libretro-thumbnails/Nintendo_-_GameCube">libretro-thumbnails</a>. The Spotlight layout's design is <a href="https://github.com/mvizensk/gameplay-spotlight">Gameplay Spotlight</a> by mvizensk, used with permission. Cheats from the <a href="https://www.gc-forever.com/forums/viewtopic.php?t=2165">gc-forever WiiRD/Gecko code collection</a> (07.04.2023) by Ralf and its contributors, and the geckocodes.org database via <a href="https://codes.rc24.xyz/">codes.rc24.xyz</a>; authors are credited in each file. Not affiliated with Nintendo. Rights holder or problem? <a href="https://github.com/spencercnorton/indigo/issues">Open an issue</a>.</p>
 </div>
 
 <h2 id="docs">Documentation</h2>
@@ -322,14 +335,15 @@
   <a class="glass" href="/indigo/guide/memory-cards/"><strong>Memory Cards</strong></a>
   <a class="glass" href="/indigo/guide/posters/"><strong>Posters</strong></a>
   <a class="glass" href="/indigo/guide/troubleshooting/"><strong>Troubleshooting</strong></a>
+  <a class="glass" href="/indigo/guide/apps/"><strong>Apps</strong></a>
   <a class="glass" href="/indigo/guide/settings-file/"><strong>Settings files</strong></a>
   <a class="glass" href="/indigo/changelog/"><strong>Changelog</strong></a>
 </div>
 <div class="prose">
 <ul>
-  <li><a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/README.md#any-platform--from-source">Build from source</a>: one container, no toolchain on your machine.</li>
-  <li><a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/CONTRIBUTING.md">Contributing</a>: how to propose a change.</li>
-  <li><a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/SECURITY.md">Security policy</a> and <a href="https://github.com/spencercnorton/indigo/blob/v2.0.1/NOTICE">NOTICE</a>: upstream provenance and third-party components.</li>
+  <li><a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/README.md#any-platform--from-source">Build from source</a>: one container, no toolchain on your machine.</li>
+  <li><a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/CONTRIBUTING.md">Contributing</a>: how to propose a change.</li>
+  <li><a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/SECURITY.md">Security policy</a> and <a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/NOTICE">NOTICE</a>: upstream provenance and third-party components.</li>
   <li><a href="https://github.com/emukidid/swiss-gc">Swiss documentation</a>: device handlers, patches and boot options, which Indigo leaves as Swiss has them.</li>
 </ul>
 </div>
@@ -337,7 +351,7 @@
 <h2 id="channels">Releases</h2>
 <div class="how">
   <div class="glass"><h3>Releases</h3><p>Each <code>vX.Y.Z</code> on <code>main</code> is a release, marked Latest on GitHub: the one for everyday use.</p></div>
-  <div class="glass"><h3>Release candidates</h3><p>Before a release ships, a release candidate, <code>vX.Y.Z-rc.N</code>, goes out as a GitHub pre-release for a last round of testing. While one is out, this page offers it first, with the release beside it.</p></div>
+  <div class="glass"><h3>Release candidates</h3><p>Before a release ships, a release candidate, <code>vX.Y.Z-rc.N</code>, goes out as a GitHub pre-release for a last round of testing, and its release notes say how to try it. This page offers the release: take that one for everyday use.</p></div>
   <div class="glass"><h3>Every build is traceable</h3><p>Each zip is built from its tagged commit in a pinned container and published with its SHA-256 and a build provenance attestation, and System › System Information shows the commit it was built from.</p></div>
 </div>
 
@@ -346,7 +360,8 @@
 <details><summary>Does Indigo replace Swiss?</summary><p>It is Swiss, with a different interface. Everything Swiss does, from the device handlers to the patches and boot options, works the same way, and your settings carry over in both directions. Keep stock Swiss as <code>z.dol</code> if you want it one button away.</p></details>
 <details><summary>Which consoles and loaders does it run on?</summary><p>Any GameCube that already runs Swiss and reads an SD card, in an SD2SP2, an SD Gecko or the loader's own slot; or a Wii with GameCube ports, running Swiss in GameCube mode with the card in an SD Gecko. PicoBoot and other modchips that boot <code>ipl.dol</code> start it directly, and disc-image loaders such as GC Loader start it from Swiss. See <a href="#install">Install</a>.</p></details>
 <details><summary>I only see Swiss's plain file list, not the Library.</summary><p>The Library takes over only when <code>/games</code> holds disc images and nothing else. Any other file or an empty folder, in <code>/games</code> or in a game's folder, keeps Swiss's list. <a href="/indigo/guide/troubleshooting/">Troubleshooting</a> covers this and the other common surprises.</p></details>
-<details><summary>Where do the posters and cheats come from?</summary><p>The poster packs are GameTDB's box art, cropped to the front cover; the cheat pack is the gc-forever collection plus geckocodes. You can build a poster pack from your own covers instead: see <a href="/indigo/guide/posters/">Posters</a>.</p></details>
+<details><summary>Can I start emulators and other homebrew?</summary><p>Yes. Put their <code>.dol</code> files in <code>/apps</code>, and Home gets an Apps face that shows them as posters and starts them the way Swiss's file list does, <code>.cli</code> and <code>.dcp</code> files included. Game Boy Interface's download is already laid out that way. Settings › Setup › Console › Apps Face hides the face if you don't want it. See <a href="/indigo/guide/apps/">Apps</a>.</p></details>
+<details><summary>Where do the posters and cheats come from?</summary><p>The poster pack is GameTDB's box art, cropped to the front cover, with gameplay stills from libretro-thumbnails and descriptions from GameTDB; the cheat pack is the gc-forever collection plus geckocodes. You can build a pack from your own covers and screenshots instead: see <a href="/indigo/guide/posters/">Posters</a>.</p></details>
 <details><summary>Is it affiliated with Nintendo or with the Swiss project?</summary><p>No. Indigo is an unofficial fork, not endorsed by or affiliated with the Swiss project or Nintendo. Please report Indigo problems to Indigo, never to upstream Swiss.</p></details>
 </div>
 
@@ -355,7 +370,7 @@
 <ul>
   <li>Bugs and feature requests: <a href="https://github.com/spencercnorton/indigo/issues/new/choose">open an issue</a>. Questions: <a href="https://github.com/spencercnorton/indigo/discussions">Discussions</a>.</li>
   <li>Security reports: <a href="https://github.com/spencercnorton/indigo/security/advisories/new">private vulnerability reporting</a>. There is no e-mail address; that is deliberate.</li>
-  <li>Release notes: <a href="https://github.com/spencercnorton/indigo/releases/tag/v2.0.1">this version's</a> on GitHub, or the <a href="/indigo/changelog/">changelog</a> here.</li>
+  <li>Release notes: <a href="https://github.com/spencercnorton/indigo/releases/tag/v2.1.0">this version's</a> on GitHub, or the <a href="/indigo/changelog/">changelog</a> here.</li>
   <li>If Indigo saves you time, you can <a href="https://buy.stripe.com/8x26oH2U44f65TRe574wM04">support its development</a>.</li>
 </ul>
 <p>Indigo is a modified version of <a href="https://github.com/emukidid/swiss-gc">Swiss</a> (© emukidid and the Swiss contributors, GPL-2.0-or-later) and inherits that licence. Not affiliated with Nintendo. Indigo's interface was built with <a href="https://claude.com/claude-code">Claude Code</a>.</p>
