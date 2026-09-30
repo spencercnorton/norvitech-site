@@ -214,6 +214,7 @@ def main() -> int:
             if ref.startswith(("http://", "https://", "mailto:")):
                 continue
             path, _, fragment = ref.partition("#")
+            path = path.partition("?")[0]
             path = path.split(" ")[0]
             if path and not (DOCS / path.lstrip("/")).exists():
                 errors.append(f"dead link {ref}")
