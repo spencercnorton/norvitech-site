@@ -47,8 +47,8 @@
 .career .gantt{margin-bottom:28px}
 .career .g-legend{gap:8px}
 .career .g-legend .key-n{display:none}
-.career .c-body{display:block}
-.career .c-list{width:min(100%,960px);min-width:0}
+.career .c-body{display:flex;flex-direction:column;gap:28px}
+.career .c-list,.c-overview{width:100%;min-width:0}
 .career .tl-card{background:var(--glass-strong)}
 .career .tl-hint{margin:24px 0 16px}
 .eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0 0 8px}
@@ -69,10 +69,7 @@
 .current-metric:hover span{color:var(--link);text-decoration:underline}
 .about-credentials{position:relative;z-index:1;border-radius:16px;margin:32px 0 24px;padding:18px 22px;background:var(--glass-strong)}
 .about-credentials summary{cursor:pointer;font-weight:600}
-.credentials-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:20px}
-.credentials-grid h3{margin-top:0}
 .about-end{display:flex;flex-wrap:wrap;gap:16px 32px;margin:24px 0 48px}
-@media (min-width:1600px){.career .c-list{width:65%;max-width:1300px}}
 @media (max-width:760px){
   .about-hero{gap:24px}
   .about-portrait{flex-basis:auto;width:min(100%,280px)}
@@ -85,7 +82,6 @@
   .about-current > div{grid-column:1 / -1;padding:0}
   .current-metric{padding:8px 16px}
   .current-metric strong{font-size:34px}
-  .credentials-grid{grid-template-columns:1fr;gap:12px}
 }
 @media (prefers-reduced-motion:reduce){.career .c-rail{transition:none}}
 @media (prefers-reduced-transparency:reduce){.career .c-rail{display:none}}
@@ -102,3 +98,63 @@
 /* Keep the Zurich study-tour marker clear of the neighbouring MSc label. */
 .g-track[data-lane="edu"] .g-pt{top:0}
 @media (max-width:760px){.career .m-city[data-city="shanghai"] .m-name{left:auto;right:10px}}
+
+/* Achievements use the room beside the overview and timeline. Keep the
+   sidebar in document flow on short screens so every credential is reachable. */
+.about-achievements{min-width:0;align-self:start;width:100%}
+.about-achievements > h2{font-size:18px;letter-spacing:-.02em;margin:0 0 16px}
+.eagle-feature{position:relative;overflow:hidden;border-radius:20px;padding:24px;border-color:color-mix(in srgb,var(--link) 35%,var(--line));background:var(--glass-strong)}
+.eagle-icon{display:block;width:76px;height:76px;color:var(--link);margin:0 0 16px}
+.eagle-feature h3{font-size:30px;line-height:1.15;margin:0 0 12px;letter-spacing:-.025em}
+.eagle-feature p:not(.eyebrow){font-size:14px;margin:0 0 16px;max-width:40ch}
+.eagle-feature a{font-size:13px;font-weight:600}
+.achievement-list{border-radius:18px;padding:4px 20px;margin-top:16px;background:var(--glass-strong)}
+.achievement-item{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.achievement-item h3{font-size:14px;line-height:1.4;margin:0;font-weight:650}
+.achievement-item p{font-size:12px;color:var(--muted);margin:4px 0 0}
+.achievement-icon,.achievement-logo{flex:none;width:32px;height:32px;color:var(--link)}
+.achievement-logo{object-fit:contain;border-radius:6px}
+.achievement-extra{padding:15px 0;margin:0;border:0;border-radius:0;background:none;box-shadow:none}
+.achievement-extra summary{font-size:12px;color:var(--muted);font-weight:500}
+.achievement-extra ul{font-size:12px;color:var(--muted);padding-left:18px;margin:12px 0 4px}
+.achievement-extra li+li{margin-top:8px}
+.achievement-languages{font-size:12px;color:var(--muted);margin:14px 4px 0}
+.career .c-list > h2{margin:0 0 12px;font-size:25px}
+.career .c-list .tl-hint{margin:0 0 22px;max-width:60ch}
+.career .tl-voice{grid-template-columns:auto minmax(0,1fr);align-items:start;background:var(--glass-strong)}
+.career .tv-more{grid-column:2;white-space:normal}
+.career .tv-avs{flex-wrap:wrap;max-width:104px}
+.c-overview .about-current{margin-bottom:0}
+@media (min-width:1100px){
+  .career .c-body{display:grid;grid-template-columns:minmax(0,1fr) clamp(310px,26vw,390px);gap:32px;align-items:start}
+  .c-overview{grid-column:1;grid-row:1}
+  .about-achievements{grid-column:2;grid-row:1 / span 2}
+  .career .c-list{grid-column:1;grid-row:2;max-width:none}
+  .c-overview .patent-feature{padding:28px;gap:28px}
+  .c-overview .patent-seal{flex-basis:110px}
+  .c-overview .about-current{grid-template-columns:minmax(0,1.35fr) repeat(2,minmax(0,1fr));gap:12px;padding:20px}
+  .c-overview .current-metric{padding:8px 16px}
+}
+@media (min-width:1100px) and (min-height:1050px){.about-achievements{position:sticky;top:82px}}
+@media (max-width:1099px) and (min-width:700px){
+  .about-achievements{display:grid;grid-template-columns:1fr 1.2fr;gap:16px 24px}
+  .about-achievements > h2{grid-column:1 / -1;margin:0}
+  .achievement-list{grid-column:2;grid-row:2 / span 2;margin:0}
+  .achievement-languages{margin:0}
+}
+@media (max-width:900px){
+  .career .tl-voice{grid-template-columns:minmax(0,1fr)}
+  .career .tv-avs,.career .tv-says,.career .tv-more{grid-column:1}
+  .career .tv-avs{max-width:none}
+}
+@media print{
+  .career .c-body{display:block}
+  .about-achievements{position:static;display:block;margin:16pt 0;break-inside:auto}
+  .eagle-feature,.achievement-item{break-inside:avoid}
+  .eagle-feature,.achievement-list{background:none;box-shadow:none}
+  .eagle-icon{width:48pt;height:48pt}
+  .achievement-list{padding:0;border:0}
+  .achievement-item{padding:8pt 0}
+  .achievement-extra{display:block}
+  .career .tl-voice{display:block;background:none}
+}

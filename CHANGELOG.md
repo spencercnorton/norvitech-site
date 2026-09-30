@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Restore visible recommendation previews and direct links to all 15 full
+  recommendations. Bring achievements into a desktop sidebar, feature Eagle
+  Scout with matching award icons, and keep Microsoft certifications secondary.
+
 - Simplify About: bring the career chart forward, keep a larger map in the
   background while scrolling, feature the granted patent, and replace old-job
   KPI cards with current project and patent counts. Keep career details and
