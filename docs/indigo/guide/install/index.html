@@ -287,10 +287,8 @@ installed on your computer:</p>
 <span class="pl-c1">cd</span> indigo
 docker run --rm -u <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s"><span class="pl-pds">$(</span>id -u<span class="pl-pds">)</span></span>:<span class="pl-s"><span class="pl-pds">$(</span>id -g<span class="pl-pds">)</span></span><span class="pl-pds">"</span></span> -v <span class="pl-s"><span class="pl-pds">"</span><span class="pl-smi">$PWD</span>:/work<span class="pl-pds">"</span></span> -w /work \
   ghcr.io/extremscorner/libogc2@sha256:e6531ecaa458d0b5d8c9ba57cee1facc5fb9120808c6d9eebb2c05e4ffaf6f0f make dev</pre></div>
-<p>This writes <code>cube/packer/swiss.dol</code>, the same file as <code>ipl.dol</code> in the
-release zip: copy it to the card under the name your loader expects. It is
-compressed, and the console unpacks it as it starts. <code>cube/swiss/swiss.dol</code>
-is the same program uncompressed, the one to run in the Dolphin emulator.
+<p>This writes <code>cube/swiss/swiss.dol</code>. That is the same program as <code>ipl.dol</code>
+in the release zip; copy it to the card under the name your loader expects.
 <code>buildtools/sd_package.sh vX.Y.Z</code> packs it into the zip, with the
 <code>apploader.img</code> In-Game Reset returns to.</p>
 <hr>
@@ -299,7 +297,7 @@ is the same program uncompressed, the one to run in the Dolphin emulator.
 <a class="prev" href="/indigo/guide/"><small>Previous</small>Indigo guide</a>
 <a class="next" href="/indigo/guide/controls/"><small>Next</small>Controls</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.1.0/docs/guide/install.md">docs/guide/install.md</a> in Indigo v2.1.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/guide/install.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.1.1/docs/guide/install.md">docs/guide/install.md</a> in Indigo v2.1.1, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/docs/guide/install.md">Suggest an edit</a>.</p>
 </article>
 </div>
 
