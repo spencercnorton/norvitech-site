@@ -183,6 +183,37 @@
 <p>Versions follow <a href="https://semver.org/">semantic versioning</a>. Each release is a
 <code>vX.Y.Z</code> tag on <code>main</code>, and a release candidate before it is a <code>vX.Y.Z-rc.N</code>
 tag on <code>beta</code>. The newest changes are at the top until their release is named.</p>
+<h2 id="v220--backdrop-and-wave-color-a-clock-setting-and-a-cleaner-cube">v2.2.0 — Backdrop and Wave Color, a Clock setting and a cleaner cube</h2>
+<p>The backdrop and the waves can each have a color of their own, the clock can
+move to the top left or go, and the cube draws cleaner on a console: no glow
+spot under it, smoother edges, and side faces that show clear glass at rest
+instead of broken icons. A Jet Black backdrop is nearly black now.</p>
+<h3 id="new">New</h3>
+<ul>
+<li>Settings › Setup › Console › <strong>Clock</strong> puts the time and the temperature
+dial in the top right corner (the default), the top left, or nowhere. The
+loading spinner and the Source screen's label move to the other corner.</li>
+<li>Settings › Setup › Console has <strong>Backdrop Color</strong> and <strong>Wave Color</strong> under
+Menu Color. The backdrop behind the cube and the waves in front of it can
+each keep a color of their own, one of Menu Color's eight, or follow Menu
+Color as before (the default). Like Menu Color, A lists the colors and the
+screen shows each one as you move through the list. In <code>global.ini</code> they are
+<code>Backdrop Color</code> and <code>Wave Color</code>.</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>A Jet Black backdrop is nearly black now. Gray at Indigo's brightness read
+light on a TV.</li>
+<li>The glow spot on the floor under the Home cube is gone; the halo behind the
+cube stays.</li>
+<li>The cube's edges are smoother on a console. The lights mirrored in the glass
+no longer break into a dashed line along a bevel seen nearly edge-on, and the
+rim of light on the top right corner no longer stair-steps.</li>
+<li>The icons on the cube's side faces no longer break into fragments, such as
+the Settings face's sliders showing as crosses. An icon fades as its face
+turns edge-on and comes back as the face turns round, so at rest the faces
+to either side show clear glass.</li>
+</ul>
 <h2 id="v211--ipldol-uncompressed-again">v2.1.1 — ipl.dol uncompressed again</h2>
 <p>2.1.0's compressed <code>ipl.dol</code> could leave the console restarting over and over
 at power-on instead of starting Indigo. 2.1.1 is 2.1.0 with <code>ipl.dol</code>
@@ -329,7 +360,7 @@ ended in an ellipsis.</li>
 <h3 id="for-developers-1">For developers</h3>
 <ul>
 <li>
-<a href="https://github.com/spencercnorton/indigo/tree/v2.1.1/UPSTREAM"><code>UPSTREAM</code></a> names the upstream Swiss commit Indigo is built on,
+<a href="https://github.com/spencercnorton/indigo/tree/v2.2.0/UPSTREAM"><code>UPSTREAM</code></a> names the upstream Swiss commit Indigo is built on,
 now r2119, and lists the upstream files Indigo changes, each with the
 reason. CI checks it both ways: a change to an
 upstream file that the list leaves out fails, and so does a listed file
@@ -353,7 +384,7 @@ files.</li>
 <code>poster_pack.py --stills &lt;folder&gt;</code> writes <code>stills.pak</code>, one 320×240
 screenshot per game in the poster pack's format. The Library's art cache
 loads a stills pack next to the poster pack, in three slots of its own.
-<a href="https://github.com/spencercnorton/indigo/blob/v2.1.1/docs/PACKS.md">docs/PACKS.md</a> describes
+<a href="https://github.com/spencercnorton/indigo/blob/v2.2.0/docs/PACKS.md">docs/PACKS.md</a> describes
 the format, which the source cited but the repository never had.</li>
 <li>Game details read no further than a disc banner's 128-character
 description, which need not end in a NUL; they could read on into the
@@ -573,8 +604,8 @@ CONTRIBUTING.md the route for a fix to a release.</li>
 <li>Indigo is developed on GitHub. Changes land on the <code>beta</code> branch by pull
 request, betas ship as <code>vX.Y.Z-beta.N</code> pre-releases, and a release
 candidate that holds up is promoted to <code>main</code> as a release.
-<a href="https://github.com/spencercnorton/indigo/blob/v2.1.1/docs/RELEASING.md">docs/RELEASING.md</a> has the procedure and
-<a href="https://github.com/spencercnorton/indigo/blob/v2.1.1/AGENTS.md">AGENTS.md</a> the working detail.</li>
+<a href="https://github.com/spencercnorton/indigo/blob/v2.2.0/docs/RELEASING.md">docs/RELEASING.md</a> has the procedure and
+<a href="https://github.com/spencercnorton/indigo/blob/v2.2.0/AGENTS.md">AGENTS.md</a> the working detail.</li>
 <li>GitHub Actions builds the DOL and the SD card zip for every push and pull
 request, runs the three host-test lanes and the source checks (whitespace
 and the UI isolation guardrail), and keeps the zip as an artifact to try on
@@ -588,7 +619,7 @@ removes the Makefile's own target lists, so a new test is cleaned too.</li>
 <li>CI and releases run on the maintainer's own machines: every job gets a
 fresh container that takes that one job and is thrown away, runs without
 privileges, and can reach GitHub and nothing else
-(<a href="https://github.com/spencercnorton/indigo/blob/v2.1.1/buildtools/ci/runner/README.md">buildtools/ci/runner/</a>).</li>
+(<a href="https://github.com/spencercnorton/indigo/blob/v2.2.0/buildtools/ci/runner/README.md">buildtools/ci/runner/</a>).</li>
 <li>CI checks more: the DOL's structure, size and the commit it names; the
 zip's exact layout; a second build that must match the first byte for
 byte; the host tests under Clang's sanitizers as well as GCC's; and a
@@ -600,7 +631,7 @@ Library moves between games and opens one's details, where UP and A open
 the game's settings, on a demonstration disc of fictitious games.
 Dolphin emulates the MMU, so a crash stops the test as it would stop a
 console. Every step's picture is kept with the run
-(<a href="https://github.com/spencercnorton/indigo/blob/v2.1.1/buildtools/ui/emulator/README.md">buildtools/ui/emulator/</a>).</li>
+(<a href="https://github.com/spencercnorton/indigo/blob/v2.2.0/buildtools/ui/emulator/README.md">buildtools/ui/emulator/</a>).</li>
 <li>CI fuzzes the files Indigo reads from a card: poster packs, the play
 history, saves, settings files and disc images' file tables, each with
 AddressSanitizer and UBSan, starting from real files of each kind. The
@@ -612,7 +643,7 @@ again and the fuzzers run for ten minutes each.</li>
 device's name, RIGHT shows another, and B leaves it.</li>
 <li>Release candidates: a <code>vX.Y.Z-rc.N</code> tag on <code>beta</code> publishes a pre-release
 like a beta, its notes opening with "Release candidate"
-(<a href="https://github.com/spencercnorton/indigo/blob/v2.1.1/docs/RELEASING.md">docs/RELEASING.md</a>).</li>
+(<a href="https://github.com/spencercnorton/indigo/blob/v2.2.0/docs/RELEASING.md">docs/RELEASING.md</a>).</li>
 <li>Release notes link the repository's files by full URL at the release's
 tag, so the links also work where GitHub doesn't rewrite them: through the
 API and <code>gh</code>.</li>
@@ -1111,7 +1142,7 @@ error.</li>
 <code>global.ini</code> and from a game's own settings file, with its values, its
 default and where it appears in Settings, so a card can be set up on a
 computer before it goes in the console. Example files are in
-<a href="https://github.com/spencercnorton/indigo/tree/v2.1.1/docs/examples">docs/examples/</a>.</li>
+<a href="https://github.com/spencercnorton/indigo/tree/v2.2.0/docs/examples">docs/examples/</a>.</li>
 <li>The README no longer says Settings was rebuilt: it keeps Swiss's six tabs,
 restyled.</li>
 </ul>
@@ -1222,7 +1253,7 @@ upstream Swiss.</li>
 <nav class="pager" aria-label="Previous and next page">
 <a class="prev" href="/indigo/guide/settings-file/"><small>Previous</small>Settings files</a>
 </nav>
-<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.1.1/CHANGELOG.md">CHANGELOG.md</a> in Indigo v2.1.1, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/CHANGELOG.md">Suggest an edit</a>.</p>
+<p class="docsrc">From <a href="https://github.com/spencercnorton/indigo/blob/v2.2.0/CHANGELOG.md">CHANGELOG.md</a> in Indigo v2.2.0, rendered for the web. Spotted a mistake? <a href="https://github.com/spencercnorton/indigo/edit/beta/CHANGELOG.md">Suggest an edit</a>.</p>
 </article>
 </div>
 
