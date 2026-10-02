@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#241f31">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<title>Road Track · NorviTech</title>
+<meta name="description" content="A running-cost dashboard, a finance tab and printable reports for the self-hosted LubeLogger vehicle tracker.">
+<link rel="canonical" href="https://norvitech.com/roadtrack/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NorviTech">
+<meta property="og:title" content="Road Track · NorviTech">
+<meta property="og:description" content="A running-cost dashboard, a finance tab and printable reports for the self-hosted LubeLogger vehicle tracker.">
+<meta property="og:url" content="https://norvitech.com/roadtrack/">
+<meta property="og:image" content="https://norvitech.com/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="NorviTech: open-source apps for the Linux desktop and the self-hosted stack">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="Road Track releases" href="https://github.com/spencercnorton/roadtrack/releases.atom">
+<script src="/site.js" defer></script>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Road Track",
+  "url": "https://norvitech.com/roadtrack/",
+  "description": "A running-cost dashboard, a finance tab and printable reports for the self-hosted LubeLogger vehicle tracker.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Linux",
+  "programmingLanguage": "JavaScript",
+  "codeRepository": "https://github.com/spencercnorton/roadtrack",
+  "license": "https://opensource.org/license/mit"
+}</script>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28"><span>NorviTech</span></a>
+    <span class="slash" aria-hidden="true">/</span>
+    <a class="product" href="/roadtrack/" aria-current="page">Road Track</a>
+    <span class="rule" aria-hidden="true"></span>
+    <nav aria-label="Road Track">
+      <details class="menu" name="nav">
+        <summary>Overview</summary>
+        <ul>
+          <li><a href="/roadtrack/#features">What it does</a></li>
+          <li><a href="/roadtrack/#data">Where your data lives</a></li>
+        </ul>
+      </details>
+      <details class="menu" name="nav">
+        <summary>Docs</summary>
+        <ul>
+          <li><a href="https://github.com/spencercnorton/roadtrack/blob/main/docs/user-guide.md">User guide</a></li>
+          <li><a href="https://github.com/spencercnorton/roadtrack/blob/main/docs/configuration.md">Configuration</a></li>
+          <li><a href="https://github.com/spencercnorton/roadtrack/blob/main/docs/operations.md">Operations</a></li>
+          <li><a href="https://github.com/spencercnorton/roadtrack/blob/main/docs/how-it-works.md">How it works</a></li>
+          <li><a href="https://github.com/spencercnorton/roadtrack/blob/main/CHANGELOG.md">Changelog</a></li>
+          <li><a href="https://github.com/spencercnorton/roadtrack/issues/new/choose">Issues</a></li>
+          <li><a href="https://github.com/spencercnorton/roadtrack/discussions">Discussions</a></li>
+          <li><a href="https://github.com/spencercnorton/roadtrack/security/advisories/new">Report a vulnerability</a></li>
+        </ul>
+      </details>
+      <a class="act" href="/roadtrack/#install">Install</a>
+      <a href="https://github.com/spencercnorton/roadtrack">GitHub</a>
+    </nav>
+    <a class="clock" id="clock" href="https://time.globalentry.systems/">
+      <time data-face>--:--:--</time>
+      <span data-note></span>
+    </a>
+  </div>
+</header>
+<main class="wrap"><section class="hero app"><p class="crumb"><a href="/">Suite</a> / Road Track</p><h1>Road Track</h1><p class="tag">What every car in the garage really costs, on top of LubeLogger.</p><p>A running-cost dashboard, a finance tab and printable reports for the self-hosted LubeLogger vehicle tracker, added over its published image without forking it.</p><p class="cta"><a class="primary" href="#install">Install with Docker Compose</a><a class="secondary" href="https://github.com/spencercnorton/roadtrack">Source on GitHub</a></p></section>
+<section class="prose"><picture><source media="(prefers-color-scheme: dark)" srcset="/assets/previews/roadtrack-dashboard-dark.png"><img src="/assets/previews/roadtrack-dashboard-light.png" alt="The Road Track dashboard for one vehicle: total spend, the last twelve months against the year before, cost per month and per mile, distance covered, and a cost-of-ownership chart of running spend, what has been paid for the car and what it is worth." width="1280" height="980"></picture>
+<p>The vehicle dashboard, on demonstration data. <a href="https://github.com/hargata/lubelog">LubeLogger</a> keeps the records; Road Track turns them into what each car costs to own — per month, per mile, by system and including the loan. It runs as LubeLogger's own container image plus a layer of browser-side files, so your existing data stays exactly where it is.</p>
+
+<h2 id="features">What it does</h2>
+<div class="how">
+  <div class="glass"><h3>What a car costs, not what it burns</h3><p>Running cost per month and per mile, spend by category and by system, the biggest expenses and the distance driven. It reads sensibly for a garage that logs no fuel at all, where LubeLogger's own dashboard reports zero miles.</p></div>
+  <div class="glass"><h3>From the day you bought it</h3><p>Give a vehicle its purchase date and the odometer that day, and the previous owner's receipts and miles drop out of your cost per mile. Odometer readings are cleaned of mis-keyed and out-of-order values first.</p></div>
+  <div class="glass"><h3>A Finance tab for the car itself</h3><p>Price, deposit, rate and term give a payment schedule that ends at exactly zero; typed valuations or per-model depreciation curves draw what it has been worth since. One toggle folds it all into the dashboard's totals.</p></div>
+  <div class="glass"><h3>Named, printable reports</h3><p>Routine maintenance, full records and a cost summary, chosen by name instead of a column picker, with a toggle that leaves the prices off a history meant for a buyer or a mechanic.</p></div>
+  <div class="glass"><h3>Sharing you can see</h3><p>A Collaborators tab on every vehicle, and for administrators an Access grid of who sees which car, inherited access included, changed with a checkbox through LubeLogger's own rules.</p></div>
+  <div class="glass"><h3>Finished, not configured</h3><p>The theme in light and dark, an installable web app and phone layouts come in the image; the only settings are LubeLogger's, plus an optional Add a receipt button for an instance that files receipts from Telegram or e-mail.</p></div>
+</div>
+
+<h2 id="install">Install</h2>
+<div class="how">
+  <div class="glass"><h3>Docker Compose</h3><p>Download <code>docker-compose.example.yml</code> from the repository as <code>docker-compose.yml</code> and run <code>docker compose up -d</code>; the image is <code>ghcr.io/spencercnorton/roadtrack</code> for amd64 and arm64. Turn on sign-in before anyone else can reach it. Commands in the <a href="https://github.com/spencercnorton/roadtrack#install">README</a>.</p></div>
+  <div class="glass"><h3>Already running LubeLogger</h3><p>Change your service's image to Road Track's and keep its volumes; nothing in your data changes, and switching back is the same edit in reverse. Each release names the LubeLogger version it is built on.</p></div>
+</div>
+
+<h2 id="data">Where your data lives</h2>
+<div class="prose">
+<p>Everything stays in LubeLogger's own data volume, including the purchase, loan and valuation fields Road Track adds. Road Track stores nothing of its own, its pages talk only to the instance that serves them, and there is no telemetry; nothing leaves the machine unless someone presses a receipt link. The <a href="https://github.com/spencercnorton/roadtrack#where-your-data-lives">README table</a> lists every path.</p>
+</div>
+
+<h2 id="docs">Documentation</h2>
+<div class="prose">
+<ul>
+  <li><a href="https://github.com/spencercnorton/roadtrack/blob/main/docs/user-guide.md">User guide</a> — the dashboard, Finance, reports, collaborators and the Access grid</li>
+  <li><a href="https://github.com/spencercnorton/roadtrack/blob/main/docs/configuration.md">Configuration</a> — every setting, the fields Road Track adds, reverse proxies and caching</li>
+  <li><a href="https://github.com/spencercnorton/roadtrack/blob/main/docs/operations.md">Operations</a> — upgrades, pinning and rollback, backups, single sign-on hardening</li>
+  <li><a href="https://github.com/spencercnorton/roadtrack/blob/main/CHANGELOG.md">Changelog</a> — one entry per tagged release</li>
+  <li><a href="https://github.com/spencercnorton/roadtrack/issues/new/choose">Issues</a> · <a href="https://github.com/spencercnorton/roadtrack/discussions">Discussions</a> · <a href="https://github.com/spencercnorton/roadtrack/security/advisories/new">Report a vulnerability</a></li>
+</ul>
+</div>
+</section>
+<nav class="siblings" aria-label="Other apps">
+  <a class="glass" href="/helios/">Helios</a>
+  <a class="glass" href="/bitagent/">BitAgent</a>
+  <a class="glass" href="/xnote/">XNote</a>
+  <a class="glass" href="/xnote-placement/">XNote Placement</a>
+  <a class="glass" href="/snipsnap/">SnipSnap</a>
+  <a class="glass" href="/conductor/">Conductor</a>
+  <a class="glass" href="/norvi-os/">NorviOS</a>
+  <a class="glass" href="/indigo/">Indigo</a>
+  <a class="glass" href="/roadtrack/" aria-current="page">Road Track</a>
+</nav>
+
+</main>
+<footer class="masthead">
+  <div class="wrap">
+    <nav aria-label="Products">
+      <a href="/helios/">Helios</a>
+      <a href="/bitagent/">BitAgent</a>
+      <a href="/xnote/">XNote</a>
+      <a href="/xnote-placement/">XNote Placement</a>
+      <a href="/snipsnap/">SnipSnap</a>
+      <a href="/conductor/">Conductor</a>
+      <a href="/norvi-os/">NorviOS</a>
+      <a href="/indigo/">Indigo</a>
+      <a href="/roadtrack/">Road Track</a>
+      <a href="/about/">About</a>
+      <a href="/consulting/">Consulting</a>
+    </nav>
+    <p>NorviTech © Spencer Norton · <a href="https://github.com/spencercnorton/norvitech-site">Source</a> · <a href="https://github.com/spencercnorton">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

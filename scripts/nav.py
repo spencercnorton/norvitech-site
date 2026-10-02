@@ -142,6 +142,16 @@ PRODUCTS = [
                             ("Changelog", "/indigo/changelog/"),
                             ("Release notes", f"{GH}/indigo/releases/latest"),
                             *support("indigo")])]),
+    dict(slug="roadtrack", name="Road Track", note="Running costs for LubeLogger",
+         action=("Install", "/roadtrack/#install"), menus=[
+             ("Overview", [("What it does", "/roadtrack/#features"),
+                           ("Where your data lives", "/roadtrack/#data")]),
+             ("Docs", [("User guide", f"{GH}/roadtrack/blob/main/docs/user-guide.md"),
+                       ("Configuration", f"{GH}/roadtrack/blob/main/docs/configuration.md"),
+                       ("Operations", f"{GH}/roadtrack/blob/main/docs/operations.md"),
+                       ("How it works", f"{GH}/roadtrack/blob/main/docs/how-it-works.md"),
+                       ("Changelog", f"{GH}/roadtrack/blob/main/CHANGELOG.md"),
+                       *support("roadtrack")])]),
 ]
 
 BRAND = '<a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="28"><span>NorviTech</span></a>'
